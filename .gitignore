@@ -1,0 +1,7 @@
+node_modules
+*.log
+.cache
+es
+cjs
+dist
+coverage

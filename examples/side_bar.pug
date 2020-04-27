@@ -1,0 +1,80 @@
+mixin link(href)
+  if href.endsWith(`${example}/index.pug`) || href === path
+    a
+      block
+  else
+    a(href=href)
+      block
+
+nav
+  div React combo boxes
+  details
+    summary Select
+    +link('~/select.pug') About
+    +link('~/select/string_options/index.pug') String options
+    +link('~/select/object_options/index.pug') Object options
+    +link('~/select/placeholder_option/index.pug') Placeholder option
+    +link('~/select/disabled_option/index.pug') Disabled option
+    +link('~/select/grouped_options/index.pug') Grouped options
+    +link('~/select/mapped_options/index.pug') Mapped options
+    +link('~/select/html_options/index.pug') HTML options
+  details
+    summary Drop down
+    +link('~/drop_down.pug') About
+    +link('~/drop_down/string_options/index.pug') String options
+    +link('~/drop_down/object_options/index.pug') Object options
+    +link('~/drop_down/placeholder_option/index.pug') Placeholder option
+    +link('~/drop_down/disabled_option/index.pug') Disabled option
+    +link('~/drop_down/disabled/index.pug') Disabled drop down
+    +link('~/drop_down/grouped_options/index.pug') Grouped options
+    +link('~/drop_down/html_options/index.pug') HTML options
+    +link('~/drop_down/mapped_options/index.pug') Mapped options
+    +link('~/drop_down/without_managed_focus/index.pug') Without managed focus
+    +link('~/drop_down/aria_1_2_groups/index.pug') With ARIA 1.2 groups
+    details
+      summary Edge cases
+      +link('~/drop_down/identical_options/index.pug') Identical options
+      +link('~/drop_down/no_options/index.pug') No options
+      +link('~/drop_down/all_disabled_options/index.pug') All disabled options
+  details
+    summary Combo box
+    +link('~/combo_box.pug') About
+    +link('~/combo_box/string_options/index.pug') String options
+    +link('~/combo_box/object_options/index.pug') Object options
+    +link('~/combo_box/disabled_option/index.pug') Disabled option
+    +link('~/combo_box/grouped_options/index.pug') Grouped options
+    +link('~/combo_box/html_options/index.pug') HTML options
+    +link('~/combo_box/mapped_options/index.pug') Mapped options
+    +link('~/combo_box/without_autocomplete/index.pug') Without autocomplete
+    +link('~/combo_box/without_managed_focus/index.pug') Without managed focus
+    +link('~/combo_box/inline_autocomplete/index.pug') With inline autocomplete
+    +link('~/combo_box/aria_1_0/index.pug') ARIA 1.0
+    +link('~/combo_box/aria_1_1/index.pug') ARIA 1.1
+    +link('~/combo_box/aria_1_2_groups/index.pug') ARIA 1.2 groups
+    +link('~/combo_box/listbox_footer/index.pug') Listbox footer
+    details
+      summary Searches
+      +link('~/searchers.pug') About
+      +link('~/combo_box/async_search/index.pug') Async search
+      +link('~/combo_box/search_suggestions/index.pug') Search suggestions
+      +link('~/combo_box/background_autocomplete/index.pug') With background autocomplete
+    details
+      summary Edge cases
+      +link('~/combo_box/identical_options/index.pug') Identical options
+      +link('~/combo_box/all_disabled_options/index.pug') All disabled options
+      +link('~/combo_box/autoselect_disabled_option/index.pug') Disabled option and autoselect
+  details
+    summary Table layout
+    +link('~/list_box_table.pug') About
+    details
+      summary Drop down
+      +link('~/list_box_table/drop_down/index.pug') Table
+      +link('~/list_box_table/drop_down_headers/index.pug') With headers
+      +link('~/list_box_table/drop_down_grouped/index.pug') Grouped
+    details
+      summary Combo box
+      +link('~/list_box_table/combo_box/index.pug') Table
+      +link('~/list_box_table/combo_box_headers/index.pug') With headers
+      +link('~/list_box_table/combo_box_grouped/index.pug') Grouped
+
+script(src='~/side_collapse.js')

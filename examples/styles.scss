@@ -1,0 +1,154 @@
+@import "normalize.css";
+@import "prismjs/themes/prism.css";
+@import "../styles/dropdown.scss";
+@import "../styles/combobox.scss";
+
+$text-colour: #161616;
+
+body {
+  font: 1em/1.5 sans-serif;
+  display: grid;
+  grid-template: "nav main" / 20em;
+  color: $text-colour;
+
+  @media (max-width: 50em) {
+    grid: "main" auto "nav" auto;
+  }
+}
+
+main {
+  grid-area: main;
+  padding: 1em;
+  min-width: 0;
+  max-width: 60em;
+}
+
+nav {
+  grid-area: nav;
+  border-right: 1px solid #ddd;
+
+  > div {
+    font-weight: bold;
+    font-size: 1.2em;
+    margin: 1rem;
+  }
+
+  summary {
+    padding: 0.5em 1em;
+    font-weight: bold;
+  }
+
+  a {
+    display: block;
+    text-decoration: none;
+    padding: 0.2em;
+    padding-left: 2em;
+    color: $text-colour;
+  }
+
+  details details a {
+    padding-left: 3em;
+  }
+
+  details details details a {
+    padding-left: 4.5em;
+  }
+
+  details details summary {
+    margin-left: 1em;
+  }
+
+  details details details summary {
+    margin-left: 3em;
+  }
+
+  a:hover {
+    background-color: #dfdfdf;
+  }
+
+  a:not([href]),
+  a:not([href]):hover {
+    background-color: #caeaff;
+  }
+}
+
+code,
+output {
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  background: rgba(27, 31, 35, 0.05);
+  font-size: 85%;
+  padding: 0.2em 0.4em;
+}
+
+pre > code {
+  padding: 0;
+}
+
+pre {
+  padding: 1em;
+  margin: 0.5em 0 1.5em 0;
+  overflow: auto;
+  background: #f5f2f0;
+  font-size: 90%;
+}
+
+table {
+  border-collapse: collapse;
+
+  th {
+    text-align: left;
+    padding: 0.4em;
+    border: 1px solid #ddd;
+  }
+
+  td {
+    vertical-align: top;
+    padding: 0.4em;
+    border: 1px solid #ddd;
+  }
+}
+
+blockquote {
+  border-left: 0.25em solid #ddd;
+  margin: 0 0 1.5em 0;
+  padding-left: 1em;
+}
+
+.reset-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.list-footer {
+  background-color: #caeaff;
+  padding: 0.2em 0.5em;
+  border-top: 1px solid #ddd;
+}
+
+label,
+.label {
+  display: block;
+  font-weight: bold;
+}
+
+fieldset {
+  border: 1px solid #ddd;
+  display: flex;
+
+  label {
+    margin-right: 1.5em;
+  }
+}
+
+[data-react-example] {
+  border: 1px solid #ddd;
+  padding: 1em;
+  margin-bottom: 1.5em;
+
+  > label:not(:first-child),
+  > .label:not(:first-child),
+  > fieldset {
+    margin-top: 1.5em;
+  }
+}

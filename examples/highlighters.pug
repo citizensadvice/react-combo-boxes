@@ -1,0 +1,8 @@
+extends layout.pug
+
+block variables
+  - const title = 'Highlighters'
+  - const path = '~/highlighters.pug'
+
+block main
+  include:markdown ../docs/highlighters.md

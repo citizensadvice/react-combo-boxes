@@ -1,0 +1,14 @@
+extends ../../layout.pug
+
+block variables
+  - const title = 'Combo box with ARIA 1.2 groups'
+  - const example = 'combo_box/aria_1_2_groups'
+
+block main
+  include:markdown README.md
+
+  div(data-react-example=example)
+
+  pre.language-js
+    code.language-js
+      include:highlight:packageInclude index.jsx

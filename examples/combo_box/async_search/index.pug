@@ -1,0 +1,14 @@
+extends ../../layout.pug
+
+block variables
+  - const title = 'Combo box with async search'
+  - const example = 'combo_box/async_search'
+
+block main
+  include:markdown README.md
+
+  div(data-react-example=example)
+
+  pre.language-js
+    code.language-js
+      include:highlight:packageInclude index.jsx

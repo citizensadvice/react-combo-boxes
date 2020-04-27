@@ -1,0 +1,62 @@
+@import './variables.scss';
+@import './listbox.scss';
+@import './sr_only.scss';
+
+.react-combo-boxes-dropdown {
+  width: max-content;
+  position: relative;
+  max-width: 100%;
+
+  .react-combo-boxes-listbox {
+    margin-top: -2px;
+  }
+}
+
+.react-combo-boxes-dropdown__combobox {
+  outline: none;
+  border: none;
+  padding: 0.4em;
+  box-shadow: inset 0 0 0 1px #ccc;
+  cursor: pointer;
+  border-radius: 1px;
+  display: inline-block;
+  position: relative;
+  padding-right: 2em;
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-overflow: "";
+
+  &:-moz-focusring {
+    outline: none;
+  }
+
+  &:focus {
+    outline: none;
+    border: 0;
+    box-shadow: inset 0 0 0 2px $react-combo-boxes-border-color-focus;
+  }
+
+  .react-combo-boxes-dropdown:focus-within & {
+    box-shadow: inset 0 0 0 2px $react-combo-boxes-border-color-focus;
+  }
+
+  &::after {
+    border: 0 solid rgba(0, 0, 0, 0);
+    border-left-width: 0.5em;
+    border-right-width: 0.5em;
+    border-top-width: 0.5em;
+    border-top-style: solid;
+    border-top-color: black;
+    content: '';
+    height: 0;
+    position: absolute;
+    pointer-events: none;
+    right: 0.5em;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    top: 50%;
+    width: 0;
+  }
+}

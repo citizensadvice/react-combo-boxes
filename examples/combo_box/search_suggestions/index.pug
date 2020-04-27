@@ -1,0 +1,14 @@
+extends ../../layout.pug
+
+block variables
+  - const title = 'Combo box search suggestions'
+  - const example = 'combo_box/search_suggestions'
+
+block main
+  include:markdown README.md
+
+  div(data-react-example=example)
+
+  pre.language-js
+    code.language-js
+      include:highlight:packageInclude index.jsx

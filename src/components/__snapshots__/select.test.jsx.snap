@@ -1,0 +1,142 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`options as array of strings renders an select 1`] = `
+<div>
+  <select>
+    <option
+      value="Apple"
+    >
+      Apple
+    </option>
+    <option
+      value="Banana"
+    >
+      Banana
+    </option>
+    <option
+      value="Orange"
+    >
+      Orange
+    </option>
+  </select>
+</div>
+`;
+
+exports[`options options as array of numbers renders an select 1`] = `
+<div>
+  <select>
+    <option
+      value="0"
+    >
+      0
+    </option>
+    <option
+      value="1"
+    >
+      1
+    </option>
+    <option
+      value="2"
+    >
+      2
+    </option>
+    <option
+      value="3"
+    >
+      3
+    </option>
+  </select>
+</div>
+`;
+
+exports[`options options as array of objects group renders grouped options 1`] = `
+<div>
+  <select>
+    <option
+      value="Apple"
+    >
+      Apple
+    </option>
+    <optgroup
+      label="Citrus"
+    >
+      <option
+        value="Orange"
+      >
+        Orange
+      </option>
+      <option
+        value="Lemon"
+      >
+        Lemon
+      </option>
+    </optgroup>
+    <optgroup
+      label="Berry"
+    >
+      <option
+        value="Raspberry"
+      >
+        Raspberry
+      </option>
+      <option
+        value="Strawberry"
+      >
+        Strawberry
+      </option>
+    </optgroup>
+  </select>
+</div>
+`;
+
+exports[`options options as array of objects label renders an select 1`] = `
+<div>
+  <select>
+    <option
+      value="Apple"
+    >
+      Apple
+    </option>
+    <option
+      value="Banana"
+    >
+      Banana
+    </option>
+    <option
+      value="Orange"
+    >
+      Orange
+    </option>
+  </select>
+</div>
+`;
+
+exports[`options options as null renders an select 1`] = `
+<div>
+  <select>
+    <option
+      value="foo"
+    >
+      foo
+    </option>
+    <option
+      value=""
+    />
+  </select>
+</div>
+`;
+
+exports[`options options as undefined renders an select 1`] = `
+<div>
+  <select>
+    <option
+      value="foo"
+    >
+      foo
+    </option>
+    <option
+      value=""
+    />
+  </select>
+</div>
+`;

@@ -1,0 +1,14 @@
+extends ../../layout.pug
+
+block variables
+  - const title = 'Drop down with html options'
+  - const example = 'drop_down/html_options'
+
+block main
+  include:markdown README.md
+
+  div(data-react-example=example)
+
+  pre.language-js
+    code.language-js
+      include:highlight:packageInclude index.jsx
