@@ -251,7 +251,7 @@ describe('minLength', () => {
     expect(spy).toHaveBeenLastCalledWith(
       [],
       expect.anything(),
-      false,
+      null,
     );
   });
 
@@ -284,7 +284,7 @@ describe('minLength', () => {
     expect(spy).toHaveBeenLastCalledWith(
       [],
       expect.anything(),
-      false,
+      null,
     );
   });
 });

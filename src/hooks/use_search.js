@@ -34,7 +34,7 @@ export function useSearch(
       return;
     }
     if (minLength && query.trim().length < minLength) {
-      dispatch({ busy: false, options: [] });
+      dispatch({ busy: null, options: [] });
       return;
     }
     dispatch({ busy: null });

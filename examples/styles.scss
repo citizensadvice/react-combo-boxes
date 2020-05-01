@@ -1,9 +1,10 @@
 @import "normalize.css";
 @import "prismjs/themes/prism.css";
-@import "../styles/dropdown.scss";
-@import "../styles/combobox.scss";
 
 $text-colour: #161616;
+
+@import "../styles/dropdown.scss";
+@import "../styles/combobox.scss";
 
 body {
   font: 1em/1.5 sans-serif;

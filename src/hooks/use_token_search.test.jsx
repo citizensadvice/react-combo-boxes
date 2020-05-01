@@ -146,6 +146,18 @@ describe('options', () => {
 });
 
 describe('minLength', () => {
+  it('does not set initial options', async () => {
+    const spy = jest.fn();
+    render((
+      <TestTokenSearch options={['foo', 'bar', 'foe']} onUpdate={spy} minLength={2} />
+    ));
+    expect(spy).toHaveBeenLastCalledWith(
+      [],
+      expect.anything(),
+      false,
+    );
+  });
+
   it('returns no results for a query less then minLength', async () => {
     const spy = jest.fn();
     render((
@@ -157,7 +169,7 @@ describe('minLength', () => {
     expect(spy).toHaveBeenLastCalledWith(
       [],
       expect.anything(),
-      false,
+      null,
     );
   });
 
