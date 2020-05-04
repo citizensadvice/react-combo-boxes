@@ -13,11 +13,11 @@ export function useSearch(
   const timeoutRef = useRef();
   const unmountedRef = useRef(false);
 
-  const search = useCallback(async (query) => {
+  const search = useCallback(async (query, currentSearch) => {
     dispatch({ busy: true });
     const results = await fn(query);
     // Prevent out of sync returns clobbering the results
-    if (lastSearchRef.current !== query || unmountedRef.current) {
+    if (lastSearchRef.current !== currentSearch || unmountedRef.current) {
       return;
     }
     if (results === null) {
@@ -28,7 +28,7 @@ export function useSearch(
   }, [fn, maxResults]);
 
   const onSearch = useCallback((query) => {
-    lastSearchRef.current = query;
+    lastSearchRef.current = {};
     if (!query.trim() && emptyOptions) {
       dispatch({ busy: false, options: emptyOptions.slice(0, maxResults) });
       return;
@@ -42,10 +42,10 @@ export function useSearch(
     if (debounce) {
       clearTimeout(timeoutRef.current);
       timeoutRef.current = setTimeout(() => {
-        search(query);
+        search(query, lastSearchRef.current);
       }, debounce);
     } else {
-      search(query);
+      search(query, lastSearchRef.current);
     }
   }, [search, debounce, minLength, emptyOptions, maxResults]);
 
