@@ -84,15 +84,18 @@ export const DropDown = forwardRef((rawProps, ref) => {
     }
   }, [expanded, managedFocus, focusedOption]);
 
+  const lastExpandedRef = useRef(expanded);
   useLayoutEffect(() => {
-    if (onLayoutListBox) {
-      onLayoutListBox({
-        expanded,
-        listbox: listRef.current,
-        combobox: comboBoxRef.current,
-        option: focusedRef.current,
-      });
+    if (!onLayoutListBox || (!expanded && !lastExpandedRef.current)) {
+      return;
     }
+    lastExpandedRef.current = expanded;
+    onLayoutListBox({
+      expanded,
+      listbox: listRef.current,
+      combobox: comboBoxRef.current,
+      option: focusedRef.current,
+    });
   }, [onLayoutListBox, expanded, focusedOption]);
 
   const optionsCheck = options.length ? options : null;

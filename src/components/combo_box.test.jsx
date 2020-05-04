@@ -3219,18 +3219,12 @@ describe('visuallyHiddenClassName', () => {
 describe('onLayoutListBox', () => {
   const options = ['Apple', 'Banana', 'Orange'];
 
-  it('is called when the component is rendered', () => {
+  it('is not called when the component is rendered', () => {
     const onLayoutListBox = jest.fn();
-    const { getByRole } = render(
+    render(
       <ComboBoxWrapper options={options} onLayoutListBox={onLayoutListBox} />,
     );
-    getByRole('combobox').focus();
-    expect(onLayoutListBox).toHaveBeenCalledWith({
-      expanded: false,
-      listbox: getByRole('listbox'),
-      combobox: getByRole('combobox'),
-      option: undefined,
-    });
+    expect(onLayoutListBox).not.toHaveBeenCalled();
   });
 
   it('is called when the listbox is displayed', () => {
@@ -3301,6 +3295,20 @@ describe('onLayoutListBox', () => {
       combobox: getByRole('combobox'),
       option: undefined,
     });
+  });
+
+  it('is not called while the listbox is closed', () => {
+    const propUpdater = new PropUpdater();
+    const onLayoutListBox = jest.fn();
+    render((
+      <ComboBoxWrapper
+        options={options}
+        onLayoutListBox={onLayoutListBox}
+        propUpdater={propUpdater}
+      />
+    ));
+    propUpdater.update((props) => ({ ...props, options: ['strawberry'] }));
+    expect(onLayoutListBox).not.toHaveBeenCalled();
   });
 });
 

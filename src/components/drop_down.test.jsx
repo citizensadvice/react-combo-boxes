@@ -1987,15 +1987,10 @@ describe('onLayoutListBox', () => {
 
   it('is called when the component is rendered', () => {
     const onLayoutListBox = jest.fn();
-    const { getByRole, getAllByRole } = render(
+    render(
       <DropDownWrapper options={options} onLayoutListBox={onLayoutListBox} />,
     );
-    expect(onLayoutListBox).toHaveBeenCalledWith({
-      expanded: false,
-      listbox: getByRole('listbox', { hidden: true }),
-      combobox: getByRole('combobox'),
-      option: getAllByRole('option', { hidden: true })[0],
-    });
+    expect(onLayoutListBox).not.toHaveBeenCalled();
   });
 
   it('is called when the listbox is displayed', () => {
@@ -2066,5 +2061,19 @@ describe('onLayoutListBox', () => {
       combobox: getByRole('combobox'),
       option: null,
     });
+  });
+
+  it('is not called while the listbox is closed', () => {
+    const propUpdater = new PropUpdater();
+    const onLayoutListBox = jest.fn();
+    render((
+      <DropDownWrapper
+        options={options}
+        onLayoutListBox={onLayoutListBox}
+        propUpdater={propUpdater}
+      />
+    ));
+    propUpdater.update((props) => ({ ...props, options: ['strawberry'] }));
+    expect(onLayoutListBox).not.toHaveBeenCalled();
   });
 });

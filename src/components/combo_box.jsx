@@ -166,10 +166,12 @@ export const ComboBox = forwardRef(({ placeholder, ...rawProps }, ref) => {
     };
   }, [busy, busyDebounce, busyTimeoutRef]);
 
+  const lastExpandedRef = useRef(showListBox);
   useLayoutEffect(() => {
-    if (!onLayoutListBox) {
+    if (!onLayoutListBox || (!showListBox && !lastExpandedRef.current)) {
       return;
     }
+    lastExpandedRef.current = showListBox;
     onLayoutListBox({
       listbox: listRef.current,
       combobox: inputRef.current,
