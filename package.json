@@ -6,11 +6,14 @@
   "author": "Daniel Lewis",
   "main": "cjs/index.js",
   "module": "es/index.js",
+  "files": [
+    "es/**/*",
+    "cjs/**/*",
+    "styles/**/*"
+  ],
   "scripts": {
     "build:cjs": "rm -rf cjs && babel src --out-dir cjs --source-maps",
     "build:es": "rm -rf es && BABEL_ENV=es babel src --out-dir es --source-maps",
-    "prepare": "npm run build:cjs && npm run build:es",
-    "install": "npm run prepare",
     "prebuild": "rm -rf dist",
     "build": "parcel build ./examples/index.pug",
     "start": "parcel ./examples/index.pug",
@@ -19,7 +22,11 @@
     "lint": "npm run lint:js && npm run lint:scss",
     "test": "jest",
     "predeploy": "npm run lint",
-    "deploy": "npm run build -- --public-url \"/react-combo-boxes/\" && gh-pages -d dist"
+    "deploy": "npm run build -- --public-url \"/react-combo-boxes/\" && gh-pages -d dist",
+    "version": "npm run lint",
+    "prepublishOnly": "npm run build:cjs && npm run build:es",
+    "postpublish": "npm run deploy",
+    "release": "np"
   },
   "devDependencies": {
     "@babel/core": "^7.8.7",
@@ -46,6 +53,7 @@
     "marked": "^0.8.2",
     "node-emoji": "^1.10.0",
     "normalize.css": "^8.0.1",
+    "np": "^6.2.3",
     "parcel-bundler": "^1.12.3",
     "parcel-plugin-bundle-visualiser": "^1.2.0",
     "postcss-modules": "^2.0.0",
@@ -68,5 +76,8 @@
     "@babel/cli": "^7.8.4",
     "shallow-equal": "^1.2.1"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "np": {
+    "yarn": false
+  }
 }
