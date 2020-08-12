@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
 import * as components from '**/*.jsx'; // eslint-disable-line import/no-unresolved, import/extensions
 
@@ -12,7 +12,9 @@ document.querySelectorAll('[data-react-example]').forEach((node) => {
   target = target.index;
 
   ReactDOM.render(
-    <target.Example />,
+    <StrictMode>
+      <target.Example />
+    </StrictMode>,
     node,
   );
 });
