@@ -238,7 +238,7 @@ describe('options', () => {
       it('sets the disabled attribute', () => {
         const options = [{ label: 'foo', disabled: true }];
         const { getAllByRole } = render(<SelectWrapper options={options} />);
-        expect(getAllByRole('option')[0]).toHaveAttribute('disabled', '');
+        expect(getAllByRole('option')[0]).toBeDisabled();
       });
     });
 
@@ -381,7 +381,7 @@ describe('additional props', () => {
     const { getByRole } = render(
       <SelectWrapper options={options} required data-foo="bar" />,
     );
-    expect(getByRole('combobox')).toHaveAttribute('required', '');
+    expect(getByRole('combobox')).toBeRequired();
     expect(getByRole('combobox')).toHaveAttribute('data-foo', 'bar');
   });
 });
