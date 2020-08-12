@@ -27,7 +27,7 @@ const ComboBoxWrapper = forwardRef(({ value: initialValue, propUpdater, ...props
 
 function expectToBeClosed(combobox) { // and focused
   expect(combobox).toHaveAttribute('role', 'combobox');
-  expect(document.activeElement).toEqual(combobox);
+  expect(combobox).toHaveFocus();
   const listbox = document.getElementById(combobox.getAttribute('aria-controls'));
   expect(listbox).toHaveAttribute('role', 'listbox');
   expect(listbox).not.toBeVisible();
@@ -57,7 +57,7 @@ function expectNotToHaveNotFoundMessage(combobox) {
 
 function expectToBeOpen(combobox) { // and focused with no selected or focused option
   expect(combobox).toHaveAttribute('role', 'combobox');
-  expect(document.activeElement).toEqual(combobox);
+  expect(combobox).toHaveFocus();
   const listbox = document.getElementById(combobox.getAttribute('aria-controls'));
   expect(listbox).toHaveAttribute('role', 'listbox');
   expect(listbox).toBeVisible();
@@ -77,7 +77,7 @@ function expectToHaveFocusedOption(combobox, option) {
   expect(listbox).toHaveAttribute('aria-activedescendant', option.id);
   expect(option).toHaveAttribute('role', 'option');
   expect(option).toHaveAttribute('aria-selected', 'true');
-  expect(document.activeElement).toEqual(option);
+  expect(option).toHaveFocus();
   expectNotToHaveNotFoundMessage(combobox);
 }
 
@@ -91,7 +91,7 @@ function expectToHaveSelectedOption(combobox, option) {
   expect(listbox).not.toHaveAttribute('aria-activedescendant');
   expect(option).toHaveAttribute('role', 'option');
   expect(option).toHaveAttribute('aria-selected', 'true');
-  expect(document.activeElement).toEqual(combobox);
+  expect(combobox).toHaveFocus();
   expectNotToHaveNotFoundMessage(combobox);
 }
 
@@ -473,7 +473,7 @@ describe('options', () => {
             await waitFor(() => {
               expect(getByRole('listbox', { hidden: true })).not.toBeVisible();
             });
-            expect(document.activeElement).toEqual(getByRole('textbox'));
+            expect(getByRole('textbox')).toHaveFocus();
           });
 
           it('updates the displayed value', async () => {
@@ -880,7 +880,7 @@ describe('options', () => {
               expect(getByRole('listbox', { hidden: true })).not.toBeVisible();
             });
             expect(spy).not.toHaveBeenCalled();
-            expect(document.activeElement).toEqual(getByRole('textbox'));
+            expect(getByRole('textbox')).toHaveFocus();
           });
         });
       });
@@ -1102,7 +1102,7 @@ describe('options', () => {
       fireEvent.keyDown(document.activeElement, { key: 'Enter' });
       expect(spy).toHaveBeenCalledWith(null);
       expectToBeClosed(getByRole('combobox'));
-      expect(document.activeElement).toEqual(getByRole('combobox'));
+      expect(getByRole('combobox')).toHaveFocus();
     });
   });
 
@@ -1124,7 +1124,7 @@ describe('options', () => {
       fireEvent.keyDown(document.activeElement, { key: 'Enter' });
       expect(spy).toHaveBeenCalledWith(undefined);
       expectToBeClosed(getByRole('combobox'));
-      expect(document.activeElement).toEqual(getByRole('combobox'));
+      expect(getByRole('combobox')).toHaveFocus();
     });
   });
 
@@ -1315,7 +1315,7 @@ describe('open button', () => {
     const open = document.getElementById('id_open_button');
     expect(open).toBeVisible();
     fireEvent.click(open, { button: 1 });
-    expect(document.activeElement).not.toEqual(getByRole('combobox'));
+    expect(getByRole('combobox')).not.toHaveFocus();
     expect(getByRole('listbox', { hidden: true })).not.toBeVisible();
   });
 
@@ -1655,7 +1655,7 @@ describe('managedFocus', () => {
       comboBox.focus();
       fireEvent.keyDown(comboBox, { key: 'ArrowDown' });
       fireEvent.keyDown(comboBox, { key: 'ArrowDown' });
-      expect(document.activeElement).toEqual(comboBox);
+      expect(comboBox).toHaveFocus();
       expect(comboBox).toHaveAttribute('aria-activedescendant', getAllByRole('option')[1].id);
       expect(getAllByRole('option')[1]).toHaveAttribute('aria-selected', 'true');
     });
@@ -1668,7 +1668,7 @@ describe('managedFocus', () => {
       comboBox.focus();
       fireEvent.keyDown(comboBox, { key: 'ArrowDown' });
       fireEvent.keyDown(comboBox, { key: 'Enter' });
-      expect(document.activeElement).toEqual(comboBox);
+      expect(comboBox).toHaveFocus();
       expectToBeClosed(getByRole('combobox'));
       expect(comboBox).toHaveValue('Apple');
     });
@@ -2727,7 +2727,7 @@ describe('onFocus', () => {
       userEvent.tab();
     });
     await waitFor(() => {
-      expect(document.activeElement).toEqual(getByRole('textbox'));
+      expect(getByRole('textbox')).toHaveFocus();
     });
     expect(spy).toHaveBeenCalledTimes(1);
   });

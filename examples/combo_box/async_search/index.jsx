@@ -16,7 +16,6 @@ async function search(term) {
   return searcher(term);
 }
 
-
 export function Example() {
   const [value, setValue] = useState(null);
   const [searchDebounce, setSearchDebounce] = useState(200);

@@ -130,7 +130,6 @@ export function Example() {
         </label>
       </fieldset>
 
-
       <label htmlFor="output">
         Current value
       </label>
