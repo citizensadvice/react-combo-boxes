@@ -40,12 +40,10 @@ function applyAutoselect(state, { type, ...params }, props) {
         break;
       }
 
-      const { inputRef: { current: { selectionStart } } } = props;
-
       return {
         ...state,
         focusedOption: suggestedOption,
-        inlineAutoselect: autoselect === 'inline' && selectionStart === search.length,
+        inlineAutoselect: autoselect === 'inline' && params.selectionStart === search.length,
       };
     }
     default:

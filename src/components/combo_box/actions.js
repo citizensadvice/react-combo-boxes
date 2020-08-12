@@ -10,8 +10,15 @@ export const SET_CLOSED = 'SET_CLOSED';
 export const SET_FOCUSED_OPTION = 'SET_FOCUSED_OPTION';
 export const SET_FOCUS_LIST_BOX = 'SET_FOCUS_LIST_BOX';
 
-function setFocusedOption({ focusedOption, focusListBox, autoselect, expanded }) {
-  return { type: SET_FOCUSED_OPTION, focusedOption, focusListBox, autoselect, expanded };
+function setFocusedOption({ focusedOption, focusListBox, autoselect, expanded, selectionStart }) {
+  return {
+    type: SET_FOCUSED_OPTION,
+    focusedOption,
+    focusListBox,
+    autoselect,
+    expanded,
+    selectionStart,
+  };
 }
 
 function onSelectValue(newValue, expanded = false) {
@@ -176,8 +183,8 @@ export function onChange(event) {
   return (dispatch, getState, getProps) => {
     const { focusedOption } = getState();
     const { onChange: passedOnChange, value } = getProps();
-    const { target: { value: search } } = event;
-    dispatch({ type: SET_SEARCH, search, autoselect: true });
+    const { target: { value: search, selectionStart } } = event;
+    dispatch({ type: SET_SEARCH, search, autoselect: true, selectionStart });
     if (!search && (focusedOption || value)) {
       dispatch(onSelectValue(null, true));
       return;
@@ -265,12 +272,13 @@ export function onOptionsChanged() {
     if (!expanded) {
       return;
     }
-    const { options } = getProps();
+    const { options, inputRef } = getProps();
     const newOption = options.find((o) => o.identity === focusedOption?.identity);
 
     dispatch(setFocusedOption({
       focusedOption: newOption,
       autoselect: true,
+      selectionStart: inputRef.current.selectionStart,
     }));
   };
 }
