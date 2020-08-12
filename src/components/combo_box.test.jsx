@@ -2057,16 +2057,17 @@ describe('autoselect', () => {
 
       it('does not select the text if the cursor position is inappropriate', async () => {
         const { getByRole } = render(
-          <ComboBoxWrapper options={['foo']} autoselect="inline" />,
+          <ComboBoxWrapper options={['abcd']} autoselect="inline" />,
         );
         getByRole('combobox').focus();
-        document.activeElement.value = 'f';
-        // JSDOM bug https://github.com/testing-library/user-event/issues/236
-        jest.spyOn(document.activeElement, 'selectionStart', 'get').mockImplementation(() => 1);
+        document.activeElement.value = 'ac';
+        document.activeElement.setSelectionRange(1, 1);
+        // can't use userEvent.type, as it always sets the selectionRange to the end of the input
+        jest.spyOn(document.activeElement, 'selectionStart', 'get').mockImplementation(() => 2);
         const spy = jest.spyOn(document.activeElement, 'setSelectionRange');
-        userEvent.type(document.activeElement, 'o');
+        fireEvent.change(document.activeElement, { target: { value: 'abc' } });
         expectToHaveSelectedOption(getByRole('combobox'), getByRole('option'));
-        expect(document.activeElement).toHaveValue('fo');
+        expect(document.activeElement).toHaveValue('abc');
         expect(spy).not.toHaveBeenCalled();
       });
 
@@ -2075,7 +2076,8 @@ describe('autoselect', () => {
           <ComboBoxWrapper options={['foo']} autoselect="inline" />,
         );
         getByRole('combobox').focus();
-        userEvent.type(document.activeElement, 'fo');
+        // can't use userEvent.type, as it ignores selection ranges
+        fireEvent.change(document.activeElement, { target: { value: 'fo' } });
         expect(document.activeElement).toHaveValue('foo');
         const spy = jest.spyOn(document.activeElement, 'setSelectionRange');
         fireEvent.keyDown(document.activeElement, { key: 'Backspace' });
@@ -2089,7 +2091,8 @@ describe('autoselect', () => {
           <ComboBoxWrapper options={['foo']} autoselect="inline" />,
         );
         getByRole('combobox').focus();
-        userEvent.type(document.activeElement, 'fo');
+        // can't use userEvent.type, as it ignores selection ranges
+        fireEvent.change(document.activeElement, { target: { value: 'fo' } });
         expect(document.activeElement).toHaveValue('foo');
         const spy = jest.spyOn(document.activeElement, 'setSelectionRange');
         fireEvent.keyDown(document.activeElement, { key: 'Delete' });
@@ -2103,7 +2106,8 @@ describe('autoselect', () => {
           <ComboBoxWrapper options={['foo']} autoselect="inline" />,
         );
         getByRole('combobox').focus();
-        userEvent.type(document.activeElement, 'fo');
+        // can't use userEvent.type, as it ignores selection ranges
+        fireEvent.change(document.activeElement, { target: { value: 'fo' } });
         expect(document.activeElement).toHaveValue('foo');
         const spy = jest.spyOn(document.activeElement, 'setSelectionRange');
         fireEvent.keyDown(document.activeElement, { key: 'Escape' });
@@ -2119,7 +2123,8 @@ describe('autoselect', () => {
             <ComboBoxWrapper options={['foo', 'foe']} autoselect="inline" showSelectedLabel />,
           );
           getByRole('combobox').focus();
-          userEvent.type(getByRole('combobox'), 'fo');
+          // can't use userEvent.type, as it ignores selection ranges
+          fireEvent.change(document.activeElement, { target: { value: 'fo' } });
           expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[0]);
 
           const spy = jest.spyOn(document.activeElement, 'setSelectionRange');
@@ -2135,7 +2140,8 @@ describe('autoselect', () => {
               <ComboBoxWrapper options={['foo', 'foe']} autoselect="inline" showSelectedLabel />,
             );
             getByRole('combobox').focus();
-            userEvent.type(getByRole('combobox'), 'fo');
+            // can't use userEvent.type, as it ignores selection ranges
+            fireEvent.change(document.activeElement, { target: { value: 'fo' } });
             expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[0]);
 
             const spy = jest.spyOn(document.activeElement, 'setSelectionRange');
@@ -2154,7 +2160,8 @@ describe('autoselect', () => {
             <ComboBoxWrapper options={['foo', 'foe']} autoselect="inline" showSelectedLabel={false} />,
           );
           getByRole('combobox').focus();
-          userEvent.type(getByRole('combobox'), 'fo');
+          // can't use userEvent.type, as it ignores selection ranges
+          fireEvent.change(document.activeElement, { target: { value: 'fo' } });
           expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[0]);
 
           const spy = jest.spyOn(document.activeElement, 'setSelectionRange');
@@ -2172,7 +2179,8 @@ describe('autoselect', () => {
           <ComboBoxWrapper options={['foo', 'foe']} autoselect="inline" />,
         );
         getByRole('combobox').focus();
-        userEvent.type(getByRole('combobox'), 'fo');
+        // can't use userEvent.type, as it ignores selection ranges
+        fireEvent.change(document.activeElement, { target: { value: 'fo' } });
         expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[0]);
 
         const spy = jest.spyOn(document.activeElement, 'setSelectionRange');
@@ -2190,7 +2198,8 @@ describe('autoselect', () => {
           </>
         ));
         getByRole('combobox').focus();
-        userEvent.type(getByRole('combobox'), 'fo');
+        // can't use userEvent.type, as it ignores selection ranges
+        fireEvent.change(document.activeElement, { target: { value: 'fo' } });
         expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[0]);
 
         const spy = jest.spyOn(document.activeElement, 'setSelectionRange');
@@ -2318,7 +2327,8 @@ describe('tabAutocomplete', () => {
           <ComboBoxWrapper options={['foo', 'foe']} autoselect="inline" tabAutocomplete onValue={spy} />
         ));
         getByRole('combobox').focus();
-        await userEvent.type(document.activeElement, 'fo');
+        // can't use userEvent.type, as it ignores selection ranges
+        fireEvent.change(document.activeElement, { target: { value: 'fo' } });
         fireEvent.keyDown(document.activeElement, { key: 'Tab' });
         expect(spy).toHaveBeenCalledWith('foo');
       });
