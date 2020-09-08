@@ -85,7 +85,8 @@ export const ComboBox = forwardRef(({ placeholder, ...rawProps }, ref) => {
     if (onSearch) {
       onSearch(searchValue);
     }
-  }, [onSearch, searchValue, mounted]);
+    // Prevent infinite loop - onSearch can update with each render
+  }, [searchValue, mounted]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const inputLabel = useMemo(() => {
     if (inlineAutoselect
