@@ -1,0 +1,8 @@
+extends layout.pug
+
+block variables
+  - const title = 'Test helper'
+  - const path = '~/test_helper.pug'
+
+block main
+  include:markdown ../docs/test_helper.md
