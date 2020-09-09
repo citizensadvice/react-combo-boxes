@@ -37,6 +37,7 @@ export function Example() {
         showSelectedLabel
         managedFocus={false}
         expandOnFocus={false}
+        OpenButtonComponent={() => null}
         ClearButtonComponent={() => null}
         ValueComponent={TokenHighlight}
         valueProps={{ inverse: true }}
