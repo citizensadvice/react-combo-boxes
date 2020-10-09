@@ -5,7 +5,7 @@ The test helper `select_combo_box_options` is provided.
 This requires `@testing-libaray/react`;
 
 ```js
-import { selectComboBoxOption } from '@citizensadvice/react-combo-boxes';
+import { selectComboBoxOption } from '@citizensadvice/react-combo-boxes/spec-helpers';
 
 describe('a test', () => {
   it('helps select a combo box option', async () => {

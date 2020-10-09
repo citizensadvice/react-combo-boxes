@@ -6,6 +6,10 @@
   "author": "Daniel Lewis",
   "main": "cjs/index.js",
   "module": "es/index.js",
+  "exports": {
+    ".": "es/index.js",
+    "./spec-helpers": "es/spec_helpers"
+  },
   "files": [
     "es/**/*",
     "cjs/**/*",
