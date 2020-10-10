@@ -1414,7 +1414,7 @@ describe('id', () => {
     { label: 'Orange', group: 'Citrus' },
   ];
 
-  it('it prefixes all ids', () => {
+  it('prefixes all ids', () => {
     const { container, getByRole, getAllByRole } = render(
       <DropDownWrapper options={options} id="foo" />,
     );
@@ -1455,7 +1455,7 @@ describe('disabled', () => {
   });
 
   describe('when true', () => {
-    it('it sets aria-disabled on the combobox', () => {
+    it('sets aria-disabled on the combobox', () => {
       const { getByRole } = render(
         <DropDownWrapper options={['one', 'two']} disabled />,
       );
