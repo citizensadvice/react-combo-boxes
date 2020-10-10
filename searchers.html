@@ -2,7 +2,7 @@
 <p>The combo box will call an <code>onSearch</code> event when the user types a search term.
 The application should use this to filter the options provided to the combo box.</p>
 <p>You can handle this yourself and maintain a centralised state, or some hooks have been provided.</p>
-<h2 id="usesearchsearcher--initialoptions-debounce-minlength-maxresults-"><code>useSearch(searcher, { initialOptions, debounce, minLength, maxResults })</code></h2>
+<h2 id="usesearchsearcher--initialoptions-debounce-minlength-emptyoptions-"><code>useSearch(searcher, { initialOptions, debounce, minLength, emptyOptions })</code></h2>
 <pre><code class="language-javascript"><span class="token keyword">function</span> <span class="token keyword">async</span> <span class="token function">search</span><span class="token punctuation">(</span><span class="token parameter">term</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
   <span class="token keyword">const</span> url <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">URL</span><span class="token punctuation">(</span>endpoint<span class="token punctuation">)</span><span class="token punctuation">;</span>
   url<span class="token punctuation">.</span>searchParams<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">'query'</span><span class="token punctuation">,</span> term<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -11,9 +11,9 @@ The application should use this to filter the options provided to the combo box.
 <span class="token punctuation">}</span>
 
 <span class="token keyword">const</span> <span class="token punctuation">[</span>filteredOptions<span class="token punctuation">,</span> onSearch<span class="token punctuation">,</span> busy<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">useSearch</span><span class="token punctuation">(</span>fn<span class="token punctuation">,</span> <span class="token punctuation">{</span> initialOptions<span class="token punctuation">,</span> debounce<span class="token punctuation">,</span> minLength <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<p>Use a custom search function. <code>async function (search: String): Array&lt;Object&gt;</code>.
-The search function can be an async function. It should return an array
-of search results. It can also return <code>null</code> which will keep the current set of results.</p>
+<p>Use a custom search function. <code>async function (search: String): any</code>.
+The search function can be an async function. Usually it will return an array of results, but
+it can return anything. It can also return <code>null</code> which will keep the current set of results.</p>
 <p>This will set <code>busy</code> to true while searching, optionally can debounce search results, and prevents out-of-sync async returns
 from overwriting the results.</p>
 <ul>
@@ -21,7 +21,6 @@ from overwriting the results.</p>
 <li><code>emptyOptions</code> (<code>Array</code>) Options to show if there is no search term</li>
 <li><code>debounce</code> (<code>Number</code>) milliseconds to debounce the search </li>
 <li><code>minLength</code> (<code>Number</code>) minimum number of characters to supply to make a search.</li>
-<li><code>maxResults</code> (<code>Number</code>) limit the maximum results returned</li>
 </ul>
 <h2 id="usetokensearchoptions--index-tokenise-minlength-maxresults-"><code>useTokenSearch(options, { index, tokenise, minLength, maxResults })</code></h2>
 <pre><code class="language-javascript"><span class="token keyword">const</span> <span class="token punctuation">[</span>filteredOptions<span class="token punctuation">,</span> onSearch<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">useTokenSearch</span><span class="token punctuation">(</span>options<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
@@ -35,4 +34,4 @@ Customise this by providing an index function with the signature <code>function 
 <p>Searches an array of options for a matching prefix. This will find options starting with the search term.</p>
 <p>By default it will search either strings, or <code>label</code> property if the options are objects.
 Customise this by providing an index function with the signature <code>function (option: Object): String</code>.</p>
-</main><script src="/react-combo-boxes/render.be5c9c52.js"></script></body></html>
+</main><script src="/react-combo-boxes/render.657d6ae2.js"></script></body></html>
