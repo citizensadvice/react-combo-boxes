@@ -2135,7 +2135,7 @@ describe('autoselect', () => {
         });
 
         describe('when returning to the original option', () => {
-          it('it sets the search string without selecting the text', () => {
+          it('sets the search string without selecting the text', () => {
             const { getByRole, getAllByRole } = render(
               <ComboBoxWrapper options={['foo', 'foe']} autoselect="inline" showSelectedLabel />,
             );
@@ -2559,7 +2559,7 @@ describe('id', () => {
     { label: 'Orange', group: 'Citrus' },
   ];
 
-  it('it prefixes all ids', () => {
+  it('prefixes all ids', () => {
     const { container, getByRole, getAllByRole } = render(
       <ComboBoxWrapper options={options} id="foo" />,
     );
@@ -2752,36 +2752,28 @@ describe('aria-describedby', () => {
   });
 });
 
-['disabled', 'readOnly', 'required'].forEach((name) => {
-  describe(name, () => {
-    it('is added to the input', () => {
-      const props = { [name]: true };
-      const { getByRole } = render((
-        <ComboBoxWrapper options={['foo']} {...props} />
-      ));
-      expect(getByRole('combobox')).toHaveAttribute(name);
-    });
-  });
+it.each(['disabled', 'readOnly', 'required'])('%i is added to input', (name) => {
+  const props = { [name]: true };
+  const { getByRole } = render((
+    <ComboBoxWrapper options={['foo']} {...props} />
+  ));
+  expect(getByRole('combobox')).toHaveAttribute(name);
 });
 
-[
+it.each([
   'autoComplete', 'autoCapitalize', 'autoCorrect', 'inputMode',
   'maxLength', 'minLength', 'pattern', 'placeholder',
   'spellCheck',
-].forEach((name) => {
-  describe(name, () => {
-    it('is added to the input', () => {
-      const props = { [name]: 'foo' };
-      const { getByRole } = render((
-        <ComboBoxWrapper options={['foo']} {...props} />
-      ));
-      expect(getByRole('combobox')).toHaveAttribute(name, 'foo');
-    });
-  });
+])('%i is added to input', (name) => {
+  const props = { [name]: 'foo' };
+  const { getByRole } = render((
+    <ComboBoxWrapper options={['foo']} {...props} />
+  ));
+  expect(getByRole('combobox')).toHaveAttribute(name, 'foo');
 });
 
 describe('autoFocus', () => {
-  it('it focuses the input', () => {
+  it('focuses the input', () => {
     const { getByRole } = render((
       <ComboBoxWrapper options={['foo']} autoFocus />
     ));

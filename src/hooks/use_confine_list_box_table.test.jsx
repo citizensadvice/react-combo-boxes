@@ -2,6 +2,8 @@ import React from 'react';
 import { render, act } from '@testing-library/react';
 import { useConfineListBoxTable } from './use_confine_list_box_table';
 
+/* eslint-disable jest-dom/prefer-to-have-style */
+
 function Test({ selector, out }) {
   const [style, onLayoutListBox] = useConfineListBoxTable(selector);
 
