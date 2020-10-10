@@ -1,12 +1,14 @@
 import { useCallback, useReducer, useRef, useEffect } from 'react';
 
+const defaultOptions = Object.freeze([]);
+
 export function useSearch(
   fn,
-  { initialOptions, debounce, minLength, maxResults, emptyOptions } = {},
+  { initialOptions, debounce, minLength, emptyOptions } = {},
 ) {
   const [{ options, busy }, dispatch] = useReducer(
     (state, action) => ({ ...state, ...action }),
-    { options: initialOptions?.slice(0, maxResults) || [], busy: false },
+    { options: initialOptions || defaultOptions, busy: false },
   );
 
   const lastSearchRef = useRef();
@@ -24,13 +26,13 @@ export function useSearch(
       dispatch({ busy: null });
       return;
     }
-    dispatch({ options: results.slice(0, maxResults), busy: false });
-  }, [fn, maxResults]);
+    dispatch({ options: results, busy: false });
+  }, [fn]);
 
   const onSearch = useCallback((query) => {
     lastSearchRef.current = {};
     if (!query.trim() && emptyOptions) {
-      dispatch({ busy: false, options: emptyOptions.slice(0, maxResults) });
+      dispatch({ busy: false, options: emptyOptions });
       return;
     }
     if (minLength && query.trim().length < minLength) {
@@ -47,7 +49,7 @@ export function useSearch(
     } else {
       search(query, lastSearchRef.current);
     }
-  }, [search, debounce, minLength, emptyOptions, maxResults]);
+  }, [search, debounce, minLength, emptyOptions]);
 
   useEffect(() => () => {
     unmountedRef.current = true;

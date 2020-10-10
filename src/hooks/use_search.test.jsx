@@ -391,37 +391,6 @@ describe('debounce', () => {
   });
 });
 
-describe('maxResults', () => {
-  it('does not return more initialOptions than maxResults', () => {
-    const spy = jest.fn();
-    const fn = jest.fn(() => ['foo']);
-    render((
-      <TestSearch initialOptions={['foo', 'bar', 'foe']} fn={fn} onUpdate={spy} maxResults={2} />
-    ));
-    expect(spy).toHaveBeenCalledWith(
-      ['foo', 'bar'],
-      expect.any(Function),
-      false,
-    );
-  });
-
-  it('does not return more found options than maxResults', async () => {
-    const spy = jest.fn();
-    const fn = jest.fn(() => ['foo', 'bar', 'foe']);
-    render((
-      <TestSearch fn={fn} onUpdate={spy} maxResults={2} />
-    ));
-    await act(async () => {
-      spy.mock.calls[0][1]('ba');
-    });
-    expect(spy).toHaveBeenCalledWith(
-      ['foo', 'bar'],
-      expect.any(Function),
-      false,
-    );
-  });
-});
-
 describe('emptyOptions', () => {
   it('does not return emptyOptions as initialOptions', () => {
     const spy = jest.fn();

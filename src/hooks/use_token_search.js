@@ -4,7 +4,7 @@ import { useSearch } from './use_search';
 
 export function useTokenSearch(
   options,
-  { index, tokenise, minLength, ...more } = {},
+  { index, tokenise, minLength, maxResults, ...more } = {},
 ) {
   const search = useMemo(() => (
     tokenSearcher(options, { index, tokenise })
@@ -15,5 +15,9 @@ export function useTokenSearch(
     search,
     { initialOptions, minLength, ...more },
   );
-  return [filteredOptions, onSearch, busy];
+  return [
+    maxResults ? filteredOptions?.slice(0, maxResults) : filteredOptions,
+    onSearch,
+    busy,
+  ];
 }

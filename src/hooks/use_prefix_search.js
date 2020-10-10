@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { prefixSearcher } from '../searchers/prefix_searcher';
 import { useSearch } from './use_search';
 
-export function usePrefixSearch(options, { index, minLength, ...more } = {}) {
+export function usePrefixSearch(options, { index, minLength, maxResults, ...more } = {}) {
   const search = useMemo(() => (
     prefixSearcher(options, { index })
   ), [options, index]);
@@ -12,5 +12,9 @@ export function usePrefixSearch(options, { index, minLength, ...more } = {}) {
     search,
     { initialOptions, minLength, ...more },
   );
-  return [filteredOptions, onSearch, busy];
+  return [
+    maxResults ? filteredOptions?.slice(0, maxResults) : filteredOptions,
+    onSearch,
+    busy,
+  ];
 }
