@@ -5,7 +5,7 @@ The application should use this to filter the options provided to the combo box.
 
 You can handle this yourself and maintain a centralised state, or some hooks have been provided.
 
-## `useSearch(searcher, { initialOptions, debounce, minLength, maxResults })`
+## `useSearch(searcher, { initialOptions, debounce, minLength, emptyOptions })`
 
 ```javascript
 function async search(term) {
@@ -18,9 +18,9 @@ function async search(term) {
 const [filteredOptions, onSearch, busy] = useSearch(fn, { initialOptions, debounce, minLength });
 ```
 
-Use a custom search function.  `async function (search: String): Array<Object>`.
-The search function can be an async function.  It should return an array
-of search results.  It can also return `null` which will keep the current set of results.
+Use a custom search function.  `async function (search: String): any`.
+The search function can be an async function.  Usually it will return an array of results, but
+it can return anything.  It can also return `null` which will keep the current set of results.
 
 This will set `busy` to true while searching, optionally can debounce search results, and prevents out-of-sync async returns
 from overwriting the results.
@@ -29,7 +29,6 @@ from overwriting the results.
 - `emptyOptions` (`Array`) Options to show if there is no search term
 - `debounce` (`Number`) milliseconds to debounce the search 
 - `minLength` (`Number`) minimum number of characters to supply to make a search.
-- `maxResults` (`Number`) limit the maximum results returned
 
 ## `useTokenSearch(options, { index, tokenise, minLength, maxResults })`
 
