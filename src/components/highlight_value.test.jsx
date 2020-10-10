@@ -14,7 +14,7 @@ it('calls highlight with a search', () => {
     </Context.Provider>
   ));
 
-  expect(spy).toHaveBeenCalledWith('foo', 'foo', { search: 'foo', test: 'bar', props: {} }, { foe: 'fee' });
+  expect(spy).toHaveBeenCalledWith('foo', 'foo', { foe: 'fee' });
 });
 
 it('calls highlight with a value', () => {
@@ -31,11 +31,20 @@ it('calls highlight with a value', () => {
   expect(spy).toHaveBeenCalledWith(
     'foo',
     'foo',
-    {
-      search: '',
-      test: 'bar',
-      props: { value: { label: 'foo' } },
-    },
     { foe: 'fee' },
   );
+});
+
+it('calls highlight with a custom search', () => {
+  const spy = jest.fn(() => []);
+
+  render((
+    <Context.Provider value={{ search: 'foo', props: {}, test: 'bar' }}>
+      <HighlightValue highlight={spy} foe="fee" search="fee">
+        foo
+      </HighlightValue>
+    </Context.Provider>
+  ));
+
+  expect(spy).toHaveBeenCalledWith('foo', 'fee', { foe: 'fee' });
 });

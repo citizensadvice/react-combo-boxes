@@ -1,6 +1,6 @@
 import { normaliseHighlight } from '../helpers/normalise_highlight';
 
-export function preHighlighter(term, label, context, { start, end } = {}) {
+export function preHighlighter(term, label, { start, end } = {}) {
   if (!term) {
     return [''];
   }
