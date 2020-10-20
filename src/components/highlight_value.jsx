@@ -3,12 +3,30 @@ import PropTypes from 'prop-types';
 import { Highlight } from './highlight';
 import { Context } from '../context';
 
+function emptyHighlight(highlight) {
+  return !highlight.length || (highlight.length === 1 && typeof highlight[0] === 'string');
+}
+
 export function HighlightValue({ children: value, highlight, inverse, search: _search, ...props }) {
-  const { search, props: { value: _value } } = useContext(Context);
+  const { search, props: { value: _value, visuallyHiddenClassName } } = useContext(Context);
+  const highlighted = highlight(value ?? '', _search ?? (search || _value?.label), props);
+
+  if (emptyHighlight(highlighted)) {
+    return highlighted.join('');
+  }
+
+  // Accessible naming treats inline elements as block and adds additional white space
   return (
-    <Highlight inverse={inverse}>
-      {highlight(value ?? '', _search ?? (search || _value?.label), props)}
-    </Highlight>
+    <>
+      <span className={visuallyHiddenClassName}>
+        {value}
+      </span>
+      <span aria-hidden="true">
+        <Highlight inverse={inverse}>
+          {highlighted}
+        </Highlight>
+      </span>
+    </>
   );
 }
 

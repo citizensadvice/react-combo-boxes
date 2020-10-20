@@ -5,7 +5,7 @@ import { Context } from '../../context';
 
 function TestHighlight({ children, inverse, value, ...props }) {
   return (
-    <Context.Provider value={{ ...props, props: { value } }}>
+    <Context.Provider value={{ ...props, props: { value, visuallyHiddenClassName: 'sr-only' } }}>
       <PrefixHighlight inverse={inverse}>
         {children}
       </PrefixHighlight>
@@ -48,7 +48,7 @@ it('highlights the first prefix', () => {
     </TestHighlight>
   ));
 
-  expect(container).toContainHTML('<div><mark>bar</mark> foo bar</div>');
+  expect(container).toMatchSnapshot();
 });
 
 it('highlights existing value', () => {
@@ -58,7 +58,7 @@ it('highlights existing value', () => {
     </TestHighlight>
   ));
 
-  expect(container).toContainHTML('<div><mark>bar</mark> foo bar</div>');
+  expect(container).toMatchSnapshot();
 });
 
 it('inverses the highlight', () => {
@@ -68,5 +68,5 @@ it('inverses the highlight', () => {
     </TestHighlight>
   ));
 
-  expect(container).toContainHTML('<div>bar<mark> foo bar</mark></div>');
+  expect(container).toMatchSnapshot();
 });

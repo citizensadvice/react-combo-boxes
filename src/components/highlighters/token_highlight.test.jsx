@@ -5,7 +5,7 @@ import { Context } from '../../context';
 
 function TestHighlight({ children, value, inverse, ...props }) {
   return (
-    <Context.Provider value={{ ...props, props: { value } }}>
+    <Context.Provider value={{ ...props, props: { value, visuallyHiddenClassName: 'sr-only' } }}>
       <TokenHighlight inverse={inverse}>
         {children}
       </TokenHighlight>
@@ -48,7 +48,7 @@ it('highlights all tokens', () => {
     </TestHighlight>
   ));
 
-  expect(container).toContainHTML('<div>foo <mark>bar</mark> foo <mark>bar</mark></div>');
+  expect(container).toMatchSnapshot();
 });
 
 it('highlights the start of tokens', () => {
@@ -58,7 +58,7 @@ it('highlights the start of tokens', () => {
     </TestHighlight>
   ));
 
-  expect(container).toContainHTML('<div>"<mark>bar</mark>foo"');
+  expect(container).toMatchSnapshot();
 });
 
 it('highlights existing value', () => {
@@ -68,7 +68,7 @@ it('highlights existing value', () => {
     </TestHighlight>
   ));
 
-  expect(container).toContainHTML('<div>foo <mark>bar</mark> foo <mark>bar</mark></div>');
+  expect(container).toMatchSnapshot();
 });
 
 it('inverses the highlight', () => {
@@ -78,5 +78,5 @@ it('inverses the highlight', () => {
     </TestHighlight>
   ));
 
-  expect(container).toContainHTML('<div><mark>foo </mark>bar<mark> foo </mark>bar</div>');
+  expect(container).toMatchSnapshot();
 });
