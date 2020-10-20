@@ -5,7 +5,7 @@ import { Context } from '../../context';
 
 function TestHighlight({ children, value, inverse, ...props }) {
   return (
-    <Context.Provider value={{ ...props, props: { value } }}>
+    <Context.Provider value={{ ...props, props: { value, visuallyHiddenClassName: 'sr-only' } }}>
       <SubstringHighlight inverse={inverse}>
         {children}
       </SubstringHighlight>
@@ -48,7 +48,7 @@ it('highlights a substring', () => {
     </TestHighlight>
   ));
 
-  expect(container).toContainHTML('<div>foo <mark>bar</mark> foo bar</div>');
+  expect(container).toMatchSnapshot();
 });
 
 it('highlights an existing value substring', () => {
@@ -58,7 +58,7 @@ it('highlights an existing value substring', () => {
     </TestHighlight>
   ));
 
-  expect(container).toContainHTML('<div>foo <mark>bar</mark> foo bar</div>');
+  expect(container).toMatchSnapshot();
 });
 
 it('inverses the highlight', () => {
@@ -68,5 +68,5 @@ it('inverses the highlight', () => {
     </TestHighlight>
   ));
 
-  expect(container).toContainHTML('<div><mark>foo </mark>bar<mark> foo bar</mark></div>');
+  expect(container).toMatchSnapshot();
 });
