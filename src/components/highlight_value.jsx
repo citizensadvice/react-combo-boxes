@@ -19,7 +19,7 @@ export function HighlightValue({ children: value, highlight, inverse, search: _s
   return (
     <>
       <span className={visuallyHiddenClassName}>
-        {value}
+        {highlighted.join('')}
       </span>
       <span aria-hidden="true">
         <Highlight inverse={inverse}>
