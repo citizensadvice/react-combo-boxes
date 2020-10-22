@@ -56,7 +56,7 @@ export const ListBoxTable = forwardRef(({ focusedRef, hidden, onSelectOption, ..
         </colgroup>
         {columns.some(({ label }) => label) && (
           <thead role="presentation">
-            <tr>
+            <tr role="presentation">
               {columns.map(({ name, label }) => (
                 <th
                   aria-hidden="true"

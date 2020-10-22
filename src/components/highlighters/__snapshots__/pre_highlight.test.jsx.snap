@@ -5,7 +5,7 @@ exports[`converts <em> in html strings to a highlight 1`] = `
   <span
     class="sr-only"
   >
-    foo &lt;em&gt;bar&lt;/em&gt; &lt;em&gt;foe&lt;/em&gt;
+    foo bar foe
   </span>
   <span
     aria-hidden="true"
@@ -27,7 +27,7 @@ exports[`inverses the highlight 1`] = `
   <span
     class="sr-only"
   >
-    foo &lt;em&gt;bar&lt;/em&gt; &lt;em&gt;foe&lt;/em&gt;
+    foo bar foe
   </span>
   <span
     aria-hidden="true"

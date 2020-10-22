@@ -185,7 +185,9 @@ exports[`used with a combo box columns with headers renders a table with headers
         <thead
           role="presentation"
         >
-          <tr>
+          <tr
+            role="presentation"
+          >
             <th
               aria-hidden="true"
               class="react-combo-boxes-listbox__table-header"
