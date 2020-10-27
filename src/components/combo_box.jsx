@@ -13,6 +13,7 @@ import { useOnBlur } from '../hooks/use_on_blur';
 import { useMounted } from '../hooks/use_mounted';
 import { joinTokens } from '../helpers/join_tokens';
 import { componentValidator } from '../validators/component_validator';
+import { stringOrArray } from '../validators/string_or_array';
 import { findOption } from '../helpers/find_option';
 import { useCombineRefs } from '../hooks/use_combine_refs';
 import { allowProps } from '../helpers/allow_props';
@@ -29,8 +30,8 @@ const allowAttributes = [
 export const ComboBox = forwardRef(({ placeholder, ...rawProps }, ref) => {
   const optionisedProps = { ...useNormalisedOptions(rawProps), placeholder };
   const {
-    'aria-describedby': ariaDescribedBy, busyDebounce,
-    options, value, selectedOption, id, className,
+    'aria-describedby': ariaDescribedBy, 'aria-labelledby': ariaLabelledBy,
+    busyDebounce, options, value, selectedOption, id, className,
     notFoundMessage, onLayoutListBox, managedFocus, busy, onSearch,
     autoselect, showSelectedLabel,
     onBlur: passedOnBlur, onFocus: passedOnFocus,
@@ -225,6 +226,7 @@ export const ComboBox = forwardRef(({ placeholder, ...rawProps }, ref) => {
           onMouseUp={(e) => dispatch(onInputMouseUp(e))}
           onFocus={(e) => dispatch(onFocusInput(e))}
           aria-describedby={joinTokens(showNotFound && `${id}_not_found`, `${id}_found_description`, ariaDescribedBy)}
+          aria-labelledby={joinTokens(ariaLabelledBy)}
           ref={combinedRef}
           tabIndex={managedFocus && showListBox && focusListBox ? -1 : null}
           {...allowProps(optionisedProps, ...allowAttributes)}
@@ -254,6 +256,7 @@ export const ComboBox = forwardRef(({ placeholder, ...rawProps }, ref) => {
           tabIndex={-1}
           hidden={!showListBox}
           aria-activedescendant={(showListBox && focusListBox && focusedOption?.key) || null}
+          aria-labelledby={joinTokens(ariaLabelledBy)}
           onKeyDown={(e) => dispatch(onKeyDown(e))}
           onSelectOption={clickOption}
           focusedRef={focusedRef}
@@ -288,10 +291,8 @@ ComboBox.propTypes = {
   busy: PropTypes.oneOf([false, true, null]),
   busyDebounce: PropTypes.number,
 
-  'aria-describedby': PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.arrayOf(PropTypes.string),
-  ]),
+  'aria-describedby': stringOrArray,
+  'aria-labelledby': stringOrArray.isRequired,
   className: PropTypes.string,
   id: PropTypes.string.isRequired,
   placeholder: PropTypes.string,

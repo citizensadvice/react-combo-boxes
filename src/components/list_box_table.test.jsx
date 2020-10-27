@@ -8,7 +8,14 @@ import { Context } from '../context';
 const ComboBoxWrapper = forwardRef(({ value: initialValue, ...props }, ref) => {
   const [value, onValue] = useState(initialValue);
   return (
-    <ComboBox id="id" value={value} onValue={onValue} {...props} ref={ref} />
+    <ComboBox
+      id="id"
+      aria-labelledby="id-label"
+      value={value}
+      onValue={onValue}
+      {...props}
+      ref={ref}
+    />
   );
 });
 

@@ -62,11 +62,15 @@ export function Example() {
 
   return (
     <>
-      <label htmlFor="select">
+      <label
+        id="select-label"
+        htmlFor="select"
+      >
         Select
       </label>
       <ComboBox
         id="select"
+        aria-labelledby="select-label"
         value={value}
         size={100}
         onChange={({ target: { value: _value } }) => setValue(_value)}
