@@ -14,7 +14,15 @@ You may also consider using a native <code>&lt;datalist&gt;</code> for this.</p>
 <pre><code class="language-js"><span class="token keyword">const</span> <span class="token punctuation">[</span>value<span class="token punctuation">,</span> setValue<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">useState</span><span class="token punctuation">(</span>initialValue<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token keyword">const</span> <span class="token punctuation">[</span>onSearch<span class="token punctuation">,</span> filteredOptions<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">useTokenSearch</span><span class="token punctuation">(</span>options<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
+<span class="token operator">&lt;</span>label
+  id<span class="token operator">=</span><span class="token string">"id-label"</span>
+  htmlFor<span class="token operator">=</span><span class="token string">"id"</span>
+<span class="token operator">></span>
+  Label
+<span class="token operator">&lt;</span><span class="token operator">/</span>label<span class="token operator">></span>
 <span class="token operator">&lt;</span>ComboBox
+  id<span class="token operator">=</span><span class="token string">"id"</span>
+  aria<span class="token operator">-</span>labelledby<span class="token operator">=</span><span class="token string">"id-label"</span>
   options<span class="token operator">=</span><span class="token punctuation">{</span>filterOptions<span class="token punctuation">}</span>
   value<span class="token operator">=</span><span class="token punctuation">{</span>value<span class="token punctuation">}</span>
   onValue<span class="token operator">=</span><span class="token punctuation">{</span>setValue<span class="token punctuation">}</span>
@@ -58,12 +66,17 @@ You may also consider using a native <code>&lt;datalist&gt;</code> for this.</p>
 </tr>
 <tr>
 <td><code>aria-describedby</code></td>
-<td><code>string</code></td>
+<td><code>String</code> or <code>String[]</code></td>
 <td>Ids of elements describing the <code>&lt;input&gt;</code></td>
 </tr>
 <tr>
+<td><code>aria-labelledby</code></td>
+<td><code>String</code> or <code>String[]</code></td>
+<td>Ids of elements labelling the <code>&lt;input&gt;</code> and list box</td>
+</tr>
+<tr>
 <td><code>className</code></td>
-<td><code>string</code></td>
+<td><code>String</code></td>
 <td>Class name of the wrapper</td>
 </tr>
 <tr>
@@ -223,4 +236,4 @@ If false, the list box will always show the current search string.</p>
 <h3 id="tabautocomplete-boolean"><code>tabAutocomplete</code> (<code>Boolean</code>)</h3>
 <p>If true pressing tab will select the suggested option. If false, pressing tab will behave normally and
 move the focus to the next control.</p>
-</main><script src="/react-combo-boxes/render.25ac162b.js"></script></body></html>
+</main><script src="/react-combo-boxes/render.30d523d4.js"></script></body></html>

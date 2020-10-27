@@ -8,18 +8,18 @@ design pattern.</p>
 <p>There are significant differences between the way a <code>&lt;select&gt;</code> is represented with and interacted with
 on different devices and in different operating systems. This control has to take a single approach and
 may confuse some users.</p>
-<p>It is also more cumbersome to add a label to this component. The native <code>&lt;label&gt;</code> element <em>will not work</em>.
-Instead you will need to do the following:</p>
-<pre><code class="language-js"><span class="token operator">&lt;</span>div id<span class="token operator">=</span><span class="token string">"label-id"</span><span class="token operator">></span>My label<span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
-<span class="token operator">&lt;</span>DropDown
- aria<span class="token operator">-</span>labelledby<span class="token operator">=</span><span class="token string">"label-id"</span>
- <span class="token punctuation">{</span><span class="token operator">...</span>moreProps<span class="token punctuation">}</span>
-<span class="token operator">&lt;</span><span class="token operator">/</span>DropDown<span class="token operator">></span></code></pre>
 </blockquote>
 <h2 id="usage">Usage</h2>
 <pre><code class="language-js"><span class="token keyword">const</span> <span class="token punctuation">[</span>value<span class="token punctuation">,</span> setValue<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">useState</span><span class="token punctuation">(</span>initialValue<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
+<span class="token operator">&lt;</span>label
+  id<span class="token operator">=</span><span class="token string">"id-label"</span>
+<span class="token operator">></span>
+  Label
+<span class="token operator">&lt;</span><span class="token operator">/</span>label<span class="token operator">></span>
 <span class="token operator">&lt;</span>DropDown
+  id<span class="token operator">=</span><span class="token string">"id"</span>
+  aria<span class="token operator">-</span>labelledby<span class="token operator">=</span><span class="token string">"id-label"</span>
   options<span class="token operator">=</span><span class="token punctuation">{</span>options<span class="token punctuation">}</span>
   value<span class="token operator">=</span><span class="token punctuation">{</span>value<span class="token punctuation">}</span>
   onValue<span class="token operator">=</span><span class="token punctuation">{</span>setValue<span class="token punctuation">}</span>
@@ -172,4 +172,4 @@ Return true if an option matching the search string is found.</p>
 <p>This is called when the list box is displayed or the options change.</p>
 <p>It has the signature <code>Function (expanded: Boolean, listbox: Element, combobox: Element, option: Element)</code></p>
 <p>See <a href="/react-combo-boxes/on_layout_list_box.html">onLayoutListBox</a></p>
-</main><script src="/react-combo-boxes/render.25ac162b.js"></script></body></html>
+</main><script src="/react-combo-boxes/render.30d523d4.js"></script></body></html>

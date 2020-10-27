@@ -34,11 +34,15 @@
 
   <span class="token keyword">return</span> <span class="token punctuation">(</span>
     <span class="token operator">&lt;</span><span class="token operator">></span>
-      <span class="token operator">&lt;</span>label htmlFor<span class="token operator">=</span><span class="token string">"select"</span><span class="token operator">></span>
+      <span class="token operator">&lt;</span>label
+        id<span class="token operator">=</span><span class="token string">"select-label"</span>
+        htmlFor<span class="token operator">=</span><span class="token string">"select"</span>
+      <span class="token operator">></span>
         Select
       <span class="token operator">&lt;</span><span class="token operator">/</span>label<span class="token operator">></span>
       <span class="token operator">&lt;</span>ComboBox
         id<span class="token operator">=</span><span class="token string">"select"</span>
+        aria<span class="token operator">-</span>labelledby<span class="token operator">=</span><span class="token string">"select-label"</span>
         value<span class="token operator">=</span><span class="token punctuation">{</span>value<span class="token punctuation">}</span>
         onChange<span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">(</span><span class="token parameter"><span class="token punctuation">{</span> target<span class="token operator">:</span> <span class="token punctuation">{</span> value<span class="token operator">:</span> v <span class="token punctuation">}</span> <span class="token punctuation">}</span></span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token function">setValue</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span><span class="token punctuation">}</span>
         onSearch<span class="token operator">=</span><span class="token punctuation">{</span>onSearch<span class="token punctuation">}</span>
@@ -61,4 +65,4 @@
     <span class="token operator">&lt;</span><span class="token operator">/</span><span class="token operator">></span>
   <span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
-</code></pre></main><script src="/react-combo-boxes/render.25ac162b.js"></script></body></html>
+</code></pre></main><script src="/react-combo-boxes/render.30d523d4.js"></script></body></html>
