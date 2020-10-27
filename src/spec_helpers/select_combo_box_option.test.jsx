@@ -15,9 +15,15 @@ function ComboBoxWrapper({ id = 'id' }) {
 
   return (
     <>
-      <label htmlFor={id}>Label</label>
+      <label
+        htmlFor={id}
+        id={`${id}_label`}
+      >
+        Label
+      </label>
       <ComboBox
         id={id}
+        aria-labelledby={`${id}_label`}
         value={value}
         onValue={onValue}
         onSearch={onSearch}

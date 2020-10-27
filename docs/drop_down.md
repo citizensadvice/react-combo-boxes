@@ -12,24 +12,20 @@ design pattern.
 > There are significant differences between the way a `<select>` is represented with and interacted with
 > on different devices and in different operating systems.  This control has to take a single approach and
 > may confuse some users.
->
-> It is also more cumbersome to add a label to this component.  The native `<label>` element _will not work_.
-> Instead you will need to do the following:
->
-> ```js
-> <div id="label-id">My label</div>
-> <DropDown
->  aria-labelledby="label-id"
->  {...moreProps}
-> </DropDown>
-> ```
 
 ## Usage
 
 ```js
 const [value, setValue] = useState(initialValue);
 
+<label
+  id="id-label"
+>
+  Label
+</label>
 <DropDown
+  id="id"
+  aria-labelledby="id-label"
   options={options}
   value={value}
   onValue={setValue}

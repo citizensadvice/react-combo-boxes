@@ -20,7 +20,15 @@ You may also consider using a native `<datalist>` for this.
 const [value, setValue] = useState(initialValue);
 const [onSearch, filteredOptions] = useTokenSearch(options);
 
+<label
+  id="id-label"
+  htmlFor="id"
+>
+  Label
+</label>
 <ComboBox
+  id="id"
+  aria-labelledby="id-label"
   options={filterOptions}
   value={value}
   onValue={setValue}
@@ -41,8 +49,9 @@ The `onSearch` function is called with the current search value and should be us
 | `mapOption`         | `Function`              | Use to map options. [See options][1]                                |
 | `busy`              | `Boolean` or null       | The busy status of the search. See busy                             |
 | `busyDebounce`      | `Number`                | Debounce busy notifications, defaults to 200                        |
-| `aria-describedby`  | `string`                | Ids of elements describing the `<input>`                            |
-| `className`         | `string`                | Class name of the wrapper                                           |
+| `aria-describedby`  | `String` or `String[]`  | Ids of elements describing the `<input>`                            |
+| `aria-labelledby`   | `String` or `String[]`  | Ids of elements labelling the `<input>` and list box                |
+| `className`         | `String`                | Class name of the wrapper                                           |
 | `id`                | `String`                | id of the component (required)                                      |
 | `ref`               | React ref               | Will be passed to the `<input>`                                     |
 | `notFoundMessage`   | `String`                | Message to show if the search string has no results.                |

@@ -21,7 +21,14 @@ const ComboBoxWrapper = forwardRef(({ value: initialValue, propUpdater, ...props
     propUpdater.setUpdater(setProps);
   }
   return (
-    <ComboBox id="id" value={value} onValue={onValue} {...newProps} ref={ref} />
+    <ComboBox
+      id="id"
+      aria-labelledby="id-label"
+      value={value}
+      onValue={onValue}
+      {...newProps}
+      ref={ref}
+    />
   );
 });
 

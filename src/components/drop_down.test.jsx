@@ -21,7 +21,14 @@ const DropDownWrapper = React.forwardRef(({ value: initialValue, propUpdater, ..
     propUpdater.setUpdater(setProps);
   }
   return (
-    <DropDown id="id" value={value} onValue={onValue} {...newProps} ref={ref} />
+    <DropDown
+      id="id"
+      aria-labelledby="id-label"
+      value={value}
+      onValue={onValue}
+      {...newProps}
+      ref={ref}
+    />
   );
 });
 

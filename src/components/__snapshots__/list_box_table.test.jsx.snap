@@ -11,6 +11,7 @@ exports[`used with a combo box columns as names only renders a table as the list
       aria-controls="id_listbox"
       aria-describedby="id_found_description"
       aria-expanded="false"
+      aria-labelledby="id-label"
       autocomplete="off"
       class="react-combo-boxes-combobox__input"
       id="id"
@@ -34,6 +35,7 @@ exports[`used with a combo box columns as names only renders a table as the list
       hidden=""
     >
       <table
+        aria-labelledby="id-label"
         class="react-combo-boxes-listbox__table"
         id="id_listbox"
         role="listbox"
@@ -150,6 +152,7 @@ exports[`used with a combo box columns with headers renders a table with headers
       aria-controls="id_listbox"
       aria-describedby="id_found_description"
       aria-expanded="false"
+      aria-labelledby="id-label"
       autocomplete="off"
       class="react-combo-boxes-combobox__input"
       id="id"
@@ -173,6 +176,7 @@ exports[`used with a combo box columns with headers renders a table with headers
       hidden=""
     >
       <table
+        aria-labelledby="id-label"
         class="react-combo-boxes-listbox__table"
         id="id_listbox"
         role="listbox"
@@ -319,6 +323,7 @@ exports[`used with a combo box columns with html renders a table with colgroups 
       aria-controls="id_listbox"
       aria-describedby="id_found_description"
       aria-expanded="false"
+      aria-labelledby="id-label"
       autocomplete="off"
       class="react-combo-boxes-combobox__input"
       id="id"
@@ -342,6 +347,7 @@ exports[`used with a combo box columns with html renders a table with colgroups 
       hidden=""
     >
       <table
+        aria-labelledby="id-label"
         class="react-combo-boxes-listbox__table"
         id="id_listbox"
         role="listbox"
@@ -442,6 +448,7 @@ exports[`used with a combo box grouped renders a table with groups 1`] = `
       aria-controls="id_listbox"
       aria-describedby="id_found_description"
       aria-expanded="false"
+      aria-labelledby="id-label"
       autocomplete="off"
       class="react-combo-boxes-combobox__input"
       id="id"
@@ -465,6 +472,7 @@ exports[`used with a combo box grouped renders a table with groups 1`] = `
       hidden=""
     >
       <table
+        aria-labelledby="id-label"
         class="react-combo-boxes-listbox__table"
         id="id_listbox"
         role="listbox"

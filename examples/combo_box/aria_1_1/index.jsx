@@ -29,11 +29,15 @@ export function Example() {
 
   return (
     <>
-      <label htmlFor="select" id="select-label">
+      <label
+        id="select-label"
+        htmlFor="select"
+      >
         Select
       </label>
       <ComboBox
         id="select"
+        aria-labelledby="select-label"
         value={value}
         onValue={setValue}
         onSearch={onSearch}

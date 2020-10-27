@@ -13,6 +13,7 @@ import { useNormalisedOptions } from '../hooks/use_normalised_options';
 import { useOnBlur } from '../hooks/use_on_blur';
 import { useMounted } from '../hooks/use_mounted';
 import { componentValidator } from '../validators/component_validator';
+import { stringOrArray } from '../validators/string_or_array';
 import { useCombineRefs } from '../hooks/use_combine_refs';
 import { findOption } from '../helpers/find_option';
 import { ListBox } from './list_box';
@@ -24,6 +25,7 @@ export const DropDown = forwardRef((rawProps, ref) => {
   const optionisedProps = useNormalisedOptions(rawProps, { mustHaveSelection: true });
   const {
     'aria-labelledby': ariaLabelledBy,
+    'aria-describedby': ariaDescribedBy,
     'aria-invalid': ariaInvalid,
     required, disabled,
     options, value, id,
@@ -145,6 +147,7 @@ export const DropDown = forwardRef((rawProps, ref) => {
           aria-expanded={expanded ? 'true' : 'false'}
           aria-activedescendant={(expanded && focusedOption?.key) || null}
           aria-labelledby={joinTokens(ariaLabelledBy, `${id}_value`)}
+          aria-describedby={joinTokens(ariaDescribedBy)}
           aria-required={required ? 'true' : null}
           aria-disabled={disabled ? 'true' : null}
           aria-invalid={ariaInvalid == null ? undefined : String(ariaInvalid)}
@@ -161,7 +164,7 @@ export const DropDown = forwardRef((rawProps, ref) => {
           id={`${id}_listbox`}
           hidden={!expanded}
           aria-activedescendant={(expanded && focusedOption?.key) || null}
-          aria-labelledby={ariaLabelledBy}
+          aria-labelledby={joinTokens(ariaLabelledBy)}
           tabIndex={-1}
           onSelectOption={clickOption}
           focusedRef={focusedRef}
@@ -179,7 +182,8 @@ DropDown.propTypes = {
   value: PropTypes.any, // eslint-disable-line react/forbid-prop-types
   children: PropTypes.node,
 
-  'aria-labelledby': PropTypes.string,
+  'aria-describedby': stringOrArray,
+  'aria-labelledby': stringOrArray.isRequired,
   'aria-invalid': PropTypes.string,
   disabled: PropTypes.bool,
   id: PropTypes.string.isRequired,
@@ -219,7 +223,7 @@ DropDown.defaultProps = {
   placeholder: null,
   value: null,
 
-  'aria-labelledby': null,
+  'aria-describedby': null,
   'aria-invalid': null,
   disabled: false,
   required: false,
