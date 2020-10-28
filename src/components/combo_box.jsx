@@ -146,8 +146,12 @@ export const ComboBox = forwardRef(({ placeholder, ...rawProps }, ref) => {
   ), [expanded, options, selectedOption, search, value]);
 
   useLayoutEffect(() => {
-    if (focusedOption && managedFocus && focusListBox && showListBox) {
-      focusedRef.current?.focus?.();
+    if (focusedOption && focusListBox && showListBox) {
+      if (managedFocus) {
+        focusedRef.current?.focus();
+      } else {
+        focusedRef.current?.scrollIntoView?.({ block: 'nearest' });
+      }
     } else if (expanded && document.activeElement !== inputRef.current) {
       inputRef.current.focus();
     }

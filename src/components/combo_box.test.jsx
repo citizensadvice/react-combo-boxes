@@ -1667,6 +1667,18 @@ describe('managedFocus', () => {
       expect(getAllByRole('option')[1]).toHaveAttribute('aria-selected', 'true');
     });
 
+    it('scrolls the element into view', () => {
+      Element.prototype.scrollIntoView = jest.fn();
+      const { getByRole } = render(
+        <ComboBoxWrapper options={options} managedFocus={false} />,
+      );
+      const comboBox = getByRole('combobox');
+      comboBox.focus();
+      fireEvent.keyDown(comboBox, { key: 'ArrowDown' });
+      fireEvent.keyDown(comboBox, { key: 'ArrowDown' });
+      expect(Element.prototype.scrollIntoView).toHaveBeenCalledWith({ block: 'nearest' });
+    });
+
     it('allows an option to be selected', () => {
       const { getByRole } = render(
         <ComboBoxWrapper options={options} managedFocus={false} />,
