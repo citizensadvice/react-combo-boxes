@@ -137,6 +137,11 @@ exports[`used with a combo box columns as names only renders a table as the list
       hidden=""
       id="id_not_found"
     />
+    <div
+      aria-atomic="true"
+      aria-live="polite"
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+    />
   </div>
 </div>
 `;
@@ -308,6 +313,11 @@ exports[`used with a combo box columns with headers renders a table with headers
       hidden=""
       id="id_not_found"
     />
+    <div
+      aria-atomic="true"
+      aria-live="polite"
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+    />
   </div>
 </div>
 `;
@@ -432,6 +442,11 @@ exports[`used with a combo box columns with html renders a table with colgroups 
       class="react-combo-boxes-combobox__not-found"
       hidden=""
       id="id_not_found"
+    />
+    <div
+      aria-atomic="true"
+      aria-live="polite"
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
     />
   </div>
 </div>
@@ -590,6 +605,11 @@ exports[`used with a combo box grouped renders a table with groups 1`] = `
       class="react-combo-boxes-combobox__not-found"
       hidden=""
       id="id_not_found"
+    />
+    <div
+      aria-atomic="true"
+      aria-live="polite"
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
     />
   </div>
 </div>

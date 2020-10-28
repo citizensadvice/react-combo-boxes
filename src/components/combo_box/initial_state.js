@@ -6,5 +6,6 @@ export function initialState({ selectedOption }) {
     search: null,
     focusedOption: selectedOption,
     suggestedOption: null,
+    screenReaderMessage: null,
   };
 }

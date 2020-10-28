@@ -18,6 +18,7 @@ import { findOption } from '../helpers/find_option';
 import { useCombineRefs } from '../hooks/use_combine_refs';
 import { allowProps } from '../helpers/allow_props';
 import { ListBox } from './list_box';
+import { ScreenReaderMessage } from './screen_reader_message';
 import { classPrefix } from '../constants/class_prefix';
 import { visuallyHiddenClassName } from '../constants/visually_hidden_class_name';
 
@@ -27,12 +28,16 @@ const allowAttributes = [
   'required', 'size', 'spellCheck', 'aria-invalid',
 ];
 
+function defaultFoundOptionsMessage(options) {
+  return `${options.length} option${options.length > 1 ? 's' : ''} found`;
+}
+
 export const ComboBox = forwardRef(({ placeholder, ...rawProps }, ref) => {
   const optionisedProps = { ...useNormalisedOptions(rawProps), placeholder };
   const {
     'aria-describedby': ariaDescribedBy, 'aria-labelledby': ariaLabelledBy,
     busyDebounce, options, value, selectedOption, id, className,
-    notFoundMessage, onLayoutListBox, managedFocus, busy, onSearch,
+    notFoundMessage, foundOptionsMessage, onLayoutListBox, managedFocus, busy, onSearch,
     autoselect, showSelectedLabel,
     onBlur: passedOnBlur, onFocus: passedOnFocus,
     ListBoxComponent, listBoxProps,
@@ -43,6 +48,7 @@ export const ComboBox = forwardRef(({ placeholder, ...rawProps }, ref) => {
     ClearButtonComponent, clearButtonProps,
     NotFoundComponent, notFoundProps,
     FoundDescriptionComponent,
+    ScreenReaderMessageComponent,
     visuallyHiddenClassName: providedVisuallyHiddenClassName,
   } = optionisedProps;
 
@@ -270,9 +276,7 @@ export const ComboBox = forwardRef(({ placeholder, ...rawProps }, ref) => {
           id={`${id}_found_description`}
           className={providedVisuallyHiddenClassName}
         >
-          {showListBox && (
-            `${options.length} option${options.length > 1 ? 's' : ''} found`
-          )}
+          {showListBox ? foundOptionsMessage(options) : null }
         </FoundDescriptionComponent>
         <NotFoundComponent
           id={`${id}_not_found`}
@@ -282,6 +286,9 @@ export const ComboBox = forwardRef(({ placeholder, ...rawProps }, ref) => {
         >
           {showNotFound ? notFoundMessage : null}
         </NotFoundComponent>
+        <ScreenReaderMessageComponent
+          hidden={!showNotFound && !showListBox}
+        />
       </WrapperComponent>
     </Context.Provider>
   );
@@ -302,6 +309,7 @@ ComboBox.propTypes = {
   placeholder: PropTypes.string,
 
   notFoundMessage: PropTypes.node,
+  foundOptionsMessage: PropTypes.func,
 
   onBlur: PropTypes.func,
   onChange: PropTypes.func,
@@ -342,6 +350,7 @@ ComboBox.propTypes = {
   FoundDescriptionComponent: componentValidator,
   NotFoundComponent: componentValidator,
   notFoundProps: PropTypes.object,
+  ScreenReaderMessageComponent: componentValidator,
   visuallyHiddenClassName: PropTypes.string,
 };
 
@@ -357,6 +366,7 @@ ComboBox.defaultProps = {
   className: `${classPrefix}combobox`,
 
   notFoundMessage: 'No matches found',
+  foundOptionsMessage: defaultFoundOptionsMessage,
 
   onBlur: null,
   onChange: null,
@@ -397,6 +407,7 @@ ComboBox.defaultProps = {
   FoundDescriptionComponent: 'div',
   NotFoundComponent: 'div',
   notFoundProps: null,
+  ScreenReaderMessageComponent: ScreenReaderMessage,
   visuallyHiddenClassName,
 };
 
