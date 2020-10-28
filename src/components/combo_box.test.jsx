@@ -2569,6 +2569,86 @@ describe('hint', () => {
     getByRole('combobox').focus();
     expect(container.querySelector('#id_found_description')).toHaveTextContent('1 option found');
   });
+
+  describe('foundOptionsMessage', () => {
+    it('customises the found options message', () => {
+      const spy = jest.fn((options) => `found ${options.length} options`);
+      const { container, getByRole } = render((
+        <ComboBoxWrapper options={['foo', 'bar']} foundOptionsMessage={spy} />
+      ));
+      getByRole('combobox').focus();
+      expect(container.querySelector('#id_found_description')).toHaveTextContent('found 2 options');
+    });
+  });
+});
+
+describe('screen reader message', () => {
+  const options = ['foo'];
+
+  it('adds a debounced message', async () => {
+    jest.useFakeTimers();
+    const propUpdater = new PropUpdater();
+    const { container, getByRole } = render(<ComboBoxWrapper
+      options={options}
+      propUpdater={propUpdater}
+    />);
+
+    getByRole('combobox').focus();
+
+    expect(container.querySelector('[aria-live="polite"]')).not.toHaveTextContent();
+    act(() => jest.advanceTimersByTime(500));
+    expect(container.querySelector('[aria-live="polite"]')).toHaveTextContent('1 option found');
+
+    propUpdater.update((props) => ({ ...props, options: ['foo', 'bar'] }));
+    expect(container.querySelector('[aria-live="polite"]')).toHaveTextContent('1 option found');
+    act(() => jest.advanceTimersByTime(500));
+    expect(container.querySelector('[aria-live="polite"]')).toHaveTextContent('2 options found');
+
+    propUpdater.update((props) => ({ ...props, options: [] }));
+    await userEvent.type(document.activeElement, 'a');
+    expect(container.querySelector('[aria-live="polite"]')).toHaveTextContent('2 options found');
+    act(() => jest.advanceTimersByTime(500));
+    expect(container.querySelector('[aria-live="polite"]')).toHaveTextContent('No matches found');
+  });
+
+  it('does not update the message if not focused', () => {
+    jest.useFakeTimers();
+    const propUpdater = new PropUpdater();
+    const { container } = render(<ComboBoxWrapper
+      options={options}
+      propUpdater={propUpdater}
+    />);
+
+    expect(container.querySelector('[aria-live="polite"]')).not.toHaveTextContent();
+    act(() => jest.advanceTimersByTime(500));
+    expect(container.querySelector('[aria-live="polite"]')).not.toHaveTextContent();
+  });
+
+  describe('foundOptionsMessage', () => {
+    it('customises the found options message', async () => {
+      jest.useFakeTimers();
+      const spy = jest.fn((ops) => `found ${ops.length} options`);
+      const { container, getByRole } = render((
+        <ComboBoxWrapper options={['foo', 'bar']} foundOptionsMessage={spy} />
+      ));
+      getByRole('combobox').focus();
+      act(() => jest.advanceTimersByTime(500));
+      expect(container.querySelector('[aria-live="polite"]')).toHaveTextContent('found 2 options');
+    });
+  });
+
+  describe('notFoundMessage', () => {
+    it('customises the not found message', async () => {
+      jest.useFakeTimers();
+      const { container, getByRole } = render((
+        <ComboBoxWrapper options={[]} notFoundMessage="not found" />
+      ));
+      getByRole('combobox').focus();
+      await userEvent.type(document.activeElement, 'a');
+      act(() => jest.advanceTimersByTime(500));
+      expect(container.querySelector('[aria-live="polite"]')).toHaveTextContent('not found');
+    });
+  });
 });
 
 describe('id', () => {
@@ -3211,6 +3291,16 @@ describe('NotFoundComponent', () => {
     );
     const el = document.getElementById('id_not_found');
     expect(el.tagName).toEqual('DL');
+  });
+});
+
+describe('ScreenReaderMessageComponent', () => {
+  it('allows the component to be replaced', () => {
+    render(
+      <ComboBoxWrapper options={['foo']} ScreenReaderMessageComponent="dl" />,
+    );
+    const els = document.getElementsByTagName('dl');
+    expect(els).toHaveLength(1);
   });
 });
 

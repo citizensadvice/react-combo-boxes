@@ -160,6 +160,11 @@ exports[`onSearch updating options updates the displayed options 1`] = `
       hidden=""
       id="id_not_found"
     />
+    <div
+      aria-atomic="true"
+      aria-live="polite"
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+    />
   </div>
 </div>
 `;
@@ -229,6 +234,11 @@ exports[`options as array of objects disabled sets the aria-disabled attribute 1
       class="react-combo-boxes-combobox__not-found"
       hidden=""
       id="id_not_found"
+    />
+    <div
+      aria-atomic="true"
+      aria-live="polite"
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
     />
   </div>
 </div>
@@ -354,6 +364,11 @@ exports[`options as array of objects group renders grouped options 1`] = `
       hidden=""
       id="id_not_found"
     />
+    <div
+      aria-atomic="true"
+      aria-live="polite"
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+    />
   </div>
 </div>
 `;
@@ -430,6 +445,11 @@ exports[`options as array of objects label renders a closed combo box 1`] = `
       hidden=""
       id="id_not_found"
     />
+    <div
+      aria-atomic="true"
+      aria-live="polite"
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+    />
   </div>
 </div>
 `;
@@ -488,6 +508,11 @@ exports[`options as array of objects missing label treats as a blank string 1`] 
       class="react-combo-boxes-combobox__not-found"
       hidden=""
       id="id_not_found"
+    />
+    <div
+      aria-atomic="true"
+      aria-live="polite"
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
     />
   </div>
 </div>
@@ -565,6 +590,11 @@ exports[`options options as array of numbers renders a closed combo box 1`] = `
       hidden=""
       id="id_not_found"
     />
+    <div
+      aria-atomic="true"
+      aria-live="polite"
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+    />
   </div>
 </div>
 `;
@@ -641,6 +671,11 @@ exports[`options options as array of strings renders a closed combo box 1`] = `
       hidden=""
       id="id_not_found"
     />
+    <div
+      aria-atomic="true"
+      aria-live="polite"
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+    />
   </div>
 </div>
 `;
@@ -710,6 +745,11 @@ exports[`options options as null renders an option with an empty string 1`] = `
       hidden=""
       id="id_not_found"
     />
+    <div
+      aria-atomic="true"
+      aria-live="polite"
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+    />
   </div>
 </div>
 `;
@@ -778,6 +818,11 @@ exports[`options options as undefined renders an option with an empty string 1`]
       class="react-combo-boxes-combobox__not-found"
       hidden=""
       id="id_not_found"
+    />
+    <div
+      aria-atomic="true"
+      aria-live="polite"
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
     />
   </div>
 </div>
