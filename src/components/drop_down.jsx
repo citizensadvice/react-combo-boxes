@@ -80,9 +80,12 @@ export const DropDown = forwardRef((rawProps, ref) => {
 
   useLayoutEffect(() => {
     if (expanded && focusedOption && managedFocus) {
-      focusedRef.current?.focus?.();
+      focusedRef.current?.focus();
     } else if (expanded) {
-      comboBoxRef.current.focus();
+      if (document.activeElement !== comboBoxRef.current) {
+        comboBoxRef.current.focus();
+      }
+      focusedRef.current?.scrollIntoView?.({ block: 'nearest' });
     }
   }, [expanded, managedFocus, focusedOption]);
 
