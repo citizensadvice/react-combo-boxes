@@ -1222,8 +1222,8 @@ describe('clear button', () => {
 
   it('pressing the button removes the value', () => {
     const spy = jest.fn();
-    render(<ComboBoxWrapper options={options} value="Apple" onValue={spy} />);
-    const remove = document.getElementById('id_clear_button');
+    const { getByRole } = render(<ComboBoxWrapper options={options} value="Apple" onValue={spy} />);
+    const remove = getByRole('button', { name: 'Clear Apple' });
     expect(remove).toBeVisible();
     userEvent.click(remove);
     expect(spy).toHaveBeenCalledWith(null);
@@ -1231,10 +1231,37 @@ describe('clear button', () => {
 
   it('pressing the middle button does not remove the value', () => {
     const spy = jest.fn();
-    render(<ComboBoxWrapper options={options} value="Apple" onValue={spy} />);
-    const remove = document.getElementById('id_clear_button');
+    const { getByRole } = render(<ComboBoxWrapper options={options} value="Apple" onValue={spy} />);
+    const remove = getByRole('button', { name: 'Clear Apple' });
     expect(remove).toBeVisible();
     fireEvent.click(remove, { button: 1 });
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('pressing ENTER on the button clears the value', () => {
+    const spy = jest.fn();
+    const { getByRole } = render(<ComboBoxWrapper options={options} value="Apple" onValue={spy} />);
+    const remove = getByRole('button', { name: 'Clear Apple' });
+    expect(remove).toBeVisible();
+    fireEvent.keyDown(remove, { key: 'Enter' });
+    expect(spy).toHaveBeenCalledWith(null);
+  });
+
+  it('pressing SPACE on the button clears the value', () => {
+    const spy = jest.fn();
+    const { getByRole } = render(<ComboBoxWrapper options={options} value="Apple" onValue={spy} />);
+    const remove = getByRole('button', { name: 'Clear Apple' });
+    expect(remove).toBeVisible();
+    fireEvent.keyDown(remove, { key: 'Enter' });
+    expect(spy).toHaveBeenCalledWith(null);
+  });
+
+  it('pressing a different key does not clear the value', () => {
+    const spy = jest.fn();
+    const { getByRole } = render(<ComboBoxWrapper options={options} value="Apple" onValue={spy} />);
+    const remove = getByRole('button', { name: 'Clear Apple' });
+    expect(remove).toBeVisible();
+    fireEvent.keyDown(remove, { key: 'x' });
     expect(spy).not.toHaveBeenCalled();
   });
 });
@@ -2197,7 +2224,7 @@ describe('expandOnFocus', () => {
         <ComboBoxWrapper options={options} value="Apple" />
       ));
       getByRole('combobox').focus();
-      userEvent.click(document.getElementById('id_clear_button'));
+      userEvent.click(getByRole('button', { name: /Clear/ }));
       expectToBeOpen(getByRole('combobox'));
     });
   });
@@ -2216,7 +2243,7 @@ describe('expandOnFocus', () => {
         <ComboBoxWrapper options={options} value="Apple" expandOnFocus />
       ));
       getByRole('combobox').focus();
-      userEvent.click(document.getElementById('id_clear_button'));
+      userEvent.click(getByRole('button', { name: /Clear/ }));
       expectToBeOpen(getByRole('combobox'));
     });
   });
@@ -2234,9 +2261,12 @@ describe('expandOnFocus', () => {
       const { getByRole } = render((
         <ComboBoxWrapper options={options} value="Apple" expandOnFocus={false} />
       ));
-      getByRole('combobox').focus();
-      userEvent.click(document.getElementById('id_clear_button'));
-      expectToBeClosed(getByRole('combobox'));
+      const combobox = getByRole('combobox');
+      combobox.focus();
+      userEvent.click(getByRole('button', { name: /Clear/ }));
+      const listbox = document.getElementById(combobox.getAttribute('aria-controls'));
+      expect(listbox).toHaveAttribute('role', 'listbox');
+      expect(listbox).not.toBeVisible();
     });
   });
 });
@@ -2573,7 +2603,7 @@ describe('onChange', () => {
       <ComboBoxWrapper options={options} value="Apple" onChange={spy} />,
     );
     getByRole('combobox').focus();
-    userEvent.click(document.getElementById(`${getByRole('combobox').id}_clear_button`));
+    userEvent.click(getByRole('button', { name: /Clear/ }));
 
     expect(spy).toHaveBeenCalledWith(expect.objectContaining({
       target: expect.objectContaining({
