@@ -58,6 +58,7 @@ If you wish to submit the value add a `<input type="hidden" name="name" value="v
 | `onLayoutListBox` | `Function` | Handler for custom listbox positioning. See [onLayoutListBox][2] |
 | `skipOption`      | `Function` | Allows options to be skipped with keyboard navigation            |
 | `findOption`      | `Function` | Customise finding an option when typing                          |
+| `managedFocus`    | `Function` | Use managed focus                                                |
 
 Additional props can be used to customise the component.  See customisation.
 
@@ -109,7 +110,7 @@ By default this is `true`.  It means the browser focus follows the current selec
 
 If `false` the combo box element remains focused and the current selected option is
 marked with `aria-activedescendant`.  This method is found to have incomplete compatibility
-with many screen-readers.
+with some screen-readers.
 
 #### `skipOption` (`Function`)
 

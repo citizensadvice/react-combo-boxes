@@ -1,4 +1,4 @@
-import { isMac } from './is_mac';
+import { isMac } from '../sniffers/is_mac';
 
 export function getKey(event) {
   const { key, ctrlKey, altKey, metaKey } = event;

@@ -21,6 +21,8 @@ import { ListBox } from './list_box';
 import { ScreenReaderMessage } from './screen_reader_message';
 import { classPrefix } from '../constants/class_prefix';
 import { visuallyHiddenClassName } from '../constants/visually_hidden_class_name';
+import { isSafari } from '../sniffers/is_safari';
+import { isMac } from '../sniffers/is_mac';
 
 const allowAttributes = [
   'autoComplete', 'autoCapitalize', 'autoCorrect', 'autoFocus', 'disabled', 'inputMode',
@@ -378,7 +380,7 @@ ComboBox.defaultProps = {
   autoselect: false,
   expandOnFocus: true,
   findSuggestion: findOption,
-  managedFocus: true,
+  managedFocus: !(isMac() && !isSafari()),
   skipOption: undefined,
   showSelectedLabel: undefined,
   tabAutocomplete: false,

@@ -204,55 +204,26 @@ describe('options', () => {
         });
 
         describe('pressing the home key', () => {
-          describe('on a mac', () => {
-            it('moves to the first option with the home key', () => {
-              jest.spyOn(navigator, 'platform', 'get').mockImplementation(() => 'MacIntel');
-              const { getByRole, getAllByRole } = render((
-                <ComboBoxWrapper options={options} />
-              ));
-              getByRole('combobox').focus();
-              fireEvent.keyDown(document.activeElement, { key: 'ArrowUp' });
-              fireEvent.keyDown(document.activeElement, { key: 'Home' });
-              expectToHaveFocusedOption(getByRole('combobox'), getAllByRole('option')[0]);
-            });
-          });
-
-          describe('on other systems', () => {
-            it('moves focus back to the list box', () => {
-              const { getByRole } = render((
-                <ComboBoxWrapper options={options} />
-              ));
-              getByRole('combobox').focus();
-              fireEvent.keyDown(document.activeElement, { key: 'ArrowUp' });
-              fireEvent.keyDown(document.activeElement, { key: 'Home' });
-              expectToBeOpen(getByRole('combobox'));
-            });
+          it('moves focus back to the list box', () => {
+            const { getByRole } = render((
+              <ComboBoxWrapper options={options} />
+            ));
+            getByRole('combobox').focus();
+            fireEvent.keyDown(document.activeElement, { key: 'ArrowUp' });
+            fireEvent.keyDown(document.activeElement, { key: 'Home' });
+            expectToBeOpen(getByRole('combobox'));
           });
         });
 
         describe('pressing the end key', () => {
-          describe('on a mac', () => {
-            it('moves to the last option with the end key', () => {
-              jest.spyOn(navigator, 'platform', 'get').mockImplementation(() => 'MacIntel');
-              const { getByRole, getAllByRole } = render((
-                <ComboBoxWrapper options={options} />
-              ));
-              getByRole('combobox').focus();
-              fireEvent.keyDown(document.activeElement, { key: 'End' });
-              expectToHaveFocusedOption(getByRole('combobox'), getAllByRole('option')[2]);
-            });
-          });
-
-          describe('on other systems', () => {
-            it('moves focus back to the list box', () => {
-              const { getByRole, getAllByRole } = render((
-                <ComboBoxWrapper options={options} />
-              ));
-              getByRole('combobox').focus();
-              fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
-              fireEvent.keyDown(document.activeElement, { key: 'End' });
-              expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[0]);
-            });
+          it('moves focus back to the list box', () => {
+            const { getByRole, getAllByRole } = render((
+              <ComboBoxWrapper options={options} />
+            ));
+            getByRole('combobox').focus();
+            fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
+            fireEvent.keyDown(document.activeElement, { key: 'End' });
+            expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[0]);
           });
         });
 
@@ -317,56 +288,26 @@ describe('options', () => {
         });
 
         describe('pressing Ctrl+d', () => {
-          describe('on a mac', () => {
-            it('moves focus back to the list box removing the selected option', () => {
-              jest.spyOn(navigator, 'platform', 'get').mockImplementation(() => 'MacIntel');
-              const { getByRole } = render((
-                <ComboBoxWrapper options={options} />
-              ));
-              getByRole('combobox').focus();
-              fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
-              fireEvent.keyDown(document.activeElement, { key: 'd', ctrlKey: true });
-              expectToBeOpen(getByRole('combobox'));
-            });
-          });
-
-          describe('on other systems', () => {
-            it('moves focus back to the list box removing the selected option', () => {
-              const { getByRole, getAllByRole } = render((
-                <ComboBoxWrapper options={options} />
-              ));
-              getByRole('combobox').focus();
-              fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
-              fireEvent.keyDown(document.activeElement, { key: 'd', ctrlKey: true });
-              expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[0]);
-            });
+          it('moves focus back to the list box removing the selected option', () => {
+            const { getByRole, getAllByRole } = render((
+              <ComboBoxWrapper options={options} />
+            ));
+            getByRole('combobox').focus();
+            fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
+            fireEvent.keyDown(document.activeElement, { key: 'd', ctrlKey: true });
+            expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[0]);
           });
         });
 
         describe('pressing Ctrl+k', () => {
-          describe('on a mac', () => {
-            it('moves focus back to the list box removing the selected option', () => {
-              jest.spyOn(navigator, 'platform', 'get').mockImplementation(() => 'MacIntel');
-              const { getByRole } = render((
-                <ComboBoxWrapper options={options} />
-              ));
-              getByRole('combobox').focus();
-              fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
-              fireEvent.keyDown(document.activeElement, { key: 'k', ctrlKey: true });
-              expectToBeOpen(getByRole('combobox'));
-            });
-          });
-
-          describe('on other systems', () => {
-            it('moves focus back to the list box removing the selected option', () => {
-              const { getByRole, getAllByRole } = render((
-                <ComboBoxWrapper options={options} />
-              ));
-              getByRole('combobox').focus();
-              fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
-              fireEvent.keyDown(document.activeElement, { key: 'k', ctrlKey: true });
-              expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[0]);
-            });
+          it('moves focus back to the list box removing the selected option', () => {
+            const { getByRole, getAllByRole } = render((
+              <ComboBoxWrapper options={options} />
+            ));
+            getByRole('combobox').focus();
+            fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
+            fireEvent.keyDown(document.activeElement, { key: 'k', ctrlKey: true });
+            expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[0]);
           });
         });
       });
@@ -648,42 +589,6 @@ describe('options', () => {
             fireEvent.keyDown(document.activeElement, { key: 'ArrowUp', altKey: true });
             fireEvent.keyDown(document.activeElement, { key: 'Enter' });
             expect(spy).not.toHaveBeenCalled();
-          });
-        });
-
-        describe('pressing the Home key', () => {
-          describe('on a mac', () => {
-            it('does not change the option', () => {
-              jest.spyOn(navigator, 'platform', 'get').mockImplementation(() => 'MacIntel');
-              const { getByRole, getAllByRole } = render((
-                <ComboBoxWrapper options={options} />
-              ));
-              getByRole('combobox').focus();
-              fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
-              fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
-              fireEvent.keyDown(document.activeElement, { key: 'Enter' });
-              fireEvent.keyDown(document.activeElement, { key: 'Home' });
-              fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
-              expectToHaveFocusedOption(getByRole('combobox'), getAllByRole('option')[1]);
-            });
-          });
-        });
-
-        describe('pressing the End key', () => {
-          describe('on a mac', () => {
-            it('does not change the option', () => {
-              jest.spyOn(navigator, 'platform', 'get').mockImplementation(() => 'MacIntel');
-              const { getByRole, getAllByRole } = render((
-                <ComboBoxWrapper options={options} />
-              ));
-              getByRole('combobox').focus();
-              fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
-              fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
-              fireEvent.keyDown(document.activeElement, { key: 'Enter' });
-              fireEvent.keyDown(document.activeElement, { key: 'End' });
-              fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
-              expectToHaveFocusedOption(getByRole('combobox'), getAllByRole('option')[1]);
-            });
           });
         });
 
@@ -1845,29 +1750,14 @@ describe('autoselect', () => {
       });
 
       describe('ctrl+d', () => {
-        describe('on a mac', () => {
-          it('does not auto-select an option', async () => {
-            jest.spyOn(navigator, 'platform', 'get').mockImplementation(() => 'MacIntel');
-            const { getByRole } = render(
-              <ComboBoxWrapper options={['foo', 'bar']} autoselect />,
-            );
-            getByRole('combobox').focus();
-            await userEvent.type(document.activeElement, 'fo');
-            fireEvent.keyDown(getByRole('combobox'), { key: 'd', ctrlKey: true });
-            expectToBeOpen(getByRole('combobox'));
-          });
-        });
-
-        describe('on other systems', () => {
-          it('continues to auto-select an option', async () => {
-            const { getByRole, getAllByRole } = render(
-              <ComboBoxWrapper options={['food', 'bar']} autoselect />,
-            );
-            getByRole('combobox').focus();
-            await userEvent.type(document.activeElement, 'foo');
-            fireEvent.keyDown(getByRole('combobox'), { key: 'd', ctrlKey: true });
-            expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[0]);
-          });
+        it('continues to auto-select an option', async () => {
+          const { getByRole, getAllByRole } = render(
+            <ComboBoxWrapper options={['food', 'bar']} autoselect />,
+          );
+          getByRole('combobox').focus();
+          await userEvent.type(document.activeElement, 'foo');
+          fireEvent.keyDown(getByRole('combobox'), { key: 'd', ctrlKey: true });
+          expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[0]);
         });
       });
     });
@@ -1885,60 +1775,28 @@ describe('autoselect', () => {
       });
 
       describe('ctrl+h', () => {
-        describe('on a mac', () => {
-          it('does not auto-select an option', async () => {
-            jest.spyOn(navigator, 'platform', 'get').mockImplementation(() => 'MacIntel');
-            const { getByRole } = render(
-              <ComboBoxWrapper options={['foo', 'bar']} autoselect />,
-            );
-            getByRole('combobox').focus();
-            await userEvent.type(document.activeElement, 'foo');
-            fireEvent.keyDown(getByRole('combobox'), { key: 'h', ctrlKey: true });
-            fireEvent.change(getByRole('combobox'), { target: { value: 'fo' } });
-            expectToBeOpen(getByRole('combobox'));
-          });
-        });
-
-        describe('on other systems', () => {
-          it('continues to auto-select an option', async () => {
-            const { getByRole, getAllByRole } = render(
-              <ComboBoxWrapper options={['fooh', 'bar']} autoselect />,
-            );
-            getByRole('combobox').focus();
-            await userEvent.type(document.activeElement, 'foo');
-            fireEvent.keyDown(getByRole('combobox'), { key: 'h', ctrlKey: true });
-            fireEvent.change(getByRole('combobox'), { target: { value: 'fooh' } });
-            expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[0]);
-          });
+        it('continues to auto-select an option', async () => {
+          const { getByRole, getAllByRole } = render(
+            <ComboBoxWrapper options={['fooh', 'bar']} autoselect />,
+          );
+          getByRole('combobox').focus();
+          await userEvent.type(document.activeElement, 'foo');
+          fireEvent.keyDown(getByRole('combobox'), { key: 'h', ctrlKey: true });
+          fireEvent.change(getByRole('combobox'), { target: { value: 'fooh' } });
+          expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[0]);
         });
       });
 
       describe('ctrl+k', () => {
-        describe('on a mac', () => {
-          it('does not auto-select an option', async () => {
-            jest.spyOn(navigator, 'platform', 'get').mockImplementation(() => 'MacIntel');
-            const { getByRole } = render(
-              <ComboBoxWrapper options={['foo', 'bar']} autoselect />,
-            );
-            getByRole('combobox').focus();
-            await userEvent.type(document.activeElement, 'fo');
-            fireEvent.keyDown(getByRole('combobox'), { key: 'k', ctrlKey: true });
-            fireEvent.change(getByRole('combobox'), { target: { value: 'fo' } });
-            expectToBeOpen(getByRole('combobox'));
-          });
-        });
-
-        describe('on other systems', () => {
-          it('continues to auto-select an option', async () => {
-            const { getByRole, getAllByRole } = render(
-              <ComboBoxWrapper options={['fook', 'bar']} autoselect />,
-            );
-            getByRole('combobox').focus();
-            await userEvent.type(document.activeElement, 'foo');
-            fireEvent.keyDown(getByRole('combobox'), { key: 'k', ctrlKey: true });
-            fireEvent.change(getByRole('combobox'), { target: { value: 'fok' } });
-            expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[0]);
-          });
+        it('continues to auto-select an option', async () => {
+          const { getByRole, getAllByRole } = render(
+            <ComboBoxWrapper options={['fook', 'bar']} autoselect />,
+          );
+          getByRole('combobox').focus();
+          await userEvent.type(document.activeElement, 'foo');
+          fireEvent.keyDown(getByRole('combobox'), { key: 'k', ctrlKey: true });
+          fireEvent.change(getByRole('combobox'), { target: { value: 'fok' } });
+          expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[0]);
         });
       });
 
@@ -2704,34 +2562,6 @@ describe('skipOption', () => {
     fireEvent.keyDown(document.activeElement, { key: 'ArrowUp' });
     fireEvent.keyDown(document.activeElement, { key: 'ArrowUp' });
     expectToHaveFocusedOption(getByRole('combobox'), getAllByRole('option')[0]);
-  });
-
-  describe('on a mac', () => {
-    it('allows options to be skipped pressing home', () => {
-      jest.spyOn(navigator, 'platform', 'get').mockImplementation(() => 'MacIntel');
-      function skipOption(option) {
-        return option.label === 'Apple';
-      }
-      const { getByRole, getAllByRole } = render(
-        <ComboBoxWrapper options={options} skipOption={skipOption} />,
-      );
-      getByRole('combobox').focus();
-      fireEvent.keyDown(document.activeElement, { key: 'Home' });
-      expectToHaveFocusedOption(getByRole('combobox'), getAllByRole('option')[1]);
-    });
-
-    it('allows options to be skipped pressing end', () => {
-      jest.spyOn(navigator, 'platform', 'get').mockImplementation(() => 'MacIntel');
-      function skipOption(option) {
-        return option.label === 'Orange';
-      }
-      const { getByRole, getAllByRole } = render(
-        <ComboBoxWrapper options={options} skipOption={skipOption} />,
-      );
-      getByRole('combobox').focus();
-      fireEvent.keyDown(document.activeElement, { key: 'End' });
-      expectToHaveFocusedOption(getByRole('combobox'), getAllByRole('option')[1]);
-    });
   });
 });
 

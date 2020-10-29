@@ -48,3 +48,17 @@ it('calls highlight with a custom search', () => {
 
   expect(spy).toHaveBeenCalledWith('foo', 'fee', { foe: 'fee' });
 });
+
+it('renders the highlight with hidden text', () => {
+  const spy = jest.fn(() => ['f', ['o'], 'o']);
+
+  const { container } = render((
+    <Context.Provider value={{ search: 'foo', props: {}, test: 'bar' }}>
+      <HighlightValue highlight={spy} foe="fee" search="fee">
+        foo
+      </HighlightValue>
+    </Context.Provider>
+  ));
+
+  expect(container).toContainHTML('<div><span>foo</span><span aria-hidden="true">f<mark>o</mark>o</span></div>');
+});
