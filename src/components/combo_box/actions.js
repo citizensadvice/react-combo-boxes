@@ -1,7 +1,7 @@
 import { nextInList } from '../../helpers/next_in_list';
 import { previousInList } from '../../helpers/previous_in_list';
 import { rNonPrintableKey } from '../../constants/r_non_printable_key';
-import { isMac } from '../../helpers/is_mac';
+import { isMac } from '../../sniffers/is_mac';
 import { getKey } from '../../helpers/get_key';
 
 export const SET_SEARCH = 'SET_SEARCH';
@@ -158,7 +158,8 @@ export function onKeyDown(event) {
         event.preventDefault();
         if (focusedOption && !focusedOption?.unselectable) {
           dispatch(onSelectValue(focusedOption));
-          if (managedFocus) {
+          if (document.activeElement !== inputRef.current) {
+            // Mac Firefox still needs the focus reset even without managedFocus
             inputRef.current.focus();
           }
         }

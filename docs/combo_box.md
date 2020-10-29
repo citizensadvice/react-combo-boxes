@@ -61,6 +61,7 @@ The `onSearch` function is called with the current search value and should be us
 | `onSearch`          | `Function`              | Handler for searching.  See [Searchers][2]                          |
 | `onLayoutListBox`   | `Function`              | Handler for custom listbox positioning. See [onLayoutListBox][3]    |
 | `onValue`           | `Function`              | Handler for when a value is selected                                |
+| `managedFocus`      | `Boolean`               | Use managed focus                                                   |
 | `autoselect`        | `Boolean` or `"inline"` | If set the first matching option will be automatically selected     |
 | `expandOnFocus`     | `Boolean`               | Show available options when focusing.  Defaults to true             |
 | `findSuggestion`    | `Function`              | Customise finding the autoselect option                             |
@@ -111,8 +112,9 @@ the html element, or a full component if you want a more far reaching change.  B
     </ListBoxListComponent>
     <OpenButtonComponent {...openButtonProps} />                      // <span>
     <ClearButtonComponent {...clearButtonProps} />                    // <span>
-    <FoundDescriptionComponent className={visuallyHiddenClassName} /> // Tells screen readers how many results were found
+    <FoundDescriptionComponent className={visuallyHiddenClassName} /> // Description with the number of found items 
     <NotFoundComponent {...notFoundProps} />                          // <div>
+    <ScreenReaderMessage />                                           // ARIA live region with the number of found items
   </ListBoxComponent>
 </WrapperComponent>
 ```
@@ -158,11 +160,9 @@ Return `true` to select an option, `null` to continue finding an option, or `fal
 
 ### `managedFocus` (`Boolean`)
 
-By default this is `true`.  It means the browser focus follows the current selected option.
+By default this is `true`, expect on non-Safari browser on a Mac.  It means the browser focus follows the current selected option.
 
-If `false` the combo box element remains focused and the current selected option is
-marked with `aria-activedescendant`.  This method is found to have incomplete compatibility
-with many screen-readers.
+If `false` the combo box element remains focused and the current selected option is marked with `aria-activedescendant`.
 
 ### `onLayoutListBox` (`Function`)
 

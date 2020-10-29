@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Highlight } from './highlight';
 import { Context } from '../context';
+import { isIE } from '../sniffers/is_ie';
 
 function emptyHighlight(highlight) {
   return !highlight.length || (highlight.length === 1 && typeof highlight[0] === 'string');
@@ -13,6 +14,15 @@ export function HighlightValue({ children: value, highlight, inverse, search: _s
 
   if (emptyHighlight(highlighted)) {
     return highlighted.join('');
+  }
+
+  if (isIE()) {
+    // IE ignores aria-hidden, however it also doesn't suffer from the inline element issue
+    return (
+      <Highlight inverse={inverse}>
+        {highlighted}
+      </Highlight>
+    );
   }
 
   // Accessible naming treats inline elements as block and adds additional white space

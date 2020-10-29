@@ -4,5 +4,4 @@
 and does not follow the selected option.  Instead `aria-activedescendant` sets
 the focused option.
 
-While this is technically correct, it does not work well in all screen-readers.
-
+The default is to use `managedFocus` as this has the best browser and screen-reader compatibility.
