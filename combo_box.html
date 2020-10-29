@@ -125,6 +125,11 @@ You may also consider using a native <code>&lt;datalist&gt;</code> for this.</p>
 <td>Handler for when a value is selected</td>
 </tr>
 <tr>
+<td><code>managedFocus</code></td>
+<td><code>Boolean</code></td>
+<td>Use managed focus</td>
+</tr>
+<tr>
 <td><code>autoselect</code></td>
 <td><code>Boolean</code> or <code>&quot;inline&quot;</code></td>
 <td>If set the first matching option will be automatically selected</td>
@@ -187,8 +192,9 @@ the html element, or a full component if you want a more far reaching change. Be
     <span class="token operator">&lt;</span><span class="token operator">/</span>ListBoxListComponent<span class="token operator">></span>
     <span class="token operator">&lt;</span>OpenButtonComponent <span class="token punctuation">{</span><span class="token operator">...</span>openButtonProps<span class="token punctuation">}</span> <span class="token operator">/</span><span class="token operator">></span>                      <span class="token comment">// &lt;span></span>
     <span class="token operator">&lt;</span>ClearButtonComponent <span class="token punctuation">{</span><span class="token operator">...</span>clearButtonProps<span class="token punctuation">}</span> <span class="token operator">/</span><span class="token operator">></span>                    <span class="token comment">// &lt;span></span>
-    <span class="token operator">&lt;</span>FoundDescriptionComponent className<span class="token operator">=</span><span class="token punctuation">{</span>visuallyHiddenClassName<span class="token punctuation">}</span> <span class="token operator">/</span><span class="token operator">></span> <span class="token comment">// Tells screen readers how many results were found</span>
+    <span class="token operator">&lt;</span>FoundDescriptionComponent className<span class="token operator">=</span><span class="token punctuation">{</span>visuallyHiddenClassName<span class="token punctuation">}</span> <span class="token operator">/</span><span class="token operator">></span> <span class="token comment">// Description with the number of found items </span>
     <span class="token operator">&lt;</span>NotFoundComponent <span class="token punctuation">{</span><span class="token operator">...</span>notFoundProps<span class="token punctuation">}</span> <span class="token operator">/</span><span class="token operator">></span>                          <span class="token comment">// &lt;div></span>
+    <span class="token operator">&lt;</span>ScreenReaderMessage <span class="token operator">/</span><span class="token operator">></span>                                           <span class="token comment">// ARIA live region with the number of found items</span>
   <span class="token operator">&lt;</span><span class="token operator">/</span>ListBoxComponent<span class="token operator">></span>
 <span class="token operator">&lt;</span><span class="token operator">/</span>WrapperComponent<span class="token operator">></span></code></pre>
 <h3 id="context">Context</h3>
@@ -219,10 +225,8 @@ option providing it starts with the search string.</p>
 <p>This takes a function with the signature <code>function (option: Object, search: String): Boolean</code>.
 Return <code>true</code> to select an option, <code>null</code> to continue finding an option, or <code>false</code> to stop searching.</p>
 <h3 id="managedfocus-boolean"><code>managedFocus</code> (<code>Boolean</code>)</h3>
-<p>By default this is <code>true</code>. It means the browser focus follows the current selected option.</p>
-<p>If <code>false</code> the combo box element remains focused and the current selected option is
-marked with <code>aria-activedescendant</code>. This method is found to have incomplete compatibility
-with many screen-readers.</p>
+<p>By default this is <code>true</code>, expect on non-Safari browser on a Mac. It means the browser focus follows the current selected option.</p>
+<p>If <code>false</code> the combo box element remains focused and the current selected option is marked with <code>aria-activedescendant</code>.</p>
 <h3 id="onlayoutlistbox-function"><code>onLayoutListBox</code> (<code>Function</code>)</h3>
 <p>This is called when the list box is displayed or the options change.</p>
 <p>It has the signature <code>Function ({ expanded: Boolean, listbox: Element, combobox: Element, option: Element })</code></p>
@@ -236,4 +240,4 @@ If false, the list box will always show the current search string.</p>
 <h3 id="tabautocomplete-boolean"><code>tabAutocomplete</code> (<code>Boolean</code>)</h3>
 <p>If true pressing tab will select the suggested option. If false, pressing tab will behave normally and
 move the focus to the next control.</p>
-</main><script src="/react-combo-boxes/render.30d523d4.js"></script></body></html>
+</main><script src="/react-combo-boxes/render.63d23528.js"></script></body></html>

@@ -121,6 +121,11 @@ If you wish to submit the value add a <code>&lt;input type=&quot;hidden&quot; na
 <td><code>Function</code></td>
 <td>Customise finding an option when typing</td>
 </tr>
+<tr>
+<td><code>managedFocus</code></td>
+<td><code>Function</code></td>
+<td>Use managed focus</td>
+</tr>
 </tbody></table>
 <p>Additional props can be used to customise the component. See customisation.</p>
 <h2 id="customisation">Customisation</h2>
@@ -160,7 +165,7 @@ the html element, or a full component if you want a more far reaching change. Be
 <p>By default this is <code>true</code>. It means the browser focus follows the current selected option.</p>
 <p>If <code>false</code> the combo box element remains focused and the current selected option is
 marked with <code>aria-activedescendant</code>. This method is found to have incomplete compatibility
-with many screen-readers.</p>
+with some screen-readers.</p>
 <h4 id="skipoption-function"><code>skipOption</code> (<code>Function</code>)</h4>
 <p>This function can be used to skip an option when navigating with the arrow keys.</p>
 <p>It has the signature <code>function (option: Object): Boolean</code>. Return <code>true</code> if the option should be skipped.</p>
@@ -172,4 +177,4 @@ Return true if an option matching the search string is found.</p>
 <p>This is called when the list box is displayed or the options change.</p>
 <p>It has the signature <code>Function (expanded: Boolean, listbox: Element, combobox: Element, option: Element)</code></p>
 <p>See <a href="/react-combo-boxes/on_layout_list_box.html">onLayoutListBox</a></p>
-</main><script src="/react-combo-boxes/render.30d523d4.js"></script></body></html>
+</main><script src="/react-combo-boxes/render.63d23528.js"></script></body></html>
