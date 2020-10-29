@@ -6,7 +6,7 @@ import { reducer } from './combo_box/reducer';
 import { initialState } from './combo_box/initial_state';
 import {
   onKeyDown, onChange, onFocus, onInputMouseUp, onClearValue, onBlur,
-  onClick, onOptionsChanged, onValueChanged, onFocusInput, onOpenButtonClick,
+  onClick, onOptionsChanged, onValueChanged, onFocusInput,
 } from './combo_box/actions';
 import { useNormalisedOptions } from '../hooks/use_normalised_options';
 import { useOnBlur } from '../hooks/use_on_blur';
@@ -46,7 +46,7 @@ export const ComboBox = forwardRef(({ placeholder, ...rawProps }, ref) => {
     WrapperComponent, wrapperProps,
     BeforeInputComponent,
     InputComponent, inputProps,
-    OpenButtonComponent, openButtonProps,
+    DownArrowComponent, downArrowProps,
     ClearButtonComponent, clearButtonProps,
     NotFoundComponent, notFoundProps,
     FoundDescriptionComponent,
@@ -244,14 +244,11 @@ export const ComboBox = forwardRef(({ placeholder, ...rawProps }, ref) => {
           {...allowProps(optionisedProps, ...allowAttributes)}
           {...inputProps}
         />
-        <OpenButtonComponent
-          id={`${id}_open_button`}
-          className={`${classPrefix}combobox__open-button`}
-          onMouseDown={(e) => e.preventDefault()}
-          onClick={(e) => dispatch(onOpenButtonClick(e))}
+        <DownArrowComponent
+          id={`${id}_down_arrow`}
+          className={`${classPrefix}combobox__down-arrow`}
           hidden={value || !options.length}
-          aria-hidden="true"
-          {...openButtonProps}
+          {...downArrowProps}
         />
         <ClearButtonComponent
           id={`${id}_clear_button`}
@@ -345,8 +342,8 @@ ComboBox.propTypes = {
   optionProps: PropTypes.object,
   ValueComponent: componentValidator,
   valueProps: PropTypes.object,
-  OpenButtonComponent: componentValidator,
-  openButtonProps: PropTypes.object,
+  DownArrowComponent: componentValidator,
+  downArrowProps: PropTypes.object,
   ClearButtonComponent: componentValidator,
   clearButtonProps: PropTypes.object,
   FoundDescriptionComponent: componentValidator,
@@ -402,8 +399,8 @@ ComboBox.defaultProps = {
   optionProps: null,
   ValueComponent: Fragment,
   valueProps: null,
-  OpenButtonComponent: 'span',
-  openButtonProps: null,
+  DownArrowComponent: 'span',
+  downArrowProps: null,
   ClearButtonComponent: 'span',
   clearButtonProps: null,
   FoundDescriptionComponent: 'div',

@@ -220,17 +220,6 @@ export function onInputMouseUp(e) {
   };
 }
 
-export function onOpenButtonClick(e) {
-  return (dispatch, getState, getProps) => {
-    const { expanded } = getState();
-    const { inputRef } = getProps();
-    if (expanded || e.button > 0) {
-      return;
-    }
-    inputRef.current.focus();
-  };
-}
-
 export function onBlur() {
   return (dispatch, getState, getProps) => {
     const { focusedOption } = getState();
