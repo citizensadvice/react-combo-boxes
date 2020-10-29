@@ -252,11 +252,14 @@ export const ComboBox = forwardRef(({ placeholder, ...rawProps }, ref) => {
         />
         <ClearButtonComponent
           id={`${id}_clear_button`}
+          role="button"
+          aria-label="Clear"
+          aria-labelledby={joinTokens(`${id}_clear_button`, ariaLabelledBy, id)}
           className={`${classPrefix}combobox__clear-button`}
-          onMouseDown={(e) => e.preventDefault()}
           onClick={(e) => dispatch(onClearValue(e))}
+          onKeyDown={(e) => dispatch(onClearValue(e))}
           hidden={!value || search === ''}
-          aria-hidden="true"
+          tabIndex={-1}
           {...clearButtonProps}
         />
         <ListBoxComponent

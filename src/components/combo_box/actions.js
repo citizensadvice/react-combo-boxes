@@ -248,7 +248,10 @@ export function onClick(event, option) {
 
 export function onClearValue(event) {
   return (dispatch, setState, getProps) => {
-    if (event.button > 0) {
+    if (event.type === 'click' && event.button > 0) {
+      return;
+    }
+    if (event.type === 'keydown' && ![' ', 'Enter'].includes(event.key)) {
       return;
     }
     const { expandOnFocus } = getProps();

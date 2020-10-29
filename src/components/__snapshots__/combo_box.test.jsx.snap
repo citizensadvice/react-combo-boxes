@@ -38,10 +38,13 @@ exports[`WrapperComponent allows custom layouts 1`] = `
       class="clear-button-wrapper"
     >
       <span
-        aria-hidden="true"
+        aria-label="Clear"
+        aria-labelledby="id_clear_button id-label id"
         class="react-combo-boxes-combobox__clear-button"
         hidden=""
         id="id_clear_button"
+        role="button"
+        tabindex="-1"
       />
     </div>
     <div
@@ -110,10 +113,13 @@ exports[`onSearch updating options updates the displayed options 1`] = `
       id="id_down_arrow"
     />
     <span
-      aria-hidden="true"
+      aria-label="Clear"
+      aria-labelledby="id_clear_button id-label id"
       class="react-combo-boxes-combobox__clear-button"
       hidden=""
       id="id_clear_button"
+      role="button"
+      tabindex="-1"
     />
     <ul
       aria-labelledby="id-label"
@@ -191,10 +197,13 @@ exports[`options as array of objects disabled sets the aria-disabled attribute 1
       id="id_down_arrow"
     />
     <span
-      aria-hidden="true"
+      aria-label="Clear"
+      aria-labelledby="id_clear_button id-label id"
       class="react-combo-boxes-combobox__clear-button"
       hidden=""
       id="id_clear_button"
+      role="button"
+      tabindex="-1"
     />
     <ul
       aria-labelledby="id-label"
@@ -265,10 +274,13 @@ exports[`options as array of objects group renders grouped options 1`] = `
       id="id_down_arrow"
     />
     <span
-      aria-hidden="true"
+      aria-label="Clear"
+      aria-labelledby="id_clear_button id-label id"
       class="react-combo-boxes-combobox__clear-button"
       hidden=""
       id="id_clear_button"
+      role="button"
+      tabindex="-1"
     />
     <ul
       aria-labelledby="id-label"
@@ -393,10 +405,13 @@ exports[`options as array of objects label renders a closed combo box 1`] = `
       id="id_down_arrow"
     />
     <span
-      aria-hidden="true"
+      aria-label="Clear"
+      aria-labelledby="id_clear_button id-label id"
       class="react-combo-boxes-combobox__clear-button"
       hidden=""
       id="id_clear_button"
+      role="button"
+      tabindex="-1"
     />
     <ul
       aria-labelledby="id-label"
@@ -473,10 +488,13 @@ exports[`options as array of objects missing label treats as a blank string 1`] 
       id="id_down_arrow"
     />
     <span
-      aria-hidden="true"
+      aria-label="Clear"
+      aria-labelledby="id_clear_button id-label id"
       class="react-combo-boxes-combobox__clear-button"
       hidden=""
       id="id_clear_button"
+      role="button"
+      tabindex="-1"
     />
     <ul
       aria-labelledby="id-label"
@@ -536,10 +554,13 @@ exports[`options options as array of numbers renders a closed combo box 1`] = `
       id="id_down_arrow"
     />
     <span
-      aria-hidden="true"
+      aria-label="Clear"
+      aria-labelledby="id_clear_button id-label id"
       class="react-combo-boxes-combobox__clear-button"
       hidden=""
       id="id_clear_button"
+      role="button"
+      tabindex="-1"
     />
     <ul
       aria-labelledby="id-label"
@@ -616,10 +637,13 @@ exports[`options options as array of strings renders a closed combo box 1`] = `
       id="id_down_arrow"
     />
     <span
-      aria-hidden="true"
+      aria-label="Clear"
+      aria-labelledby="id_clear_button id-label id"
       class="react-combo-boxes-combobox__clear-button"
       hidden=""
       id="id_clear_button"
+      role="button"
+      tabindex="-1"
     />
     <ul
       aria-labelledby="id-label"
@@ -696,10 +720,13 @@ exports[`options options as null renders an option with an empty string 1`] = `
       id="id_down_arrow"
     />
     <span
-      aria-hidden="true"
+      aria-label="Clear"
+      aria-labelledby="id_clear_button id-label id"
       class="react-combo-boxes-combobox__clear-button"
       hidden=""
       id="id_clear_button"
+      role="button"
+      tabindex="-1"
     />
     <ul
       aria-labelledby="id-label"
@@ -769,10 +796,13 @@ exports[`options options as undefined renders an option with an empty string 1`]
       id="id_down_arrow"
     />
     <span
-      aria-hidden="true"
+      aria-label="Clear"
+      aria-labelledby="id_clear_button id-label id"
       class="react-combo-boxes-combobox__clear-button"
       hidden=""
       id="id_clear_button"
+      role="button"
+      tabindex="-1"
     />
     <ul
       aria-labelledby="id-label"
