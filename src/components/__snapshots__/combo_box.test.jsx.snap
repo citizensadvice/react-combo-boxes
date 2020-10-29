@@ -27,12 +27,11 @@ exports[`WrapperComponent allows custom layouts 1`] = `
       class="before-input"
     />
     <div
-      class="open-button-wrapper"
+      class="down-arrow-wrapper"
     >
       <span
-        aria-hidden="true"
-        class="react-combo-boxes-combobox__open-button"
-        id="id_open_button"
+        class="react-combo-boxes-combobox__down-arrow"
+        id="id_down_arrow"
       />
     </div>
     <div
@@ -107,9 +106,8 @@ exports[`onSearch updating options updates the displayed options 1`] = `
       value=""
     />
     <span
-      aria-hidden="true"
-      class="react-combo-boxes-combobox__open-button"
-      id="id_open_button"
+      class="react-combo-boxes-combobox__down-arrow"
+      id="id_down_arrow"
     />
     <span
       aria-hidden="true"
@@ -189,9 +187,8 @@ exports[`options as array of objects disabled sets the aria-disabled attribute 1
       value=""
     />
     <span
-      aria-hidden="true"
-      class="react-combo-boxes-combobox__open-button"
-      id="id_open_button"
+      class="react-combo-boxes-combobox__down-arrow"
+      id="id_down_arrow"
     />
     <span
       aria-hidden="true"
@@ -264,9 +261,8 @@ exports[`options as array of objects group renders grouped options 1`] = `
       value=""
     />
     <span
-      aria-hidden="true"
-      class="react-combo-boxes-combobox__open-button"
-      id="id_open_button"
+      class="react-combo-boxes-combobox__down-arrow"
+      id="id_down_arrow"
     />
     <span
       aria-hidden="true"
@@ -393,9 +389,8 @@ exports[`options as array of objects label renders a closed combo box 1`] = `
       value=""
     />
     <span
-      aria-hidden="true"
-      class="react-combo-boxes-combobox__open-button"
-      id="id_open_button"
+      class="react-combo-boxes-combobox__down-arrow"
+      id="id_down_arrow"
     />
     <span
       aria-hidden="true"
@@ -474,9 +469,8 @@ exports[`options as array of objects missing label treats as a blank string 1`] 
       value=""
     />
     <span
-      aria-hidden="true"
-      class="react-combo-boxes-combobox__open-button"
-      id="id_open_button"
+      class="react-combo-boxes-combobox__down-arrow"
+      id="id_down_arrow"
     />
     <span
       aria-hidden="true"
@@ -538,9 +532,8 @@ exports[`options options as array of numbers renders a closed combo box 1`] = `
       value=""
     />
     <span
-      aria-hidden="true"
-      class="react-combo-boxes-combobox__open-button"
-      id="id_open_button"
+      class="react-combo-boxes-combobox__down-arrow"
+      id="id_down_arrow"
     />
     <span
       aria-hidden="true"
@@ -619,9 +612,8 @@ exports[`options options as array of strings renders a closed combo box 1`] = `
       value=""
     />
     <span
-      aria-hidden="true"
-      class="react-combo-boxes-combobox__open-button"
-      id="id_open_button"
+      class="react-combo-boxes-combobox__down-arrow"
+      id="id_down_arrow"
     />
     <span
       aria-hidden="true"
@@ -700,9 +692,8 @@ exports[`options options as null renders an option with an empty string 1`] = `
       value=""
     />
     <span
-      aria-hidden="true"
-      class="react-combo-boxes-combobox__open-button"
-      id="id_open_button"
+      class="react-combo-boxes-combobox__down-arrow"
+      id="id_down_arrow"
     />
     <span
       aria-hidden="true"
@@ -774,9 +765,8 @@ exports[`options options as undefined renders an option with an empty string 1`]
       value=""
     />
     <span
-      aria-hidden="true"
-      class="react-combo-boxes-combobox__open-button"
-      id="id_open_button"
+      class="react-combo-boxes-combobox__down-arrow"
+      id="id_down_arrow"
     />
     <span
       aria-hidden="true"

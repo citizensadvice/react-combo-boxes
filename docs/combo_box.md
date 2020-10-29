@@ -110,7 +110,7 @@ the html element, or a full component if you want a more far reaching change.  B
         </OptionComponent>
       </GroupComponent>
     </ListBoxListComponent>
-    <OpenButtonComponent {...openButtonProps} />                      // <span>
+    <DownArrowComponent {...downArrowProps} />                        // <span>
     <ClearButtonComponent {...clearButtonProps} />                    // <span>
     <FoundDescriptionComponent className={visuallyHiddenClassName} /> // Description with the number of found items 
     <NotFoundComponent {...notFoundProps} />                          // <div>

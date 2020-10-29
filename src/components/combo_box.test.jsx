@@ -1211,39 +1211,6 @@ describe('value', () => {
   });
 });
 
-describe('open button', () => {
-  const options = ['Apple', 'Orange', 'Banana'];
-
-  it('pressing the button focuses the input', () => {
-    render(<ComboBoxWrapper options={options} />);
-    const open = document.getElementById('id_open_button');
-    expect(open).toBeVisible();
-    userEvent.click(open);
-    expectToBeOpen(document.activeElement);
-  });
-
-  it('pressing the middle button does not focus the input', () => {
-    const { getByRole } = render(<ComboBoxWrapper options={options} />);
-    const open = document.getElementById('id_open_button');
-    expect(open).toBeVisible();
-    fireEvent.click(open, { button: 1 });
-    expect(getByRole('combobox')).not.toHaveFocus();
-    expect(getByRole('listbox', { hidden: true })).not.toBeVisible();
-  });
-
-  it('is not present with a value', () => {
-    render(<ComboBoxWrapper options={options} value="Apple" />);
-    const open = document.getElementById('id_open_button');
-    expect(open).not.toBeVisible();
-  });
-
-  it('is not present with no options', () => {
-    render(<ComboBoxWrapper options={[]} />);
-    const open = document.getElementById('id_open_button');
-    expect(open).not.toBeVisible();
-  });
-});
-
 describe('clear button', () => {
   const options = ['Apple', 'Orange', 'Banana'];
 
@@ -2528,7 +2495,7 @@ describe('id', () => {
     expect(getAllByRole('option')[1]).toHaveAttribute('id', 'foo_option_pear');
     expect(getAllByRole('option')[2]).toHaveAttribute('id', 'foo_option_orange');
 
-    expect(document.getElementById('foo_open_button')).toBeInstanceOf(Element);
+    expect(document.getElementById('foo_down_arrow')).toBeInstanceOf(Element);
     expect(document.getElementById('foo_clear_button')).toBeInstanceOf(Element);
     expect(document.getElementById('foo_found_description')).toBeInstanceOf(Element);
     expect(document.getElementById('foo_not_found')).toBeInstanceOf(Element);
@@ -2784,7 +2751,7 @@ describe('WrapperComponent', () => {
   it('allows custom layouts', () => {
     const WrapperComponent = forwardRef((props, ref) => {
       const {
-        children: [beforeInput, input, openButton, clearButton, listBox, hint, notFound],
+        children: [beforeInput, input, downArrow, clearButton, listBox, hint, notFound],
       } = props;
 
       return (
@@ -2795,8 +2762,8 @@ describe('WrapperComponent', () => {
           <div className="before-input">
             {beforeInput}
           </div>
-          <div className="open-button-wrapper">
-            {openButton}
+          <div className="down-arrow-wrapper">
+            {downArrow}
           </div>
           <div className="clear-button-wrapper">
             {clearButton}
@@ -3064,23 +3031,23 @@ describe('valueProps', () => {
   });
 });
 
-describe('OpenButtonComponent', () => {
+describe('DownArrowComponent', () => {
   it('allows the component to be replaced', () => {
     render(
-      <ComboBoxWrapper options={['foo']} OpenButtonComponent="dl" />,
+      <ComboBoxWrapper options={['foo']} DownArrowComponent="dl" />,
     );
-    const button = document.getElementById('id_open_button');
-    expect(button.tagName).toEqual('DL');
+    const arrow = document.getElementById('id_down_arrow');
+    expect(arrow.tagName).toEqual('DL');
   });
 });
 
-describe('openButtonProps', () => {
+describe('downArrowProps', () => {
   it('allows custom props', () => {
     render(
-      <ComboBoxWrapper options={['foo']} openButtonProps={{ className: 'foo' }} />,
+      <ComboBoxWrapper options={['foo']} downArrowProps={{ className: 'foo' }} />,
     );
-    const button = document.getElementById('id_open_button');
-    expect(button).toHaveClass('foo');
+    const arrow = document.getElementById('id_down_arrow');
+    expect(arrow).toHaveClass('foo');
   });
 });
 
