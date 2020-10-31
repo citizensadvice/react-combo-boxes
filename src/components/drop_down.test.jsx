@@ -312,6 +312,32 @@ describe('options', () => {
           });
         });
 
+        describe('pressing the page up key', () => {
+          it('moves the page of options down', () => {
+            const spy = jest.fn();
+            const { getByRole } = render((
+              <DropDownWrapper options={options} value="Banana" onValue={spy} />
+            ));
+            fireEvent.click(getByRole('combobox'));
+            fireEvent.keyDown(document.activeElement, { key: 'PageUp' });
+            expectToHaveFocusedOption(getByRole('combobox'), getByRole('option', { name: 'Apple' }));
+            expect(spy).not.toHaveBeenCalled();
+          });
+        });
+
+        describe('pressing the page down key', () => {
+          it('moves the page of options down', () => {
+            const spy = jest.fn();
+            const { getByRole } = render((
+              <DropDownWrapper options={options} value="Banana" onValue={spy} />
+            ));
+            fireEvent.click(getByRole('combobox'));
+            fireEvent.keyDown(document.activeElement, { key: 'PageDown' });
+            expectToHaveFocusedOption(getByRole('combobox'), getByRole('option', { name: 'Orange' }));
+            expect(spy).not.toHaveBeenCalled();
+          });
+        });
+
         describe('typing', () => {
           it('moves the option when typing without calling onValue', () => {
             const spy = jest.fn();
