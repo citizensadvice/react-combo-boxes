@@ -99,9 +99,8 @@ export const DropDown = forwardRef((rawProps, ref) => {
       expanded,
       listbox: listRef.current,
       combobox: comboBoxRef.current,
-      option: focusedRef.current,
     });
-  }, [onLayoutListBox, expanded, focusedOption]);
+  }, [onLayoutListBox, expanded]);
 
   const optionsCheck = options.length ? options : null;
   useLayoutEffect(() => {

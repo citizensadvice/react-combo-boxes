@@ -3,7 +3,7 @@
 The `onLayoutListBox` event can be used to programmatically control the size or
 position of the list box.
 
-It has the signature `Function ({ expanded: Boolean, listbox: Element, combobox: Element, option: Element })`
+It has the signature `Function ({ expanded: Boolean, listbox: Element, combobox: Element })`
 
 It is called each time any of these properties changes.
 

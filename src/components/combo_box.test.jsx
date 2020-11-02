@@ -3175,7 +3175,6 @@ describe('onLayoutListBox', () => {
       expanded: true,
       listbox: getByRole('listbox'),
       combobox: getByRole('combobox'),
-      option: undefined,
     });
   });
 
@@ -3195,11 +3194,10 @@ describe('onLayoutListBox', () => {
       expanded: true,
       listbox: getByRole('listbox'),
       combobox: getByRole('combobox'),
-      option: undefined,
     });
   });
 
-  it('is called when the selected option changes', () => {
+  it('is not called when the selected option changes', () => {
     const onLayoutListBox = jest.fn();
     const { getByRole } = render((
       <ComboBoxWrapper
@@ -3208,13 +3206,9 @@ describe('onLayoutListBox', () => {
       />
     ));
     getByRole('combobox').focus();
+    onLayoutListBox.mockClear();
     fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
-    expect(onLayoutListBox).toHaveBeenLastCalledWith({
-      expanded: true,
-      listbox: getByRole('listbox'),
-      combobox: getByRole('combobox'),
-      option: document.activeElement,
-    });
+    expect(onLayoutListBox).not.toHaveBeenCalled();
   });
 
   it('when the listbox is closed', () => {
@@ -3231,7 +3225,6 @@ describe('onLayoutListBox', () => {
       expanded: false,
       listbox: getByRole('listbox', { hidden: true }),
       combobox: getByRole('combobox'),
-      option: undefined,
     });
   });
 
