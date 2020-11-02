@@ -162,6 +162,7 @@ export const ComboBox = forwardRef(({ placeholder, ...rawProps }, ref) => {
       }
     } else if (expanded && document.activeElement !== inputRef.current) {
       inputRef.current.focus();
+      inputRef.current?.scrollIntoView?.({ block: 'nearest' });
     }
   }, [expanded, managedFocus, focusedOption, focusListBox, showListBox]);
 
@@ -189,10 +190,9 @@ export const ComboBox = forwardRef(({ placeholder, ...rawProps }, ref) => {
     onLayoutListBox({
       listbox: listRef.current,
       combobox: inputRef.current,
-      option: focusedRef.current,
       expanded: showListBox,
     });
-  }, [onLayoutListBox, showListBox, focusedOption, options]);
+  }, [onLayoutListBox, showListBox, options]);
 
   const showNotFound = notFoundMessage && busy === false && expanded && !options.length
     && search?.trim() && search !== value?.label;

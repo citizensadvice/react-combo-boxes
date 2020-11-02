@@ -24,10 +24,13 @@ exports[`used with a combo box columns as names only renders a table as the list
       id="id_down_arrow"
     />
     <span
-      aria-hidden="true"
+      aria-label="Clear"
+      aria-labelledby="id_clear_button id-label id"
       class="react-combo-boxes-combobox__clear-button"
       hidden=""
       id="id_clear_button"
+      role="button"
+      tabindex="-1"
     />
     <div
       class="react-combo-boxes-listbox"
@@ -169,10 +172,13 @@ exports[`used with a combo box columns with headers renders a table with headers
       id="id_down_arrow"
     />
     <span
-      aria-hidden="true"
+      aria-label="Clear"
+      aria-labelledby="id_clear_button id-label id"
       class="react-combo-boxes-combobox__clear-button"
       hidden=""
       id="id_clear_button"
+      role="button"
+      tabindex="-1"
     />
     <div
       class="react-combo-boxes-listbox"
@@ -344,10 +350,13 @@ exports[`used with a combo box columns with html renders a table with colgroups 
       id="id_down_arrow"
     />
     <span
-      aria-hidden="true"
+      aria-label="Clear"
+      aria-labelledby="id_clear_button id-label id"
       class="react-combo-boxes-combobox__clear-button"
       hidden=""
       id="id_clear_button"
+      role="button"
+      tabindex="-1"
     />
     <div
       class="react-combo-boxes-listbox"
@@ -473,10 +482,13 @@ exports[`used with a combo box grouped renders a table with groups 1`] = `
       id="id_down_arrow"
     />
     <span
-      aria-hidden="true"
+      aria-label="Clear"
+      aria-labelledby="id_clear_button id-label id"
       class="react-combo-boxes-combobox__clear-button"
       hidden=""
       id="id_clear_button"
+      role="button"
+      tabindex="-1"
     />
     <div
       class="react-combo-boxes-listbox"

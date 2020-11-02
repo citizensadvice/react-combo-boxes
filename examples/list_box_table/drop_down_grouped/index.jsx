@@ -12,6 +12,7 @@ export function Example() {
   const [value, setValue] = useState(null);
   const ref = useRef();
   const [style, onLayoutListBox] = useConfineListBoxTable();
+  const [managedFocus, setManagedFocus] = useState(true);
 
   return (
     <>
@@ -34,6 +35,7 @@ export function Example() {
         listBoxListProps={{ style }}
         columns={columns}
         mapOption={mapOption}
+        managedFocus={managedFocus}
       />
 
       <label htmlFor="output">
@@ -42,6 +44,16 @@ export function Example() {
       <output htmlFor="drop-down" id="output">
         {JSON.stringify(value, undefined, ' ')}
       </output>
+
+      <label>
+        <input
+          type="checkbox"
+          onChange={({ target: { checked } }) => setManagedFocus(checked)}
+          checked={managedFocus}
+        />
+        {' '}
+        Toggle managed focus
+      </label>
     </>
   );
 }

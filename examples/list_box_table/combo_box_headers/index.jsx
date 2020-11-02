@@ -29,6 +29,7 @@ export function Example() {
   const [value, setValue] = useState(null);
   const [filteredOptions, onSearch] = useTokenSearch(cats, { index: mapOption });
   const [style, onLayoutListBox] = useConfineListBoxTable();
+  const [managedFocus, setManagedFocus] = useState(true);
 
   return (
     <>
@@ -51,6 +52,7 @@ export function Example() {
         mapOption={mapOption}
         onLayoutListBox={onLayoutListBox}
         listBoxListProps={{ style }}
+        managedFocus={managedFocus}
       />
 
       <label htmlFor="output">
@@ -59,6 +61,16 @@ export function Example() {
       <output htmlFor="select" id="output">
         {JSON.stringify(value, undefined, ' ')}
       </output>
+
+      <label>
+        <input
+          type="checkbox"
+          onChange={({ target: { checked } }) => setManagedFocus(checked)}
+          checked={managedFocus}
+        />
+        {' '}
+        Toggle managed focus
+      </label>
     </>
   );
 }

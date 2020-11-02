@@ -9,6 +9,7 @@ function map({ name, code }) {
 export function Example() {
   const [value, setValue] = useState(null);
   const [filteredOptions, onSearch] = useTokenSearch(countries, { index: map });
+  const [managedFocus, setManagedFocus] = useState(false);
 
   return (
     <>
@@ -26,7 +27,7 @@ export function Example() {
         onSearch={onSearch}
         options={filteredOptions}
         mapOption={map}
-        managedFocus={false}
+        managedFocus={managedFocus}
       />
 
       <label htmlFor="output">
@@ -35,6 +36,16 @@ export function Example() {
       <output htmlFor="select" id="output">
         {JSON.stringify(value, undefined, ' ')}
       </output>
+
+      <label>
+        <input
+          type="checkbox"
+          onChange={({ target: { checked } }) => setManagedFocus(checked)}
+          checked={managedFocus}
+        />
+        {' '}
+        Toggle managed focus
+      </label>
     </>
   );
 }

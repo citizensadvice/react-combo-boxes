@@ -40,10 +40,12 @@ export function useConfineListBox(selector = 'body') {
         return;
       }
 
+      const { scrollTop } = listbox;
       setStyle({
         maxWidth: calculateMaxWidth(listbox, selector),
         maxHeight: calculateMaxHeight(listbox),
       });
+      listbox.scrollTop = scrollTop; // eslint-disable-line no-param-reassign
     };
 
     updateProps();
