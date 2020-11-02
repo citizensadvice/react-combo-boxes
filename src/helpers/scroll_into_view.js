@@ -3,8 +3,11 @@
  *
  * This scrolls the list box, and then the entire page as required.
  *
- * The built-in scrollIntoView works badly in IE11, and fails to scroll
- * a parentbox when it is height limited.
+ * There is a native scrollIntoView method.  This works great in Chrome and Firefox however:
+ *
+ * - in IE11 it always jumps the element to the top of the page
+ * - in Safari it does not support scroll-padding-top so cannot handle sticky table headers.
+ * - in Safari it does not support all arguments, and can scroll the element to the centre.
  */
 export function scrollIntoView(element) {
   if (!element) {
@@ -12,6 +15,11 @@ export function scrollIntoView(element) {
   }
 
   let parent = element.offsetParent;
+
+  if (!parent) {
+    return;
+  }
+
   if (parent.matches('table')) {
     parent = parent.offsetParent;
   }
@@ -20,6 +28,8 @@ export function scrollIntoView(element) {
     return;
   }
 
+  // Ensure the list box is correctly scrolled
+
   const elementTop = element.offsetTop;
   const elementBottom = elementTop + element.clientHeight;
 
@@ -27,10 +37,13 @@ export function scrollIntoView(element) {
   const parentBottom = parentTop + parent.clientHeight;
 
   if (parentTop > elementTop) {
-    parent.scrollTop = elementTop;
+    const scrollPaddingTop = parseFloat(window.getComputedStyle(parent).scrollPaddingTop) || 0;
+    parent.scrollTop = elementTop - scrollPaddingTop;
   } else if (parentBottom < elementBottom) {
     parent.scrollTop = elementBottom - (parentBottom - parentTop);
   }
+
+  // Ensure the element is on-screen
 
   const elementRect = element.getBoundingClientRect();
   const height = document.body.clientHeight;

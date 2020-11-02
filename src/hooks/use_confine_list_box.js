@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useRef, useState, useLayoutEffect, useCallback } from 'react';
 
 function calculateMaxWidth(el, selector) {
   el.maxWidth = ''; // eslint-disable-line no-param-reassign
@@ -16,53 +16,61 @@ function calculateMaxHeight(el) {
 
   const elBounding = el.getBoundingClientRect();
   const windowEnd = window.innerHeight;
-  let maxHeight = '';
+  const extras = Math.ceil(elBounding.height - el.clientHeight)
+    + (parseFloat(getComputedStyle(el).marginBottom) || 0);
+  const newHeight = elBounding.height - (elBounding.bottom - windowEnd) - extras;
+  const newMaxHeight = Math.max(newHeight, 0);
+  const maxHeight = `${newMaxHeight}px`;
 
-  if (elBounding.bottom > windowEnd) {
-    const extras = Math.ceil(elBounding.height - el.clientHeight)
-      + (parseFloat(getComputedStyle(el).marginBottom) || 0);
-    const newHeight = elBounding.height - (elBounding.bottom - windowEnd) - extras;
-    const newMaxHeight = Math.max(newHeight, 0);
-    maxHeight = `${newMaxHeight}px`;
-  }
   el.style.maxHeight = maxHeight; // eslint-disable-line no-param-reassign
   return maxHeight;
 }
 
 export function useConfineListBox(selector = 'body') {
   const [style, setStyle] = useState({});
-  const [handler, setHandler] = useState(null);
+  const [currentExpanded, setCurrentExpanded] = useState(false);
+  const listboxRef = useRef(null);
+
+  const handler = useCallback(() => {
+    const { current: listbox } = listboxRef;
+    const { scrollTop } = listbox;
+    setStyle({
+      maxWidth: calculateMaxWidth(listbox, selector),
+      maxHeight: calculateMaxHeight(listbox),
+    });
+    listbox.scrollTop = scrollTop; // eslint-disable-line no-param-reassign
+  }, [selector]);
 
   // Called when the list box is opened, closed, or the options or selected option changes
   const layoutListBox = useCallback(({ expanded, listbox }) => {
-    const updateProps = () => {
-      if (!expanded || !listbox) {
-        return;
-      }
+    if (!expanded || !listbox) {
+      setCurrentExpanded(() => false);
+      return;
+    }
+    setCurrentExpanded(true);
+    listboxRef.current = listbox;
+  }, []);
 
-      const { scrollTop } = listbox;
-      setStyle({
-        maxWidth: calculateMaxWidth(listbox, selector),
-        maxHeight: calculateMaxHeight(listbox),
-      });
-      listbox.scrollTop = scrollTop; // eslint-disable-line no-param-reassign
-    };
-
-    updateProps();
-    setHandler(() => updateProps);
-  }, [selector]);
-
-  useEffect(() => {
-    if (!handler) {
+  useLayoutEffect(() => {
+    if (!currentExpanded) {
       return undefined;
     }
-    window.addEventListener('resize', handler, { passive: true });
-    window.addEventListener('scroll', handler, { passive: true });
-    return () => {
-      window.removeEventListener('resize', handler, { passive: true });
-      window.removeEventListener('scroll', handler, { passive: true });
+    handler();
+
+    let frame;
+    const handlerWithAnimationFrame = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(handler);
     };
-  }, [handler]);
+
+    window.addEventListener('resize', handlerWithAnimationFrame, { passive: true });
+    window.addEventListener('scroll', handlerWithAnimationFrame, { passive: true });
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener('resize', handlerWithAnimationFrame, { passive: true });
+      window.removeEventListener('scroll', handlerWithAnimationFrame, { passive: true });
+    };
+  }, [currentExpanded, handler]);
 
   return [style, layoutListBox];
 }

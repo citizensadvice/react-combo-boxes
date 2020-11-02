@@ -130,23 +130,7 @@ describe('maxHeight', () => {
     expect(listbox.style.maxHeight).toEqual('');
   });
 
-  it('does not add maxHeight if the listbox is not too high', () => {
-    const out = {};
-    jest.spyOn(listbox, 'clientHeight', 'get').mockImplementation(() => 320);
-    window.innerHight = 500;
-    jest.spyOn(listbox, 'getBoundingClientRect').mockImplementation(() => ({ bottom: 200, height: 300 }));
-
-    render(<Test out={out} />);
-
-    act(() => {
-      out.onLayoutListBox({ expanded: true, listbox });
-    });
-
-    expect(out.style.maxHeight).toEqual('');
-    expect(listbox.style.maxHeight).toEqual('');
-  });
-
-  it('adds maxHeight if the listbox is too high', () => {
+  it('adds maxHeight', () => {
     const out = {};
     jest.spyOn(listbox, 'clientHeight', 'get').mockImplementation(() => 300);
     window.innerHeight = 500;
@@ -163,7 +147,7 @@ describe('maxHeight', () => {
   });
 
   describe('with a margin', () => {
-    it('adds maxHeight if the listbox is too high', () => {
+    it('adds maxHeight', () => {
       const out = {};
       listbox.style.marginBottom = '10px';
       jest.spyOn(listbox, 'clientHeight', 'get').mockImplementation(() => 300);
