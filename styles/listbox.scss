@@ -17,6 +17,8 @@
   min-height: 1.5em;
   box-sizing: border-box;
   box-shadow: 0 2px 4px #aaa;
+  overscroll-behavior: none;
+  -ms-scroll-chaining: none;
 }
 
 .react-combo-boxes-listbox__option,
