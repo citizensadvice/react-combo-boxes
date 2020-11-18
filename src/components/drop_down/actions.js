@@ -1,6 +1,7 @@
 import { nextInList } from '../../helpers/next_in_list';
 import { previousInList } from '../../helpers/previous_in_list';
 import { rNonPrintableKey } from '../../constants/r_non_printable_key';
+import { movePage } from '../../helpers/move_page';
 
 export const SET_EXPANDED = 'SET_EXPANDED';
 export const CLEAR_SEARCH = 'CLEAR_SEARCH';
@@ -103,6 +104,20 @@ export function onKeyDown(event) {
         if (expanded) {
           event.preventDefault();
           dispatch(setFocusedOption(previousInList(options, -1, { skip })));
+        }
+        break;
+      case 'PageDown':
+        // Next page of items
+        if (expanded) {
+          event.preventDefault();
+          dispatch(setFocusedOption(movePage('down', options, focusedOption, { skip })));
+        }
+        break;
+      case 'PageUp':
+        // Next page of items
+        if (expanded) {
+          event.preventDefault();
+          dispatch(setFocusedOption(movePage('up', options, focusedOption, { skip })));
         }
         break;
       case 'Escape':

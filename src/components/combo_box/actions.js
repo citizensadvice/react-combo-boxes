@@ -3,6 +3,7 @@ import { previousInList } from '../../helpers/previous_in_list';
 import { rNonPrintableKey } from '../../constants/r_non_printable_key';
 import { isMac } from '../../sniffers/is_mac';
 import { getKey } from '../../helpers/get_key';
+import { movePage } from '../../helpers/move_page';
 
 export const SET_SEARCH = 'SET_SEARCH';
 export const SET_EXPANDED = 'SET_EXPANDED';
@@ -146,6 +147,26 @@ export function onKeyDown(event) {
           event.preventDefault();
           dispatch(setFocusedOption({
             focusedOption: previousInList(options, -1, { skip }),
+            focusListBox: true,
+          }));
+        }
+        break;
+      case 'PageDown':
+        // Next page of items
+        if (expanded) {
+          event.preventDefault();
+          dispatch(setFocusedOption({
+            focusedOption: movePage('down', options, focusedOption, { skip }),
+            focusListBox: true,
+          }));
+        }
+        break;
+      case 'PageUp':
+        // Next page of items
+        if (expanded) {
+          event.preventDefault();
+          dispatch(setFocusedOption({
+            focusedOption: movePage('up', options, focusedOption, { skip }),
             focusListBox: true,
           }));
         }

@@ -247,6 +247,31 @@ describe('options', () => {
           });
         });
 
+        describe('pressing the page up key', () => {
+          it('moves the page of options up', () => {
+            const { getByRole } = render((
+              <ComboBoxWrapper options={options} />
+            ));
+            getByRole('combobox').focus();
+            fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
+            fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
+            fireEvent.keyDown(document.activeElement, { key: 'PageUp' });
+            expectToHaveFocusedOption(getByRole('combobox'), getByRole('option', { name: 'Apple' }));
+          });
+        });
+
+        describe('pressing the page down key', () => {
+          it('moves the page of options down', () => {
+            const { getByRole } = render((
+              <ComboBoxWrapper options={options} />
+            ));
+            getByRole('combobox').focus();
+            fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
+            fireEvent.keyDown(document.activeElement, { key: 'PageDown' });
+            expectToHaveFocusedOption(getByRole('combobox'), getByRole('option', { name: 'Orange' }));
+          });
+        });
+
         describe('typing', () => {
           it('moves focus back to the list box', async () => {
             const { getByRole, getAllByRole } = render((
@@ -595,6 +620,26 @@ describe('options', () => {
             fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
             fireEvent.keyDown(document.activeElement, { key: 'ArrowUp', altKey: true });
             fireEvent.keyDown(document.activeElement, { key: 'ArrowUp', altKey: true });
+            expectToBeClosed(getByRole('combobox'));
+          });
+        });
+
+        describe('pressing page down', () => {
+          it('does not open the listbox', () => {
+            const { getByRole } = render(<ComboBoxWrapper options={options} />);
+            getByRole('combobox').focus();
+            fireEvent.keyDown(document.activeElement, { key: 'ArrowUp', altKey: true });
+            fireEvent.keyDown(document.activeElement, { key: 'PageDown' });
+            expectToBeClosed(getByRole('combobox'));
+          });
+        });
+
+        describe('pressing page up', () => {
+          it('does not open the listbox', () => {
+            const { getByRole } = render(<ComboBoxWrapper options={options} />);
+            getByRole('combobox').focus();
+            fireEvent.keyDown(document.activeElement, { key: 'ArrowUp', altKey: true });
+            fireEvent.keyDown(document.activeElement, { key: 'PageUp' });
             expectToBeClosed(getByRole('combobox'));
           });
         });
