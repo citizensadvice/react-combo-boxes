@@ -35,10 +35,12 @@ export const ListBoxTable = forwardRef(({ focusedRef, hidden, onSelectOption, ..
     })
   ), [rawColumns]);
 
+  const hasHeader = columns.some(({ label }) => label);
+
   return (
     <ListBoxListComponent
       hidden={hidden}
-      className={`${classPrefix}listbox`}
+      className={`${classPrefix}listbox ${classPrefix}listbox--header`}
       onMouseDown={(e) => e.preventDefault()}
       {...listBoxListProps}
     >
@@ -54,7 +56,7 @@ export const ListBoxTable = forwardRef(({ focusedRef, hidden, onSelectOption, ..
             <col key={name} {...html} />
           ))}
         </colgroup>
-        {columns.some(({ label }) => label) && (
+        {hasHeader && (
           <thead role="presentation">
             <tr role="presentation">
               {columns.map(({ name, label }) => (

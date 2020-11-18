@@ -120,6 +120,15 @@ describe('options', () => {
               fireEvent.keyDown(getByRole('combobox'), { key: 'ArrowDown', altKey: true });
               expectToHaveFocusedOption(getByRole('combobox'), getAllByRole('option')[0]);
             });
+
+            it('scrolls the element into view', () => {
+              const spy = jest.fn();
+              const { getByRole } = render((
+                <DropDownWrapper options={options} scrollIntoView={spy} />
+              ));
+              fireEvent.keyDown(getByRole('combobox'), { key: 'ArrowDown' });
+              expect(spy).toHaveBeenCalledWith(getByRole('option', { name: 'Apple' }));
+            });
           });
 
           describe('pressing up arrow', () => {
@@ -133,6 +142,15 @@ describe('options', () => {
               const { getByRole } = render(<DropDownWrapper options={options} />);
               fireEvent.keyDown(getByRole('combobox'), { key: 'ArrowUp', altKey: true });
               expectToBeClosed(getByRole('combobox'));
+            });
+
+            it('scrolls the element into view', () => {
+              const spy = jest.fn();
+              const { getByRole } = render((
+                <DropDownWrapper options={options} scrollIntoView={spy} />
+              ));
+              fireEvent.keyDown(getByRole('combobox'), { key: 'ArrowUp' });
+              expect(spy).toHaveBeenCalledWith(getByRole('option', { name: 'Apple' }));
             });
           });
         });
@@ -222,6 +240,16 @@ describe('options', () => {
             expectToHaveFocusedOption(getByRole('combobox'), getAllByRole('option')[0]);
             expect(spy).not.toHaveBeenCalled();
           });
+
+          it('scrolls the element into view', () => {
+            const spy = jest.fn();
+            const { getByRole } = render((
+              <DropDownWrapper options={options} scrollIntoView={spy} />
+            ));
+            fireEvent.click(getByRole('combobox'));
+            fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
+            expect(spy).toHaveBeenCalledWith(getByRole('option', { name: 'Banana' }));
+          });
         });
 
         describe('pressing the up arrow', () => {
@@ -245,6 +273,16 @@ describe('options', () => {
             fireEvent.keyDown(document.activeElement, { key: 'ArrowUp' });
             expectToHaveFocusedOption(getByRole('combobox'), getAllByRole('option')[2]);
             expect(spy).not.toHaveBeenCalled();
+          });
+
+          it('scrolls the element into view', () => {
+            const spy = jest.fn();
+            const { getByRole } = render((
+              <DropDownWrapper options={options} scrollIntoView={spy} />
+            ));
+            fireEvent.click(getByRole('combobox'));
+            fireEvent.keyDown(document.activeElement, { key: 'ArrowUp' });
+            expect(spy).toHaveBeenCalledWith(getByRole('option', { name: 'Orange' }));
           });
         });
 
@@ -1276,6 +1314,15 @@ describe('value', () => {
     expectToHaveFocusedOption(getByRole('combobox'), getAllByRole('option')[1]);
   });
 
+  it('scrolls the option into view', () => {
+    const spy = jest.fn();
+    const { getByRole } = render((
+      <DropDownWrapper options={options} value="Banana" scrollIntoView={spy} />
+    ));
+    fireEvent.click(getByRole('combobox'));
+    expect(spy).toHaveBeenCalledWith(getByRole('option', { name: 'Banana' }));
+  });
+
   describe('value is not in options', () => {
     it('sets the initial focused option to the first option', () => {
       const { getAllByRole, getByRole } = render((
@@ -1402,16 +1449,16 @@ describe('managedFocus', () => {
     });
 
     it('scrolls the element into view', () => {
-      Element.prototype.scrollIntoView = jest.fn();
+      const spy = jest.fn();
       const { getByRole } = render(
-        <DropDownWrapper options={options} managedFocus={false} />,
+        <DropDownWrapper options={options} managedFocus={false} scrollIntoView={spy} />,
       );
       const comboBox = getByRole('combobox');
       fireEvent.click(comboBox);
       const listBox = getByRole('listbox');
       expect(comboBox).toHaveFocus();
       fireEvent.keyDown(listBox, { key: 'ArrowDown' });
-      expect(Element.prototype.scrollIntoView).toHaveBeenCalledWith({ block: 'nearest' });
+      expect(spy).toHaveBeenCalledWith(getByRole('option', { name: 'Banana' }));
     });
 
     it('allows an option to be selected', () => {
@@ -2041,20 +2088,6 @@ describe('onLayoutListBox', () => {
       listbox: getByRole('listbox'),
       combobox: getByRole('combobox'),
     });
-  });
-
-  it('is not called when the selected option changes', () => {
-    const onLayoutListBox = jest.fn();
-    const { getByRole } = render((
-      <DropDownWrapper
-        options={options}
-        onLayoutListBox={onLayoutListBox}
-      />
-    ));
-    fireEvent.click(getByRole('combobox'));
-    fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
-    onLayoutListBox.mockClear();
-    expect(onLayoutListBox).not.toHaveBeenCalled();
   });
 
   it('is called when a listbox closed', () => {

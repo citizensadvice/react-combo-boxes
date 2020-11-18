@@ -23,6 +23,7 @@ import { classPrefix } from '../constants/class_prefix';
 import { visuallyHiddenClassName } from '../constants/visually_hidden_class_name';
 import { isSafari } from '../sniffers/is_safari';
 import { isMac } from '../sniffers/is_mac';
+import { scrollIntoView as defaultScrollIntoView } from '../helpers/scroll_into_view';
 
 const allowAttributes = [
   'autoComplete', 'autoCapitalize', 'autoCorrect', 'autoFocus', 'disabled', 'inputMode',
@@ -41,7 +42,7 @@ export const ComboBox = forwardRef(({ placeholder, ...rawProps }, ref) => {
     busyDebounce, options, value, selectedOption, id, className,
     notFoundMessage, foundOptionsMessage, onLayoutListBox, managedFocus, busy, onSearch,
     autoselect, showSelectedLabel,
-    onBlur: passedOnBlur, onFocus: passedOnFocus,
+    onBlur: passedOnBlur, onFocus: passedOnFocus, scrollIntoView,
     ListBoxComponent, listBoxProps,
     WrapperComponent, wrapperProps,
     BeforeInputComponent,
@@ -154,17 +155,17 @@ export const ComboBox = forwardRef(({ placeholder, ...rawProps }, ref) => {
   ), [expanded, options, selectedOption, search, value]);
 
   useLayoutEffect(() => {
+    if (showListBox && focusedRef.current) {
+      scrollIntoView(focusedRef.current);
+    }
     if (focusedOption && focusListBox && showListBox) {
       if (managedFocus) {
         focusedRef.current?.focus();
-      } else {
-        focusedRef.current?.scrollIntoView?.({ block: 'nearest' });
       }
     } else if (expanded && document.activeElement !== inputRef.current) {
       inputRef.current.focus();
-      inputRef.current?.scrollIntoView?.({ block: 'nearest' });
     }
-  }, [expanded, managedFocus, focusedOption, focusListBox, showListBox]);
+  }, [expanded, managedFocus, focusedOption, focusListBox, showListBox, scrollIntoView]);
 
   useEffect(() => {
     if (busy && !busyDebounce) {
@@ -324,6 +325,7 @@ ComboBox.propTypes = {
   expandOnFocus: PropTypes.bool,
   findSuggestion: PropTypes.func,
   managedFocus: PropTypes.bool,
+  scrollIntoView: PropTypes.func,
   showSelectedLabel: PropTypes.bool,
   skipOption: PropTypes.func,
   tabAutocomplete: PropTypes.bool,
@@ -381,6 +383,7 @@ ComboBox.defaultProps = {
   expandOnFocus: true,
   findSuggestion: findOption,
   managedFocus: !(isMac() && !isSafari()),
+  scrollIntoView: defaultScrollIntoView,
   skipOption: undefined,
   showSelectedLabel: undefined,
   tabAutocomplete: false,

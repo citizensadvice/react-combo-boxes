@@ -20,6 +20,7 @@ import { ListBox } from './list_box';
 import { classPrefix } from '../constants/class_prefix';
 import { joinTokens } from '../helpers/join_tokens';
 import { visuallyHiddenClassName } from '../constants/visually_hidden_class_name';
+import { scrollIntoView as defaultScrollIntoView } from '../helpers/scroll_into_view';
 
 export const DropDown = forwardRef((rawProps, ref) => {
   const optionisedProps = useNormalisedOptions(rawProps, { mustHaveSelection: true });
@@ -30,7 +31,7 @@ export const DropDown = forwardRef((rawProps, ref) => {
     required, disabled,
     options, value, id,
     children, managedFocus, onLayoutListBox,
-    selectedOption, findOption: currentFindOption,
+    selectedOption, findOption: currentFindOption, scrollIntoView,
     onBlur: passedOnBlur, onFocus: passedOnFocus,
     ListBoxComponent, listBoxProps,
     WrapperComponent, wrapperProps,
@@ -79,20 +80,20 @@ export const DropDown = forwardRef((rawProps, ref) => {
   }, [options, search, expanded, currentFindOption]);
 
   useLayoutEffect(() => {
+    if (expanded && focusedRef.current) {
+      scrollIntoView(focusedRef.current);
+    }
     if (expanded && focusedOption && managedFocus) {
       focusedRef.current?.focus();
-    } else if (expanded) {
-      if (document.activeElement !== comboBoxRef.current) {
-        comboBoxRef.current.focus();
-      }
-      focusedRef.current?.scrollIntoView?.({ block: 'nearest' });
+    } else if (expanded && document.activeElement !== comboBoxRef.current) {
+      comboBoxRef.current.focus();
     }
-  }, [expanded, managedFocus, focusedOption]);
+  }, [expanded, managedFocus, focusedOption, scrollIntoView]);
 
   const lastExpandedRef = useRef(expanded);
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!onLayoutListBox || (!expanded && !lastExpandedRef.current)) {
-      return;
+      return undefined;
     }
     lastExpandedRef.current = expanded;
     onLayoutListBox({
@@ -193,6 +194,7 @@ DropDown.propTypes = {
 
   findOption: PropTypes.func,
   managedFocus: PropTypes.bool,
+  scrollIntoView: PropTypes.func,
   skipOption: PropTypes.func,
 
   onBlur: PropTypes.func,
@@ -232,6 +234,7 @@ DropDown.defaultProps = {
 
   findOption,
   managedFocus: true,
+  scrollIntoView: defaultScrollIntoView,
   skipOption: undefined,
 
   onBlur: null,

@@ -84,7 +84,8 @@
 }
 
 .react-combo-boxes-listbox__table {
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   line-height: inherit;
   font-family: inherit;
   font-size: inherit;
@@ -101,8 +102,27 @@
   text-align: left;
 }
 
+.react-combo-boxes-listbox__table-header {
+  border-bottom: 1px solid #ddd;
+}
+
 .react-combo-boxes-listbox__table-group-header {
   border-top: 1px solid #ddd;
+}
+
+@supports (scroll-padding-top: 1px) and (position: sticky) {
+  .react-combo-boxes-listbox--header {
+    scroll-padding-top: 1.7em;
+  }
+
+  .react-combo-boxes-listbox__table-header {
+    position: sticky;
+    top: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    background-color: $react-combo-boxes-background-color;
+  }
 }
 
 .react-combo-boxes-listbox__table-cell {

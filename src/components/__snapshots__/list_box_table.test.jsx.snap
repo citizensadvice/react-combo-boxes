@@ -33,7 +33,7 @@ exports[`used with a combo box columns as names only renders a table as the list
       tabindex="-1"
     />
     <div
-      class="react-combo-boxes-listbox"
+      class="react-combo-boxes-listbox react-combo-boxes-listbox--header"
       hidden=""
     >
       <table
@@ -181,7 +181,7 @@ exports[`used with a combo box columns with headers renders a table with headers
       tabindex="-1"
     />
     <div
-      class="react-combo-boxes-listbox"
+      class="react-combo-boxes-listbox react-combo-boxes-listbox--header"
       hidden=""
     >
       <table
@@ -359,7 +359,7 @@ exports[`used with a combo box columns with html renders a table with colgroups 
       tabindex="-1"
     />
     <div
-      class="react-combo-boxes-listbox"
+      class="react-combo-boxes-listbox react-combo-boxes-listbox--header"
       hidden=""
     >
       <table
@@ -491,7 +491,7 @@ exports[`used with a combo box grouped renders a table with groups 1`] = `
       tabindex="-1"
     />
     <div
-      class="react-combo-boxes-listbox"
+      class="react-combo-boxes-listbox react-combo-boxes-listbox--header"
       hidden=""
     >
       <table
