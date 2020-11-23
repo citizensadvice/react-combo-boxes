@@ -93,7 +93,7 @@ export const DropDown = forwardRef((rawProps, ref) => {
   const lastExpandedRef = useRef(expanded);
   useEffect(() => {
     if (!onLayoutListBox || (!expanded && !lastExpandedRef.current)) {
-      return undefined;
+      return;
     }
     lastExpandedRef.current = expanded;
     onLayoutListBox({

@@ -28,7 +28,7 @@
     "test": "jest",
     "predeploy": "npm run lint",
     "deploy": "npm run build -- --public-url \"/react-combo-boxes/\" && gh-pages -d dist",
-    "version": "npm run lint",
+    "preversion": "npm run lint",
     "prepublishOnly": "npm run build:cjs && npm run build:es",
     "postpublish": "npm run deploy",
     "release": "np"
