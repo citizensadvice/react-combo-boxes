@@ -1,12 +1,6 @@
-import React from 'react';
-import { HighlightValue } from '../highlight_value';
+import { highlightValue } from './highlight_value';
 import { prefixHighlighter } from '../../highlighters/prefix_highlighter';
 
-export function PrefixHighlight(props) {
-  return (
-    <HighlightValue
-      highlight={prefixHighlighter}
-      {...props}
-    />
-  );
+export function prefixHighlight(...args) {
+  return highlightValue(prefixHighlighter, ...args);
 }

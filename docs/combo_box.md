@@ -5,9 +5,6 @@ Creates a searchable drop down, sometimes called a typeahead or autocomplete.
 This uses the ARIA 1.2 editable [combo box](https://w3c.github.io/aria-practices/#combobox)
 design pattern.
 
-> :warning: **Warning** this pattern can be useful but some users may find it difficult
-> or confusing to use.
-
 Combo-boxes like this are used in multiple different ways with many different interaction patterns.
 This implementation is mainly intended for finding and picking an item.  
 
@@ -84,58 +81,44 @@ Setting `aria-busy` is debounced to prevent some screen-readers constantly readi
 
 ## Customisation
 
-A number of hooks are provided to customise the appearance of the component.
+A number of render methods are provided to customise the appearance of the component.
 
-The `nameProps` props allow you to add your own attributes to each part, potentially overriding those already present.
-This is a good way to add your own classes.
+Each render method has the signature `render(props, state, componentProps)` where:
 
-The `NameComponent` props allow you to replace or override each component.  Pass a lower-case string to change
-the html element, or a full component if you want a more far reaching change.  Bear-in-mind you will have to
-`forwardRef` for a number of the components.
+- `props` are the default props for that component
+- `state` state is the current state of the combo box and has the properties:
+  - `aria-autocomplete` - `String` - the `aria-autocomplete` value for the component
+  - `aria-busy` - `String` - the `aria-busy` value for the component
+  - `currentOption` - `Object` - the currently selected option
+  - `expanded` - `Boolean` - is the list box showing
+  - `group` - `Object` - the currently rendered group (when rendering a group or option only)
+  - `notFound` - `Boolean` - is the not found message showing
+  - `option` - `Object` - the currently rendered option (when rendering an option only)
+  - `search` - `String` - the current search string
+  - `selected` - `Boolean` - is the currently selected option selected (when rendering an option only)
+  - `suggestedOption` - `Object` - the currently suggested option
+- `componentProps` - the props passed to the component
 
-```js
-<WrapperComponent {...wrapperProps}>                                  // <div>
-  <BeforeInputComponent />                                            // Fragment
-  <InputComponent {...inputProps} />                                  // <input>
-  <ListBoxComponent {...listBoxProps} >                               // the entire listbox implementation
-    <ListBoxListComponent {...listBoxListProps}>                      // <ul>
-      <OptionComponent {...optionProps}>                              // <li>
-        <ValueComponent {...valueProps} />                            // Fragment
-      </OptionComponent>
-      <GroupComponent {...groupProps}>                                // Fragment
-        <GroupLabelComponent {...groupProps} />                       // <li>
-        <OptionComponent {...optionProps}>                            // <li>
-          <div className={visuallyHiddenClassName } />                // contains the group name for screen readers
-          <ValueComponent {...valueProps} />                          // Fragment
-        </OptionComponent>
-      </GroupComponent>
-    </ListBoxListComponent>
-    <DownArrowComponent {...downArrowProps} />                        // <span>
-    <ClearButtonComponent {...clearButtonProps} />                    // <span>
-    <FoundDescriptionComponent className={visuallyHiddenClassName} /> // Description with the number of found items 
-    <NotFoundComponent {...notFoundProps} />                          // <div>
-    <ScreenReaderMessage />                                           // ARIA live region with the number of found items
-  </ListBoxComponent>
-</WrapperComponent>
-```
+The render functions available are:
 
-### Context
-
-A context is provided to access the props and internal state of the control.  The properties are:
-
-- `expanded` is the component expanded
-- `notFound` is the not found message shown
-- `activeOption` the currently active option
-- `search` the current search term
-- `suggestedOption` the currently suggested option
-- `props` the props supplied to the component
-- `aria-busy` the computed value of aria-busy
-- `aria-autocomplete` the computed value of aria-autocomplete
-- `props` the props supplied to the component
+| Name                         | Default element | Description                                                                         |
+| `renderWrapper`              | `<div>`         | Renders the component wrapper                                                       |
+| `renderInput`                | `<input>`       | Renders the combo-box input                                                         |
+| `renderDownArrow`            | `<span>`        | Renders down arrow displayed when options are available                             |
+| `renderClearButton`          | `<span>`        | Renders '×' button displayed when an option is selected                             |
+| `renderListBox`              | `<ul>`          | Renders the list-box                                                                |
+| `renderGroup`                | `<Fragment>`    | Wraps a group of options                                                            |
+| `renderGroupLabel`           | `<li>`          | Renders the visible label for a group. This will be ignored by a screen-reader      |
+| `renderOption`               | `<li>`          | Renders an option                                                                   |
+| `renderGroupAccessibleLabel` | `<span>`        | Renders the accessible label for a group.  This will be read out before each option |
+| `renderValue`                | `<Fragment>`    | Renders the value within an option                                                  |
+| `renderNotFound`             | `<div>`         | Renders the not found message                                                       |
+| `renderAriaDescription`      | `<div>`         | Renders the aria description of the combo box                                       |
+| `renderAriaLiveMessage`      | `<div>`         | Renders an aria live message that alerts users new options have been found          |
 
 ### Highlighters
 
-It is possible to highlight the parts of the matching the search term by replacing the `ValueComponent`.  See [Highlighters][4].
+It is possible to highlight the parts of the matching the search term using `renderValue`.  See [Highlighters][4].
 
 ## Advanced options
 

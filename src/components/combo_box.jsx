@@ -1,6 +1,5 @@
 import React, { useRef, useEffect, useLayoutEffect, Fragment, useMemo, forwardRef, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { Context } from '../context';
 import { useThunkReducer as useReducer } from '../hooks/use_thunk_reducer';
 import { reducer } from './combo_box/reducer';
 import { initialState } from './combo_box/initial_state';
@@ -12,46 +11,63 @@ import { useNormalisedOptions } from '../hooks/use_normalised_options';
 import { useOnBlur } from '../hooks/use_on_blur';
 import { useMounted } from '../hooks/use_mounted';
 import { joinTokens } from '../helpers/join_tokens';
-import { componentValidator } from '../validators/component_validator';
 import { stringOrArray } from '../validators/string_or_array';
 import { findOption } from '../helpers/find_option';
 import { useCombineRefs } from '../hooks/use_combine_refs';
-import { allowProps } from '../helpers/allow_props';
 import { ListBox } from './list_box';
-import { ScreenReaderMessage } from './screen_reader_message';
+import { AriaLiveMessage } from './aria_live_message';
 import { classPrefix } from '../constants/class_prefix';
 import { visuallyHiddenClassName } from '../constants/visually_hidden_class_name';
 import { isSafari } from '../sniffers/is_safari';
 import { isMac } from '../sniffers/is_mac';
 import { scrollIntoView as defaultScrollIntoView } from '../helpers/scroll_into_view';
 
-const allowAttributes = [
-  'autoComplete', 'autoCapitalize', 'autoCorrect', 'autoFocus', 'disabled', 'inputMode',
-  'maxLength', 'minLength', 'pattern', 'placeholder', 'readOnly',
-  'required', 'size', 'spellCheck', 'aria-invalid',
-];
-
 function defaultFoundOptionsMessage(options) {
   return `${options.length} option${options.length > 1 ? 's' : ''} found`;
 }
 
 export const ComboBox = forwardRef(({ placeholder, ...rawProps }, ref) => {
-  const optionisedProps = { ...useNormalisedOptions(rawProps), placeholder };
+  const optionisedProps = Object.freeze({ ...useNormalisedOptions(rawProps), placeholder });
   const {
-    'aria-describedby': ariaDescribedBy, 'aria-labelledby': ariaLabelledBy,
-    busyDebounce, options, value, selectedOption, id, className,
-    notFoundMessage, foundOptionsMessage, onLayoutListBox, managedFocus, busy, onSearch,
-    autoselect, showSelectedLabel,
-    onBlur: passedOnBlur, onFocus: passedOnFocus, scrollIntoView,
-    ListBoxComponent, listBoxProps,
-    WrapperComponent, wrapperProps,
-    BeforeInputComponent,
-    InputComponent, inputProps,
-    DownArrowComponent, downArrowProps,
-    ClearButtonComponent, clearButtonProps,
-    NotFoundComponent, notFoundProps,
-    FoundDescriptionComponent,
-    ScreenReaderMessageComponent,
+    'aria-describedby': ariaDescribedBy,
+    'aria-invalid': ariaInvalid,
+    'aria-labelledby': ariaLabelledBy,
+    autoCapitalize,
+    autoComplete,
+    autoCorrect,
+    autoFocus,
+    autoselect,
+    busy,
+    busyDebounce,
+    className,
+    disabled,
+    foundOptionsMessage,
+    id,
+    inputMode,
+    managedFocus,
+    maxLength,
+    minLength,
+    notFoundMessage,
+    onBlur: passedOnBlur,
+    onFocus: passedOnFocus,
+    onLayoutListBox,
+    onSearch,
+    options,
+    pattern,
+    readOnly,
+    renderClearButton,
+    renderAriaDescription,
+    renderDownArrow,
+    renderInput,
+    renderNotFound,
+    renderWrapper,
+    required,
+    scrollIntoView,
+    selectedOption,
+    showSelectedLabel,
+    size,
+    spellCheck,
+    value,
     visuallyHiddenClassName: providedVisuallyHiddenClassName,
   } = optionisedProps;
 
@@ -199,8 +215,7 @@ export const ComboBox = forwardRef(({ placeholder, ...rawProps }, ref) => {
     && search?.trim() && search !== value?.label;
   const ariaBusy = showBusy && search?.trim() && search !== (value?.label);
   const combinedRef = useCombineRefs(inputRef, ref);
-  const context = {
-    props: optionisedProps,
+  const componentState = Object.freeze({
     expanded: showListBox,
     notFound: showNotFound,
     currentOption: focusedOption,
@@ -208,62 +223,68 @@ export const ComboBox = forwardRef(({ placeholder, ...rawProps }, ref) => {
     suggestedOption,
     'aria-busy': ariaBusy,
     'aria-autocomplete': ariaAutocomplete,
-  };
+  });
   const clickOption = useCallback((e, option) => dispatch(onClick(e, option)), []);
 
-  return (
-    <Context.Provider value={context}>
-      <WrapperComponent
-        aria-busy={ariaBusy ? 'true' : 'false'}
-        className={className}
-        onBlur={handleBlur}
-        onFocus={handleFocus}
-        ref={comboRef}
-        {...wrapperProps}
-      >
-        <BeforeInputComponent />
-        <InputComponent
-          id={id}
-          className={`${classPrefix}combobox__input`}
-          type="text"
-          role="combobox"
-          autoComplete="off"
-          // aria-haspopup="listbox" is implicit
-          aria-autocomplete={ariaAutocomplete}
-          aria-controls={`${id}_listbox`} // ARIA 1.2 pattern
-          aria-expanded={showListBox ? 'true' : 'false'}
-          aria-activedescendant={(showListBox && focusListBox && focusedOption?.key) || null}
-          value={inputLabel || ''}
-          onKeyDown={(e) => dispatch(onKeyDown(e))}
-          onChange={(e) => dispatch(onChange(e))}
-          onMouseUp={(e) => dispatch(onInputMouseUp(e))}
-          onFocus={(e) => dispatch(onFocusInput(e))}
-          aria-describedby={joinTokens(showNotFound && `${id}_not_found`, `${id}_found_description`, ariaDescribedBy)}
-          aria-labelledby={joinTokens(ariaLabelledBy)}
-          ref={combinedRef}
-          tabIndex={managedFocus && showListBox && focusListBox ? -1 : null}
-          {...allowProps(optionisedProps, ...allowAttributes)}
-          {...inputProps}
-        />
-        <DownArrowComponent
-          id={`${id}_down_arrow`}
-          className={`${classPrefix}combobox__down-arrow`}
-          hidden={value || !options.length}
-          {...downArrowProps}
-        />
-        <ClearButtonComponent
-          id={`${id}_clear_button`}
-          role="button"
-          aria-label="Clear"
-          aria-labelledby={joinTokens(`${id}_clear_button`, ariaLabelledBy, id)}
-          className={`${classPrefix}combobox__clear-button`}
-          onClick={(e) => dispatch(onClearValue(e))}
-          onKeyDown={(e) => dispatch(onClearValue(e))}
-          hidden={!value || search === ''}
-          tabIndex={-1}
-          {...clearButtonProps}
-        />
-        <ListBoxComponent
+  return renderWrapper({
+    'aria-busy': ariaBusy ? 'true' : 'false',
+    className,
+    onBlur: handleBlur,
+    onFocus: handleFocus,
+    ref: comboRef,
+    children: (
+      <>
+        {renderInput({
+          id,
+          className: `${classPrefix}combobox__input`,
+          type: 'text',
+          role: 'combobox',
+          'aria-autocomplete': ariaAutocomplete,
+          'aria-controls': `${id}_listbox`,
+          'aria-expanded': showListBox ? 'true' : 'false',
+          'aria-activedescendant': (showListBox && focusListBox && focusedOption?.key) || null,
+          'aria-describedby': joinTokens(showNotFound && `${id}_not_found`, `${id}_aria_description`, ariaDescribedBy),
+          'aria-labelledby': joinTokens(ariaLabelledBy),
+          value: inputLabel || '',
+          onKeyDown: (e) => dispatch(onKeyDown(e)),
+          onChange: (e) => dispatch(onChange(e)),
+          onMouseUp: (e) => dispatch(onInputMouseUp(e)),
+          onFocus: (e) => dispatch(onFocusInput(e)),
+          ref: combinedRef,
+          tabIndex: managedFocus && showListBox && focusListBox ? -1 : null,
+          'aria-invalid': ariaInvalid,
+          autoCapitalize,
+          autoComplete,
+          autoCorrect,
+          autoFocus,
+          disabled,
+          inputMode,
+          maxLength,
+          minLength,
+          pattern,
+          placeholder,
+          readOnly,
+          required,
+          size,
+          spellCheck,
+        }, componentState, optionisedProps)}
+        {renderDownArrow({
+          id: `${id}_down_arrow`,
+          className: `${classPrefix}combobox__down-arrow`,
+          hidden: value || !options.length,
+        }, componentState, optionisedProps)}
+        {renderClearButton({
+          id: `${id}_clear_button`,
+          role: 'button',
+          'aria-label': 'Clear',
+          'aria-labelledby': joinTokens(`${id}_clear_button`, ariaLabelledBy, id),
+          className: `${classPrefix}combobox__clear-button`,
+          onClick: (e) => dispatch(onClearValue(e)),
+          onKeyDown: (e) => dispatch(onClearValue(e)),
+          hidden: !value || search === '',
+          tabIndex: -1,
+        }, componentState, optionisedProps)}
+        <ListBox
           ref={listRef}
           id={`${id}_listbox`}
           tabIndex={-1}
@@ -273,28 +294,28 @@ export const ComboBox = forwardRef(({ placeholder, ...rawProps }, ref) => {
           onKeyDown={(e) => dispatch(onKeyDown(e))}
           onSelectOption={clickOption}
           focusedRef={focusedRef}
-          {...listBoxProps}
+          componentProps={optionisedProps}
+          componentState={componentState}
         />
-        <FoundDescriptionComponent
-          id={`${id}_found_description`}
-          className={providedVisuallyHiddenClassName}
-        >
-          {showListBox ? foundOptionsMessage(options) : null }
-        </FoundDescriptionComponent>
-        <NotFoundComponent
-          id={`${id}_not_found`}
-          className={`${classPrefix}combobox__not-found`}
-          hidden={!showNotFound}
-          {...notFoundProps}
-        >
-          {showNotFound ? notFoundMessage : null}
-        </NotFoundComponent>
-        <ScreenReaderMessageComponent
+        {renderAriaDescription({
+          id: `${id}_aria_description`,
+          className: providedVisuallyHiddenClassName,
+          children: showListBox ? foundOptionsMessage(options) : null,
+        }, componentState, optionisedProps)}
+        {renderNotFound({
+          id: `${id}_not_found`,
+          className: `${classPrefix}combobox__not-found`,
+          hidden: !showNotFound,
+          children: showNotFound ? notFoundMessage : null,
+        }, componentState, optionisedProps)}
+        <AriaLiveMessage
           hidden={!showNotFound && !showListBox}
+          componentProps={optionisedProps}
+          componentState={componentState}
         />
-      </WrapperComponent>
-    </Context.Provider>
-  );
+      </>
+    ),
+  }, componentState, optionisedProps);
 });
 
 ComboBox.propTypes = {
@@ -309,7 +330,22 @@ ComboBox.propTypes = {
   'aria-labelledby': stringOrArray.isRequired,
   className: PropTypes.string,
   id: PropTypes.string.isRequired,
+
+  'aria-invalid': PropTypes.string,
+  autoComplete: PropTypes.string,
+  autoCapitalize: PropTypes.string,
+  autoCorrect: PropTypes.string,
+  autoFocus: PropTypes.bool,
+  disabled: PropTypes.bool,
+  inputMode: PropTypes.string,
+  maxLength: PropTypes.number,
+  minLength: PropTypes.number,
+  pattern: PropTypes.string,
   placeholder: PropTypes.string,
+  readOnly: PropTypes.bool,
+  required: PropTypes.bool,
+  size: PropTypes.number,
+  spellCheck: PropTypes.string,
 
   notFoundMessage: PropTypes.node,
   foundOptionsMessage: PropTypes.func,
@@ -330,31 +366,20 @@ ComboBox.propTypes = {
   skipOption: PropTypes.func,
   tabAutocomplete: PropTypes.bool,
 
-  WrapperComponent: componentValidator,
-  wrapperProps: PropTypes.object,
-  BeforeInputComponent: componentValidator,
-  InputComponent: componentValidator,
-  inputProps: PropTypes.object,
-  ListBoxComponent: componentValidator,
-  listBoxProps: PropTypes.object,
-  ListBoxListComponent: componentValidator,
-  listBoxListProps: PropTypes.object,
-  GroupComponent: componentValidator,
-  groupProps: PropTypes.object,
-  GroupLabelComponent: componentValidator,
-  groupLabelProps: PropTypes.object,
-  OptionComponent: componentValidator,
-  optionProps: PropTypes.object,
-  ValueComponent: componentValidator,
-  valueProps: PropTypes.object,
-  DownArrowComponent: componentValidator,
-  downArrowProps: PropTypes.object,
-  ClearButtonComponent: componentValidator,
-  clearButtonProps: PropTypes.object,
-  FoundDescriptionComponent: componentValidator,
-  NotFoundComponent: componentValidator,
-  notFoundProps: PropTypes.object,
-  ScreenReaderMessageComponent: componentValidator,
+  renderWrapper: PropTypes.func,
+  renderInput: PropTypes.func,
+  renderListBox: PropTypes.func,
+  renderGroup: PropTypes.func,
+  renderGroupLabel: PropTypes.func,
+  renderGroupAccessibleLabel: PropTypes.func,
+  renderOption: PropTypes.func,
+  renderValue: PropTypes.func,
+  renderDownArrow: PropTypes.func,
+  renderClearButton: PropTypes.func,
+  renderNotFound: PropTypes.func,
+  renderAriaDescription: PropTypes.func,
+  renderAriaLiveMessage: PropTypes.func,
+
   visuallyHiddenClassName: PropTypes.string,
 };
 
@@ -366,8 +391,23 @@ ComboBox.defaultProps = {
   busyDebounce: 400,
 
   'aria-describedby': null,
-  placeholder: null,
   className: `${classPrefix}combobox`,
+
+  'aria-invalid': null,
+  autoComplete: 'off',
+  autoCapitalize: null,
+  autoCorrect: null,
+  autoFocus: null,
+  disabled: null,
+  inputMode: null,
+  maxLength: null,
+  minLength: null,
+  pattern: null,
+  placeholder: null,
+  readOnly: null,
+  required: null,
+  size: null,
+  spellCheck: null,
 
   notFoundMessage: 'No matches found',
   foundOptionsMessage: defaultFoundOptionsMessage,
@@ -388,31 +428,20 @@ ComboBox.defaultProps = {
   showSelectedLabel: undefined,
   tabAutocomplete: false,
 
-  WrapperComponent: 'div',
-  wrapperProps: null,
-  BeforeInputComponent: Fragment,
-  InputComponent: 'input',
-  inputProps: null,
-  ListBoxComponent: ListBox,
-  listBoxProps: null,
-  ListBoxListComponent: undefined,
-  listBoxListProps: null,
-  GroupComponent: undefined,
-  groupProps: null,
-  GroupLabelComponent: undefined,
-  groupLabelProps: null,
-  OptionComponent: undefined,
-  optionProps: null,
-  ValueComponent: Fragment,
-  valueProps: null,
-  DownArrowComponent: 'span',
-  downArrowProps: null,
-  ClearButtonComponent: 'span',
-  clearButtonProps: null,
-  FoundDescriptionComponent: 'div',
-  NotFoundComponent: 'div',
-  notFoundProps: null,
-  ScreenReaderMessageComponent: ScreenReaderMessage,
+  renderWrapper: (props) => <div {...props} />,
+  renderInput: (props) => <input {...props} />,
+  renderListBox: (props) => <ul {...props} />,
+  renderGroup: (props) => <Fragment {...props} />,
+  renderGroupLabel: (props) => <li {...props} />,
+  renderGroupAccessibleLabel: (props) => <span {...props} />,
+  renderOption: (props) => <li {...props} />,
+  renderValue: (props) => <Fragment {...props} />,
+  renderDownArrow: (props) => <span {...props} />,
+  renderClearButton: (props) => <span {...props} />,
+  renderNotFound: (props) => <div {...props} />,
+  renderAriaDescription: (props) => <div {...props} />,
+  renderAriaLiveMessage: (props) => <div {...props} />,
+
   visuallyHiddenClassName,
 };
 

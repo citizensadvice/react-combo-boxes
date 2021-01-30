@@ -1,5 +1,5 @@
-import React, { forwardRef, useContext, useState } from 'react';
-import { Context, ComboBox, useTokenSearch } from '../../../src';
+import React, { useState } from 'react';
+import { ComboBox, useTokenSearch } from '../../../src';
 
 const options = [
   'Apple',
@@ -9,18 +9,27 @@ const options = [
   'Strawberry',
 ];
 
-const WrapperComponent = forwardRef((props, ref) => {
-  const { expanded, props: { id } } = useContext(Context);
+function renderWrapper(props, { expanded }, { id, 'aria-labelledby': ariaLabelledBy }) {
   return (
     <div
       {...props}
-      ref={ref}
       role="combobox"
       aria-owns={id}
-      aris-expanded={expanded ? 'true' : 'false'}
+      aria-expanded={expanded ? 'true' : 'false'}
+      aria-labelledby={ariaLabelledBy}
     />
   );
-});
+}
+
+function renderInput(props) {
+  return (
+    <input
+      {...props}
+      role={null}
+      aria-expanded={null}
+    />
+  );
+}
 
 export function Example() {
   const [value, setValue] = useState(null);
@@ -42,9 +51,8 @@ export function Example() {
         onValue={setValue}
         onSearch={onSearch}
         options={filteredOptions}
-        WrapperComponent={WrapperComponent}
-        wrapperProps={{ 'aria-labelledby': 'select-label' }}
-        inputProps={{ role: null, 'aria-expanded': null }}
+        renderWrapper={renderWrapper}
+        renderInput={renderInput}
         managedFocus={managedFocus}
       />
 

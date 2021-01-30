@@ -6,7 +6,7 @@ import { renderGroupedOptions } from '../helpers/render_grouped_options';
 export const Select = forwardRef((rawProps, ref) => {
   const {
     options, onChange, onValue, value: _, selectedOption,
-    optionProps, optgroupProps,
+    renderOption, renderOptGroup,
     ...props
   } = useNormalisedOptions(rawProps, { mustHaveSelection: true });
 
@@ -25,30 +25,11 @@ export const Select = forwardRef((rawProps, ref) => {
       {renderGroupedOptions({
         options,
         renderGroup({ key, html, children, label }) { // eslint-disable-line react/prop-types
-          return (
-            <optgroup
-              key={key}
-              label={label}
-              {...optgroupProps}
-              {...html}
-            >
-              {children}
-            </optgroup>
-          );
+          return renderOptGroup({ key, label, ...html, children });
         },
         // eslint-disable-next-line react/prop-types
         renderOption({ identity, label, key, html, disabled }) {
-          return (
-            <option
-              value={identity}
-              key={key}
-              disabled={disabled}
-              {...optionProps}
-              {...html}
-            >
-              {label}
-            </option>
-          );
+          return renderOption({ key, value: identity, disabled, ...html, children: label });
         },
       })}
     </select>
@@ -61,8 +42,8 @@ Select.propTypes = {
   onValue: PropTypes.func,
   options: PropTypes.arrayOf(PropTypes.any).isRequired,
   value: PropTypes.any,
-  optionProps: PropTypes.object,
-  optgroupProps: PropTypes.object,
+  renderOption: PropTypes.func,
+  renderOptGroup: PropTypes.func,
 };
 
 Select.defaultProps = {
@@ -70,8 +51,8 @@ Select.defaultProps = {
   value: null,
   onChange: null,
   onValue: null,
-  optionProps: null,
-  optgroupProps: null,
+  renderOption: (props) => <option {...props} />,
+  renderOptGroup: (props) => <optgroup {...props} />,
 };
 
 Select.displayName = 'Select';

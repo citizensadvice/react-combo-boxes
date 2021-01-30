@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ComboBox, useTokenSearch, TokenHighlight } from '../../../src';
+import { ComboBox, useTokenSearch, tokenHighlight } from '../../../src';
 import countries from '../../data/countries.json';
 
 function map({ name, code }) {
@@ -36,7 +36,7 @@ export function Example() {
         showSelectedLabel={showSelectedLabel}
         managedFocus={managedFocus}
         expandOnFocus={expandOnFocus}
-        ValueComponent={TokenHighlight}
+        renderValue={tokenHighlight}
       />
 
       <fieldset>

@@ -20,16 +20,16 @@ const [value, setValue] = useState(initialValue);
 />
 ```
 
-| Prop            | Type       | Purpose                                   |
-| ----            | ----       | ----                                      |
-| `placeholder`   | `String`   | Set a placeholder option                  |
-| `options`       | `Array`    | The set of options. [See options][1]      |
-| `value`         | `Any`      | The currently selected option             |
-| `onValue`       | `Function` | Called with the selected option           |
-| `mapOption`     | `Function` | Use to map options. [See options][1]      |
-| `optionProps`   | `Object`   | Props to add to all `<option>` elements   |
-| `optGroupProps` | `Object`   | Props to add to all `<optgroup>` elements |
-| `ref`           | `ref`      | Will be forwarded to `<select>` element   |
-| Any other prop  |            | Will be passed to the `<select>` element  |
+| Prop             | Type       | Purpose                                  |
+| ----             | ----       | ----                                     |
+| `placeholder`    | `String`   | Set a placeholder option                 |
+| `options`        | `Array`    | The set of options. [See options][1]     |
+| `value`          | `Any`      | The currently selected option            |
+| `onValue`        | `Function` | Called with the selected option          |
+| `mapOption`      | `Function` | Use to map options. [See options][1]     |
+| `renderOption`   | `Function` | Render function for options              |
+| `renderOptGroup` | `Function` | Render function for optgroups            |
+| `ref`            | `ref`      | Will be forwarded to `<select>` element  |
+| Any other prop   |            | Will be passed to the `<select>` element |
 
 [1]: options.md

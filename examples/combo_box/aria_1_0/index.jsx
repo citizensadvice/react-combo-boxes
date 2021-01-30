@@ -1,5 +1,4 @@
-import React, { forwardRef, useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import { ComboBox, useTokenSearch } from '../../../src';
 
 const options = [
@@ -10,19 +9,14 @@ const options = [
   'Ugli fruit',
 ];
 
-const InputComponent = forwardRef(({ 'aria-controls': ariaOwns, ...props }, ref) => (
-  <input
-    {...props}
-    ref={ref}
-    aria-owns={ariaOwns}
-  />
-));
-
-InputComponent.propTypes = {
-  'aria-controls': PropTypes.string.isRequired,
-};
-
-InputComponent.displayName = 'InputComponent';
+function renderInput({ 'aria-controls': ariaOwns, ...props }) {
+  return (
+    <input
+      {...props}
+      aria-owns={ariaOwns}
+    />
+  );
+}
 
 export function Example() {
   const [value, setValue] = useState(null);
@@ -44,7 +38,7 @@ export function Example() {
         onValue={setValue}
         onSearch={onSearch}
         options={filteredOptions}
-        InputComponent={InputComponent}
+        renderInput={renderInput}
         managedFocus={managedFocus}
       />
 

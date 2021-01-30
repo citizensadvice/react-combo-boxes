@@ -1,21 +1,9 @@
-import React from 'react';
 import { render } from '@testing-library/react';
-import { TokenHighlight } from './token_highlight';
-import { Context } from '../../context';
-
-function TestHighlight({ children, value, inverse, ...props }) {
-  return (
-    <Context.Provider value={{ ...props, props: { value, visuallyHiddenClassName: 'sr-only' } }}>
-      <TokenHighlight inverse={inverse}>
-        {children}
-      </TokenHighlight>
-    </Context.Provider>
-  );
-}
+import { tokenHighlight } from './token_highlight';
 
 it('does not highlight with no children', () => {
   const { container } = render((
-    <TestHighlight search="bar" />
+    tokenHighlight({ children: null }, { search: null }, {})
   ));
 
   expect(container).toContainHTML('<div></div>');
@@ -23,9 +11,7 @@ it('does not highlight with no children', () => {
 
 it('does not highlight with no search children', () => {
   const { container } = render((
-    <TestHighlight search={null}>
-      foo
-    </TestHighlight>
+    tokenHighlight({ children: 'foo' }, { search: null }, {})
   ));
 
   expect(container).toContainHTML('<div>foo</div>');
@@ -33,9 +19,7 @@ it('does not highlight with no search children', () => {
 
 it('does not highlight no match', () => {
   const { container } = render((
-    <TestHighlight search="bar">
-      foo foobar
-    </TestHighlight>
+    tokenHighlight({ children: 'foo foobar' }, { search: 'bar' }, {})
   ));
 
   expect(container).toContainHTML('<div>foo foobar</div>');
@@ -43,9 +27,7 @@ it('does not highlight no match', () => {
 
 it('highlights all tokens', () => {
   const { container } = render((
-    <TestHighlight search="bar">
-      foo bar foo bar
-    </TestHighlight>
+    tokenHighlight({ children: 'foo bar foo bar' }, { search: 'bar' }, { visuallyHiddenClassName: 'sr-only' })
   ));
 
   expect(container).toMatchSnapshot();
@@ -53,9 +35,7 @@ it('highlights all tokens', () => {
 
 it('highlights the start of tokens', () => {
   const { container } = render((
-    <TestHighlight search="bar">
-      &quot;barfoo&quot;
-    </TestHighlight>
+    tokenHighlight({ children: '"barfoo"' }, { search: 'bar' }, { visuallyHiddenClassName: 'sr-only' })
   ));
 
   expect(container).toMatchSnapshot();
@@ -63,9 +43,7 @@ it('highlights the start of tokens', () => {
 
 it('highlights existing value', () => {
   const { container } = render((
-    <TestHighlight value={{ label: 'bar' }}>
-      foo bar foo bar
-    </TestHighlight>
+    tokenHighlight({ children: 'foo bar foo bar' }, { search: null }, { value: { label: 'bar' }, visuallyHiddenClassName: 'sr-only' })
   ));
 
   expect(container).toMatchSnapshot();
@@ -73,9 +51,7 @@ it('highlights existing value', () => {
 
 it('inverses the highlight', () => {
   const { container } = render((
-    <TestHighlight search="bar" inverse>
-      foo bar foo bar
-    </TestHighlight>
+    tokenHighlight({ children: 'foo bar foo bar' }, { search: 'bar' }, { visuallyHiddenClassName: 'sr-only' }, { inverse: true })
   ));
 
   expect(container).toMatchSnapshot();
