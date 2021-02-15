@@ -53,17 +53,22 @@
 
   width: 100%;
   border: none;
-  box-shadow: inset 0 0 0 1px #ccc;
+  box-shadow: inset 0 0 0 1px $react-combo-boxes-border-color;
   box-sizing: border-box;
   appearance: none;
   line-height: inherit;
+  outline: none;
 
   &:focus {
-    box-shadow: inset 0 0 0 $react-combo-boxes-focus-border-width $react-combo-boxes-focus-border-color;
+    box-shadow:
+      inset 0 0 0 $react-combo-boxes-focus-border-width $react-combo-boxes-border-color,
+      0 0 0 $react-combo-boxes-focus-border-width $react-combo-boxes-focus-border-color;
   }
 
   .react-combo-boxes-combobox:focus-within & {
-    box-shadow: inset 0 0 0 $react-combo-boxes-focus-border-width $react-combo-boxes-focus-border-color;
+    box-shadow:
+      inset 0 0 0 $react-combo-boxes-focus-border-width $react-combo-boxes-border-color,
+      0 0 0 $react-combo-boxes-focus-border-width $react-combo-boxes-focus-border-color;
   }
 
   &::-ms-clear {

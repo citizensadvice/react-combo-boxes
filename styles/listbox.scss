@@ -6,7 +6,7 @@
   min-width: 100%;
   width: max-content;
   background-color: white;
-  border: $react-combo-boxes-focus-border-width solid $react-combo-boxes-focus-border-color;
+  border: $react-combo-boxes-focus-border-width solid $react-combo-boxes-border-color;
   max-height: 30rem;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
@@ -16,7 +16,11 @@
   margin: 0 1em 1em 0;
   min-height: 1.5em;
   box-sizing: border-box;
-  box-shadow: 0 2px 4px #aaa;
+  box-shadow:
+    0 $react-combo-boxes-focus-border-width 0 0 $react-combo-boxes-focus-border-color,
+    $react-combo-boxes-focus-border-width  0 0 0 $react-combo-boxes-focus-border-color,
+    -$react-combo-boxes-focus-border-width 0 0 0 $react-combo-boxes-focus-border-color,
+    0 2px 4px #aaa;
   overscroll-behavior: none;
   -ms-scroll-chaining: none;
 }
@@ -28,7 +32,7 @@
 
   mark {
     font-weight: bold;
-    background-color: transparent;
+    background-color: $react-combo-boxes-mark-color;
   }
 
   &:hover,

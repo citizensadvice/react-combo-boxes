@@ -8,3 +8,4 @@
 - `<ListBoxTable>` is refactored into `ComboBoxTable` and `DropDownTable` components
 - Removed `context` as it is no longer required
 - Removed `useConfineListBoxTable` is it is no longer required
+- Update focus and contrast styles
