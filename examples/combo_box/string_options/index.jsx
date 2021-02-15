@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ComboBox, useTokenSearch, TokenHighlight } from '../../../src';
+import { ComboBox, useTokenSearch, tokenHighlight } from '../../../src';
 
 const options = [
   'Apple',
@@ -29,7 +29,7 @@ export function Example() {
         onValue={setValue}
         onSearch={onSearch}
         options={filteredOptions}
-        ValueComponent={TokenHighlight}
+        renderValue={tokenHighlight}
       />
 
       <label htmlFor="output">

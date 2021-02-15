@@ -1,12 +1,6 @@
-import React from 'react';
-import { HighlightValue } from '../highlight_value';
+import { highlightValue } from './highlight_value';
 import { tokenHighlighter } from '../../highlighters/token_highlighter';
 
-export function TokenHighlight(props) {
-  return (
-    <HighlightValue
-      highlight={tokenHighlighter}
-      {...props}
-    />
-  );
+export function tokenHighlight(...args) {
+  return highlightValue(tokenHighlighter, ...args);
 }

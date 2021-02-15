@@ -1,6 +1,6 @@
 export { Select } from './select';
 export { DropDown } from './drop_down';
+export { DropDownTable } from './drop_down_table';
 export { ComboBox } from './combo_box';
-export { ListBoxTable } from './list_box_table';
-export { HighlightValue } from './highlight_value';
+export { ComboBoxTable } from './combo_box_table';
 export * from './highlighters';

@@ -1,5 +1,5 @@
-import React, { forwardRef, useContext, useState } from 'react';
-import { ComboBox, useSearch, Context } from '../../../src';
+import React, { useState } from 'react';
+import { ComboBox, useSearch } from '../../../src';
 
 function search(value) {
   if (!value) {
@@ -31,29 +31,25 @@ function search(value) {
     ));
 }
 
-const InputComponent = forwardRef((props, ref) => {
-  const { expanded, suggestedOption } = useContext(Context);
+function renderInput(props, { expanded, suggestedOption }) {
   const suggestedValue = (expanded && suggestedOption?.label) || '';
+  const { className } = props;
 
   return (
     <>
       <input
         {...props}
-        ref={ref}
         style={{ background: 'transparent' }}
       />
       <input
-        {...props}
+        className={className}
         value={suggestedValue}
         disabled
-        id={null}
         style={{ position: 'absolute', left: 0, background: 'white', zIndex: -1, color: '#999' }}
       />
     </>
   );
-});
-
-InputComponent.displayName = 'InputComponent';
+}
 
 export function Example() {
   const [value, setValue] = useState(null);
@@ -80,9 +76,9 @@ export function Example() {
         showSelectedLabel
         expandOnFocus={false}
         managedFocus={false}
-        NotFoundComponent={() => null}
-        ClearButtonComponent={() => null}
-        InputComponent={InputComponent}
+        renderNotFound={() => null}
+        renderClearButton={() => null}
+        renderInput={renderInput}
         autoselect={autoselect}
         autoCapitalize="none"
         autoCorrect="off"

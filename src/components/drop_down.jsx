@@ -1,6 +1,5 @@
 import React, { useRef, useEffect, useLayoutEffect, Fragment, forwardRef, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { Context } from '../context';
 import { useThunkReducer as useReducer } from '../hooks/use_thunk_reducer';
 import { reducer } from './drop_down/reducer';
 import { initialState } from './drop_down/initial_state';
@@ -12,7 +11,6 @@ import {
 import { useNormalisedOptions } from '../hooks/use_normalised_options';
 import { useOnBlur } from '../hooks/use_on_blur';
 import { useMounted } from '../hooks/use_mounted';
-import { componentValidator } from '../validators/component_validator';
 import { stringOrArray } from '../validators/string_or_array';
 import { useCombineRefs } from '../hooks/use_combine_refs';
 import { findOption } from '../helpers/find_option';
@@ -23,20 +21,28 @@ import { visuallyHiddenClassName } from '../constants/visually_hidden_class_name
 import { scrollIntoView as defaultScrollIntoView } from '../helpers/scroll_into_view';
 
 export const DropDown = forwardRef((rawProps, ref) => {
-  const optionisedProps = useNormalisedOptions(rawProps, { mustHaveSelection: true });
+  const optionisedProps = Object.freeze(
+    useNormalisedOptions(rawProps, { mustHaveSelection: true }),
+  );
   const {
-    'aria-labelledby': ariaLabelledBy,
     'aria-describedby': ariaDescribedBy,
     'aria-invalid': ariaInvalid,
-    required, disabled,
-    options, value, id,
-    children, managedFocus, onLayoutListBox,
-    selectedOption, findOption: currentFindOption, scrollIntoView,
-    onBlur: passedOnBlur, onFocus: passedOnFocus,
-    ListBoxComponent, listBoxProps,
-    WrapperComponent, wrapperProps,
-    ComboBoxComponent, comboBoxProps,
-    visuallyHiddenClassName: providedVisuallyHiddenClassName,
+    'aria-labelledby': ariaLabelledBy,
+    children,
+    disabled,
+    findOption: currentFindOption,
+    id,
+    managedFocus,
+    onBlur: passedOnBlur,
+    onFocus: passedOnFocus,
+    onLayoutListBox,
+    options,
+    renderComboBox,
+    renderWrapper,
+    required,
+    scrollIntoView,
+    selectedOption,
+    value,
   } = optionisedProps;
   const comboBoxRef = useRef();
   const listRef = useRef();
@@ -120,49 +126,35 @@ export const DropDown = forwardRef((rawProps, ref) => {
   }, [valueIdentity, mounted]);
 
   const combinedRef = useCombineRefs(comboBoxRef, ref);
-  const context = {
-    props: optionisedProps,
-    expanded,
-    currentOption: focusedOption,
-  };
   const clickOption = useCallback((e, option) => dispatch(onClick(e, option)), []);
+  const componentState = Object.freeze({ expanded, search, currentOption: focusedOption });
 
-  return (
-    <Context.Provider value={context}>
-      <WrapperComponent
-        onBlur={handleBlur}
-        onFocus={handleFocus}
-        onKeyDown={(e) => dispatch(onKeyDown(e))}
-        className={`${classPrefix}dropdown`}
-        {...wrapperProps}
-      >
-        <div // Some screen-readers don't read the value
-          id={`${id}_value`}
-          className={providedVisuallyHiddenClassName}
-        >
-          {(children ?? value?.label ?? selectedOption?.label) || '\u00A0'}
-        </div>
-        <ComboBoxComponent
-          role="combobox"
-          id={id}
-          className={`${classPrefix}dropdown__combobox`}
-          aria-controls={`${id}_listbox`}
-          aria-expanded={expanded ? 'true' : 'false'}
-          aria-activedescendant={(expanded && focusedOption?.key) || null}
-          aria-labelledby={joinTokens(ariaLabelledBy, `${id}_value`)}
-          aria-describedby={joinTokens(ariaDescribedBy)}
-          aria-required={required ? 'true' : null}
-          aria-disabled={disabled ? 'true' : null}
-          aria-invalid={ariaInvalid == null ? undefined : String(ariaInvalid)}
-          tabIndex={disabled ? null : 0}
-          ref={combinedRef}
-          onClick={(e) => dispatch(onToggleOpen(e))}
-          onMouseDown={(e) => e.preventDefault()}
-          {...comboBoxProps}
-        >
-          {(children ?? value?.label ?? selectedOption?.label) || '\u00A0'}
-        </ComboBoxComponent>
-        <ListBoxComponent
+  return renderWrapper({
+    onBlur: handleBlur,
+    onFocus: handleFocus,
+    onKeyDown: (e) => dispatch(onKeyDown(e)),
+    className: `${classPrefix}dropdown`,
+    children: (
+      <>
+        {renderComboBox({
+          role: 'combobox',
+          id,
+          className: `${classPrefix}dropdown__combobox`,
+          'aria-controls': `${id}_listbox`,
+          'aria-expanded': expanded ? 'true' : 'false',
+          'aria-activedescendant': (expanded && focusedOption?.key) || null,
+          'aria-labelledby': joinTokens(ariaLabelledBy, id),
+          'aria-describedby': joinTokens(ariaDescribedBy),
+          'aria-required': required ? 'true' : null,
+          'aria-disabled': disabled ? 'true' : null,
+          'aria-invalid': ariaInvalid == null ? undefined : String(ariaInvalid),
+          tabIndex: disabled ? null : 0,
+          ref: combinedRef,
+          onClick: (e) => dispatch(onToggleOpen(e)),
+          onMouseDown: (e) => e.preventDefault(),
+          children: (children ?? value?.label ?? selectedOption?.label) || '\u00A0',
+        }, componentState, optionisedProps)}
+        <ListBox
           ref={listRef}
           id={`${id}_listbox`}
           hidden={!expanded}
@@ -171,11 +163,12 @@ export const DropDown = forwardRef((rawProps, ref) => {
           tabIndex={-1}
           onSelectOption={clickOption}
           focusedRef={focusedRef}
-          {...listBoxProps}
+          componentState={componentState}
+          componentProps={optionisedProps}
         />
-      </WrapperComponent>
-    </Context.Provider>
-  );
+      </>
+    ),
+  }, componentState, optionisedProps);
 });
 
 DropDown.propTypes = {
@@ -202,22 +195,15 @@ DropDown.propTypes = {
   onValue: PropTypes.func,
   onLayoutListBox: PropTypes.func,
 
-  WrapperComponent: componentValidator,
-  wrapperProps: PropTypes.object,
-  ListBoxComponent: componentValidator,
-  listBoxProps: PropTypes.object,
-  ListBoxListComponent: componentValidator,
-  listBoxListProps: PropTypes.object,
-  ComboBoxComponent: componentValidator,
-  comboBoxProps: PropTypes.object,
-  GroupComponent: componentValidator,
-  groupProps: PropTypes.object,
-  GroupLabelComponent: componentValidator,
-  groupLabelProps: PropTypes.object,
-  OptionComponent: componentValidator,
-  optionProps: PropTypes.object,
-  ValueComponent: componentValidator,
-  valueProps: PropTypes.object,
+  renderWrapper: PropTypes.func,
+  renderListBox: PropTypes.func,
+  renderComboBox: PropTypes.func,
+  renderGroup: PropTypes.func,
+  renderGroupLabel: PropTypes.func,
+  renderGroupAccessibleLabel: PropTypes.func,
+  renderOption: PropTypes.func,
+  renderValue: PropTypes.func,
+
   visuallyHiddenClassName: PropTypes.string,
 };
 
@@ -242,22 +228,15 @@ DropDown.defaultProps = {
   onValue: null,
   onLayoutListBox: null,
 
-  WrapperComponent: 'div',
-  wrapperProps: null,
-  ComboBoxComponent: 'div',
-  comboBoxProps: null,
-  ListBoxComponent: ListBox,
-  listBoxProps: null,
-  ListBoxListComponent: undefined,
-  listBoxListProps: null,
-  GroupComponent: undefined,
-  groupProps: null,
-  GroupLabelComponent: undefined,
-  groupLabelProps: null,
-  OptionComponent: undefined,
-  optionProps: null,
-  ValueComponent: Fragment,
-  valueProps: null,
+  renderWrapper: (props) => <div {...props} />,
+  renderListBox: (props) => <ul {...props} />,
+  renderComboBox: (props) => <div {...props} />,
+  renderGroup: (props) => <Fragment {...props} />,
+  renderGroupLabel: (props) => <li {...props} />,
+  renderGroupAccessibleLabel: (props) => <span {...props} />,
+  renderOption: (props) => <li {...props} />,
+  renderValue: (props) => <Fragment {...props} />,
+
   visuallyHiddenClassName,
 };
 

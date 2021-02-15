@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ComboBox, usePrefixSearch, TokenHighlight } from '../../../src';
+import { ComboBox, usePrefixSearch, tokenHighlight } from '../../../src';
 
 const options = [
   'css',
@@ -41,10 +41,9 @@ export function Example() {
         showSelectedLabel
         managedFocus={false}
         expandOnFocus={false}
-        DownArrowComponent={() => null}
-        ClearButtonComponent={() => null}
-        ValueComponent={TokenHighlight}
-        valueProps={{ inverse: true }}
+        renderDownArrow={() => null}
+        renderClearButton={() => null}
+        renderValue={(...args) => tokenHighlight(...args, { inverse: true })}
       />
 
       <label htmlFor="output">

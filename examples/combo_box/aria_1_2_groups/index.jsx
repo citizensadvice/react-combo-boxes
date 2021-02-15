@@ -1,5 +1,5 @@
-import React, { forwardRef, useContext, useState } from 'react';
-import { Context, ComboBox, useTokenSearch } from '../../../src';
+import React, { useState } from 'react';
+import { ComboBox, useTokenSearch } from '../../../src';
 
 const options = [
   { label: 'Apple' },
@@ -9,51 +9,27 @@ const options = [
   { label: 'Strawberry', group: 'Berry' },
 ];
 
-function GroupComponent({ children }) {
-  const { group: { key } } = useContext(Context);
-  const [label, groupOptions] = children;
-
+function renderGroup(props, { groupChildren, group: { key, label } }) {
   return (
     <li
       role="group"
       aria-labelledby={key}
     >
-      {label}
+      <div
+        className="react-combo-boxes-listbox__group-label"
+        id={key}
+      >
+        {label}
+      </div>
       <ul
         role="presentation"
         className="react-combo-boxes-listbox__group"
       >
-        {groupOptions}
+        {groupChildren}
       </ul>
     </li>
   );
 }
-
-function GroupLabelComponent({ children }) {
-  const { group: { key } } = useContext(Context);
-
-  return (
-    <div
-      className="react-combo-boxes-listbox__group-label"
-      id={key}
-    >
-      {children}
-    </div>
-  );
-}
-
-const OptionComponent = forwardRef(({ children, ...props }, ref) => {
-  // Filter out visually hidden label
-  const [, option] = children;
-  return (
-    <li
-      ref={ref}
-      {...props}
-    >
-      {option}
-    </li>
-  );
-});
 
 export function Example() {
   const [value, setValue] = useState(null);
@@ -76,9 +52,8 @@ export function Example() {
         onSearch={onSearch}
         options={filteredOptions}
         managedFocus={managedFocus}
-        GroupComponent={GroupComponent}
-        GroupLabelComponent={GroupLabelComponent}
-        OptionComponent={OptionComponent}
+        renderGroup={renderGroup}
+        renderGroupAccessibleLabel={() => null}
       />
 
       <label>

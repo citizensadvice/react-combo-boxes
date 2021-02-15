@@ -1,21 +1,9 @@
-import React from 'react';
 import { render } from '@testing-library/react';
-import { SubstringHighlight } from './substring_highlight';
-import { Context } from '../../context';
-
-function TestHighlight({ children, value, inverse, ...props }) {
-  return (
-    <Context.Provider value={{ ...props, props: { value, visuallyHiddenClassName: 'sr-only' } }}>
-      <SubstringHighlight inverse={inverse}>
-        {children}
-      </SubstringHighlight>
-    </Context.Provider>
-  );
-}
+import { substringHighlight } from './substring_highlight';
 
 it('does not highlight with no children', () => {
   const { container } = render((
-    <TestHighlight search="bar" />
+    substringHighlight({ children: null }, { search: null }, {})
   ));
 
   expect(container).toContainHTML('<div></div>');
@@ -23,9 +11,7 @@ it('does not highlight with no children', () => {
 
 it('does not highlight with no search children', () => {
   const { container } = render((
-    <TestHighlight search={null}>
-      foo
-    </TestHighlight>
+    substringHighlight({ children: 'foo' }, { search: null }, {})
   ));
 
   expect(container).toContainHTML('<div>foo</div>');
@@ -33,9 +19,7 @@ it('does not highlight with no search children', () => {
 
 it('does not highlight no match', () => {
   const { container } = render((
-    <TestHighlight search="bar">
-      foo
-    </TestHighlight>
+    substringHighlight({ children: 'foo' }, { search: 'bar' }, {})
   ));
 
   expect(container).toContainHTML('<div>foo</div>');
@@ -43,9 +27,7 @@ it('does not highlight no match', () => {
 
 it('highlights a substring', () => {
   const { container } = render((
-    <TestHighlight search="bar">
-      foo bar foo bar
-    </TestHighlight>
+    substringHighlight({ children: 'foo bar foo bar' }, { search: 'bar' }, { visuallyHiddenClassName: 'sr-only' })
   ));
 
   expect(container).toMatchSnapshot();
@@ -53,9 +35,7 @@ it('highlights a substring', () => {
 
 it('highlights an existing value substring', () => {
   const { container } = render((
-    <TestHighlight value={{ label: 'bar' }}>
-      foo bar foo bar
-    </TestHighlight>
+    substringHighlight({ children: 'foo bar foo bar' }, { search: null }, { value: { label: 'bar' }, visuallyHiddenClassName: 'sr-only' })
   ));
 
   expect(container).toMatchSnapshot();
@@ -63,9 +43,7 @@ it('highlights an existing value substring', () => {
 
 it('inverses the highlight', () => {
   const { container } = render((
-    <TestHighlight search="bar" inverse>
-      foo bar foo bar
-    </TestHighlight>
+    substringHighlight({ children: 'foo bar foo bar' }, { search: 'bar' }, { visuallyHiddenClassName: 'sr-only' }, { inverse: true })
   ));
 
   expect(container).toMatchSnapshot();

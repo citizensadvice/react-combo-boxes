@@ -1,41 +1,9 @@
-import React from 'react';
 import { render } from '@testing-library/react';
-import { PassThroughHighlight } from './pass_through_highlight';
-import { Context } from '../../context';
+import { passThroughHighlight } from './pass_through_highlight';
 
-function TestHighlight({ children, value, ...props }) {
-  return (
-    <Context.Provider value={{ ...props, props: { value } }}>
-      <PassThroughHighlight>
-        {children}
-      </PassThroughHighlight>
-    </Context.Provider>
-  );
-}
-
-it('does not highlight with no children', () => {
+it('returns the children as is', () => {
   const { container } = render((
-    <TestHighlight search="bar" />
-  ));
-
-  expect(container).toContainHTML('<div></div>');
-});
-
-it('does not highlight with no search children', () => {
-  const { container } = render((
-    <TestHighlight search="null">
-      foo
-    </TestHighlight>
-  ));
-
-  expect(container).toContainHTML('<div>foo</div>');
-});
-
-it('does not highlight a match', () => {
-  const { container } = render((
-    <TestHighlight search="bar">
-      bar
-    </TestHighlight>
+    passThroughHighlight({ children: 'bar' }, { search: 'foo' }, {}, { search: 'foe' })
   ));
 
   expect(container).toContainHTML('<div>bar</div>');

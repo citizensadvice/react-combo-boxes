@@ -64,43 +64,30 @@ Additional props can be used to customise the component.  See customisation.
 
 ## Customisation
 
-A number of hooks are provided to customise the appearance of the component.
+A number of render methods are provided to customise the appearance of the component.
 
-The `nameProps` props allow you to add your own attributes to each part, potentially overriding those already present.
-This is a good way to add your own classes.
+Each render method has the signature `render(props, state, componentProps)` where:
 
-The `NameComponent` props allow you to replace or override each component.  Pass a lowercase string to change
-the html element, or a full component if you want a more far reaching change.  Bear-in-mind you will have to
-`forwardRef` for a number of the components.
+- `props` are the default props for that component
+- `state` state is the current state of the combo box and has the properties:
+  - `currentOption` - `Object` - the currently selected option
+  - `expanded` - `Boolean` - is the list box showing
+  - `group` - `Object` - the currently rendered group (when rendering a group or option only)
+  - `option` - `Object` - the currently rendered option (when rendering an option only)
+  - `search` - `String` - the current search string
+  - `selected` - `Boolean` - is the currently selected option selected (when rendering an option only)
+- `componentProps` - the props passed to the component
 
-```js
-<WrapperComponent {...wrapperProps}>                  // <div>
-  <div className={visuallyHiddenClassName} />         // contains the current value for screen readers
-  <ComboBoxComponent {...comboBoxProps} />            // <div>
-  <ListBoxComponent {...listBoxProps} >               // The entire listbox implementation
-    <ListBoxListComponent {...listBoxListProps}>      // <ul>
-      <OptionComponent {...optionProps}>              // <li>
-        <ValueComponent {...valueProps} />            // Fragment
-      </OptionComponent>
-      <GroupComponent {...groupProps}>                // Fragment
-        <GroupLabelComponent {...groupProps} />       // <li>
-        <OptionComponent {...optionProps}>            // <li>
-          <div className={visuallyHiddenClassName} /> // contains the group name for screen readers
-          <ValueComponent {...valueProps} />          // Fragment
-        </OptionComponent>
-      </GroupComponent>
-    </ListBoxListComponent>
-  </ListBoxComponent>
-</WrapperComponent>
-```
+The render functions available are:
 
-### Context
-
-A context is provided to access the props and internal state of the control.  The properties are:
-
-- `expanded` is the component expanded
-- `activeOption` the currently active option
-- `props` the props supplied to the component.
+| Name                         | Default element | Description                                                                         |
+| `renderWrapper`              | `<div>`         | Renders the component wrapper                                                       |
+| `renderListBox`              | `<ul>`          | Renders the list-box                                                                |
+| `renderGroup`                | `<Fragment>`    | Wraps a group of options                                                            |
+| `renderGroupLabel`           | `<li>`          | Renders the visible label for a group. This will be ignored by a screen-reader      |
+| `renderOption`               | `<li>`          | Renders an option                                                                   |
+| `renderGroupAccessibleLabel` | `<span>`        | Renders the accessible label for a group.  This will be read out before each option |
+| `renderValue`                | `<Fragment>`    | Renders the value within an option                                                  |
 
 ### Advanced options
 

@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react';
+import React, { useState } from 'react';
 import { ComboBox, useTokenSearch } from '../../../src';
 
 const options = [
@@ -9,23 +9,24 @@ const options = [
   'Strawberry',
 ];
 
-const ListBoxList = forwardRef(({ hidden, className, ...props }, ref) => (
-  <div
-    className={className}
-    hidden={hidden}
-  >
-    <ul
-      ref={ref}
-      className="reset-list"
-      {...props}
-    />
-    <div className="list-footer">
-      <a href="https://en.wikipedia.org/wiki/Fruit">
-        More about fruit
-      </a>
+function renderListBox({ hidden, className, ...props }) {
+  return (
+    <div
+      className={className}
+      hidden={hidden}
+    >
+      <ul
+        className="reset-list"
+        {...props}
+      />
+      <div className="list-footer">
+        <a href="https://en.wikipedia.org/wiki/Fruit">
+          More about fruit
+        </a>
+      </div>
     </div>
-  </div>
-));
+  );
+}
 
 export function Example() {
   const [value, setValue] = useState(null);
@@ -46,7 +47,7 @@ export function Example() {
         onValue={setValue}
         onSearch={onSearch}
         options={filteredOptions}
-        ListBoxListComponent={ListBoxList}
+        renderListBox={renderListBox}
       />
 
       <label htmlFor="output">

@@ -2,8 +2,7 @@
 
 Highlighters can be used to highlight which parts of the search results match the search term.
 
-To use the `ValueComponent` prop should be replaced with an appropriate highlighter for the
-search types.
+To use the `renderValue` prop should be replaced with an appropriate highlight function for the search type.
 
 ```js
 const [options, onSearch] = useTokenSearch(initialOptions);
@@ -11,7 +10,7 @@ const [options, onSearch] = useTokenSearch(initialOptions);
 <ComboBox
   options={options}
   onSearch={onSearch}
-  ValueComponent={TokenHighlight}
+  renderValue={tokenHighlight}
 />
 ```
 
@@ -22,12 +21,11 @@ All highlights also support an inverse option.  This is useful for highlighting 
 ```js
 <ComboBox
   {...props}
-  ValueComponent={TokenHighlight}
-  valueProps={{ inverse: true }}
+  renderValue={(...args) => tokenHighlight(...args, { inverse: true })}
 />
 ```
 
-## `DelimitedHighlight`
+## `delimitedHighlight`
 
 Adds highlighting to a string that already contains delimiters marking the highlight.
 
@@ -39,22 +37,21 @@ You need to pass the start and end delimiters to the highlight.
 ```js
 <ComboBox
   {...props}
-  ValueComponent={DelimitedHighlight}
-  valueProps={{ start: '<em>', end: '</em>' }}
+  renderValue={(...args) => delimitedHighlight(...args, { start: '<em>', end: '</em>' })}
 />
 ```
 
-## `PassThroughHightlight`
+## `passThroughHightlight`
 
 This passes the input through without highlighting anything.
 
-## `PrefixHighlight`
+## `prefixHighlight`
 
 Highlights where the search term appears at the start of the string.
 
 Left trims and matches case insensitively.
 
-## `SubstringHighlighter`
+## `substringHighlight`
 
 Highlights where the search term matches part of a string.
 
@@ -62,7 +59,7 @@ Left trims and matches case insensitively.
 
 Useful for highlighting a database ilike query.
 
-## `TokenHighlighter`
+## `tokenHighlight`
 
 Highlights matching tokens from a token search.
 
@@ -70,23 +67,21 @@ Highlights matching tokens from a token search.
 
 To create your own highlighter you need to create a method with the following signature:
 
-`function (term: String, query: String, context: Object, props: Object): Array<String|Array<String>>`
+`function (term: String, query: String, options: Object): Array<String|Array<String>>`
 
 - `term` The term to highlight
 - `query` The search query to highlight with
-- `context` The context from the component
-- `props` Any additional props passed to the component
+- `options` Any additional props passed to the component
 
 This should return an array whose members are strings or a single item array.  For example:
 
 `foo<mark>bar</mark> foe` would be represented as `['foo', ['bar'], ' foe']`
 
-You can pass this highlighter to `HighlightValue`.
+You can pass this highlighter to `highlightValue`.
 
 ```javascript
 <ComboBox
   {...props}
-  ValueComponent={HighlightValue}
-  valueProps={{ highlight: myCustomHighlighter }}
+  renderValue={(...args) => highlightValue(myCustomHighlighter, ...args, { any: 'options' })}
 />
 ```

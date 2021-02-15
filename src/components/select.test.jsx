@@ -342,12 +342,12 @@ describe('placeholder', () => {
   });
 });
 
-describe('optionProps', () => {
+describe('renderOption', () => {
   const options = ['Apple', 'Banana', 'Orange'];
 
   it('allows additional props to be added to all options', () => {
     const { getAllByRole } = render(
-      <SelectWrapper options={options} optionProps={{ 'data-foo': 'bar' }} />,
+      <SelectWrapper options={options} renderOption={(props) => <option {...props} data-foo="bar" />} />,
     );
     getAllByRole('option').forEach((option) => {
       expect(option).toHaveAttribute('data-foo', 'bar');
@@ -355,7 +355,7 @@ describe('optionProps', () => {
   });
 });
 
-describe('optgroupProps', () => {
+describe('renderOptGroup', () => {
   const options = [
     { label: 'Apple' },
     { label: 'Orange', group: 'Citrus' },
@@ -366,7 +366,7 @@ describe('optgroupProps', () => {
 
   it('allows additional props to be added to all options', () => {
     const { container } = render(
-      <SelectWrapper options={options} optgroupProps={{ 'data-foo': 'bar' }} />,
+      <SelectWrapper options={options} renderOptGroup={(props) => <optgroup {...props} data-foo="bar" />} />,
     );
     container.querySelectorAll('optgroup').forEach((option) => {
       expect(option).toHaveAttribute('data-foo', 'bar');

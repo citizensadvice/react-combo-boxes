@@ -25,7 +25,3 @@ This will set a max-width and a `max-height` on the list box that prevents it ex
 width, or height of the window.
 
 Optionally a selector can be passed in to confine the max-width.
-
-## `useConfineListBoxTable(selector = 'body')`
-
-An alternative confine for use with `<ListBoxTable>`.

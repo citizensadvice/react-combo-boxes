@@ -36,6 +36,12 @@ nav
       +link('~/drop_down/identical_options/index.pug') Identical options
       +link('~/drop_down/no_options/index.pug') No options
       +link('~/drop_down/all_disabled_options/index.pug') All disabled options
+    details
+      summary Drop down table
+      +link('~/drop_down_table.pug') About
+      +link('~/drop_down_table/drop_down/index.pug') Table
+      +link('~/drop_down_table/drop_down_headers/index.pug') With headers
+      +link('~/drop_down_table/drop_down_grouped/index.pug') Grouped
   details
     summary Combo box
     +link('~/combo_box.pug') About
@@ -64,19 +70,12 @@ nav
       +link('~/combo_box/all_disabled_options/index.pug') All disabled options
       +link('~/combo_box/autoselect_disabled_option/index.pug') Disabled option and autoselect
       +link('~/combo_box/search_min_length/index.pug') Search min length
-  details
-    summary Table layout
-    +link('~/list_box_table.pug') About
     details
-      summary Drop down
-      +link('~/list_box_table/drop_down/index.pug') Table
-      +link('~/list_box_table/drop_down_headers/index.pug') With headers
-      +link('~/list_box_table/drop_down_grouped/index.pug') Grouped
-    details
-      summary Combo box
-      +link('~/list_box_table/combo_box/index.pug') Table
-      +link('~/list_box_table/combo_box_headers/index.pug') With headers
-      +link('~/list_box_table/combo_box_grouped/index.pug') Grouped
+      summary Combo box table
+      +link('~/combo_box_table.pug') About
+      +link('~/combo_box_table/combo_box/index.pug') Table
+      +link('~/combo_box_table/combo_box_headers/index.pug') With headers
+      +link('~/combo_box_table/combo_box_grouped/index.pug') Grouped
   +link('~/test_helper.pug') Test helper
 
 script(src='~/side_collapse.js')
