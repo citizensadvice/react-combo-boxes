@@ -24,7 +24,7 @@ function setFocusedOption({ focusedOption, focusListBox, autoselect, expanded, s
 
 function onSelectValue(newValue, expanded = false) {
   return (dispatch, getState, getProps) => {
-    const { onValue, onChange: passedOnChange, inputRef } = getProps();
+    const { onValue, inputRef } = getProps();
     dispatch({ type: SET_CLOSED, expanded });
     if (newValue?.unselectable) {
       return;
@@ -36,8 +36,6 @@ function onSelectValue(newValue, expanded = false) {
       input.setSelectionRange(input.value.length, input.value.length, 'forward');
     }
     onValue?.(newValue ? newValue.value : null);
-    // It is not possible to fire a React SimulatedEvent
-    passedOnChange?.({ target: inputRef.current });
   };
 }
 

@@ -9,7 +9,8 @@ const options = [
 
 export function Example() {
   const [value, setValue] = useState();
-  const [filteredOptions, onSearch, busy] = useTokenSearch(options, { minLength: 2 });
+  const [search, setSearch] = useState(null);
+  const filteredOptions = useTokenSearch(search, { options, minLength: 2 });
 
   return (
     <>
@@ -24,9 +25,8 @@ export function Example() {
         aria-labelledby="select-label"
         value={value}
         onValue={setValue}
-        onSearch={onSearch}
+        onSearch={setSearch}
         options={filteredOptions}
-        busy={busy}
       />
 
       <label htmlFor="output">

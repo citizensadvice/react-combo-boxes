@@ -3,54 +3,98 @@
 The combo box will call an `onSearch` event when the user types a search term.
 The application should use this to filter the options provided to the combo box.
 
-You can handle this yourself and maintain a centralised state, or some hooks have been provided.
+You can handle this yourself, or some hooks have been provided for some common cases.
 
-## `useSearch(searcher, { initialOptions, debounce, minLength, emptyOptions })`
+A simple implementation to filter an array of strings would be:
 
-```javascript
-function async search(term) {
-  const url = new URL(endpoint);
-  url.searchParams.set('query', term);
+```js
+const [value, setValue] = useState();
+const [search, setSearch] = useState();
 
-  return (await fetch(url)).json();
-}
+const allOptions = ['Apple', 'Orange', 'Banana'];
 
-const [filteredOptions, onSearch, busy] = useSearch(fn, { initialOptions, debounce, minLength });
+const options = useMemo(() => (
+  allOptions.filter((value) => value.toLowerCase().startsWith(search.toLowerCase())
+), [search]);
+
+<ComboBox
+  value={value}
+  options={options}
+  onValue={setValue}
+  onSearch={setSearch}
+/>
 ```
+## `useAsyncSearch(term, { searcher, debounce, minLength, emptyOptions, catchErrors })`
 
-Use a custom search function.  `async function (search: String): any`.
-The search function can be an async function.  Usually it will return an array of results, but
-it can return anything.  It can also return `null` which will keep the current set of results.
+This wraps a search function.  It supports debouncing, catching errors and cancelling requests.
 
-This will set `busy` to true while searching, optionally can debounce search results, and prevents out-of-sync async returns
-from overwriting the results.
+Returns an array of `[results: any, busy: boolean, error: Error]`
 
+- `results`: whatever the searcher returns
+- `busy`: true while searching, false while not searching, null if the search was cancelled
+- `error`: if `catchErrors` is true, a caught error will be set here.
+
+Options:
+
+- `searcher` (`async function (search: string, { signal }: { signal: AbortSignal }): any`) **Required**, a function to search.
+  First argument is the query.  Also passes the signal of an `AbortController` for cancelling requests.
 - `initialOptions` (`Array`) Options to initially populate the search with
 - `emptyOptions` (`Array`) Options to show if there is no search term
 - `debounce` (`Number`) milliseconds to debounce the search 
 - `minLength` (`Number`) minimum number of characters to supply to make a search.
+- `catchErrors` (`Boolean`) if true, catch errors and return them as the third array argument.
 
-## `useTokenSearch(options, { index, tokenise, minLength, maxResults })`
+Example:
 
 ```javascript
-const [filteredOptions, onSearch] = useTokenSearch(options);
+
+const [value, setValue] = useState();
+const [search, setSearch] = useState();
+
+const searcher = useCallback((query, { signal }) => {
+  if (!query) {
+    return [] 
+  }
+  const url = new URL(apiUrl);
+  url.searchParams.set('query', query);
+  const response = await fetch(url, { signal });
+  return await response.json();
+}, [apiUrl]);
+
+const [options, busy, error] = useSearch(search, { searcher, catchErrors: true });
+
+<ComboBox
+  value={value}
+  options={options}
+  busy={busy}
+  onValue={setValue}
+  onSearch={setSearch}
+/>
 ```
 
-Searches an array of options for matching words.  This will split each option into words, and return any option where a word starts
-with the search term.
+## `useTokenSearch(query, { options, index, tokenise, minLength, maxResults })`
+
+```javascript
+const filteredOptions = useTokenSearch(query, { options });
+```
+
+Searches an array of options.  The options are split into tokenised into words.
+Any options containing a word starting with the search term will be returned.
 
 By default it will search either strings, or `label` property if the options are objects.
-Customise this by providing an index function with the signature `function (option: Object): Array<String>`.
+
+You can customise how the array indexed by providing an index function with the signature `function (option: Object): Array<String>`.
 
 The tokeniser can also be replaced.  This is function with the signature `function (string: String): Array<String>`
 
-## `usePrefixSearch(options, { index, minLength, maxResults })`
+## `usePrefixSearch(query, { options, index, minLength, maxResults })`
 
 ```javascript
-const [filteredOptions, onSearch] = usePrefixSearch(options);
+const filteredOptions = usePrefixSearch(query, { options });
 ```
 
 Searches an array of options for a matching prefix.  This will find options starting with the search term.
 
 By default it will search either strings, or `label` property if the options are objects.
-Customise this by providing an index function with the signature `function (option: Object): String`.
+
+You can customise how the array indexed by providing an index function with the signature `function (option: Object): Array<String>`.

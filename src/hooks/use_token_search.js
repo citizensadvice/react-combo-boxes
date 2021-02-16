@@ -1,23 +1,20 @@
 import { useMemo } from 'react';
 import { tokenSearcher } from '../searchers/token_searcher';
-import { useSearch } from './use_search';
 
 export function useTokenSearch(
-  options,
-  { index, tokenise, minLength, maxResults, ...more } = {},
+  query,
+  { options, index, tokenise, minLength, maxResults },
 ) {
-  const search = useMemo(() => (
+  const searcher = useMemo(() => (
     tokenSearcher(options, { index, tokenise })
   ), [options, index, tokenise]);
 
-  const initialOptions = minLength > 0 ? null : options;
-  const [filteredOptions, onSearch, busy] = useSearch(
-    search,
-    { initialOptions, minLength, ...more },
-  );
-  return [
-    maxResults ? filteredOptions?.slice(0, maxResults) : filteredOptions,
-    onSearch,
-    busy,
-  ];
+  return useMemo(() => {
+    if (minLength && (!query || query?.trim().length < minLength)) {
+      return null;
+    }
+
+    const filtered = searcher(query);
+    return maxResults ? filtered.slice(0, maxResults) : filtered;
+  }, [searcher, query, minLength, maxResults]);
 }

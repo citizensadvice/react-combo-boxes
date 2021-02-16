@@ -11,7 +11,8 @@ const values = ['foo', 'bar', 'foe', 'fee'];
 
 function ComboBoxWrapper({ id = 'id' }) {
   const [value, onValue] = useState(null);
-  const [options, onSearch] = useTokenSearch(values);
+  const [search, setSearch] = useState(null);
+  const options = useTokenSearch(search, { options: values });
 
   return (
     <>
@@ -26,7 +27,7 @@ function ComboBoxWrapper({ id = 'id' }) {
         aria-labelledby={`${id}_label`}
         value={value}
         onValue={onValue}
-        onSearch={onSearch}
+        onSearch={setSearch}
         options={options}
       />
       <label htmlFor={`output-${id}`}>Output</label>

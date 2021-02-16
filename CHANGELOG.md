@@ -2,10 +2,17 @@
 
 ## _Unreleased_
 
-- Customization now uses render functions
-- Highlighters are now render functions
-- `<PreHighlighter>` renamed to `delimitedHighlight`
-- `<ListBoxTable>` is refactored into `ComboBoxTable` and `DropDownTable` components
-- Removed `context` as it is no longer required
-- Removed `useConfineListBoxTable` is it is no longer required
 - Update focus and contrast styles
+- `<ListBoxTable>` is refactored into `ComboBoxTable` and `DropDownTable` components
+- Customization
+  - Customization now uses render functions
+  - Removed `context` as it is no longer required
+  - Removed `useConfineListBoxTable` is it is no longer required
+- Highlighters
+  - Highlighters are now render functions
+  - `<PreHighlighter>` renamed to `delimitedHighlight`
+- Searchers
+  - useSearch is now useAsyncSearch and has a different signature
+  - useTokenSearch and useAsyncSearch have a different signature
+- Combo box
+  - onChange is no longer called when selecting a value

@@ -1,29 +1,32 @@
-import React, { useState } from 'react';
-import { ComboBox, useSearch, tokenSearcher } from '../../../src';
+import React, { useMemo, useState } from 'react';
+import { ComboBox, useAsyncSearch, tokenSearcher } from '../../../src';
 import countries from '../../data/countries.json';
 
 function mapOption({ name }) {
   return name;
 }
 
-const searcher = tokenSearcher(countries, { index: mapOption });
+function useFindOptions(query, { debounce }) {
+  const searcher = useMemo(() => {
+    const search = tokenSearcher(countries, { index: mapOption });
+    return async (term) => {
+      await new Promise((resolve) => {
+        setTimeout(resolve, Math.random() * 1000);
+      });
 
-async function search(term) {
-  await new Promise((resolve) => {
-    setTimeout(resolve, Math.random() * 1000);
-  });
+      return search(term);
+    };
+  }, []);
 
-  return searcher(term);
+  return useAsyncSearch(query, { searcher, initialOptions: countries, debounce });
 }
 
 export function Example() {
   const [value, setValue] = useState(null);
+  const [search, setSearch] = useState(null);
   const [searchDebounce, setSearchDebounce] = useState(200);
   const [busyDebounce, setBusyDebounce] = useState(400);
-  const [filteredOptions, onSearch, busy] = useSearch(
-    search,
-    { initialOptions: countries, debounce: searchDebounce },
-  );
+  const [filteredOptions, busy] = useFindOptions(search, { debounce: searchDebounce });
 
   return (
     <>
@@ -38,7 +41,7 @@ export function Example() {
         aria-labelledby="select-label"
         value={value}
         onValue={setValue}
-        onSearch={onSearch}
+        onSearch={setSearch}
         options={filteredOptions}
         mapOption={mapOption}
         busy={busy}

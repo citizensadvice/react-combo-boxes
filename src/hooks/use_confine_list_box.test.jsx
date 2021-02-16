@@ -1,17 +1,5 @@
-import React from 'react';
-import { render, act } from '@testing-library/react';
+import { renderHook, act } from '@testing-library/react-hooks';
 import { useConfineListBox } from './use_confine_list_box';
-
-/* eslint-disable jest-dom/prefer-to-have-style */
-
-function Test({ selector, out }) {
-  const [style, onLayoutListBox] = useConfineListBox(selector);
-
-  out.onLayoutListBox = onLayoutListBox; // eslint-disable-line no-param-reassign
-  out.style = style; // eslint-disable-line no-param-reassign
-
-  return null;
-}
 
 let container;
 let listbox;
@@ -30,138 +18,130 @@ afterEach(() => {
 
 describe('maxWidth', () => {
   it('does not add maxWidth if not expanded', () => {
-    const out = {};
+    const { result } = renderHook(() => useConfineListBox());
 
-    render(<Test out={out} />);
+    expect(result.current).toEqual([{}, expect.any(Function)]);
 
     act(() => {
-      out.onLayoutListBox({ expanded: false, listbox });
+      result.current[1]({ expanded: false, listbox });
     });
 
-    expect(out.style.maxWidth).toEqual(undefined);
-    expect(listbox.style.maxWidth).toEqual('');
+    expect(result.current[0].maxWidth).toEqual(undefined);
+    expect(listbox).toHaveStyle({ maxWidth: '' });
   });
 
   it('adds maxWidth to the list box', () => {
-    const out = {};
     jest.spyOn(listbox, 'clientWidth', 'get').mockImplementation(() => 300);
     jest.spyOn(listbox, 'getBoundingClientRect').mockImplementation(() => ({ left: 200, width: 320 }));
     jest.spyOn(document.body, 'getBoundingClientRect').mockImplementation(() => ({ right: 500 }));
 
-    render(<Test out={out} />);
+    const { result } = renderHook(() => useConfineListBox());
 
     act(() => {
-      out.onLayoutListBox({ expanded: true, listbox });
+      result.current[1]({ expanded: true, listbox });
     });
 
-    expect(out.style.maxWidth).toEqual('280px');
-    expect(listbox.style.maxWidth).toEqual('280px');
+    expect(result.current[0].maxWidth).toEqual('280px');
+    expect(listbox).toHaveStyle({ maxWidth: '280px' });
   });
 
   describe('with a selector', () => {
     it('adds maxWidth if the listbox', () => {
-      const out = {};
       jest.spyOn(listbox, 'clientWidth', 'get').mockImplementation(() => 300);
       jest.spyOn(listbox, 'getBoundingClientRect').mockImplementation(() => ({ left: 200, width: 320 }));
       jest.spyOn(document.body, 'getBoundingClientRect').mockImplementation(() => ({ right: 500 }));
       jest.spyOn(container, 'getBoundingClientRect').mockImplementation(() => ({ right: 400 }));
 
-      render(<Test out={out} selector="body > div" />);
+      const { result } = renderHook(() => useConfineListBox('body > div'));
 
       act(() => {
-        out.onLayoutListBox({ expanded: true, listbox });
+        result.current[1]({ expanded: true, listbox });
       });
 
-      expect(out.style.maxWidth).toEqual('180px');
-      expect(listbox.style.maxWidth).toEqual('180px');
+      expect(result.current[0].maxWidth).toEqual('180px');
+      expect(listbox).toHaveStyle({ maxWidth: '180px' });
     });
   });
 
-  describe('with an invalid selector', () => {
+  describe('with an selector not matching an element', () => {
     it('uses the body', () => {
-      const out = {};
       jest.spyOn(listbox, 'clientWidth', 'get').mockImplementation(() => 300);
       jest.spyOn(listbox, 'getBoundingClientRect').mockImplementation(() => ({ left: 200, width: 320 }));
       jest.spyOn(document.body, 'getBoundingClientRect').mockImplementation(() => ({ right: 500 }));
 
-      render(<Test out={out} selector="table" />);
+      const { result } = renderHook(() => useConfineListBox('table'));
 
       act(() => {
-        out.onLayoutListBox({ expanded: true, listbox });
+        result.current[1]({ expanded: true, listbox });
       });
 
-      expect(out.style.maxWidth).toEqual('280px');
-      expect(listbox.style.maxWidth).toEqual('280px');
+      expect(result.current[0].maxWidth).toEqual('280px');
+      expect(listbox).toHaveStyle({ maxWidth: '280px' });
     });
   });
 
   describe('with a margin', () => {
     it('adds maxWidth if the listbox', () => {
-      const out = {};
       listbox.style.marginRight = '10px';
       jest.spyOn(listbox, 'clientWidth', 'get').mockImplementation(() => 300);
       jest.spyOn(listbox, 'getBoundingClientRect').mockImplementation(() => ({ left: 200, width: 320 }));
       jest.spyOn(document.body, 'getBoundingClientRect').mockImplementation(() => ({ right: 500 }));
       jest.spyOn(container, 'getBoundingClientRect').mockImplementation(() => ({ right: 400 }));
 
-      render(<Test out={out} selector="body > div" />);
+      const { result } = renderHook(() => useConfineListBox('body > div'));
 
       act(() => {
-        out.onLayoutListBox({ expanded: true, listbox });
+        result.current[1]({ expanded: true, listbox });
       });
 
-      expect(out.style.maxWidth).toEqual('170px');
-      expect(listbox.style.maxWidth).toEqual('170px');
+      expect(result.current[0].maxWidth).toEqual('170px');
+      expect(listbox).toHaveStyle({ maxWidth: '170px' });
     });
   });
 });
 
 describe('maxHeight', () => {
   it('does not add maxHeight if not expanded', () => {
-    const out = {};
-
-    render(<Test out={out} />);
+    const { result } = renderHook(() => useConfineListBox());
 
     act(() => {
-      out.onLayoutListBox({ expanded: false, listbox });
+      result.current[1]({ expanded: false, listbox });
     });
 
-    expect(out.style.maxHeight).toEqual(undefined);
-    expect(listbox.style.maxHeight).toEqual('');
+    expect(result.current[0].maxHeight).toEqual(undefined);
+    expect(listbox).toHaveStyle({ maxHeight: '' });
   });
 
   it('adds maxHeight', () => {
-    const out = {};
     jest.spyOn(listbox, 'clientHeight', 'get').mockImplementation(() => 300);
     window.innerHeight = 500;
     jest.spyOn(listbox, 'getBoundingClientRect').mockImplementation(() => ({ bottom: 550, height: 320 }));
 
-    render(<Test out={out} />);
+    const { result } = renderHook(() => useConfineListBox());
 
     act(() => {
-      out.onLayoutListBox({ expanded: true, listbox });
+      result.current[1]({ expanded: true, listbox });
     });
 
-    expect(out.style.maxHeight).toEqual('250px');
-    expect(listbox.style.maxHeight).toEqual('250px');
+    expect(result.current[0].maxHeight).toEqual('250px');
+    expect(listbox).toHaveStyle({ maxHeight: '250px' });
   });
 
   describe('with a margin', () => {
     it('adds maxHeight', () => {
-      const out = {};
       listbox.style.marginBottom = '10px';
       jest.spyOn(listbox, 'clientHeight', 'get').mockImplementation(() => 300);
       window.innerHeight = 500;
       jest.spyOn(listbox, 'getBoundingClientRect').mockImplementation(() => ({ bottom: 550, height: 320 }));
 
-      render(<Test out={out} />);
+      const { result } = renderHook(() => useConfineListBox());
 
       act(() => {
-        out.onLayoutListBox({ expanded: true, listbox });
+        result.current[1]({ expanded: true, listbox });
       });
 
-      expect(out.style.maxHeight).toEqual('240px');
-      expect(listbox.style.maxHeight).toEqual('240px');
+      expect(result.current[0].maxHeight).toEqual('240px');
+      expect(listbox).toHaveStyle({ maxHeight: '240px' });
     });
   });
 });
