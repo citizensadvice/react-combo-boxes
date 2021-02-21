@@ -33,13 +33,9 @@ exports[`inverses the highlight 1`] = `
     aria-hidden="true"
   >
     <mark>
-      foo 
+      foo
     </mark>
-    bar
-    <mark>
-       
-    </mark>
-    foe
+     bar foe
   </span>
 </div>
 `;
