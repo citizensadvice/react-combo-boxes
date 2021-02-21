@@ -327,17 +327,17 @@ describe('options', () => {
   });
 });
 
-describe('placeholder', () => {
+describe('placeholderOption', () => {
   const options = ['Apple', 'Banana', 'Orange'];
 
   it('renders a placeholder option', () => {
-    const { getByRole, getAllByRole } = render(<SelectWrapper options={options} placeholder="Please select…" />);
+    const { getByRole, getAllByRole } = render(<SelectWrapper options={options} placeholderOption="Please select…" />);
     expect(getAllByRole('option')[0]).toHaveTextContent('Please select…');
     expect(getByRole('combobox')).toHaveValue('');
   });
 
   it('renders with a selected value', () => {
-    const { getByRole } = render(<SelectWrapper options={options} placeholder="Please select…" value="Orange" />);
+    const { getByRole } = render(<SelectWrapper options={options} placeholderOption="Please select…" value="Orange" />);
     expect(getByRole('combobox')).toHaveValue('Orange');
   });
 });
@@ -352,6 +352,22 @@ describe('renderOption', () => {
     getAllByRole('option').forEach((option) => {
       expect(option).toHaveAttribute('data-foo', 'bar');
     });
+  });
+
+  it('is called with context and props', () => {
+    const spy = jest.fn();
+    render(
+      <SelectWrapper options={options} renderOption={spy} test="foo" />,
+    );
+
+    expect(spy).toHaveBeenLastCalledWith(
+      expect.any(Object),
+      {
+        option: expect.objectContaining({ label: 'Orange' }),
+        group: undefined,
+      },
+      expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
+    );
   });
 });
 
@@ -371,6 +387,21 @@ describe('renderOptGroup', () => {
     container.querySelectorAll('optgroup').forEach((option) => {
       expect(option).toHaveAttribute('data-foo', 'bar');
     });
+  });
+
+  it('is called with state and props', () => {
+    const spy = jest.fn();
+    render(
+      <SelectWrapper options={options} renderOptGroup={spy} test="foo" />,
+    );
+
+    expect(spy).toHaveBeenLastCalledWith(
+      expect.any(Object),
+      {
+        group: expect.objectContaining({ label: 'Berry' }),
+      },
+      expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
+    );
   });
 });
 

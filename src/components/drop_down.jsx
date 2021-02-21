@@ -21,9 +21,10 @@ import { visuallyHiddenClassName } from '../constants/visually_hidden_class_name
 import { scrollIntoView as defaultScrollIntoView } from '../helpers/scroll_into_view';
 
 export const DropDown = forwardRef((rawProps, ref) => {
-  const optionisedProps = Object.freeze(
-    useNormalisedOptions(rawProps, { mustHaveSelection: true }),
-  );
+  const optionisedProps = Object.freeze({
+    ...rawProps,
+    ...useNormalisedOptions(rawProps, { mustHaveSelection: true }),
+  });
   const {
     'aria-describedby': ariaDescribedBy,
     'aria-invalid': ariaInvalid,
@@ -174,7 +175,7 @@ export const DropDown = forwardRef((rawProps, ref) => {
 DropDown.propTypes = {
   options: PropTypes.arrayOf(PropTypes.any).isRequired,
   mapOption: PropTypes.func,
-  placeholder: PropTypes.string,
+  placeholderOption: PropTypes.string,
   value: PropTypes.any, // eslint-disable-line react/forbid-prop-types
   children: PropTypes.node,
 
@@ -210,7 +211,7 @@ DropDown.propTypes = {
 DropDown.defaultProps = {
   children: null,
   mapOption: null,
-  placeholder: null,
+  placeholderOption: null,
   value: null,
 
   'aria-describedby': null,

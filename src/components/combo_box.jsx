@@ -26,8 +26,11 @@ function defaultFoundOptionsMessage(options) {
   return `${options.length} option${options.length > 1 ? 's' : ''} found`;
 }
 
-export const ComboBox = forwardRef(({ placeholder, ...rawProps }, ref) => {
-  const optionisedProps = Object.freeze({ ...useNormalisedOptions(rawProps), placeholder });
+export const ComboBox = forwardRef((rawProps, ref) => {
+  const optionisedProps = Object.freeze({
+    ...rawProps,
+    ...useNormalisedOptions(rawProps),
+  });
   const {
     'aria-describedby': ariaDescribedBy,
     'aria-invalid': ariaInvalid,
@@ -56,6 +59,7 @@ export const ComboBox = forwardRef(({ placeholder, ...rawProps }, ref) => {
     onSearch,
     options,
     pattern,
+    placeholder,
     readOnly,
     renderClearButton,
     renderAriaDescription,

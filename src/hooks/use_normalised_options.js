@@ -18,15 +18,15 @@ import { UniqueIdGenerator } from '../helpers/unique_id_generator';
  *   - html
  */
 export function useNormalisedOptions({
-  id, options: rawOptions, placeholder, value: rawValue, mapOption, ...props
+  id, options: rawOptions, placeholderOption, value: rawValue, mapOption,
 }, { mustHaveSelection = false } = {}) {
   const options = useMemo(() => {
     const idGenerator = new UniqueIdGenerator();
     const groups = new Map();
     const normalisedOptions = [];
-    if (placeholder) {
+    if (placeholderOption) {
       normalisedOptions.push({
-        label: placeholder,
+        label: placeholderOption,
         identity: '',
         value: null,
         key: idGenerator.uniqueId(`${id || ''}_option_placeholder`),
@@ -58,7 +58,7 @@ export function useNormalisedOptions({
     });
 
     return [].concat(...normalisedOptions).map((option, index) => ({ ...option, index }));
-  }, [id, rawOptions, placeholder, mapOption]);
+  }, [id, rawOptions, placeholderOption, mapOption]);
 
   const value = useMemo(() => (
     rawValue != null ? optionise(rawValue, mapOption) : rawValue
@@ -73,11 +73,9 @@ export function useNormalisedOptions({
   }, [value, options, mustHaveSelection]);
 
   return {
-    id,
     options,
     value,
     selectedOption,
     nullOptions: rawOptions === null,
-    ...props,
   };
 }

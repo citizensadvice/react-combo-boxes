@@ -18,7 +18,7 @@ export function Example() {
       </label>
       <Select
         id="select"
-        placeholder="Please choose…"
+        placeholderOption="Please choose…"
         value={value}
         onValue={setValue}
         options={options}
