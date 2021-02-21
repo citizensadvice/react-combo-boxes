@@ -8,7 +8,8 @@ function map({ name, code }) {
 
 export function Example() {
   const [value, setValue] = useState(null);
-  const [filteredOptions, onSearch] = useTokenSearch(countries, { index: map });
+  const [search, setSearch] = useState(null);
+  const filteredOptions = useTokenSearch(search, { options: countries, index: map });
   const [managedFocus, setManagedFocus] = useState(false);
 
   return (
@@ -24,7 +25,7 @@ export function Example() {
         aria-labelledby="select-label"
         value={value}
         onValue={setValue}
-        onSearch={onSearch}
+        onSearch={setSearch}
         options={filteredOptions}
         mapOption={map}
         managedFocus={managedFocus}

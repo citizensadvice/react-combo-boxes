@@ -5,7 +5,7 @@ import { renderGroupedOptions } from '../helpers/render_grouped_options';
 
 export const Select = forwardRef((rawProps, ref) => {
   const {
-    options, onChange, onValue, value: _, selectedOption,
+    options, onChange, onValue, value: _0, nullOptions: _1, selectedOption,
     renderOption, renderOptGroup,
     ...props
   } = useNormalisedOptions(rawProps, { mustHaveSelection: true });

@@ -14,6 +14,7 @@ function renderGroup(props, { groupChildren, group: { key, label } }) {
     <li
       role="group"
       aria-labelledby={key}
+      key={key}
     >
       <div
         className="react-combo-boxes-listbox__group-label"
@@ -33,8 +34,9 @@ function renderGroup(props, { groupChildren, group: { key, label } }) {
 
 export function Example() {
   const [value, setValue] = useState(null);
+  const [search, setSearch] = useState(null);
   const [managedFocus, setManagedFocus] = useState(true);
-  const [filteredOptions, onSearch] = useTokenSearch(options);
+  const filteredOptions = useTokenSearch(search, { options });
 
   return (
     <>
@@ -49,7 +51,7 @@ export function Example() {
         aria-labelledby="select-label"
         value={value}
         onValue={setValue}
-        onSearch={onSearch}
+        onSearch={setSearch}
         options={filteredOptions}
         managedFocus={managedFocus}
         renderGroup={renderGroup}

@@ -13,13 +13,14 @@ const dedupedEmoji = emoji.filter(({ name }) => {
 });
 
 export function Example() {
-  const index = useCallback((o) => o.name, []);
+  const index = useCallback((o) => `${o.name} ${o.char}`, []);
   const map = useCallback(({ name, char, group }) => ({ label: `${name} ${char}`, group }), []);
   const [value, setValue] = useState(null);
+  const [search, setSearch] = useState(null);
   // The list of emoji can be thousands.  This rather ruins performance so limit results to 100.
-  const [filteredOptions, onSearch] = useTokenSearch(
-    dedupedEmoji,
-    { index, minLength: 1, maxResults: 100 },
+  const filteredOptions = useTokenSearch(
+    search,
+    { options: dedupedEmoji, index, minLength: 1, maxResults: 100 },
   );
 
   return (
@@ -35,7 +36,7 @@ export function Example() {
         aria-labelledby="select-label"
         value={value}
         onValue={setValue}
-        onSearch={onSearch}
+        onSearch={setSearch}
         options={filteredOptions}
         mapOption={map}
         renderValue={tokenHighlight}

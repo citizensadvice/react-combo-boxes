@@ -1,198 +1,80 @@
-import React, { useEffect } from 'react';
-import { render, act, waitFor } from '@testing-library/react';
+import { renderHook } from '@testing-library/react-hooks';
 import { usePrefixSearch } from './use_prefix_search';
 
-function TestPrefixSearch({ options, onUpdate, ...params }) {
-  if (!Object.keys(params).length) {
-    params = undefined; // eslint-disable-line no-param-reassign
-  }
-  const [filteredOptions, onSearch, busy] = usePrefixSearch(options, params);
-  useEffect(() => {
-    onUpdate(filteredOptions, onSearch, busy);
-  }, [filteredOptions, onSearch, busy, onUpdate]);
-  return null;
-}
+it('filters string options', () => {
+  const { result, rerender } = renderHook(
+    ({ query }) => usePrefixSearch(query, { options: ['foo', 'bar', 'foe bar', 'fabar'] }),
+    { initialProps: { query: null } },
+  );
 
-describe('options', () => {
-  describe('options as string', () => {
-    it('displays all options by default', () => {
-      const spy = jest.fn();
-      render((
-        <TestPrefixSearch options={['foo', 'bar', 'foe']} onUpdate={spy} />
-      ));
-      expect(spy).toHaveBeenCalledWith(
-        ['foo', 'bar', 'foe'],
-        expect.any(Function),
-        false,
-      );
-    });
+  expect(result.current).toEqual(['foo', 'bar', 'foe bar', 'fabar']);
 
-    it('filters options by prefix', async () => {
-      const spy = jest.fn();
-      render((
-        <TestPrefixSearch options={['foo', 'bar', 'foe bar']} onUpdate={spy} />
-      ));
-      act(() => {
-        spy.mock.calls[0][1]('ba');
-      });
-      await waitFor(() => {
-        expect(spy).toHaveBeenLastCalledWith(
-          ['bar'],
-          expect.any(Function),
-          false,
-        );
-      });
-    });
+  rerender({ query: '' });
+  expect(result.current).toEqual(['foo', 'bar', 'foe bar', 'fabar']);
 
-    it('returns all options for no query', async () => {
-      const spy = jest.fn();
-      render((
-        <TestPrefixSearch options={['foo', 'bar', 'foe']} onUpdate={spy} />
-      ));
-      act(() => {
-        spy.mock.calls[0][1]('ba');
-      });
-      await waitFor(() => {
-        expect(spy).toHaveBeenLastCalledWith(
-          ['bar'],
-          expect.any(Function),
-          false,
-        );
-      });
-      act(() => {
-        spy.mock.calls[0][1]('');
-      });
-      await waitFor(() => {
-        expect(spy).toHaveBeenLastCalledWith(
-          ['foo', 'bar', 'foe'],
-          expect.any(Function),
-          false,
-        );
-      });
-    });
-  });
+  rerender({ query: 'ba' });
+  expect(result.current).toEqual(['bar']);
 
-  describe('options as objects', () => {
-    it('filters option label by a token search', async () => {
-      const spy = jest.fn();
-      const options = [
-        { label: 'foo', id: 1 },
-        { label: 'bar', id: 2 },
-      ];
-      render((
-        <TestPrefixSearch options={options} onUpdate={spy} />
-      ));
-      act(() => {
-        spy.mock.calls[0][1]('ba');
-      });
-      await waitFor(() => {
-        expect(spy).toHaveBeenLastCalledWith(
-          [options[1]],
-          expect.any(Function),
-          false,
-        );
-      });
-    });
+  // Trimming search term
+  rerender({ query: ' ba' });
+  expect(result.current).toEqual(['bar']);
 
-    describe('with a custom index', () => {
-      it('filters options with a token search', async () => {
-        const spy = jest.fn();
-        const options = [
-          { text: 'foo', id: 1 },
-          { text: 'bar', id: 2 },
-        ];
-        function index(option) {
-          return option.text;
-        }
-        render((
-          <TestPrefixSearch options={options} index={index} onUpdate={spy} />
-        ));
-        act(() => {
-          spy.mock.calls[0][1]('ba');
-        });
-        await waitFor(() => {
-          expect(spy).toHaveBeenLastCalledWith(
-            [options[1]],
-            expect.any(Function),
-            false,
-          );
-        });
-      });
-    });
+  rerender({ query: 'ba ' });
+  expect(result.current).toEqual([]);
+});
+
+it('filters object string options', () => {
+  const { result } = renderHook(
+    ({ query }) => usePrefixSearch(query, {
+      options: [{ label: 'foo', id: 1 }, { label: 'bar', id: '2' }],
+    }),
+    { initialProps: { query: 'f' } },
+  );
+
+  expect(result.current).toEqual([{ label: 'foo', id: 1 }]);
+});
+
+describe('index', () => {
+  it('selects with property to index', () => {
+    const { result } = renderHook(
+      ({ query }) => usePrefixSearch(query, {
+        options: [{ text: 'foo', id: 1 }, { text: 'bar', id: 2 }],
+        index: (o) => o.text,
+      }),
+      { initialProps: { query: 'b' } },
+    );
+
+    expect(result.current).toEqual([{ text: 'bar', id: 2 }]);
   });
 });
 
 describe('minLength', () => {
-  it('does not set initial options', async () => {
-    const spy = jest.fn();
-    render((
-      <TestPrefixSearch options={['foo', 'bar', 'foe']} onUpdate={spy} minLength={2} />
-    ));
-    expect(spy).toHaveBeenLastCalledWith(
-      [],
-      expect.anything(),
-      false,
+  it('returns nil unless the search is of minLength', () => {
+    const { result, rerender } = renderHook(
+      ({ query }) => usePrefixSearch(query, { options: ['foo', 'bar'], minLength: 2 }),
+      { initialProps: { query: null } },
     );
-  });
 
-  it('returns no results for a query less then minLength', async () => {
-    const spy = jest.fn();
-    render((
-      <TestPrefixSearch options={['foo', 'bar', 'foe']} onUpdate={spy} minLength={2} />
-    ));
-    await act(async () => {
-      spy.mock.calls[0][1]('b');
-    });
-    expect(spy).toHaveBeenLastCalledWith(
-      [],
-      expect.anything(),
-      null,
-    );
-  });
+    expect(result.current).toEqual(null);
 
-  it('searches for a query of minLength', async () => {
-    const spy = jest.fn();
-    render((
-      <TestPrefixSearch options={['foo', 'bar', 'foe']} onUpdate={spy} minLength={2} />
-    ));
-    await act(async () => {
-      spy.mock.calls[0][1]('ba');
-    });
-    expect(spy).toHaveBeenLastCalledWith(
-      ['bar'],
-      expect.anything(),
-      false,
-    );
-  });
-});
+    rerender({ query: '' });
+    expect(result.current).toEqual(null);
 
-describe('initialOptions', () => {
-  it('overrides using options as the initial options', async () => {
-    const spy = jest.fn();
-    render((
-      <TestPrefixSearch initialOptions={['foo']} options={['foo', 'bar', 'foe']} onUpdate={spy} minLength={2} />
-    ));
-    expect(spy).toHaveBeenLastCalledWith(
-      ['foo'],
-      expect.anything(),
-      false,
-    );
+    rerender({ query: 'f' });
+    expect(result.current).toEqual(null);
+
+    rerender({ query: 'fo' });
+    expect(result.current).toEqual(['foo']);
   });
 });
 
 describe('maxResults', () => {
   it('limits the results returned', async () => {
-    const spy = jest.fn();
-    render((
-      <TestPrefixSearch options={['foo', 'fi', 'foe']} onUpdate={spy} maxResults={2} />
-    ));
-    await act(async () => {
-      spy.mock.calls[0][1]('f');
-    });
-    expect(spy).toHaveBeenLastCalledWith(
-      ['foo', 'fi'],
-      expect.anything(),
-      false,
+    const { result } = renderHook(
+      ({ query }) => usePrefixSearch(query, { options: ['foo', 'bar', 'foe', 'fog'], maxResults: 2 }),
+      { initialProps: { query: 'f' } },
     );
+
+    expect(result.current).toEqual(['foo', 'foe']);
   });
 });

@@ -2421,9 +2421,9 @@ describe('notFoundMessage', () => {
       expectNotToHaveNotFoundMessage(document.activeElement);
     });
 
-    it('does not display a not found if busy is null', async () => {
+    it('does not display a not found if options are null', async () => {
       const { getByRole } = render((
-        <ComboBoxWrapper options={[]} busy={null} />
+        <ComboBoxWrapper options={null} />
       ));
       getByRole('combobox').focus();
       await userEvent.type(document.activeElement, 'foo');
@@ -2664,38 +2664,6 @@ describe('onChange', () => {
       type: 'change',
       target: expect.objectContaining({
         value: 'foo',
-        nodeName: 'INPUT',
-      }),
-    }));
-  });
-
-  it('does not trigger when a value is selected', async () => {
-    const spy = jest.fn();
-    const { getByRole } = render(
-      <ComboBoxWrapper options={options} onChange={spy} />,
-    );
-    getByRole('combobox').focus();
-    fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
-    fireEvent.keyDown(document.activeElement, { key: 'Enter' });
-    expect(spy).toHaveBeenCalledWith(expect.objectContaining({
-      target: expect.objectContaining({
-        value: 'Apple',
-        nodeName: 'INPUT',
-      }),
-    }));
-  });
-
-  it('triggers when a value is removed', async () => {
-    const spy = jest.fn();
-    const { getByRole } = render(
-      <ComboBoxWrapper options={options} value="Apple" onChange={spy} />,
-    );
-    getByRole('combobox').focus();
-    userEvent.click(getByRole('button', { name: /Clear/ }));
-
-    expect(spy).toHaveBeenCalledWith(expect.objectContaining({
-      target: expect.objectContaining({
-        value: '',
         nodeName: 'INPUT',
       }),
     }));

@@ -14,6 +14,7 @@ function renderGroup(props, { groupChildren, group: { key, label } }) {
     <li
       role="group"
       aria-labelledby={key}
+      key={key}
     >
       <div
         className="react-combo-boxes-listbox__group-label"

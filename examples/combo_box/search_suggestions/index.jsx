@@ -21,7 +21,7 @@ const options = [
 
 export function Example() {
   const [value, setValue] = useState(null);
-  const [filteredOptions, onSearch] = usePrefixSearch(options);
+  const filteredOptions = usePrefixSearch(value, { options });
 
   return (
     <>
@@ -35,8 +35,8 @@ export function Example() {
         id="select"
         aria-labelledby="select-label"
         value={value}
-        onChange={({ target: { value: v } }) => setValue(v)}
-        onSearch={onSearch}
+        onValue={setValue}
+        onSearch={setValue}
         options={filteredOptions}
         showSelectedLabel
         managedFocus={false}

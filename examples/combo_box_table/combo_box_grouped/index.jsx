@@ -24,7 +24,8 @@ function renderColumnValue(props, state, componentProps) {
 
 export function Example() {
   const [value, setValue] = useState(null);
-  const [filteredOptions, onSearch] = useTokenSearch(cats, { index });
+  const [search, setSearch] = useState(null);
+  const filteredOptions = useTokenSearch(search, { options: cats, index });
   const [style, onLayoutListBox] = useConfineListBox();
 
   return (
@@ -40,7 +41,7 @@ export function Example() {
         aria-labelledby="select-label"
         value={value}
         onValue={setValue}
-        onSearch={onSearch}
+        onSearch={setSearch}
         options={filteredOptions}
         columns={columns}
         renderColumnValue={renderColumnValue}

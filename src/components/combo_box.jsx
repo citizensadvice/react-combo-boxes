@@ -48,6 +48,7 @@ export const ComboBox = forwardRef(({ placeholder, ...rawProps }, ref) => {
     maxLength,
     minLength,
     notFoundMessage,
+    nullOptions,
     onBlur: passedOnBlur,
     onFocus: passedOnFocus,
     onLayoutListBox,
@@ -211,8 +212,14 @@ export const ComboBox = forwardRef(({ placeholder, ...rawProps }, ref) => {
     });
   }, [onLayoutListBox, showListBox, options]);
 
-  const showNotFound = notFoundMessage && busy === false && expanded && !options.length
-    && search?.trim() && search !== value?.label;
+  const showNotFound = notFoundMessage
+    && !busy
+    && expanded
+    && !options.length
+    && !nullOptions
+    && search?.trim()
+    && search !== value?.label;
+
   const ariaBusy = showBusy && search?.trim() && search !== (value?.label);
   const combinedRef = useCombineRefs(inputRef, ref);
   const componentState = Object.freeze({
@@ -319,7 +326,7 @@ export const ComboBox = forwardRef(({ placeholder, ...rawProps }, ref) => {
 });
 
 ComboBox.propTypes = {
-  options: PropTypes.arrayOf(PropTypes.any).isRequired,
+  options: PropTypes.arrayOf(PropTypes.any),
   mapOption: PropTypes.func,
   value: PropTypes.any,
 
@@ -384,6 +391,7 @@ ComboBox.propTypes = {
 };
 
 ComboBox.defaultProps = {
+  options: null,
   mapOption: null,
   value: null,
 

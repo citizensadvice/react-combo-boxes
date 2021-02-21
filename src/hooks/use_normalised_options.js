@@ -33,7 +33,7 @@ export function useNormalisedOptions({
       });
     }
 
-    rawOptions.forEach((o) => {
+    rawOptions?.forEach((o) => {
       const option = optionise(o, mapOption);
       option.key = idGenerator.uniqueId(option.html?.id || `${id || ''}_option_${option.label}`);
       delete option?.html?.id;
@@ -77,6 +77,7 @@ export function useNormalisedOptions({
     options,
     value,
     selectedOption,
+    nullOptions: rawOptions === null,
     ...props,
   };
 }

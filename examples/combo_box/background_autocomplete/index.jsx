@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { ComboBox, useSearch } from '../../../src';
+import React, { useEffect, useState } from 'react';
+import { ComboBox } from '../../../src';
 
-function search(value) {
+function searcher(value) {
   if (!value) {
     return [];
   }
@@ -53,8 +53,12 @@ function renderInput(props, { expanded, suggestedOption }) {
 
 export function Example() {
   const [value, setValue] = useState(null);
-  const [filteredOptions, onSearch] = useSearch(search, { minLength: 1 });
+  const [options, setOptions] = useState(null);
   const [autoselect, setAutoselect] = useState(false);
+
+  useEffect(() => {
+    setOptions(searcher(value));
+  }, [value]);
 
   return (
     <>
@@ -69,9 +73,9 @@ export function Example() {
         aria-labelledby="select-label"
         value={value}
         size={100}
-        onChange={({ target: { value: _value } }) => setValue(_value)}
-        onSearch={onSearch}
-        options={filteredOptions}
+        onValue={setValue}
+        onSearch={setValue}
+        options={options}
         tabAutocomplete
         showSelectedLabel
         expandOnFocus={false}
