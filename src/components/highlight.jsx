@@ -1,12 +1,13 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-
-function xor(condition, inverse) {
-  return (condition ? 1 : 0) ^ (inverse ? 1 : 0); // eslint-disable-line no-bitwise
-}
+import { inverseHighlight } from '../helpers/inverse_highlight';
 
 export function Highlight({ children, inverse }) {
-  const parts = children.map((part) => (xor(Array.isArray(part), inverse)
+  let highlighted = children;
+  if (inverse) {
+    highlighted = inverseHighlight(highlighted);
+  }
+  const parts = highlighted.map((part) => (Array.isArray(part)
     ? <mark>{part}</mark>
     : part
   ));
