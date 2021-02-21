@@ -52,7 +52,8 @@ The `onSearch` function is called with the current search value and should be us
 | `className`         | `String`                | Class name of the wrapper                                                              |
 | `id`                | `String`                | id of the component (required)                                                         |
 | `ref`               | React ref               | Will be passed to the `<input>`                                                        |
-| `notFoundMessage`   | `String`                | Message to show if the search string has no results.                                   |
+| `notFoundMessage`   | `Node`                  | Message to show if the search string has no results.                                   |
+| `errorMessage`      | `Node`                  | Message to show if the search has an error                                             |
 | `onBlur`            | `Function`              | Handler for when the component is blured                                               |
 | `onChange`          | `Function`              | Handler for typing in the input.                                                       |
 | `onFocus`           | `Function`              | Handler for when the component is focused                                              |
@@ -106,6 +107,7 @@ The render functions available are:
 | `renderGroupAccessibleLabel` | `<span>`        | Renders the accessible label for a group.  This will be read out before each option |
 | `renderValue`                | `<Fragment>`    | Renders the value within an option                                                  |
 | `renderNotFound`             | `<div>`         | Renders the not found message                                                       |
+| `renderErrorMessage`         | `<div>`         | Renders the error message                                                           |
 | `renderAriaDescription`      | `<div>`         | Renders the aria description of the combo box                                       |
 | `renderAriaLiveMessage`      | `<div>`         | Renders an aria live message that alerts users new options have been found          |
 
