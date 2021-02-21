@@ -41,6 +41,7 @@ export const ComboBox = forwardRef(({ placeholder, ...rawProps }, ref) => {
     busyDebounce,
     className,
     disabled,
+    errorMessage,
     foundOptionsMessage,
     id,
     inputMode,
@@ -61,6 +62,7 @@ export const ComboBox = forwardRef(({ placeholder, ...rawProps }, ref) => {
     renderDownArrow,
     renderInput,
     renderNotFound,
+    renderErrorMessage,
     renderWrapper,
     required,
     scrollIntoView,
@@ -164,12 +166,14 @@ export const ComboBox = forwardRef(({ placeholder, ...rawProps }, ref) => {
 
   // Do not show the list box is the only option is the currently selected option
   const showListBox = useMemo(() => (
-    expanded && !!options.length
+    expanded
+      && !errorMessage
+      && !!options.length
       && !(options.length === 1
         && options[0].identity === selectedOption?.identity
         && options[0].label === (search ?? value?.label)
       )
-  ), [expanded, options, selectedOption, search, value]);
+  ), [expanded, options, selectedOption, search, value, errorMessage]);
 
   useLayoutEffect(() => {
     if (showListBox && focusedRef.current) {
@@ -217,6 +221,7 @@ export const ComboBox = forwardRef(({ placeholder, ...rawProps }, ref) => {
     && expanded
     && !options.length
     && !nullOptions
+    && !errorMessage
     && search?.trim()
     && search !== value?.label;
 
@@ -250,7 +255,7 @@ export const ComboBox = forwardRef(({ placeholder, ...rawProps }, ref) => {
           'aria-controls': `${id}_listbox`,
           'aria-expanded': showListBox ? 'true' : 'false',
           'aria-activedescendant': (showListBox && focusListBox && focusedOption?.key) || null,
-          'aria-describedby': joinTokens(showNotFound && `${id}_not_found`, `${id}_aria_description`, ariaDescribedBy),
+          'aria-describedby': joinTokens(showNotFound && `${id}_not_found`, errorMessage && `${id}_error_message`, `${id}_aria_description`, ariaDescribedBy),
           'aria-labelledby': joinTokens(ariaLabelledBy),
           value: inputLabel || '',
           onKeyDown: (e) => dispatch(onKeyDown(e)),
@@ -304,16 +309,22 @@ export const ComboBox = forwardRef(({ placeholder, ...rawProps }, ref) => {
           componentProps={optionisedProps}
           componentState={componentState}
         />
-        {renderAriaDescription({
+        {foundOptionsMessage && renderAriaDescription({
           id: `${id}_aria_description`,
           className: providedVisuallyHiddenClassName,
           children: showListBox ? foundOptionsMessage(options) : null,
         }, componentState, optionisedProps)}
-        {renderNotFound({
+        {notFoundMessage && renderNotFound({
           id: `${id}_not_found`,
           className: `${classPrefix}combobox__not-found`,
           hidden: !showNotFound,
           children: showNotFound ? notFoundMessage : null,
+        }, componentState, optionisedProps)}
+        {errorMessage && renderErrorMessage({
+          id: `${id}_error_message`,
+          className: `${classPrefix}combobox__error-message`,
+          hidden: !errorMessage,
+          children: errorMessage,
         }, componentState, optionisedProps)}
         <AriaLiveMessage
           hidden={!showNotFound && !showListBox}
@@ -326,8 +337,8 @@ export const ComboBox = forwardRef(({ placeholder, ...rawProps }, ref) => {
 });
 
 ComboBox.propTypes = {
-  options: PropTypes.arrayOf(PropTypes.any),
   mapOption: PropTypes.func,
+  options: PropTypes.arrayOf(PropTypes.any),
   value: PropTypes.any,
 
   busy: PropTypes.oneOf([false, true, null]),
@@ -354,6 +365,7 @@ ComboBox.propTypes = {
   size: PropTypes.number,
   spellCheck: PropTypes.string,
 
+  errorMessage: PropTypes.node,
   notFoundMessage: PropTypes.node,
   foundOptionsMessage: PropTypes.func,
 
@@ -384,6 +396,7 @@ ComboBox.propTypes = {
   renderDownArrow: PropTypes.func,
   renderClearButton: PropTypes.func,
   renderNotFound: PropTypes.func,
+  renderErrorMessage: PropTypes.func,
   renderAriaDescription: PropTypes.func,
   renderAriaLiveMessage: PropTypes.func,
 
@@ -417,6 +430,7 @@ ComboBox.defaultProps = {
   size: null,
   spellCheck: null,
 
+  errorMessage: null,
   notFoundMessage: 'No matches found',
   foundOptionsMessage: defaultFoundOptionsMessage,
 
@@ -447,6 +461,7 @@ ComboBox.defaultProps = {
   renderDownArrow: (props) => <span {...props} />,
   renderClearButton: (props) => <span {...props} />,
   renderNotFound: (props) => <div {...props} />,
+  renderErrorMessage: (props) => <div {...props} />,
   renderAriaDescription: (props) => <div {...props} />,
   renderAriaLiveMessage: (props) => <div {...props} />,
 

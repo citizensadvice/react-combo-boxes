@@ -85,6 +85,13 @@
   margin-top: -2px;
 }
 
+.react-combo-boxes-combobox__error-message {
+  @extend .react-combo-boxes-listbox;
+
+  padding: $react-combo-boxes-padding-y $react-combo-boxes-padding-x;
+  margin-top: -2px;
+}
+
 @if $react-combo-boxes-enable-icons {
   .react-combo-boxes-combobox__down-arrow {
     vertical-align: middle;
