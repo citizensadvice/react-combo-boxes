@@ -891,7 +891,7 @@ describe('options', () => {
         );
         getByRole('combobox').focus();
         expect(getByRole('option')).toHaveAttribute('data-foo', 'bar');
-        expect(getByRole('option')).toHaveAttribute('class', 'class');
+        expect(getByRole('option')).toHaveClass('class');
       });
 
       describe('html id', () => {

@@ -247,7 +247,7 @@ describe('options', () => {
         const options = [{ label: 'foo', html: { 'data-foo': 'bar', className: 'class' } }];
         const { getByRole } = render(<SelectWrapper options={options} />);
         expect(getByRole('option')).toHaveAttribute('data-foo', 'bar');
-        expect(getByRole('option')).toHaveAttribute('class', 'class');
+        expect(getByRole('option')).toHaveClass('class');
       });
     });
 
