@@ -29,6 +29,7 @@ it('uses managedFocus = true on a mac in safari', () => {
     <ComboBoxWrapper options={['foo', 'bar']} />,
   );
   const comboBox = getByRole('combobox');
+
   comboBox.focus();
   fireEvent.keyDown(comboBox, { key: 'ArrowDown' });
   fireEvent.keyDown(comboBox, { key: 'ArrowDown' });

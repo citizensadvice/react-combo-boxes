@@ -239,7 +239,7 @@ describe('customisation', () => {
     });
 
     it('is called with context and props', () => {
-      const spy = jest.fn();
+      const spy = jest.fn(() => null);
       render((
         <ComboBoxWrapper options={options} columns={columns} mapOption={map} renderListBox={spy} test="foo" />
       ));
