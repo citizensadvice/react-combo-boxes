@@ -25,7 +25,7 @@ export function Example() {
         ref={ref}
         id="drop-down"
         aria-labelledby="drop-down-label"
-        placeholder="Please choose…"
+        placeholderOption="Please choose…"
         value={value}
         onValue={setValue}
         options={options}

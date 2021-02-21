@@ -369,7 +369,7 @@ describe('options', () => {
               <DropDownWrapper
                 options={options}
                 value="Banana"
-                placeholder="Please choose"
+                placeholderOption="Please choose"
               />
             ));
             fireEvent.click(getByRole('combobox'));
@@ -1406,11 +1406,11 @@ describe('value', () => {
   });
 });
 
-describe('placeholder', () => {
+describe('placeholderOption', () => {
   const options = ['Apple', 'Banana', 'Orange'];
 
   it('renders a placeholder option', () => {
-    const { container, getByRole, getAllByRole } = render(<DropDownWrapper options={options} placeholder="Please select…" />);
+    const { container, getByRole, getAllByRole } = render(<DropDownWrapper options={options} placeholderOption="Please select…" />);
     expect(container).toMatchSnapshot();
     fireEvent.click(getByRole('combobox'));
     expectToHaveFocusedOption(getByRole('combobox'), getAllByRole('option')[0]);
@@ -1418,13 +1418,13 @@ describe('placeholder', () => {
   });
 
   it('renders with a selected value', () => {
-    const { getByRole, getAllByRole } = render(<DropDownWrapper options={options} placeholder="Please select…" value="Orange" />);
+    const { getByRole, getAllByRole } = render(<DropDownWrapper options={options} placeholderOption="Please select…" value="Orange" />);
     fireEvent.click(getByRole('combobox'));
     expectToHaveFocusedOption(getByRole('combobox'), getAllByRole('option')[3]);
   });
 
   it('renders with value as null', () => {
-    const { getByRole, getAllByRole } = render(<DropDownWrapper options={options} placeholder="Please select…" value={null} />);
+    const { getByRole, getAllByRole } = render(<DropDownWrapper options={options} placeholderOption="Please select…" value={null} />);
     fireEvent.click(getByRole('combobox'));
     expectToHaveFocusedOption(getByRole('combobox'), getAllByRole('option')[0]);
   });
@@ -1433,7 +1433,7 @@ describe('placeholder', () => {
     const spy = jest.fn();
     const { getByRole, getByText } = render(<DropDownWrapper
       options={options}
-      placeholder="Please select…"
+      placeholderOption="Please select…"
       value="Orange"
       onValue={spy}
     />);
@@ -1448,7 +1448,7 @@ describe('children', () => {
 
   it('renders children in the combobox', () => {
     const { getByRole } = render(
-      <DropDownWrapper options={options} placeholder="Please select…">
+      <DropDownWrapper options={options} placeholderOption="Please select…">
         Custom text
       </DropDownWrapper>,
     );

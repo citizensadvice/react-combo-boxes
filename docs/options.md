@@ -60,6 +60,6 @@ This will add a placeholder label option to the start of the options.
 ```js
 <Select
   options={options}
-  placeholder="Please choose…"
+  placeholderOption="Please choose…"
 />
 ```

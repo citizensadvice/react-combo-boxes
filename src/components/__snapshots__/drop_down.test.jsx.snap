@@ -487,7 +487,7 @@ exports[`options updating options updates the options 1`] = `
 </div>
 `;
 
-exports[`placeholder renders a placeholder option 1`] = `
+exports[`placeholderOption renders a placeholder option 1`] = `
 <div>
   <div
     class="react-combo-boxes-dropdown"

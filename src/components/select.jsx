@@ -4,11 +4,24 @@ import { useNormalisedOptions } from '../hooks/use_normalised_options';
 import { renderGroupedOptions } from '../helpers/render_grouped_options';
 
 export const Select = forwardRef((rawProps, ref) => {
+  const optionisedProps = Object.freeze({
+    ...rawProps,
+    ...useNormalisedOptions(rawProps, { mustHaveSelection: true }),
+  });
+
   const {
-    options, onChange, onValue, value: _0, nullOptions: _1, selectedOption,
-    renderOption, renderOptGroup,
-    ...props
-  } = useNormalisedOptions(rawProps, { mustHaveSelection: true });
+    onChange,
+    onValue,
+    options,
+    renderOption,
+    renderOptGroup,
+    selectedOption,
+    value: _0,
+    placeholderOption: _1,
+    mapOption: _2,
+    nullOptions: _3,
+    ...selectProps
+  } = optionisedProps;
 
   const handleChange = useCallback((e) => {
     onValue?.(options.find((o) => o.identity === e.target.value)?.value);
@@ -20,16 +33,29 @@ export const Select = forwardRef((rawProps, ref) => {
       value={selectedOption?.identity ?? ''}
       onChange={handleChange}
       ref={ref}
-      {...props}
+      {...selectProps}
     >
       {renderGroupedOptions({
         options,
-        renderGroup({ key, html, children, label }) { // eslint-disable-line react/prop-types
-          return renderOptGroup({ key, label, ...html, children });
+        renderGroup(group) {
+          const { children, key, label, html } = group;
+          return renderOptGroup({
+            children,
+            key,
+            label,
+            ...html,
+          }, { group }, optionisedProps);
         },
         // eslint-disable-next-line react/prop-types
-        renderOption({ identity, label, key, html, disabled }) {
-          return renderOption({ key, value: identity, disabled, ...html, children: label });
+        renderOption(option) {
+          const { identity, label, key, html, disabled, group } = option;
+          return renderOption({
+            children: label,
+            disabled,
+            key,
+            value: identity,
+            ...html,
+          }, { option, group }, optionisedProps);
         },
       })}
     </select>
@@ -37,7 +63,7 @@ export const Select = forwardRef((rawProps, ref) => {
 });
 
 Select.propTypes = {
-  placeholder: PropTypes.node,
+  placeholderOption: PropTypes.string,
   onChange: PropTypes.func,
   onValue: PropTypes.func,
   options: PropTypes.arrayOf(PropTypes.any).isRequired,
@@ -47,7 +73,7 @@ Select.propTypes = {
 };
 
 Select.defaultProps = {
-  placeholder: null,
+  placeholderOption: null,
   value: null,
   onChange: null,
   onValue: null,
