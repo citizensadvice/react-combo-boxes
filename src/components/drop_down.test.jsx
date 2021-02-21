@@ -1767,7 +1767,7 @@ describe('renderWrapper', () => {
   });
 
   it('is called with context and props', () => {
-    const spy = jest.fn();
+    const spy = jest.fn(() => null);
     render((
       <DropDownWrapper options={['foo']} renderWrapper={spy} test="foo" />
     ));
@@ -1790,7 +1790,7 @@ describe('renderComboBox', () => {
   });
 
   it('is called with context and props', () => {
-    const spy = jest.fn();
+    const spy = jest.fn(() => null);
     render((
       <DropDownWrapper options={['foo']} renderComboBox={spy} test="foo" />
     ));
@@ -1813,7 +1813,7 @@ describe('renderListBox', () => {
   });
 
   it('is called with context and props', () => {
-    const spy = jest.fn();
+    const spy = jest.fn(() => null);
     render((
       <DropDownWrapper options={['foo']} renderListBox={spy} test="foo" />
     ));
@@ -1838,7 +1838,7 @@ describe('renderGroup', () => {
   });
 
   it('is called with context and props', () => {
-    const spy = jest.fn();
+    const spy = jest.fn(() => null);
     const { getByRole } = render((
       <DropDownWrapper options={[{ label: 'foo', group: 'bar' }]} renderGroup={spy} test="foo" />
     ));
@@ -1870,7 +1870,7 @@ describe('renderGroupLabel', () => {
   });
 
   it('is called with context and props', () => {
-    const spy = jest.fn();
+    const spy = jest.fn(() => null);
     const { getByRole } = render((
       <DropDownWrapper options={[{ label: 'foo', group: 'bar' }]} renderGroupLabel={spy} test="foo" />
     ));
@@ -1900,7 +1900,7 @@ describe('renderOption', () => {
   });
 
   it('is called with context and props', () => {
-    const spy = jest.fn();
+    const spy = jest.fn(() => null);
     const { getByRole } = render((
       <DropDownWrapper options={['foo']} renderOption={spy} test="foo" />
     ));
@@ -1932,7 +1932,7 @@ describe('renderGroupAccessibleLabel', () => {
   });
 
   it('is called with context and props', () => {
-    const spy = jest.fn();
+    const spy = jest.fn(() => null);
     const { getByRole } = render((
       <DropDownWrapper options={[{ label: 'foo', group: 'bar' }]} renderGroupAccessibleLabel={spy} test="foo" />
     ));
@@ -1962,7 +1962,7 @@ describe('renderValue', () => {
   });
 
   it('is called with context and props', () => {
-    const spy = jest.fn();
+    const spy = jest.fn(() => null);
     const { getByRole } = render((
       <DropDownWrapper options={['foo']} renderValue={spy} test="foo" />
     ));

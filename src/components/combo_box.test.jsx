@@ -2811,7 +2811,7 @@ describe('renderWrapper', () => {
   });
 
   it('is called with context and props', () => {
-    const spy = jest.fn();
+    const spy = jest.fn(() => null);
     render((
       <ComboBoxWrapper options={['foo']} renderWrapper={spy} test="foo" />
     ));
@@ -2842,7 +2842,7 @@ describe('renderInput', () => {
   });
 
   it('is called with context and props', () => {
-    const spy = jest.fn();
+    const spy = jest.fn(() => null);
     render((
       <ComboBoxWrapper options={['foo']} renderInput={spy} test="foo" />
     ));
@@ -2874,7 +2874,7 @@ describe('renderListBox', () => {
   });
 
   it('is called with context and props', () => {
-    const spy = jest.fn();
+    const spy = jest.fn(() => null);
     const { getByRole } = render((
       <ComboBoxWrapper options={['foo']} renderListBox={spy} test="foo" />
     ));
@@ -2907,7 +2907,7 @@ describe('renderGroup', () => {
   });
 
   it('is called with context and props', () => {
-    const spy = jest.fn();
+    const spy = jest.fn(() => null);
     const { getByRole } = render((
       <ComboBoxWrapper options={[{ label: 'foo', group: 'bar' }]} renderGroup={spy} test="foo" />
     ));
@@ -2944,7 +2944,7 @@ describe('renderGroupLabel', () => {
   });
 
   it('is called with context and props', () => {
-    const spy = jest.fn();
+    const spy = jest.fn(() => null);
     const { getByRole } = render((
       <ComboBoxWrapper options={[{ label: 'foo', group: 'bar' }]} renderGroupLabel={spy} test="foo" />
     ));
@@ -2978,7 +2978,7 @@ describe('renderOption', () => {
   });
 
   it('is called with context and props', () => {
-    const spy = jest.fn();
+    const spy = jest.fn(() => null);
     const { getByRole } = render((
       <ComboBoxWrapper options={['foo']} renderOption={spy} test="foo" />
     ));
@@ -3013,7 +3013,7 @@ describe('renderGroupAccessibleLabel', () => {
   });
 
   it('is called with context and props', () => {
-    const spy = jest.fn();
+    const spy = jest.fn(() => null);
     const { getByRole } = render((
       <ComboBoxWrapper options={[{ label: 'foo', group: 'bar' }]} renderGroupAccessibleLabel={spy} test="foo" />
     ));
@@ -3046,7 +3046,7 @@ describe('renderValue', () => {
   });
 
   it('is called with context and props', () => {
-    const spy = jest.fn();
+    const spy = jest.fn(() => null);
     const { getByRole } = render((
       <ComboBoxWrapper options={['foo']} renderValue={spy} test="foo" />
     ));
@@ -3081,7 +3081,7 @@ describe('renderDownArrow', () => {
   });
 
   it('is called with context and props', () => {
-    const spy = jest.fn();
+    const spy = jest.fn(() => null);
     render((
       <ComboBoxWrapper options={['foo']} renderDownArrow={spy} test="foo" />
     ));
@@ -3113,7 +3113,7 @@ describe('renderClearButton', () => {
   });
 
   it('is called with context and props', () => {
-    const spy = jest.fn();
+    const spy = jest.fn(() => null);
     render((
       <ComboBoxWrapper options={['foo']} renderClearButton={spy} test="foo" />
     ));
@@ -3145,7 +3145,7 @@ describe('renderAriaDescription', () => {
   });
 
   it('is called with context and props', () => {
-    const spy = jest.fn();
+    const spy = jest.fn(() => null);
     render((
       <ComboBoxWrapper options={['foo']} renderAriaDescription={spy} test="foo" />
     ));
@@ -3177,7 +3177,7 @@ describe('renderNotFound', () => {
   });
 
   it('is called with context and props', () => {
-    const spy = jest.fn();
+    const spy = jest.fn(() => null);
     render((
       <ComboBoxWrapper options={['foo']} renderNotFound={spy} test="foo" />
     ));
@@ -3209,7 +3209,7 @@ describe('renderErrorMessage', () => {
   });
 
   it('is called with context and props', () => {
-    const spy = jest.fn();
+    const spy = jest.fn(() => null);
     render((
       <ComboBoxWrapper options={['foo']} errorMessage="error" renderErrorMessage={spy} test="foo" />
     ));
