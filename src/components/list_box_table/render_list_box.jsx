@@ -1,20 +1,25 @@
 import React from 'react';
-import { classPrefix } from '../../constants/class_prefix';
-import { joinTokens } from '../../helpers/join_tokens';
+import { makeBEMClass } from '../../helpers/make_bem_class';
 
 export function renderListBox({ children, hidden, ref, ...props }, componentState, componentProps) {
-  const { columns, renderTableWrapper, renderTable, renderTableHeaderCell } = componentProps;
+  const {
+    classPrefix,
+    columns,
+    renderTableWrapper,
+    renderTable,
+    renderTableHeaderCell,
+  } = componentProps;
   const hasHeader = columns.some(({ label }) => label);
 
   return renderTableWrapper({
     hidden,
-    className: joinTokens(`${classPrefix}listbox`, hasHeader && `${classPrefix}listbox--header`),
+    className: makeBEMClass(classPrefix, 'listbox', hasHeader && 'listbox--header'),
     onMouseDown: (e) => e.preventDefault(),
     ref,
     children: renderTable({
       role: 'listbox',
       ...props,
-      className: `${classPrefix}listbox__table`,
+      className: makeBEMClass(classPrefix, 'table'),
       children: (
         <>
           <colgroup>
@@ -28,7 +33,7 @@ export function renderListBox({ children, hidden, ref, ...props }, componentStat
                 {columns.map((column) => renderTableHeaderCell({
                   'aria-hidden': 'true',
                   key: column.name,
-                  className: `${classPrefix}listbox__table-header`,
+                  className: makeBEMClass(classPrefix, 'table-header'),
                   children: column.label,
                 }, { ...componentState, column }, componentProps))}
               </tr>

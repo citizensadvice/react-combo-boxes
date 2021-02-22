@@ -1,8 +1,9 @@
 import React from 'react';
-import { classPrefix } from '../../constants/class_prefix';
+import { makeBEMClass } from '../../helpers/make_bem_class';
 
 export function renderOption({ children: _, ...props }, state, componentProps) {
   const {
+    classPrefix,
     columns,
     renderTableRow,
     renderGroupAccessibleLabel,
@@ -15,10 +16,10 @@ export function renderOption({ children: _, ...props }, state, componentProps) {
 
   return renderTableRow({
     ...props,
-    className: `${classPrefix}listbox__table-row`,
+    className: makeBEMClass(classPrefix, 'table-row'),
     children: columns.map((column, index) => renderTableCell({
       role: 'presentation',
-      className: `${classPrefix}listbox__table-cell`,
+      className: makeBEMClass(classPrefix, 'table-cell'),
       key: index,
       children: (
         <>

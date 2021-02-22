@@ -33,12 +33,12 @@ exports[`columns as names only renders a table as the list box 1`] = `
       tabindex="-1"
     />
     <div
-      class="react-combo-boxes-listbox"
+      class="react-combo-boxes-combobox__listbox react-combo-boxes-combobox__false"
       hidden=""
     >
       <table
         aria-labelledby="id-label"
-        class="react-combo-boxes-listbox__table"
+        class="react-combo-boxes-combobox__table"
         id="id_listbox"
         role="listbox"
         tabindex="-1"
@@ -51,57 +51,57 @@ exports[`columns as names only renders a table as the list box 1`] = `
           role="presentation"
         >
           <tr
-            class="react-combo-boxes-listbox__table-row"
+            class="react-combo-boxes-combobox__table-row"
             id="id_option_apple"
             role="option"
             tabindex="-1"
           >
             <td
-              class="react-combo-boxes-listbox__table-cell"
+              class="react-combo-boxes-combobox__table-cell"
               role="presentation"
             >
               Apple
             </td>
             <td
-              class="react-combo-boxes-listbox__table-cell"
+              class="react-combo-boxes-combobox__table-cell"
               role="presentation"
             >
               Fruit
             </td>
           </tr>
           <tr
-            class="react-combo-boxes-listbox__table-row"
+            class="react-combo-boxes-combobox__table-row"
             id="id_option_banana"
             role="option"
             tabindex="-1"
           >
             <td
-              class="react-combo-boxes-listbox__table-cell"
+              class="react-combo-boxes-combobox__table-cell"
               role="presentation"
             >
               Banana
             </td>
             <td
-              class="react-combo-boxes-listbox__table-cell"
+              class="react-combo-boxes-combobox__table-cell"
               role="presentation"
             >
               Fruit
             </td>
           </tr>
           <tr
-            class="react-combo-boxes-listbox__table-row"
+            class="react-combo-boxes-combobox__table-row"
             id="id_option_potato"
             role="option"
             tabindex="-1"
           >
             <td
-              class="react-combo-boxes-listbox__table-cell"
+              class="react-combo-boxes-combobox__table-cell"
               role="presentation"
             >
               Potato
             </td>
             <td
-              class="react-combo-boxes-listbox__table-cell"
+              class="react-combo-boxes-combobox__table-cell"
               role="presentation"
             >
               Vegetable
@@ -109,19 +109,19 @@ exports[`columns as names only renders a table as the list box 1`] = `
           </tr>
           <tr
             aria-disabled="true"
-            class="react-combo-boxes-listbox__table-row"
+            class="react-combo-boxes-combobox__table-row"
             id="id_option_tomato"
             role="option"
             tabindex="-1"
           >
             <td
-              class="react-combo-boxes-listbox__table-cell"
+              class="react-combo-boxes-combobox__table-cell"
               role="presentation"
             >
               Tomato
             </td>
             <td
-              class="react-combo-boxes-listbox__table-cell"
+              class="react-combo-boxes-combobox__table-cell"
               role="presentation"
             >
               Vegetable
@@ -181,12 +181,12 @@ exports[`columns with headers renders a table with headers 1`] = `
       tabindex="-1"
     />
     <div
-      class="react-combo-boxes-listbox react-combo-boxes-listbox--header"
+      class="react-combo-boxes-combobox__listbox react-combo-boxes-combobox__listbox--header"
       hidden=""
     >
       <table
         aria-labelledby="id-label"
-        class="react-combo-boxes-listbox__table"
+        class="react-combo-boxes-combobox__table"
         id="id_listbox"
         role="listbox"
         tabindex="-1"
@@ -203,13 +203,13 @@ exports[`columns with headers renders a table with headers 1`] = `
           >
             <th
               aria-hidden="true"
-              class="react-combo-boxes-listbox__table-header"
+              class="react-combo-boxes-combobox__table-header"
             >
               Name
             </th>
             <th
               aria-hidden="true"
-              class="react-combo-boxes-listbox__table-header"
+              class="react-combo-boxes-combobox__table-header"
             >
               Type
             </th>
@@ -219,13 +219,13 @@ exports[`columns with headers renders a table with headers 1`] = `
           role="presentation"
         >
           <tr
-            class="react-combo-boxes-listbox__table-row"
+            class="react-combo-boxes-combobox__table-row"
             id="id_option_apple"
             role="option"
             tabindex="-1"
           >
             <td
-              class="react-combo-boxes-listbox__table-cell"
+              class="react-combo-boxes-combobox__table-cell"
               role="presentation"
             >
               <span
@@ -236,7 +236,7 @@ exports[`columns with headers renders a table with headers 1`] = `
               Apple
             </td>
             <td
-              class="react-combo-boxes-listbox__table-cell"
+              class="react-combo-boxes-combobox__table-cell"
               role="presentation"
             >
               <span
@@ -248,13 +248,13 @@ exports[`columns with headers renders a table with headers 1`] = `
             </td>
           </tr>
           <tr
-            class="react-combo-boxes-listbox__table-row"
+            class="react-combo-boxes-combobox__table-row"
             id="id_option_banana"
             role="option"
             tabindex="-1"
           >
             <td
-              class="react-combo-boxes-listbox__table-cell"
+              class="react-combo-boxes-combobox__table-cell"
               role="presentation"
             >
               <span
@@ -265,7 +265,7 @@ exports[`columns with headers renders a table with headers 1`] = `
               Banana
             </td>
             <td
-              class="react-combo-boxes-listbox__table-cell"
+              class="react-combo-boxes-combobox__table-cell"
               role="presentation"
             >
               <span
@@ -277,13 +277,13 @@ exports[`columns with headers renders a table with headers 1`] = `
             </td>
           </tr>
           <tr
-            class="react-combo-boxes-listbox__table-row"
+            class="react-combo-boxes-combobox__table-row"
             id="id_option_potato"
             role="option"
             tabindex="-1"
           >
             <td
-              class="react-combo-boxes-listbox__table-cell"
+              class="react-combo-boxes-combobox__table-cell"
               role="presentation"
             >
               <span
@@ -294,7 +294,7 @@ exports[`columns with headers renders a table with headers 1`] = `
               Potato
             </td>
             <td
-              class="react-combo-boxes-listbox__table-cell"
+              class="react-combo-boxes-combobox__table-cell"
               role="presentation"
             >
               <span
@@ -359,12 +359,12 @@ exports[`columns with html renders a table with colgroups 1`] = `
       tabindex="-1"
     />
     <div
-      class="react-combo-boxes-listbox"
+      class="react-combo-boxes-combobox__listbox react-combo-boxes-combobox__false"
       hidden=""
     >
       <table
         aria-labelledby="id-label"
-        class="react-combo-boxes-listbox__table"
+        class="react-combo-boxes-combobox__table"
         id="id_listbox"
         role="listbox"
         tabindex="-1"
@@ -381,57 +381,57 @@ exports[`columns with html renders a table with colgroups 1`] = `
           role="presentation"
         >
           <tr
-            class="react-combo-boxes-listbox__table-row"
+            class="react-combo-boxes-combobox__table-row"
             id="id_option_apple"
             role="option"
             tabindex="-1"
           >
             <td
-              class="react-combo-boxes-listbox__table-cell"
+              class="react-combo-boxes-combobox__table-cell"
               role="presentation"
             >
               Apple
             </td>
             <td
-              class="react-combo-boxes-listbox__table-cell"
+              class="react-combo-boxes-combobox__table-cell"
               role="presentation"
             >
               Fruit
             </td>
           </tr>
           <tr
-            class="react-combo-boxes-listbox__table-row"
+            class="react-combo-boxes-combobox__table-row"
             id="id_option_banana"
             role="option"
             tabindex="-1"
           >
             <td
-              class="react-combo-boxes-listbox__table-cell"
+              class="react-combo-boxes-combobox__table-cell"
               role="presentation"
             >
               Banana
             </td>
             <td
-              class="react-combo-boxes-listbox__table-cell"
+              class="react-combo-boxes-combobox__table-cell"
               role="presentation"
             >
               Fruit
             </td>
           </tr>
           <tr
-            class="react-combo-boxes-listbox__table-row"
+            class="react-combo-boxes-combobox__table-row"
             id="id_option_potato"
             role="option"
             tabindex="-1"
           >
             <td
-              class="react-combo-boxes-listbox__table-cell"
+              class="react-combo-boxes-combobox__table-cell"
               role="presentation"
             >
               Potato
             </td>
             <td
-              class="react-combo-boxes-listbox__table-cell"
+              class="react-combo-boxes-combobox__table-cell"
               role="presentation"
             >
               Vegetable
@@ -491,12 +491,12 @@ exports[`grouped renders a table with groups 1`] = `
       tabindex="-1"
     />
     <div
-      class="react-combo-boxes-listbox"
+      class="react-combo-boxes-combobox__listbox react-combo-boxes-combobox__false"
       hidden=""
     >
       <table
         aria-labelledby="id-label"
-        class="react-combo-boxes-listbox__table"
+        class="react-combo-boxes-combobox__table"
         id="id_listbox"
         role="listbox"
         tabindex="-1"
@@ -509,24 +509,24 @@ exports[`grouped renders a table with groups 1`] = `
           role="presentation"
         >
           <tr
-            class="react-combo-boxes-listbox__table-group-row"
+            class="react-combo-boxes-combobox__table-group-row"
           >
             <th
               aria-hidden="true"
-              class="react-combo-boxes-listbox__table-group-header"
+              class="react-combo-boxes-combobox__table-group-header"
               colspan="2"
             >
               Fruit
             </th>
           </tr>
           <tr
-            class="react-combo-boxes-listbox__table-row"
+            class="react-combo-boxes-combobox__table-row"
             id="id_option_apple"
             role="option"
             tabindex="-1"
           >
             <td
-              class="react-combo-boxes-listbox__table-cell"
+              class="react-combo-boxes-combobox__table-cell"
               role="presentation"
             >
               <span
@@ -537,20 +537,20 @@ exports[`grouped renders a table with groups 1`] = `
               Apple
             </td>
             <td
-              class="react-combo-boxes-listbox__table-cell"
+              class="react-combo-boxes-combobox__table-cell"
               role="presentation"
             >
               Green
             </td>
           </tr>
           <tr
-            class="react-combo-boxes-listbox__table-row"
+            class="react-combo-boxes-combobox__table-row"
             id="id_option_banana"
             role="option"
             tabindex="-1"
           >
             <td
-              class="react-combo-boxes-listbox__table-cell"
+              class="react-combo-boxes-combobox__table-cell"
               role="presentation"
             >
               <span
@@ -561,31 +561,31 @@ exports[`grouped renders a table with groups 1`] = `
               Banana
             </td>
             <td
-              class="react-combo-boxes-listbox__table-cell"
+              class="react-combo-boxes-combobox__table-cell"
               role="presentation"
             >
               Yellow
             </td>
           </tr>
           <tr
-            class="react-combo-boxes-listbox__table-group-row"
+            class="react-combo-boxes-combobox__table-group-row"
           >
             <th
               aria-hidden="true"
-              class="react-combo-boxes-listbox__table-group-header"
+              class="react-combo-boxes-combobox__table-group-header"
               colspan="2"
             >
               Vegetable
             </th>
           </tr>
           <tr
-            class="react-combo-boxes-listbox__table-row"
+            class="react-combo-boxes-combobox__table-row"
             id="id_option_potato"
             role="option"
             tabindex="-1"
           >
             <td
-              class="react-combo-boxes-listbox__table-cell"
+              class="react-combo-boxes-combobox__table-cell"
               role="presentation"
             >
               <span
@@ -596,7 +596,7 @@ exports[`grouped renders a table with groups 1`] = `
               Potato
             </td>
             <td
-              class="react-combo-boxes-listbox__table-cell"
+              class="react-combo-boxes-combobox__table-cell"
               role="presentation"
             >
               Brown

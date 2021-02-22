@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import { renderGroupedOptions } from '../helpers/render_grouped_options';
-import { classPrefix } from '../constants/class_prefix';
+import { makeBEMClass } from '../helpers/make_bem_class';
 
 export const ListBox = forwardRef((
   {
@@ -9,6 +9,7 @@ export const ListBox = forwardRef((
     onSelectOption,
     componentProps,
     componentProps: {
+      classPrefix,
       options,
       renderListBox,
       renderGroup,
@@ -28,7 +29,7 @@ export const ListBox = forwardRef((
 ) => renderListBox({
   ref,
   role: 'listbox',
-  className: `${classPrefix}listbox`,
+  className: makeBEMClass(classPrefix, 'listbox'),
   onMouseDown: (e) => e.preventDefault(),
   ...props,
   children: (
@@ -42,7 +43,7 @@ export const ListBox = forwardRef((
             <>
               {renderGroupLabel({
                 'aria-hidden': 'true',
-                className: `${classPrefix}listbox__group-label`,
+                className: makeBEMClass(classPrefix, 'group-label'),
                 ...html,
                 children: label,
               }, { ...componentState, group }, componentProps)}
@@ -58,7 +59,7 @@ export const ListBox = forwardRef((
           id: key,
           key,
           role: 'option',
-          className: `${classPrefix}listbox__option`,
+          className: makeBEMClass(classPrefix, 'option'),
           tabIndex: -1,
           'aria-selected': selected ? 'true' : null,
           'aria-disabled': disabled ? 'true' : null,
@@ -87,6 +88,7 @@ export const ListBox = forwardRef((
 ListBox.propTypes = {
   'aria-activedescendant': PropTypes.string,
   componentProps: PropTypes.shape({
+    classPrefix: PropTypes.string,
     options: PropTypes.array.isRequired,
     renderListBox: PropTypes.func.isRequired,
     renderGroup: PropTypes.func.isRequired,

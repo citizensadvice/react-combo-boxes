@@ -3,6 +3,7 @@
 ## _Unreleased_
 
 - Update focus and contrast styles
+- Added `classPrefix` property and restructured classes
 - `<ListBoxTable>` is refactored into `ComboBoxTable` and `DropDownTable` components
 - Customization
   - Customization now uses render functions

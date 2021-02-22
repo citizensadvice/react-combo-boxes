@@ -3,13 +3,15 @@
 @import './sr_only.scss';
 
 .react-combo-boxes-dropdown {
+  @include react-combo-boxes-listbox;
+
   width: max-content;
   position: relative;
   max-width: 100%;
+}
 
-  .react-combo-boxes-listbox {
-    margin-top: -$react-combo-boxes-focus-border-width;
-  }
+.react-combo-boxes-dropdown__listbox {
+  margin-top: -$react-combo-boxes-focus-border-width;
 }
 
 .react-combo-boxes-dropdown__combobox {

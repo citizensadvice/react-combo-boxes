@@ -10,13 +10,14 @@ import {
 import { useNormalisedOptions } from '../hooks/use_normalised_options';
 import { useOnBlur } from '../hooks/use_on_blur';
 import { useMounted } from '../hooks/use_mounted';
+import { makeBEMClass } from '../helpers/make_bem_class';
 import { joinTokens } from '../helpers/join_tokens';
 import { stringOrArray } from '../validators/string_or_array';
 import { findOption } from '../helpers/find_option';
 import { useCombineRefs } from '../hooks/use_combine_refs';
 import { ListBox } from './list_box';
 import { AriaLiveMessage } from './aria_live_message';
-import { classPrefix } from '../constants/class_prefix';
+import { classPrefix as defaultClassPrefix } from '../constants/class_prefix';
 import { visuallyHiddenClassName } from '../constants/visually_hidden_class_name';
 import { isSafari } from '../sniffers/is_safari';
 import { isMac } from '../sniffers/is_mac';
@@ -43,6 +44,7 @@ export const ComboBox = forwardRef((rawProps, ref) => {
     busy,
     busyDebounce,
     className,
+    classPrefix,
     disabled,
     errorMessage,
     foundOptionsMessage,
@@ -244,7 +246,7 @@ export const ComboBox = forwardRef((rawProps, ref) => {
 
   return renderWrapper({
     'aria-busy': ariaBusy ? 'true' : 'false',
-    className,
+    className: className || makeBEMClass(classPrefix),
     onBlur: handleBlur,
     onFocus: handleFocus,
     ref: comboRef,
@@ -252,7 +254,7 @@ export const ComboBox = forwardRef((rawProps, ref) => {
       <>
         {renderInput({
           id,
-          className: `${classPrefix}combobox__input`,
+          className: makeBEMClass(classPrefix, 'input'),
           type: 'text',
           role: 'combobox',
           'aria-autocomplete': ariaAutocomplete,
@@ -286,7 +288,7 @@ export const ComboBox = forwardRef((rawProps, ref) => {
         }, componentState, optionisedProps)}
         {renderDownArrow({
           id: `${id}_down_arrow`,
-          className: `${classPrefix}combobox__down-arrow`,
+          className: makeBEMClass(classPrefix, 'down-arrow'),
           hidden: value || !options.length,
         }, componentState, optionisedProps)}
         {renderClearButton({
@@ -294,7 +296,7 @@ export const ComboBox = forwardRef((rawProps, ref) => {
           role: 'button',
           'aria-label': 'Clear',
           'aria-labelledby': joinTokens(`${id}_clear_button`, ariaLabelledBy, id),
-          className: `${classPrefix}combobox__clear-button`,
+          className: makeBEMClass(classPrefix, 'clear-button'),
           onClick: (e) => dispatch(onClearValue(e)),
           onKeyDown: (e) => dispatch(onClearValue(e)),
           hidden: !value || search === '',
@@ -320,13 +322,13 @@ export const ComboBox = forwardRef((rawProps, ref) => {
         }, componentState, optionisedProps)}
         {notFoundMessage && renderNotFound({
           id: `${id}_not_found`,
-          className: `${classPrefix}combobox__not-found`,
+          className: makeBEMClass(classPrefix, 'not-found'),
           hidden: !showNotFound,
           children: showNotFound ? notFoundMessage : null,
         }, componentState, optionisedProps)}
         {errorMessage && renderErrorMessage({
           id: `${id}_error_message`,
-          className: `${classPrefix}combobox__error-message`,
+          className: makeBEMClass(classPrefix, 'error-message'),
           hidden: !errorMessage,
           children: errorMessage,
         }, componentState, optionisedProps)}
@@ -351,6 +353,7 @@ ComboBox.propTypes = {
   'aria-describedby': stringOrArray,
   'aria-labelledby': stringOrArray.isRequired,
   className: PropTypes.string,
+  classPrefix: PropTypes.string,
   id: PropTypes.string.isRequired,
 
   'aria-invalid': PropTypes.string,
@@ -416,7 +419,8 @@ ComboBox.defaultProps = {
   busyDebounce: 400,
 
   'aria-describedby': null,
-  className: `${classPrefix}combobox`,
+  className: null,
+  classPrefix: `${defaultClassPrefix}combobox`,
 
   'aria-invalid': null,
   autoComplete: 'off',

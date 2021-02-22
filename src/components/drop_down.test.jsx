@@ -1520,6 +1520,36 @@ describe('id', () => {
   });
 });
 
+describe('classPrefix', () => {
+  const options = [
+    { label: 'Orange', group: 'Citrus' },
+  ];
+
+  it('removes classes when null', () => {
+    const { container, getByRole } = render(
+      <DropDownWrapper options={options} classPrefix={null} />,
+    );
+    fireEvent.click(getByRole('combobox'));
+    expect(container.querySelector('div')).not.toHaveClass();
+    expect(getByRole('combobox')).not.toHaveClass();
+    expect(getByRole('listbox')).not.toHaveClass();
+    expect(getByRole('option')).not.toHaveClass();
+    expect(getByRole('option').previousSibling).not.toHaveClass();
+  });
+
+  it('prefixes all classes', () => {
+    const { container, getByRole } = render(
+      <DropDownWrapper options={options} classPrefix="foo" />,
+    );
+    fireEvent.click(getByRole('combobox'));
+    expect(container.querySelector('div')).toHaveClass('foo');
+    expect(getByRole('combobox')).toHaveClass('foo__combobox');
+    expect(getByRole('listbox')).toHaveClass('foo__listbox');
+    expect(getByRole('option')).toHaveClass('foo__option');
+    expect(getByRole('option').previousSibling).toHaveClass('foo__group-label');
+  });
+});
+
 describe('required', () => {
   it('when false it does not set aria-required on the combobox', () => {
     const { getByRole } = render(

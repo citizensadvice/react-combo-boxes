@@ -2,6 +2,8 @@
 @import './listbox.scss';
 
 .react-combo-boxes-combobox {
+  @include react-combo-boxes-listbox;
+
   width: max-content;
   position: relative;
   max-width: 100%;
@@ -30,10 +32,10 @@
       animation: react-combo-boxes-spin 2s infinite linear;
     }
   }
+}
 
-  .react-combo-boxes-listbox {
-    margin-top: -$react-combo-boxes-focus-border-width;
-  }
+.react-combo-boxes-combobox__listbox {
+  margin-top: -$react-combo-boxes-focus-border-width;
 }
 
 .react-combo-boxes-combobox__input {
@@ -79,14 +81,14 @@
 }
 
 .react-combo-boxes-combobox__not-found {
-  @extend .react-combo-boxes-listbox;
+  @include react-combo-boxes-listbox-container;
 
   padding: $react-combo-boxes-padding-y $react-combo-boxes-padding-x;
   margin-top: -2px;
 }
 
 .react-combo-boxes-combobox__error-message {
-  @extend .react-combo-boxes-listbox;
+  @include react-combo-boxes-listbox-container;
 
   padding: $react-combo-boxes-padding-y $react-combo-boxes-padding-x;
   margin-top: -2px;
