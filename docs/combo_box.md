@@ -50,6 +50,7 @@ The `onSearch` function is called with the current search value and should be us
 | `aria-describedby`  | `String` or `String[]`  | Ids of elements describing the `<input>`                                               |
 | `aria-labelledby`   | `String` or `String[]`  | Ids of elements labelling the `<input>` and list box                                   |
 | `className`         | `String`                | Class name of the wrapper                                                              |
+| `classPrefix`       | `String` or `null`      | Class prefix for each component.  Set to null to remove class names.                   |
 | `id`                | `String`                | id of the component (required)                                                         |
 | `ref`               | React ref               | Will be passed to the `<input>`                                                        |
 | `notFoundMessage`   | `Node`                  | Message to show if the search string has no results.                                   |

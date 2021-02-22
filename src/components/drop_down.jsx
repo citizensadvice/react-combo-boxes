@@ -15,10 +15,11 @@ import { stringOrArray } from '../validators/string_or_array';
 import { useCombineRefs } from '../hooks/use_combine_refs';
 import { findOption } from '../helpers/find_option';
 import { ListBox } from './list_box';
-import { classPrefix } from '../constants/class_prefix';
+import { classPrefix as defaultClassPrefix } from '../constants/class_prefix';
 import { joinTokens } from '../helpers/join_tokens';
 import { visuallyHiddenClassName } from '../constants/visually_hidden_class_name';
 import { scrollIntoView as defaultScrollIntoView } from '../helpers/scroll_into_view';
+import { makeBEMClass } from '../helpers/make_bem_class';
 
 export const DropDown = forwardRef((rawProps, ref) => {
   const optionisedProps = Object.freeze({
@@ -30,6 +31,8 @@ export const DropDown = forwardRef((rawProps, ref) => {
     'aria-invalid': ariaInvalid,
     'aria-labelledby': ariaLabelledBy,
     children,
+    className,
+    classPrefix,
     disabled,
     findOption: currentFindOption,
     id,
@@ -134,13 +137,13 @@ export const DropDown = forwardRef((rawProps, ref) => {
     onBlur: handleBlur,
     onFocus: handleFocus,
     onKeyDown: (e) => dispatch(onKeyDown(e)),
-    className: `${classPrefix}dropdown`,
+    className: className || makeBEMClass(classPrefix),
     children: (
       <>
         {renderComboBox({
           role: 'combobox',
           id,
-          className: `${classPrefix}dropdown__combobox`,
+          className: className || makeBEMClass(classPrefix, 'combobox'),
           'aria-controls': `${id}_listbox`,
           'aria-expanded': expanded ? 'true' : 'false',
           'aria-activedescendant': (expanded && focusedOption?.key) || null,
@@ -182,6 +185,8 @@ DropDown.propTypes = {
   'aria-describedby': stringOrArray,
   'aria-labelledby': stringOrArray.isRequired,
   'aria-invalid': PropTypes.string,
+  className: PropTypes.string,
+  classPrefix: PropTypes.string,
   disabled: PropTypes.bool,
   id: PropTypes.string.isRequired,
   required: PropTypes.bool,
@@ -216,6 +221,8 @@ DropDown.defaultProps = {
 
   'aria-describedby': null,
   'aria-invalid': null,
+  className: null,
+  classPrefix: `${defaultClassPrefix}dropdown`,
   disabled: false,
   required: false,
 

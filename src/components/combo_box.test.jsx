@@ -2622,6 +2622,44 @@ describe('id', () => {
   });
 });
 
+describe('classPrefix', () => {
+  const options = [
+    { label: 'Orange', group: 'Citrus' },
+  ];
+
+  it('removes classes when nil', () => {
+    const { container, getByRole } = render(
+      <ComboBoxWrapper options={options} classPrefix={null} />,
+    );
+    getByRole('combobox').focus();
+    expect(container.querySelector('div')).not.toHaveClass();
+    expect(getByRole('combobox')).not.toHaveClass();
+    expect(getByRole('listbox')).not.toHaveClass();
+    expect(getByRole('option')).not.toHaveClass();
+    expect(getByRole('option').previousSibling).not.toHaveClass();
+
+    expect(document.getElementById('id_down_arrow')).not.toHaveClass();
+    expect(document.getElementById('id_clear_button')).not.toHaveClass();
+    expect(document.getElementById('id_not_found')).not.toHaveClass();
+  });
+
+  it('prefixes all classes', () => {
+    const { container, getByRole } = render(
+      <ComboBoxWrapper options={options} classPrefix="foo" />,
+    );
+    getByRole('combobox').focus();
+    expect(container.querySelector('div')).toHaveClass('foo');
+    expect(getByRole('combobox')).toHaveClass('foo__input');
+    expect(getByRole('listbox')).toHaveClass('foo__listbox');
+    expect(getByRole('option')).toHaveClass('foo__option');
+    expect(getByRole('option').previousSibling).toHaveClass('foo__group-label');
+
+    expect(document.getElementById('id_down_arrow')).toHaveClass('foo__down-arrow');
+    expect(document.getElementById('id_clear_button')).toHaveClass('foo__clear-button');
+    expect(document.getElementById('id_not_found')).toHaveClass('foo__not-found');
+  });
+});
+
 describe('skipOption', () => {
   const options = ['Apple', 'Pear', 'Orange'];
 

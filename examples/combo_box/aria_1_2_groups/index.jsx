@@ -17,14 +17,14 @@ function renderGroup(props, { groupChildren, group: { key, label } }) {
       key={key}
     >
       <div
-        className="react-combo-boxes-listbox__group-label"
+        className="react-combo-boxes-combobox__group-label"
         id={key}
       >
         {label}
       </div>
       <ul
         role="presentation"
-        className="react-combo-boxes-listbox__group"
+        className="react-combo-boxes-combobox__group"
       >
         {groupChildren}
       </ul>
