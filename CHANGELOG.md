@@ -1,6 +1,6 @@
 # Change log
 
-## _Unreleased_
+## 1.0.0-rc.15 
 
 - Update focus and contrast styles
 - Added `classPrefix` property and restructured classes
