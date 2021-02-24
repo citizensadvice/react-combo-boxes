@@ -13,7 +13,7 @@ it('renders the highlight without hidden text', () => {
   const spy = jest.fn(() => ['f', ['o'], 'o']);
 
   const { container } = render((
-    highlightValue(spy, { children: 'foo' }, { search: 'bar' }, {})
+    highlightValue(spy)({ children: 'foo' }, { search: 'bar' }, {})
   ));
 
   expect(container).toContainHTML('<div>f<mark>o</mark>o</div>');

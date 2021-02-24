@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ComboBoxTable, useTokenSearch, tokenHighlight, useConfineListBox } from '../../../src';
+import { ComboBoxTable, useTokenSearch, tokenHighlighter, passThroughHighlighter, highlightValue, useConfineListBox } from '../../../src';
 import cats from '../../data/cats.json';
 
 const columns = ['breed', 'country', 'origin', 'bodyType', 'coatLength', 'pattern'];
@@ -8,21 +8,19 @@ function mapOption({ breed }) {
   return breed;
 }
 
-function renderColumnValue(props, state, componentProps) {
+function highlighter(term, query, options, state) {
   const { column: { name } } = state;
   if (name === 'breed') {
-    return (
-      tokenHighlight(props, state, componentProps)
-    );
+    return tokenHighlighter(term, query);
   }
-  return props.children;
+  return passThroughHighlighter(term);
 }
 
 export function Example() {
   const [value, setValue] = useState(null);
   const [search, setSearch] = useState(null);
   const filteredOptions = useTokenSearch(search, { options: cats, index: mapOption });
-  const [style, onLayoutListBox] = useConfineListBox();
+  const [onLayoutListBox] = useConfineListBox();
 
   return (
     <>
@@ -40,10 +38,9 @@ export function Example() {
         onSearch={setSearch}
         options={filteredOptions}
         columns={columns}
-        renderColumnValue={renderColumnValue}
+        renderColumnValue={highlightValue(highlighter)}
         mapOption={mapOption}
         onLayoutListBox={onLayoutListBox}
-        renderListBox={(props) => <div style={style} {...props} />}
       />
 
       <label htmlFor="output">

@@ -3,7 +3,7 @@ import { substringHighlight } from './substring_highlight';
 
 it('does not highlight with no children', () => {
   const { container } = render((
-    substringHighlight({ children: null }, { search: null }, {})
+    substringHighlight()({ children: null }, { search: null }, {})
   ));
 
   expect(container).toContainHTML('<div></div>');
@@ -11,7 +11,7 @@ it('does not highlight with no children', () => {
 
 it('does not highlight with no search children', () => {
   const { container } = render((
-    substringHighlight({ children: 'foo' }, { search: null }, {})
+    substringHighlight()({ children: 'foo' }, { search: null }, {})
   ));
 
   expect(container).toContainHTML('<div>foo</div>');
@@ -19,7 +19,7 @@ it('does not highlight with no search children', () => {
 
 it('does not highlight no match', () => {
   const { container } = render((
-    substringHighlight({ children: 'foo' }, { search: 'bar' }, {})
+    substringHighlight()({ children: 'foo' }, { search: 'bar' }, {})
   ));
 
   expect(container).toContainHTML('<div>foo</div>');
@@ -27,7 +27,7 @@ it('does not highlight no match', () => {
 
 it('highlights a substring', () => {
   const { container } = render((
-    substringHighlight({ children: 'foo bar foo bar' }, { search: 'bar' }, { visuallyHiddenClassName: 'sr-only' })
+    substringHighlight()({ children: 'foo bar foo bar' }, { search: 'bar' }, { visuallyHiddenClassName: 'sr-only' })
   ));
 
   expect(container).toMatchSnapshot();
@@ -35,7 +35,7 @@ it('highlights a substring', () => {
 
 it('highlights an existing value substring', () => {
   const { container } = render((
-    substringHighlight({ children: 'foo bar foo bar' }, { search: null }, { value: { label: 'bar' }, visuallyHiddenClassName: 'sr-only' })
+    substringHighlight()({ children: 'foo bar foo bar' }, { search: null }, { value: { label: 'bar' }, visuallyHiddenClassName: 'sr-only' })
   ));
 
   expect(container).toMatchSnapshot();
@@ -43,7 +43,7 @@ it('highlights an existing value substring', () => {
 
 it('inverses the highlight', () => {
   const { container } = render((
-    substringHighlight({ children: 'foo bar foo bar' }, { search: 'bar' }, { visuallyHiddenClassName: 'sr-only' }, { inverse: true })
+    substringHighlight({ inverse: true })({ children: 'foo bar foo bar' }, { search: 'bar' }, { visuallyHiddenClassName: 'sr-only' })
   ));
 
   expect(container).toMatchSnapshot();

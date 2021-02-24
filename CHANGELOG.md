@@ -1,5 +1,11 @@
 # Change log
 
+## 1.0.0-rc.16
+
+- changed highlight methods to return a render function 
+- export highlighters
+- swapped order of the returned values for useConfineListBox
+
 ## 1.0.0-rc.15 
 
 - Update focus and contrast styles

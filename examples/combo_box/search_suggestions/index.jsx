@@ -43,7 +43,7 @@ export function Example() {
         expandOnFocus={false}
         renderDownArrow={() => null}
         renderClearButton={() => null}
-        renderValue={(...args) => tokenHighlight(...args, { inverse: true })}
+        renderValue={tokenHighlight({ inverse: true })}
       />
 
       <label htmlFor="output">
