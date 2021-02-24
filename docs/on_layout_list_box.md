@@ -12,11 +12,10 @@ A hook is provided to use method
 ## `useConfineListBox(selector = 'body')`
 
 ```js
-  const [style, onLayoutListBox] = useConfineListBox();
+  const [onLayoutListBox, style] = useConfineListBox();
 
   <DropDown
     {...props}
-    listBoxListProps={{ style }}
     onLayoutListBox={onLayoutListBox}
   />
 ```

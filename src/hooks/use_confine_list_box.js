@@ -72,5 +72,5 @@ export function useConfineListBox(selector = 'body') {
     };
   }, [currentExpanded, handler]);
 
-  return [style, layoutListBox];
+  return [layoutListBox, style];
 }

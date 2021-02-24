@@ -3,7 +3,7 @@ import { delimitedHighlight } from './delimited_highlight';
 
 it('does not highlight with no children', () => {
   const { container } = render((
-    delimitedHighlight({ children: null }, { search: null }, {}, { start: '<em>', end: '</em>' })
+    delimitedHighlight({ start: '<em>', end: '</em>' })({ children: null }, { search: null }, {})
   ));
 
   expect(container).toContainHTML('<div></div>');
@@ -11,7 +11,7 @@ it('does not highlight with no children', () => {
 
 it('does not highlight with no search children', () => {
   const { container } = render((
-    delimitedHighlight({ children: 'foo' }, { search: null }, {}, { start: '<em>', end: '</em>' })
+    delimitedHighlight({ start: '<em>', end: '</em>' })({ children: 'foo' }, { search: null }, {})
   ));
 
   expect(container).toContainHTML('<div>foo</div>');
@@ -19,7 +19,7 @@ it('does not highlight with no search children', () => {
 
 it('converts <em> in html strings to a highlight', () => {
   const { container } = render((
-    delimitedHighlight({ children: 'foo <em>bar</em> <em>foe</em>' }, { search: null }, { visuallyHiddenClassName: 'sr-only' }, { start: '<em>', end: '</em>' })
+    delimitedHighlight({ start: '<em>', end: '</em>' })({ children: 'foo <em>bar</em> <em>foe</em>' }, { search: null }, { visuallyHiddenClassName: 'sr-only' })
   ));
 
   expect(container).toMatchSnapshot();
@@ -27,11 +27,10 @@ it('converts <em> in html strings to a highlight', () => {
 
 it('inverses the highlight', () => {
   const { container } = render((
-    delimitedHighlight(
+    delimitedHighlight({ start: '<em>', end: '</em>', inverse: true })(
       { children: 'foo <em>bar</em> <em>foe</em>' },
       { search: null },
       { visuallyHiddenClassName: 'sr-only' },
-      { start: '<em>', end: '</em>', inverse: true },
     )
   ));
 

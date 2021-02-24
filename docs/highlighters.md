@@ -10,7 +10,7 @@ const [options, onSearch] = useTokenSearch(initialOptions);
 <ComboBox
   options={options}
   onSearch={onSearch}
-  renderValue={tokenHighlight}
+  renderValue={tokenHighlight()}
 />
 ```
 
@@ -21,7 +21,7 @@ All highlights also support an inverse option.  This is useful for highlighting 
 ```js
 <ComboBox
   {...props}
-  renderValue={(...args) => tokenHighlight(...args, { inverse: true })}
+  renderValue={tokenHighlight({ inverse: true })}
 />
 ```
 
@@ -37,7 +37,7 @@ You need to pass the start and end delimiters to the highlight.
 ```js
 <ComboBox
   {...props}
-  renderValue={(...args) => delimitedHighlight(...args, { start: '<em>', end: '</em>' })}
+  renderValue={delimitedHighlight({ start: '<em>', end: '</em>' })}
 />
 ```
 
@@ -63,15 +63,17 @@ Useful for highlighting a database ilike query.
 
 Highlights matching tokens from a token search.
 
-## Custom highlighters
+## Custom highlighters and `highlightValue`
 
 To create your own highlighter you need to create a method with the following signature:
 
-`function (term: String, query: String, options: Object): Array<String|Array<String>>`
+`function (term: String, query: String, options: Object, state, props): Array<String|Array<String>>,`
 
 - `term` The term to highlight
 - `query` The search query to highlight with
 - `options` Any additional props passed to the component
+- `state` The state of the component for that value
+- `props` The props passed to component
 
 This should return an array whose members are strings or a single item array.  For example:
 
@@ -82,6 +84,32 @@ You can pass this highlighter to `highlightValue`.
 ```javascript
 <ComboBox
   {...props}
-  renderValue={(...args) => highlightValue(myCustomHighlighter, ...args, { any: 'options' })}
+  renderValue={highlightValue(myCustomHighlighter,  { any: 'options' })}
+/>
+```
+
+You can compose a higlighter using the existing highlighters.  They are:
+
+- `delimitedHighlighter`
+- `passThroughHighlighter`
+- `tokenHighlighter`
+- `prefixHighligher`
+- `substringHighlighter`
+- `tokenHighlighter`
+
+```javascript
+function highlight(term, search, options, state, props) {
+  // If the term is foo highlight
+  if (term === 'foo') {
+    return tokenHighlighter(...arguments);
+  }
+
+  // Otherwise don't highlight
+  return passThroughHighlighter(...arguments);
+}
+
+<ComboBox
+  {...props}
+  renderValue={highlightValue(highlight)}
 />
 ```

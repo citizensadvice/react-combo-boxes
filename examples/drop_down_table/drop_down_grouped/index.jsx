@@ -11,7 +11,7 @@ function mapOption({ breed, coatLength }) {
 export function Example() {
   const [value, setValue] = useState(null);
   const ref = useRef();
-  const [style, onLayoutListBox] = useConfineListBox();
+  const [onLayoutListBox] = useConfineListBox();
   const [managedFocus, setManagedFocus] = useState(true);
 
   return (
@@ -31,7 +31,6 @@ export function Example() {
         onValue={setValue}
         onLayoutListBox={onLayoutListBox}
         options={cats}
-        renderListBox={(props) => <div style={style} {...props} />}
         columns={columns}
         mapOption={mapOption}
         managedFocus={managedFocus}

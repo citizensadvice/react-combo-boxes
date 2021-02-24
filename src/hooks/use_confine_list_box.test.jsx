@@ -20,13 +20,13 @@ describe('maxWidth', () => {
   it('does not add maxWidth if not expanded', () => {
     const { result } = renderHook(() => useConfineListBox());
 
-    expect(result.current).toEqual([{}, expect.any(Function)]);
+    expect(result.current).toEqual([expect.any(Function), {}]);
 
     act(() => {
-      result.current[1]({ expanded: false, listbox });
+      result.current[0]({ expanded: false, listbox });
     });
 
-    expect(result.current[0].maxWidth).toEqual(undefined);
+    expect(result.current[1].maxWidth).toEqual(undefined);
     expect(listbox).toHaveStyle({ maxWidth: '' });
   });
 
@@ -38,10 +38,10 @@ describe('maxWidth', () => {
     const { result } = renderHook(() => useConfineListBox());
 
     act(() => {
-      result.current[1]({ expanded: true, listbox });
+      result.current[0]({ expanded: true, listbox });
     });
 
-    expect(result.current[0].maxWidth).toEqual('280px');
+    expect(result.current[1].maxWidth).toEqual('280px');
     expect(listbox).toHaveStyle({ maxWidth: '280px' });
   });
 
@@ -55,10 +55,10 @@ describe('maxWidth', () => {
       const { result } = renderHook(() => useConfineListBox('body > div'));
 
       act(() => {
-        result.current[1]({ expanded: true, listbox });
+        result.current[0]({ expanded: true, listbox });
       });
 
-      expect(result.current[0].maxWidth).toEqual('180px');
+      expect(result.current[1].maxWidth).toEqual('180px');
       expect(listbox).toHaveStyle({ maxWidth: '180px' });
     });
   });
@@ -72,10 +72,10 @@ describe('maxWidth', () => {
       const { result } = renderHook(() => useConfineListBox('table'));
 
       act(() => {
-        result.current[1]({ expanded: true, listbox });
+        result.current[0]({ expanded: true, listbox });
       });
 
-      expect(result.current[0].maxWidth).toEqual('280px');
+      expect(result.current[1].maxWidth).toEqual('280px');
       expect(listbox).toHaveStyle({ maxWidth: '280px' });
     });
   });
@@ -91,10 +91,10 @@ describe('maxWidth', () => {
       const { result } = renderHook(() => useConfineListBox('body > div'));
 
       act(() => {
-        result.current[1]({ expanded: true, listbox });
+        result.current[0]({ expanded: true, listbox });
       });
 
-      expect(result.current[0].maxWidth).toEqual('170px');
+      expect(result.current[1].maxWidth).toEqual('170px');
       expect(listbox).toHaveStyle({ maxWidth: '170px' });
     });
   });
@@ -105,10 +105,10 @@ describe('maxHeight', () => {
     const { result } = renderHook(() => useConfineListBox());
 
     act(() => {
-      result.current[1]({ expanded: false, listbox });
+      result.current[0]({ expanded: false, listbox });
     });
 
-    expect(result.current[0].maxHeight).toEqual(undefined);
+    expect(result.current[1].maxHeight).toEqual(undefined);
     expect(listbox).toHaveStyle({ maxHeight: '' });
   });
 
@@ -120,10 +120,10 @@ describe('maxHeight', () => {
     const { result } = renderHook(() => useConfineListBox());
 
     act(() => {
-      result.current[1]({ expanded: true, listbox });
+      result.current[0]({ expanded: true, listbox });
     });
 
-    expect(result.current[0].maxHeight).toEqual('250px');
+    expect(result.current[1].maxHeight).toEqual('250px');
     expect(listbox).toHaveStyle({ maxHeight: '250px' });
   });
 
@@ -137,10 +137,10 @@ describe('maxHeight', () => {
       const { result } = renderHook(() => useConfineListBox());
 
       act(() => {
-        result.current[1]({ expanded: true, listbox });
+        result.current[0]({ expanded: true, listbox });
       });
 
-      expect(result.current[0].maxHeight).toEqual('240px');
+      expect(result.current[1].maxHeight).toEqual('240px');
       expect(listbox).toHaveStyle({ maxHeight: '240px' });
     });
   });
