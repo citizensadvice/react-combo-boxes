@@ -3,7 +3,7 @@ import { shallowEqualObjects } from 'shallow-equal';
 
 export function useAsyncSearch(
   query,
-  { searcher, debounce, minLength, emptyOptions, catchErrors = false } = {},
+  { searcher, debounce, catchErrors = false } = {},
 ) {
   const [{ options, busy, error }, dispatch] = useReducer(
     (state, action) => {
@@ -13,7 +13,7 @@ export function useAsyncSearch(
       }
       return result;
     },
-    { options: emptyOptions || null, busy: false, error: null },
+    { options: undefined, busy: false, error: null },
   );
 
   useEffect(() => {
@@ -55,16 +55,6 @@ export function useAsyncSearch(
       dispatch({ options: results, busy: false, error: null });
     };
 
-    if (!query?.trim() && emptyOptions) {
-      dispatch({ busy: false, options: emptyOptions, error: null });
-      return undefined;
-    }
-
-    if (minLength && (!query || query?.trim().length < minLength)) {
-      dispatch({ busy: false, options: null, error: null });
-      return undefined;
-    }
-
     if (debounce) {
       timeout = setTimeout(search, debounce);
     } else {
@@ -78,6 +68,6 @@ export function useAsyncSearch(
     };
     // Don't include emptyOptions / searcher as it leads to infinite loops
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query, debounce, minLength, catchErrors]);
+  }, [query, debounce, catchErrors]);
   return [options, busy, error];
 }

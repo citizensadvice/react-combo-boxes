@@ -18,7 +18,7 @@ function useFindOptions(query, { debounce }) {
     };
   }, []);
 
-  return useAsyncSearch(query, { searcher, initialOptions: countries, debounce });
+  return useAsyncSearch(query, { searcher, debounce });
 }
 
 export function Example() {

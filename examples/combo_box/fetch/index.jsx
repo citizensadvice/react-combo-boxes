@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import { ComboBox, useAsyncSearch } from '../../../src';
 
 async function searcher(query, { signal }) {
+  if (!query || query.trim().length < 2) {
+    return null;
+  }
   const url = new URL('https://www.thecocktaildb.com/api/json/v1/1/search.php');
-  url.searchParams.set('s', query);
+  url.searchParams.set('s', query.trim());
   const response = await fetch(url, { signal });
   const data = await response.json();
   if (!data.drinks) {
@@ -22,7 +25,7 @@ function mapOption({ idDrink, strDrink }) {
 export function Example() {
   const [value, setValue] = useState(null);
   const [search, setSearch] = useState(null);
-  const [options, busy] = useAsyncSearch(search, { searcher, debounce: 200, minLength: 2 });
+  const [options, busy] = useAsyncSearch(search, { searcher, debounce: 200 });
 
   return (
     <>

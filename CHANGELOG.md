@@ -5,6 +5,7 @@
 - changed highlight methods to return a render function 
 - export highlighters
 - swapped order of the returned values for useConfineListBox
+- simplified useAsyncSearch
 
 ## 1.0.0-rc.15 
 

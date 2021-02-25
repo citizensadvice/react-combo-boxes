@@ -24,24 +24,21 @@ const options = useMemo(() => (
   onSearch={setSearch}
 />
 ```
-## `useAsyncSearch(term, { searcher, debounce, minLength, emptyOptions, catchErrors })`
+## `useAsyncSearch(term, { searcher, debounce, catchErrors })`
 
 This wraps a search function.  It supports debouncing, catching errors and cancelling requests.
 
 Returns an array of `[results: any, busy: boolean, error: Error]`
 
 - `results`: whatever the searcher returns
-- `busy`: true while searching, false while not searching, null if the search was cancelled
+- `busy`: true while searching, false while not searching
 - `error`: if `catchErrors` is true, a caught error will be set here.
 
 Options:
 
 - `searcher` (`async function (search: string, { signal }: { signal: AbortSignal }): any`) **Required**, a function to search.
   First argument is the query.  Also passes the signal of an `AbortController` for cancelling requests.
-- `initialOptions` (`Array`) Options to initially populate the search with
-- `emptyOptions` (`Array`) Options to show if there is no search term
 - `debounce` (`Number`) milliseconds to debounce the search 
-- `minLength` (`Number`) minimum number of characters to supply to make a search.
 - `catchErrors` (`Boolean`) if true, catch errors and return them as the third array argument.
 
 Example:
