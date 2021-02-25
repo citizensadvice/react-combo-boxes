@@ -24,6 +24,7 @@
   <span class="token keyword">const</span> <span class="token punctuation">[</span>showSelectedLabel<span class="token punctuation">,</span> setShowSelectedLabel<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">useState</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token keyword">const</span> <span class="token punctuation">[</span>managedFocus<span class="token punctuation">,</span> setManagedFocus<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">useState</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token keyword">const</span> <span class="token punctuation">[</span>expandOnFocus<span class="token punctuation">,</span> setExpandOnFocus<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">useState</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> <span class="token punctuation">[</span>selectOnBlur<span class="token punctuation">,</span> setSelectOnBlur<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">useState</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
   <span class="token keyword">return</span> <span class="token punctuation">(</span>
     <span class="token operator">&lt;</span><span class="token operator">></span>
@@ -46,7 +47,8 @@
         showSelectedLabel<span class="token operator">=</span><span class="token punctuation">{</span>showSelectedLabel<span class="token punctuation">}</span>
         managedFocus<span class="token operator">=</span><span class="token punctuation">{</span>managedFocus<span class="token punctuation">}</span>
         expandOnFocus<span class="token operator">=</span><span class="token punctuation">{</span>expandOnFocus<span class="token punctuation">}</span>
-        renderValue<span class="token operator">=</span><span class="token punctuation">{</span>tokenHighlight<span class="token punctuation">}</span>
+        renderValue<span class="token operator">=</span><span class="token punctuation">{</span><span class="token function">tokenHighlight</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">}</span>
+        selectOnBlur<span class="token operator">=</span><span class="token punctuation">{</span>selectOnBlur<span class="token punctuation">}</span>
       <span class="token operator">/</span><span class="token operator">></span>
 
       <span class="token operator">&lt;</span>fieldset<span class="token operator">></span>
@@ -132,7 +134,17 @@
           checked<span class="token operator">=</span><span class="token punctuation">{</span>expandOnFocus<span class="token punctuation">}</span>
         <span class="token operator">/</span><span class="token operator">></span>
         <span class="token punctuation">{</span><span class="token string">' '</span><span class="token punctuation">}</span>
-        Toggle Expand on focus
+        Toggle expand on focus
+      <span class="token operator">&lt;</span><span class="token operator">/</span>label<span class="token operator">></span>
+
+      <span class="token operator">&lt;</span>label<span class="token operator">></span>
+        <span class="token operator">&lt;</span>input
+          type<span class="token operator">=</span><span class="token string">"checkbox"</span>
+          onChange<span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">(</span><span class="token parameter"><span class="token punctuation">{</span> target<span class="token operator">:</span> <span class="token punctuation">{</span> checked <span class="token punctuation">}</span> <span class="token punctuation">}</span></span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token function">setSelectOnBlur</span><span class="token punctuation">(</span>checked<span class="token punctuation">)</span><span class="token punctuation">}</span>
+          checked<span class="token operator">=</span><span class="token punctuation">{</span>selectOnBlur<span class="token punctuation">}</span>
+        <span class="token operator">/</span><span class="token operator">></span>
+        <span class="token punctuation">{</span><span class="token string">' '</span><span class="token punctuation">}</span>
+        Toggle select on blur
       <span class="token operator">&lt;</span><span class="token operator">/</span>label<span class="token operator">></span>
 
       <span class="token operator">&lt;</span>label htmlFor<span class="token operator">=</span><span class="token string">"output"</span><span class="token operator">></span>
@@ -144,4 +156,4 @@
     <span class="token operator">&lt;</span><span class="token operator">/</span><span class="token operator">></span>
   <span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
-</code></pre></main><script src="/react-combo-boxes/render.95f2beed.js"></script></body></html>
+</code></pre></main><script src="/react-combo-boxes/render.08f29196.js"></script></body></html>
