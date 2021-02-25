@@ -19,22 +19,19 @@ The application should use this to filter the options provided to the combo box.
   onSearch<span class="token operator">=</span><span class="token punctuation">{</span>setSearch<span class="token punctuation">}</span>
 <span class="token operator">/</span><span class="token operator">></span>
 </code></pre>
-<h2 id="useasyncsearchterm--searcher-debounce-minlength-emptyoptions-catcherrors-"><code>useAsyncSearch(term, { searcher, debounce, minLength, emptyOptions, catchErrors })</code></h2>
+<h2 id="useasyncsearchterm--searcher-debounce-catcherrors-"><code>useAsyncSearch(term, { searcher, debounce, catchErrors })</code></h2>
 <p>This wraps a search function. It supports debouncing, catching errors and cancelling requests.</p>
 <p>Returns an array of <code>[results: any, busy: boolean, error: Error]</code></p>
 <ul>
 <li><code>results</code>: whatever the searcher returns</li>
-<li><code>busy</code>: true while searching, false while not searching, null if the search was cancelled</li>
+<li><code>busy</code>: true while searching, false while not searching</li>
 <li><code>error</code>: if <code>catchErrors</code> is true, a caught error will be set here.</li>
 </ul>
 <p>Options:</p>
 <ul>
 <li><code>searcher</code> (<code>async function (search: string, { signal }: { signal: AbortSignal }): any</code>) <strong>Required</strong>, a function to search.
 First argument is the query. Also passes the signal of an <code>AbortController</code> for cancelling requests.</li>
-<li><code>initialOptions</code> (<code>Array</code>) Options to initially populate the search with</li>
-<li><code>emptyOptions</code> (<code>Array</code>) Options to show if there is no search term</li>
 <li><code>debounce</code> (<code>Number</code>) milliseconds to debounce the search </li>
-<li><code>minLength</code> (<code>Number</code>) minimum number of characters to supply to make a search.</li>
 <li><code>catchErrors</code> (<code>Boolean</code>) if true, catch errors and return them as the third array argument.</li>
 </ul>
 <p>Example:</p>
@@ -76,4 +73,4 @@ Any options containing a word starting with the search term will be returned.</p
 <p>Searches an array of options for a matching prefix. This will find options starting with the search term.</p>
 <p>By default it will search either strings, or <code>label</code> property if the options are objects.</p>
 <p>You can customise how the array indexed by providing an index function with the signature <code>function (option: Object): Array&lt;String&gt;</code>.</p>
-</main><script src="/react-combo-boxes/render.0ede6423.js"></script></body></html>
+</main><script src="/react-combo-boxes/render.290c04eb.js"></script></body></html>

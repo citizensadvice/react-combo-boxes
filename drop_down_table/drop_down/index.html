@@ -13,7 +13,7 @@
 <span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">Example</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
   <span class="token keyword">const</span> <span class="token punctuation">[</span>value<span class="token punctuation">,</span> setValue<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">useState</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token keyword">const</span> ref <span class="token operator">=</span> <span class="token function">useRef</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token keyword">const</span> <span class="token punctuation">[</span>style<span class="token punctuation">,</span> onLayoutListBox<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">useConfineListBox</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> <span class="token punctuation">[</span>onLayoutListBox<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">useConfineListBox</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
   <span class="token keyword">return</span> <span class="token punctuation">(</span>
     <span class="token operator">&lt;</span><span class="token operator">></span>
@@ -32,7 +32,6 @@
         onValue<span class="token operator">=</span><span class="token punctuation">{</span>setValue<span class="token punctuation">}</span>
         onLayoutListBox<span class="token operator">=</span><span class="token punctuation">{</span>onLayoutListBox<span class="token punctuation">}</span>
         options<span class="token operator">=</span><span class="token punctuation">{</span>cats<span class="token punctuation">}</span>
-        renderListBox<span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">(</span><span class="token parameter">props</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token operator">&lt;</span>div style<span class="token operator">=</span><span class="token punctuation">{</span>style<span class="token punctuation">}</span> <span class="token punctuation">{</span><span class="token operator">...</span>props<span class="token punctuation">}</span> <span class="token operator">/</span><span class="token operator">></span><span class="token punctuation">}</span>
         columns<span class="token operator">=</span><span class="token punctuation">{</span>columns<span class="token punctuation">}</span>
         mapOption<span class="token operator">=</span><span class="token punctuation">{</span>mapOption<span class="token punctuation">}</span>
       <span class="token operator">/</span><span class="token operator">></span>
@@ -46,4 +45,4 @@
     <span class="token operator">&lt;</span><span class="token operator">/</span><span class="token operator">></span>
   <span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
-</code></pre></main><script src="/react-combo-boxes/render.0ede6423.js"></script></body></html>
+</code></pre></main><script src="/react-combo-boxes/render.290c04eb.js"></script></body></html>

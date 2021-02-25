@@ -6,14 +6,14 @@
 <span class="token operator">&lt;</span>ComboBox
   options<span class="token operator">=</span><span class="token punctuation">{</span>options<span class="token punctuation">}</span>
   onSearch<span class="token operator">=</span><span class="token punctuation">{</span>onSearch<span class="token punctuation">}</span>
-  renderValue<span class="token operator">=</span><span class="token punctuation">{</span>tokenHighlight<span class="token punctuation">}</span>
+  renderValue<span class="token operator">=</span><span class="token punctuation">{</span><span class="token function">tokenHighlight</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">}</span>
 <span class="token operator">/</span><span class="token operator">></span>
 </code></pre>
 <p>Five highlights are provided, or you could build your own.</p>
 <p>All highlights also support an inverse option. This is useful for highlighting search suggestions.</p>
 <pre><code class="language-js"><span class="token operator">&lt;</span>ComboBox
   <span class="token punctuation">{</span><span class="token operator">...</span>props<span class="token punctuation">}</span>
-  renderValue<span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">(</span><span class="token parameter"><span class="token operator">...</span>args</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token function">tokenHighlight</span><span class="token punctuation">(</span><span class="token operator">...</span>args<span class="token punctuation">,</span> <span class="token punctuation">{</span> inverse<span class="token operator">:</span> <span class="token boolean">true</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">}</span>
+  renderValue<span class="token operator">=</span><span class="token punctuation">{</span><span class="token function">tokenHighlight</span><span class="token punctuation">(</span><span class="token punctuation">{</span> inverse<span class="token operator">:</span> <span class="token boolean">true</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">}</span>
 <span class="token operator">/</span><span class="token operator">></span>
 </code></pre>
 <h2 id="delimitedhighlight"><code>delimitedHighlight</code></h2>
@@ -23,7 +23,7 @@
 <p>You need to pass the start and end delimiters to the highlight.</p>
 <pre><code class="language-js"><span class="token operator">&lt;</span>ComboBox
   <span class="token punctuation">{</span><span class="token operator">...</span>props<span class="token punctuation">}</span>
-  renderValue<span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">(</span><span class="token parameter"><span class="token operator">...</span>args</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token function">delimitedHighlight</span><span class="token punctuation">(</span><span class="token operator">...</span>args<span class="token punctuation">,</span> <span class="token punctuation">{</span> start<span class="token operator">:</span> <span class="token string">'&lt;em>'</span><span class="token punctuation">,</span> end<span class="token operator">:</span> <span class="token string">'&lt;/em>'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">}</span>
+  renderValue<span class="token operator">=</span><span class="token punctuation">{</span><span class="token function">delimitedHighlight</span><span class="token punctuation">(</span><span class="token punctuation">{</span> start<span class="token operator">:</span> <span class="token string">'&lt;em>'</span><span class="token punctuation">,</span> end<span class="token operator">:</span> <span class="token string">'&lt;/em>'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">}</span>
 <span class="token operator">/</span><span class="token operator">></span>
 </code></pre>
 <h2 id="passthroughhightlight"><code>passThroughHightlight</code></h2>
@@ -37,20 +37,46 @@
 <p>Useful for highlighting a database ilike query.</p>
 <h2 id="tokenhighlight"><code>tokenHighlight</code></h2>
 <p>Highlights matching tokens from a token search.</p>
-<h2 id="custom-highlighters">Custom highlighters</h2>
+<h2 id="custom-highlighters-and-highlightvalue">Custom highlighters and <code>highlightValue</code></h2>
 <p>To create your own highlighter you need to create a method with the following signature:</p>
-<p><code>function (term: String, query: String, options: Object): Array&lt;String|Array&lt;String&gt;&gt;</code></p>
+<p><code>function (term: String, query: String, options: Object, state, props): Array&lt;String|Array&lt;String&gt;&gt;,</code></p>
 <ul>
 <li><code>term</code> The term to highlight</li>
 <li><code>query</code> The search query to highlight with</li>
 <li><code>options</code> Any additional props passed to the component</li>
+<li><code>state</code> The state of the component for that value</li>
+<li><code>props</code> The props passed to component</li>
 </ul>
 <p>This should return an array whose members are strings or a single item array. For example:</p>
 <p><code>foo&lt;mark&gt;bar&lt;/mark&gt; foe</code> would be represented as <code>[&#39;foo&#39;, [&#39;bar&#39;], &#39; foe&#39;]</code></p>
 <p>You can pass this highlighter to <code>highlightValue</code>.</p>
 <pre><code class="language-javascript"><span class="token operator">&lt;</span>ComboBox
   <span class="token punctuation">{</span><span class="token operator">...</span>props<span class="token punctuation">}</span>
-  renderValue<span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">(</span><span class="token parameter"><span class="token operator">...</span>args</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token function">highlightValue</span><span class="token punctuation">(</span>myCustomHighlighter<span class="token punctuation">,</span> <span class="token operator">...</span>args<span class="token punctuation">,</span> <span class="token punctuation">{</span> any<span class="token operator">:</span> <span class="token string">'options'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">}</span>
+  renderValue<span class="token operator">=</span><span class="token punctuation">{</span><span class="token function">highlightValue</span><span class="token punctuation">(</span>myCustomHighlighter<span class="token punctuation">,</span>  <span class="token punctuation">{</span> any<span class="token operator">:</span> <span class="token string">'options'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">}</span>
 <span class="token operator">/</span><span class="token operator">></span>
 </code></pre>
-</main><script src="/react-combo-boxes/render.0ede6423.js"></script></body></html>
+<p>You can compose a higlighter using the existing highlighters. They are:</p>
+<ul>
+<li><code>delimitedHighlighter</code></li>
+<li><code>passThroughHighlighter</code></li>
+<li><code>tokenHighlighter</code></li>
+<li><code>prefixHighligher</code></li>
+<li><code>substringHighlighter</code></li>
+<li><code>tokenHighlighter</code></li>
+</ul>
+<pre><code class="language-javascript"><span class="token keyword">function</span> <span class="token function">highlight</span><span class="token punctuation">(</span><span class="token parameter">term<span class="token punctuation">,</span> search<span class="token punctuation">,</span> options<span class="token punctuation">,</span> state<span class="token punctuation">,</span> props</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">// If the term is foo highlight</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>term <span class="token operator">===</span> <span class="token string">'foo'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token function">tokenHighlighter</span><span class="token punctuation">(</span><span class="token operator">...</span>arguments<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">// Otherwise don't highlight</span>
+  <span class="token keyword">return</span> <span class="token function">passThroughHighlighter</span><span class="token punctuation">(</span><span class="token operator">...</span>arguments<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token operator">&lt;</span>ComboBox
+  <span class="token punctuation">{</span><span class="token operator">...</span>props<span class="token punctuation">}</span>
+  renderValue<span class="token operator">=</span><span class="token punctuation">{</span><span class="token function">highlightValue</span><span class="token punctuation">(</span>highlight<span class="token punctuation">)</span><span class="token punctuation">}</span>
+<span class="token operator">/</span><span class="token operator">></span>
+</code></pre>
+</main><script src="/react-combo-boxes/render.290c04eb.js"></script></body></html>
