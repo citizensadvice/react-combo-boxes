@@ -1,5 +1,9 @@
 # Change log
 
+## 1.0.0-rc.18
+
+- added the selectOnBlur option to combo box
+
 ## 1.0.0-rc.17
 
 - settings options to undefined on a combo-box suppresses the not found message
