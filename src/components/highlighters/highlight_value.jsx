@@ -11,7 +11,12 @@ export function highlightValue(highlighter, { inverse, search: _search, ...optio
   return ({ children }, state, componentProps) => {
     const { value, visuallyHiddenClassName } = componentProps;
     const { search } = state;
-    const highlighted = highlighter(children || '', _search ?? (search || value?.label), options, state, componentProps);
+
+    if (!children) {
+      return children;
+    }
+
+    const highlighted = highlighter(children, _search ?? (search || value?.label || ''), options, state, componentProps);
 
     if (emptyHighlight(highlighted)) {
       return highlighted.join('');
