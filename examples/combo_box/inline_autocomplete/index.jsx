@@ -15,6 +15,7 @@ export function Example() {
   const [showSelectedLabel, setShowSelectedLabel] = useState(false);
   const [managedFocus, setManagedFocus] = useState(true);
   const [expandOnFocus, setExpandOnFocus] = useState(true);
+  const [selectOnBlur, setSelectOnBlur] = useState(true);
 
   return (
     <>
@@ -37,7 +38,8 @@ export function Example() {
         showSelectedLabel={showSelectedLabel}
         managedFocus={managedFocus}
         expandOnFocus={expandOnFocus}
-        renderValue={tokenHighlight}
+        renderValue={tokenHighlight()}
+        selectOnBlur={selectOnBlur}
       />
 
       <fieldset>
@@ -123,7 +125,17 @@ export function Example() {
           checked={expandOnFocus}
         />
         {' '}
-        Toggle Expand on focus
+        Toggle expand on focus
+      </label>
+
+      <label>
+        <input
+          type="checkbox"
+          onChange={({ target: { checked } }) => setSelectOnBlur(checked)}
+          checked={selectOnBlur}
+        />
+        {' '}
+        Toggle select on blur
       </label>
 
       <label htmlFor="output">

@@ -2350,6 +2350,48 @@ describe('expandOnFocus', () => {
   });
 });
 
+describe('selectOnBlur', () => {
+  const options = ['Apple', 'Pear', 'Orange'];
+
+  describe('when true', () => {
+    it('calls onValue when bluring the list box', async () => {
+      const spy = jest.fn();
+      const { getByRole } = render((
+        <>
+          <ComboBoxWrapper options={options} onValue={spy} selectOnBlur />
+          <input />
+        </>
+      ));
+      getByRole('combobox').focus();
+      fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
+      userEvent.tab();
+      await waitFor(() => {
+        expect(spy).toHaveBeenCalledWith('Apple');
+      });
+    });
+  });
+
+  describe('when false', () => {
+    it('does not call onValue when bluring the list box', async () => {
+      const spy = jest.fn();
+      const { getByRole, queryByRole } = render((
+        <>
+          <ComboBoxWrapper options={options} onValue={spy} selectOnBlur={false} />
+          <input id="other" />
+        </>
+      ));
+      getByRole('combobox').focus();
+      fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
+      userEvent.tab();
+      expect(document.getElementById('other')).toHaveFocus();
+      await waitFor(() => {
+        expect(queryByRole('listbox')).toBeFalsy();
+      });
+      expect(spy).not.toHaveBeenCalled();
+    });
+  });
+});
+
 describe('findSuggestion', () => {
   const options = ['Apple', 'Pear', 'Orange'];
 

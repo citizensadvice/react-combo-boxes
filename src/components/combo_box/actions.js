@@ -242,9 +242,9 @@ export function onInputMouseUp(e) {
 export function onBlur() {
   return (dispatch, getState, getProps) => {
     const { focusedOption } = getState();
-    const { value } = getProps();
+    const { value, selectOnBlur } = getProps();
 
-    if (focusedOption && value?.identify !== focusedOption?.identity) {
+    if (selectOnBlur && focusedOption && value?.identify !== focusedOption?.identity) {
       dispatch(onSelectValue(focusedOption));
       return;
     }
