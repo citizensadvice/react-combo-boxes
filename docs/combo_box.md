@@ -40,34 +40,34 @@ The `onSearch` function is called with the current search value and should be us
 
 ## Props
 
-| Prop                | Type                    | Purpose                                                                                |
-| ----                | ----                    | ----                                                                                   |
-| `options`           | `Array` or `null`       | The set of options. Setting null will suppress the not found message. [See options][1] |
-| `value`             | Any                     | The currently selected option                                                          |
-| `mapOption`         | `Function`              | Use to map options. [See options][1]                                                   |
-| `busy`              | `Boolean`               | The busy status of the search.                                                         |
-| `busyDebounce`      | `Number`                | Debounce busy notifications, defaults to 200                                           |
-| `aria-describedby`  | `String` or `String[]`  | Ids of elements describing the `<input>`                                               |
-| `aria-labelledby`   | `String` or `String[]`  | Ids of elements labelling the `<input>` and list box                                   |
-| `className`         | `String`                | Class name of the wrapper                                                              |
-| `classPrefix`       | `String` or `null`      | Class prefix for each component.  Set to null to remove class names.                   |
-| `id`                | `String`                | id of the component (required)                                                         |
-| `ref`               | React ref               | Will be passed to the `<input>`                                                        |
-| `notFoundMessage`   | `Node`                  | Message to show if the search string has no results.                                   |
-| `errorMessage`      | `Node`                  | Message to show if the search has an error                                             |
-| `onBlur`            | `Function`              | Handler for when the component is blured                                               |
-| `onChange`          | `Function`              | Handler for typing in the input.                                                       |
-| `onFocus`           | `Function`              | Handler for when the component is focused                                              |
-| `onSearch`          | `Function`              | Handler for searching.  See [Searchers][2]                                             |
-| `onLayoutListBox`   | `Function`              | Handler for custom listbox positioning. See [onLayoutListBox][3]                       |
-| `onValue`           | `Function`              | Handler for when a value is selected                                                   |
-| `managedFocus`      | `Boolean`               | Use managed focus                                                                      |
-| `autoselect`        | `Boolean` or `"inline"` | If set the first matching option will be automatically selected                        |
-| `expandOnFocus`     | `Boolean`               | Show available options when focusing.  Defaults to true                                |
-| `findSuggestion`    | `Function`              | Customise finding the autoselect option                                                |
-| `showSelectedLabel` | `Boolean`               | When true, the value in the `<input>` will match the selected label                    |
-| `skipOption`        | `Function`              | Allows options to be skipped with keyboard navigation                                  |
-| `tabAutocomplete`   | `Boolean`               | When true, pressing tab will select an autocompleted option                            |
+| Prop                | Type                    | Purpose                                                               |
+| ----                | ----                    | ----                                                                  |
+| `options`           | `Array`                 | The set of options. [See options][1]                                  |
+| `value`             | Any                     | The currently selected option                                         |
+| `mapOption`         | `Function`              | Use to map options. [See options][1]                                  |
+| `busy`              | `Boolean`               | The busy status of the search.                                        |
+| `busyDebounce`      | `Number`                | Debounce busy notifications, defaults to 200                          |
+| `aria-describedby`  | `String` or `String[]`  | Ids of elements describing the `<input>`                              |
+| `aria-labelledby`   | `String` or `String[]`  | Ids of elements labelling the `<input>` and list box                  |
+| `className`         | `String`                | Class name of the wrapper                                             |
+| `classPrefix`       | `String` or `null`      | Class prefix for each component.  Set to null to remove class names.  |
+| `id`                | `String`                | id of the component (required)                                        |
+| `ref`               | React ref               | Will be passed to the `<input>`                                       |
+| `notFoundMessage`   | `Node`                  | Message to show if the users searchers and options are an empty array |
+| `errorMessage`      | `Node`                  | Message to show if the search has an error                            |
+| `onBlur`            | `Function`              | Handler for when the component is blured                              |
+| `onChange`          | `Function`              | Handler for typing in the input.                                      |
+| `onFocus`           | `Function`              | Handler for when the component is focused                             |
+| `onSearch`          | `Function`              | Handler for searching.  See [Searchers][2]                            |
+| `onLayoutListBox`   | `Function`              | Handler for custom listbox positioning. See [onLayoutListBox][3]      |
+| `onValue`           | `Function`              | Handler for when a value is selected                                  |
+| `managedFocus`      | `Boolean`               | Use managed focus                                                     |
+| `autoselect`        | `Boolean` or `"inline"` | If set the first matching option will be automatically selected       |
+| `expandOnFocus`     | `Boolean`               | Show available options when focusing.  Defaults to true               |
+| `findSuggestion`    | `Function`              | Customise finding the autoselect option                               |
+| `showSelectedLabel` | `Boolean`               | When true, the value in the `<input>` will match the selected label   |
+| `skipOption`        | `Function`              | Allows options to be skipped with keyboard navigation                 |
+| `tabAutocomplete`   | `Boolean`               | When true, pressing tab will select an autocompleted option           |
 
 The following properties will be passed directly to the `<input>`: `autoCapitalize`, `disabled`,
 `inputMode`, `maxLength`, `minLength`, `pattern`, `placeholder`, `readOnly`, `required`, `size` and `spellCheck`.

@@ -76,6 +76,6 @@ export function useNormalisedOptions({
     options,
     value,
     selectedOption,
-    nullOptions: rawOptions === null,
+    nullOptions: rawOptions == null,
   };
 }

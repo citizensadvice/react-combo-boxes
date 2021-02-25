@@ -2421,6 +2421,15 @@ describe('notFoundMessage', () => {
       expect(getByRole('combobox')).not.toHaveDescription('No matches found');
     });
 
+    it('does not display a not found if options are undefined', async () => {
+      const { getByRole } = render((
+        <ComboBoxWrapper options={undefined} />
+      ));
+      getByRole('combobox').focus();
+      await userEvent.type(document.activeElement, 'foo');
+      expect(getByRole('combobox')).not.toHaveDescription('No matches found');
+    });
+
     it('does not display a not found if there is no search', async () => {
       const { getByRole } = render((
         <ComboBoxWrapper options={[]} />
