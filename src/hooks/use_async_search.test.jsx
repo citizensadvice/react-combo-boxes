@@ -14,7 +14,7 @@ describe('options', () => {
     );
 
     expect(searcher).toHaveBeenCalledWith(null, { signal: expect.any(AbortSignal) });
-    expect(result.current).toEqual([null, true, null]);
+    expect(result.current).toEqual([undefined, true, null]);
     await waitForNextUpdate();
     expect(result.current).toEqual([['foo'], false, null]);
 
@@ -81,13 +81,13 @@ describe('options', () => {
       { initialProps: { query: 'foo' } },
     );
 
-    expect(result.current).toEqual([null, true, null]);
+    expect(result.current).toEqual([undefined, true, null]);
     expect(searcher).toHaveBeenLastCalledWith('foo', { signal: expect.objectContaining({ aborted: false }) });
 
     // Second search
     rerender({ query: 'bar' });
     expect(searcher).toHaveBeenLastCalledWith('bar', { signal: expect.objectContaining({ aborted: false }) });
-    expect(result.current).toEqual([null, true, null]);
+    expect(result.current).toEqual([undefined, true, null]);
 
     // Check abort signal on first search
     expect(searcher.mock.calls[0][1].signal.aborted).toEqual(true);
@@ -103,34 +103,6 @@ describe('options', () => {
   });
 });
 
-describe('minLength', () => {
-  it('runs a search when minLength is met', async () => {
-    const searcher = jest.fn(() => ['foo']);
-
-    const { result, rerender, waitForNextUpdate } = renderHook(
-      ({ query }) => useAsyncSearch(query, { searcher, minLength: 2 }),
-      { initialProps: { query: null } },
-    );
-
-    expect(searcher).not.toHaveBeenCalled();
-    expect(result.current).toEqual([null, false, null]);
-
-    rerender({ query: 'f' });
-    expect(searcher).not.toHaveBeenCalled();
-    expect(result.current).toEqual([null, false, null]);
-
-    // Trimmed search
-    rerender({ query: 'f ' });
-    expect(searcher).not.toHaveBeenCalled();
-    expect(result.current).toEqual([null, false, null]);
-
-    rerender({ query: 'fo' });
-    expect(searcher).toHaveBeenCalledWith('fo', { signal: expect.any(AbortSignal) });
-    await waitForNextUpdate();
-    expect(result.current).toEqual([['foo'], false, null]);
-  });
-});
-
 describe('debounce', () => {
   it('debounces starting a search', async () => {
     jest.useFakeTimers();
@@ -142,18 +114,18 @@ describe('debounce', () => {
     );
 
     expect(searcher).not.toHaveBeenCalled();
-    expect(result.current).toEqual([null, false, null]);
+    expect(result.current).toEqual([undefined, false, null]);
 
     rerender({ query: 'f' });
     expect(searcher).not.toHaveBeenCalled();
-    expect(result.current).toEqual([null, false, null]);
+    expect(result.current).toEqual([undefined, false, null]);
 
     await act(async () => {
       jest.advanceTimersByTime(199);
     });
 
     expect(searcher).not.toHaveBeenCalled();
-    expect(result.current).toEqual([null, false, null]);
+    expect(result.current).toEqual([undefined, false, null]);
 
     await act(async () => {
       jest.advanceTimersByTime(1);
@@ -161,32 +133,6 @@ describe('debounce', () => {
 
     expect(searcher).toHaveBeenCalledTimes(1);
     expect(searcher).toHaveBeenCalledWith('f', { signal: expect.any(AbortSignal) });
-    expect(result.current).toEqual([['foo'], false, null]);
-  });
-});
-
-describe('emptyOptions', () => {
-  it('returns emptyOptions with no search term', async () => {
-    const searcher = jest.fn(() => ['bar']);
-
-    const { result, rerender, waitForNextUpdate } = renderHook(
-      ({ query }) => useAsyncSearch(query, { searcher, emptyOptions: ['foo'] }),
-      { initialProps: { query: null } },
-    );
-
-    expect(searcher).not.toHaveBeenCalled();
-    expect(result.current).toEqual([['foo'], false, null]);
-
-    rerender({ query: '' });
-    expect(searcher).not.toHaveBeenCalled();
-    expect(result.current).toEqual([['foo'], false, null]);
-
-    rerender({ query: 'f' });
-    expect(searcher).toHaveBeenCalledWith('f', { signal: expect.any(AbortSignal) });
-    await waitForNextUpdate();
-    expect(result.current).toEqual([['bar'], false, null]);
-
-    rerender({ query: '' });
     expect(result.current).toEqual([['foo'], false, null]);
   });
 });
@@ -216,6 +162,6 @@ describe('catchErrors', () => {
       { initialProps: { query: null } },
     );
 
-    expect(result.current).toEqual([null, false, null]);
+    expect(result.current).toEqual([undefined, false, null]);
   });
 });
