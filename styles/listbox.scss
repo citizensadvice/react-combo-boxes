@@ -121,7 +121,7 @@
 
   @supports (scroll-padding-top: 1px) and (position: sticky) {
     &__listbox--header {
-      scroll-padding-top: 1.7em;
+      scroll-padding-top: $react-combo-boxes-table-header-offset;
     }
 
     &__table-header {
