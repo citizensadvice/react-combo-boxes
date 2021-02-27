@@ -34,11 +34,12 @@ Columns is an array of:
 - `String` - column keys
 - `Objects` with the keys:
 
-| Key | Type | Purpose |
-| ---- | ---- | ---- |
-| `name` | `String` | The object key to show.  Required |
-| `label` | `Node` | If present it will show the HTML headers |
-| `html` | `Object` | HTML attributes to be added to `<col>` elements for each column |
+| Key        | Type     | Purpose                                                         |
+| ----       | ----     | ----                                                            |
+| `name`     | `String` | The object key to show.  Required                               |
+| `label`    | `Node`   | If present it will show the HTML headers                        |
+| `colHtml`  | `Object` | HTML attributes to be added to `<col>` elements for each column |
+| `cellHtml` | `Object` | HTML attributes to be added to `<td>` elements for each column  |
 
 ## Customisation
 

@@ -1,5 +1,104 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`cells with html renders a table with colgroups 1`] = `
+<div>
+  <div
+    class="react-combo-boxes-dropdown"
+  >
+    <div
+      aria-controls="id_listbox"
+      aria-expanded="false"
+      aria-labelledby="id-label id"
+      class="react-combo-boxes-dropdown__combobox"
+      id="id"
+      role="combobox"
+      tabindex="0"
+    >
+      Apple
+    </div>
+    <div
+      class="react-combo-boxes-dropdown__listbox react-combo-boxes-dropdown__false"
+      hidden=""
+    >
+      <table
+        aria-labelledby="id-label"
+        class="react-combo-boxes-dropdown__table"
+        id="id_listbox"
+        role="listbox"
+        tabindex="-1"
+      >
+        <colgroup>
+          <col />
+          <col />
+        </colgroup>
+        <tbody
+          role="presentation"
+        >
+          <tr
+            aria-selected="true"
+            class="react-combo-boxes-dropdown__table-row"
+            id="id_option_apple"
+            role="option"
+            tabindex="-1"
+          >
+            <td
+              class="foo"
+              role="presentation"
+            >
+              Apple
+            </td>
+            <td
+              class="bar"
+              role="presentation"
+            >
+              Fruit
+            </td>
+          </tr>
+          <tr
+            class="react-combo-boxes-dropdown__table-row"
+            id="id_option_banana"
+            role="option"
+            tabindex="-1"
+          >
+            <td
+              class="foo"
+              role="presentation"
+            >
+              Banana
+            </td>
+            <td
+              class="bar"
+              role="presentation"
+            >
+              Fruit
+            </td>
+          </tr>
+          <tr
+            class="react-combo-boxes-dropdown__table-row"
+            id="id_option_potato"
+            role="option"
+            tabindex="-1"
+          >
+            <td
+              class="foo"
+              role="presentation"
+            >
+              Potato
+            </td>
+            <td
+              class="bar"
+              role="presentation"
+            >
+              Vegetable
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`columns as names only renders a table as the list box 1`] = `
 <div>
   <div

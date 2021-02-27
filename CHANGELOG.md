@@ -1,5 +1,11 @@
 # Change log
 
+## 1.0.0-rc.19
+
+- fix accessible labels are not separated from value with a space
+- do not read accessible column header if the column is empty
+- allow custom cell classes in columns
+
 ## 1.0.0-rc.18
 
 - added the selectOnBlur option to combo box

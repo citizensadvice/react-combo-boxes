@@ -132,8 +132,31 @@ describe('columns with html', () => {
   ];
 
   const columns = [
-    { name: 'label', html: { className: 'foo' } },
-    { name: 'type', html: { className: 'bar' } },
+    { name: 'label', colHtml: { className: 'foo' } },
+    { name: 'type', colHtml: { className: 'bar' } },
+  ];
+
+  it('renders a table with colgroups', () => {
+    const { container } = render((
+      <ComboBoxWrapper
+        options={options}
+        columns={columns}
+      />
+    ));
+    expect(container).toMatchSnapshot();
+  });
+});
+
+describe('cells with html', () => {
+  const options = [
+    { label: 'Apple', type: 'Fruit', colour: 'Green' },
+    { label: 'Banana', type: 'Fruit', colour: 'Yellow' },
+    { label: 'Potato', type: 'Vegetable', colour: 'Brown' },
+  ];
+
+  const columns = [
+    { name: 'label', cellHtml: { className: 'foo' } },
+    { name: 'type', cellHtml: { className: 'bar' } },
   ];
 
   it('renders a table with colgroups', () => {

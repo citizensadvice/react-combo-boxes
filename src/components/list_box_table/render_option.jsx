@@ -21,6 +21,7 @@ export function renderOption({ children: _, ...props }, state, componentProps) {
       role: 'presentation',
       className: makeBEMClass(classPrefix, 'table-cell'),
       key: index,
+      ...column.cellHtml,
       children: (
         <>
           {group && index === 0 && renderGroupAccessibleLabel({
