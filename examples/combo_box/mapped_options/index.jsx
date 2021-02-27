@@ -39,7 +39,7 @@ export function Example() {
         onSearch={setSearch}
         options={filteredOptions}
         mapOption={map}
-        renderValue={tokenHighlight}
+        renderValue={tokenHighlight()}
       />
 
       <label htmlFor="output">
