@@ -464,7 +464,7 @@ describe('customisation', () => {
         <ComboBoxWrapper options={options} columns={columns} mapOption={map} renderGroupAccessibleLabel={spy} test="foo" />
       ));
       expect(spy).toHaveBeenLastCalledWith(
-        { children: 'Vegetable', className: visuallyHiddenClassName },
+        { children: 'Vegetable ', className: visuallyHiddenClassName },
         {
           'aria-autocomplete': 'none',
           'aria-busy': false,
@@ -497,7 +497,7 @@ describe('customisation', () => {
         <ComboBoxWrapper options={options} columns={columns} mapOption={map} renderTableCellColumnAccessibleLabel={spy} test="foo" />
       ));
       expect(spy).toHaveBeenLastCalledWith(
-        { children: 'Type', className: visuallyHiddenClassName },
+        { children: 'Type ', className: visuallyHiddenClassName },
         {
           'aria-autocomplete': 'none',
           'aria-busy': false,
@@ -512,6 +512,25 @@ describe('customisation', () => {
           column: { label: 'Type', name: 'type' },
         },
         expect.objectContaining({ options: expect.any(Array), test: 'foo', columns: expect.any(Array) }),
+      );
+    });
+
+    it('is has empty children if the column is empty', () => {
+      const testOptions = [
+        { name: 'Apple', type: 'Fruit', colour: '' },
+      ];
+      const spy = jest.fn();
+      render((
+        <ComboBoxWrapper options={testOptions} columns={columns} mapOption={map} renderTableCellColumnAccessibleLabel={spy} test="foo" />
+      ));
+      expect(spy).toHaveBeenCalledWith(
+        { children: null, className: visuallyHiddenClassName },
+        expect.objectContaining({
+          group: expect.objectContaining({ label: 'Fruit' }),
+          option: expect.objectContaining({ label: 'Apple' }),
+          column: { label: 'Colour', name: 'colour' },
+        }),
+        expect.anything(),
       );
     });
   });

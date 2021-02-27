@@ -96,7 +96,7 @@ exports[`options as array of objects group renders grouped options 1`] = `
         <span
           class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
         >
-          Citrus
+          Citrus 
         </span>
         Orange
       </li>
@@ -109,7 +109,7 @@ exports[`options as array of objects group renders grouped options 1`] = `
         <span
           class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
         >
-          Citrus
+          Citrus 
         </span>
         Lemon
       </li>
@@ -128,7 +128,7 @@ exports[`options as array of objects group renders grouped options 1`] = `
         <span
           class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
         >
-          Berry
+          Berry 
         </span>
         Raspberry
       </li>
@@ -141,7 +141,7 @@ exports[`options as array of objects group renders grouped options 1`] = `
         <span
           class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
         >
-          Berry
+          Berry 
         </span>
         Strawberry
       </li>

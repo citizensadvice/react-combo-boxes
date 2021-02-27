@@ -70,7 +70,7 @@ export const ListBox = forwardRef((
             <>
               {group ? renderGroupAccessibleLabel({
                 className: visuallyHiddenClassName,
-                children: group.label,
+                children: `${group.label} `,
               }, { ...componentState, group }, componentProps) : null}
               {renderValue(
                 { children: label },

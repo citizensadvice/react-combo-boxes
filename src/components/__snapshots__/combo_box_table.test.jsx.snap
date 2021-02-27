@@ -231,7 +231,7 @@ exports[`columns with headers renders a table with headers 1`] = `
               <span
                 class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
-                Name
+                Name 
               </span>
               Apple
             </td>
@@ -242,7 +242,7 @@ exports[`columns with headers renders a table with headers 1`] = `
               <span
                 class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
-                Type
+                Type 
               </span>
               Fruit
             </td>
@@ -260,7 +260,7 @@ exports[`columns with headers renders a table with headers 1`] = `
               <span
                 class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
-                Name
+                Name 
               </span>
               Banana
             </td>
@@ -271,7 +271,7 @@ exports[`columns with headers renders a table with headers 1`] = `
               <span
                 class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
-                Type
+                Type 
               </span>
               Fruit
             </td>
@@ -289,7 +289,7 @@ exports[`columns with headers renders a table with headers 1`] = `
               <span
                 class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
-                Name
+                Name 
               </span>
               Potato
             </td>
@@ -300,7 +300,7 @@ exports[`columns with headers renders a table with headers 1`] = `
               <span
                 class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
-                Type
+                Type 
               </span>
               Vegetable
             </td>
@@ -532,7 +532,7 @@ exports[`grouped renders a table with groups 1`] = `
               <span
                 class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
-                Fruit
+                Fruit 
               </span>
               Apple
             </td>
@@ -556,7 +556,7 @@ exports[`grouped renders a table with groups 1`] = `
               <span
                 class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
-                Fruit
+                Fruit 
               </span>
               Banana
             </td>
@@ -591,7 +591,7 @@ exports[`grouped renders a table with groups 1`] = `
               <span
                 class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
-                Vegetable
+                Vegetable 
               </span>
               Potato
             </td>

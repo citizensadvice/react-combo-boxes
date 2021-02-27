@@ -1969,7 +1969,9 @@ describe('renderGroupAccessibleLabel', () => {
 
     fireEvent.click(getByRole('combobox'));
     expect(spy).toHaveBeenLastCalledWith(
-      expect.any(Object),
+      expect.objectContaining({
+        children: 'bar ',
+      }),
       {
         expanded: true,
         search: '',

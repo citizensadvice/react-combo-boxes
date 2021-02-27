@@ -3108,7 +3108,9 @@ describe('renderGroupAccessibleLabel', () => {
     ));
     getByRole('combobox').focus();
     expect(spy).toHaveBeenLastCalledWith(
-      expect.any(Object),
+      expect.objectContaining({
+        children: 'bar ',
+      }),
       {
         'aria-autocomplete': 'none',
         'aria-busy': false,

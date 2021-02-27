@@ -25,11 +25,11 @@ export function renderOption({ children: _, ...props }, state, componentProps) {
         <>
           {group && index === 0 && renderGroupAccessibleLabel({
             className: visuallyHiddenClassName,
-            children: group.label,
+            children: `${group.label} `,
           }, state, componentProps)}
           {column.label && renderTableCellColumnAccessibleLabel({
             className: visuallyHiddenClassName,
-            children: column.label,
+            children: option.value[column.name] ? `${column.label} ` : null,
           }, { ...state, column }, componentProps)}
           {renderColumnValue({
             children: option.value[column.name],
