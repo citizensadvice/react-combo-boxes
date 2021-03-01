@@ -17,6 +17,7 @@
     "import/prefer-default-export": "off",
     "import/no-default-export": "error",
     "object-curly-newline": ["error", { "consistent": true }],
+    "no-restricted-syntax": "off",
     "no-unused-vars": ["error", { "vars": "all", "args": "after-used", "varsIgnorePattern": "^_\\d*$", "argsIgnorePattern": "^_\\d*$" }],
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "error",

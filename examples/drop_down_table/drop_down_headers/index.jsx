@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { DropDownTable, useConfineListBox } from '../../../src';
+import { DropDownTable, useLayoutListBox, layoutMaxWidth, layoutMaxHeight } from '../../../src';
 import cats from '../../data/cats.json';
 
 const columns = [
@@ -18,7 +18,7 @@ function mapOption({ breed }) {
 export function Example() {
   const [value, setValue] = useState(null);
   const ref = useRef();
-  const [onLayoutListBox] = useConfineListBox();
+  const onExpandListBox = useLayoutListBox(layoutMaxWidth, layoutMaxHeight);
 
   return (
     <>
@@ -35,7 +35,7 @@ export function Example() {
         ref={ref}
         value={value}
         onValue={setValue}
-        onLayoutListBox={onLayoutListBox}
+        onExpandListBox={onExpandListBox}
         options={cats}
         columns={columns}
         mapOption={mapOption}

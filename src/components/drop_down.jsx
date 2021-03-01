@@ -18,7 +18,7 @@ import { ListBox } from './list_box';
 import { classPrefix as defaultClassPrefix } from '../constants/class_prefix';
 import { joinTokens } from '../helpers/join_tokens';
 import { visuallyHiddenClassName } from '../constants/visually_hidden_class_name';
-import { scrollIntoView as defaultScrollIntoView } from '../helpers/scroll_into_view';
+import { scrollIntoView } from '../layout/scroll_into_view';
 import { makeBEMClass } from '../helpers/make_bem_class';
 
 export const DropDown = forwardRef((rawProps, ref) => {
@@ -39,12 +39,12 @@ export const DropDown = forwardRef((rawProps, ref) => {
     managedFocus,
     onBlur: passedOnBlur,
     onFocus: passedOnFocus,
-    onLayoutListBox,
+    onDisplayOptions,
+    onFocusOption,
     options,
     renderComboBox,
     renderWrapper,
     required,
-    scrollIntoView,
     selectedOption,
     value,
   } = optionisedProps;
@@ -89,29 +89,28 @@ export const DropDown = forwardRef((rawProps, ref) => {
     return () => clearTimeout(timeout);
   }, [options, search, expanded, currentFindOption]);
 
+  useEffect(() => {
+    if (!onDisplayOptions) {
+      return;
+    }
+    onDisplayOptions({
+      expanded,
+      listbox: listRef.current,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [expanded, options]);
+
   useLayoutEffect(() => {
-    if (expanded && focusedRef.current) {
-      scrollIntoView(focusedRef.current);
+    if (expanded && focusedRef.current && onFocusOption) {
+      onFocusOption({ option: focusedRef.current, listbox: listRef.current });
     }
     if (expanded && focusedOption && managedFocus) {
       focusedRef.current?.focus();
     } else if (expanded && document.activeElement !== comboBoxRef.current) {
       comboBoxRef.current.focus();
     }
-  }, [expanded, managedFocus, focusedOption, scrollIntoView]);
-
-  const lastExpandedRef = useRef(expanded);
-  useEffect(() => {
-    if (!onLayoutListBox || (!expanded && !lastExpandedRef.current)) {
-      return;
-    }
-    lastExpandedRef.current = expanded;
-    onLayoutListBox({
-      expanded,
-      listbox: listRef.current,
-      combobox: comboBoxRef.current,
-    });
-  }, [onLayoutListBox, expanded]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [expanded, managedFocus, focusedOption]);
 
   const optionsCheck = options.length ? options : null;
   useLayoutEffect(() => {
@@ -193,13 +192,13 @@ DropDown.propTypes = {
 
   findOption: PropTypes.func,
   managedFocus: PropTypes.bool,
-  scrollIntoView: PropTypes.func,
   skipOption: PropTypes.func,
 
   onBlur: PropTypes.func,
   onFocus: PropTypes.func,
   onValue: PropTypes.func,
-  onLayoutListBox: PropTypes.func,
+  onDisplayOptions: PropTypes.func,
+  onFocusOption: PropTypes.func,
 
   renderWrapper: PropTypes.func,
   renderListBox: PropTypes.func,
@@ -228,13 +227,13 @@ DropDown.defaultProps = {
 
   findOption,
   managedFocus: true,
-  scrollIntoView: defaultScrollIntoView,
   skipOption: undefined,
 
   onBlur: null,
   onFocus: null,
   onValue: null,
-  onLayoutListBox: null,
+  onDisplayOptions: null,
+  onFocusOption: ({ option }) => scrollIntoView(option),
 
   renderWrapper: (props) => <div {...props} />,
   renderListBox: (props) => <ul {...props} />,

@@ -57,7 +57,8 @@ If you wish to submit the value add a `<input type="hidden" name="name" value="v
 | `onBlur`            | `Function`         | Handler for when the component is blured                             |
 | `onFocus`           | `Function`         | Handler for when the component is focused                            |
 | `onValue`           | `Function`         | Handler for when a value is selected                                 |
-| `onLayoutListBox`   | `Function`         | Handler for custom listbox positioning. See [onLayoutListBox][2]     |
+| `onDisplayOptions`  | `Function`         | Handler for custom listbox positioning. See [list box layout][2]     |
+| `onFocusOption`     | `Function`         | Handler for when an option is focused                                |
 | `skipOption`        | `Function`         | Allows options to be skipped with keyboard navigation                |
 | `findOption`        | `Function`         | Customise finding an option when typing                              |
 | `managedFocus`      | `Function`         | Use managed focus                                                    |
@@ -114,13 +115,13 @@ This function can be used to customise finding an option in response to keystrok
 It has the signature `function (option: Object, search: String): boolean`.
 Return true if an option matching the search string is found.
 
-#### `onLayoutListBox` (`Function`)
+#### `onDisplayOptions` (`Function`)
 
 This is called when the list box is displayed or the options change.
 
 It has the signature `Function (expanded: Boolean, listbox: Element, combobox: Element, option: Element)`
 
-See [onLayoutListBox][2]
+See [list box layout][2]
 
 [1]: options.md
-[2]: on_layout_list_box.md
+[2]: list_box_layout.md

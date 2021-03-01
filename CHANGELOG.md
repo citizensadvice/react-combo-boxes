@@ -5,6 +5,8 @@
 - fix accessible labels are not separated from value with a space
 - do not read accessible column header if the column is empty
 - allow custom cell classes in columns
+- refactor onLayoutListBox to onDisplayOptions
+- refactor scrollIntoView to onFocusOption
 
 ## 1.0.0-rc.18
 

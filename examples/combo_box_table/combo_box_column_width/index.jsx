@@ -12,13 +12,18 @@ import {
 } from '../../../src';
 import cats from '../../data/cats.json';
 
-const columns = ['breed', 'country', 'origin', 'coatLength', 'pattern'];
+const columns = [
+  {
+    name: 'breed',
+    label: 'Breed',
+  },
+  {
+    name: 'country',
+    label: 'Country',
+  },
+];
 
-function mapOption({ breed, bodyType }) {
-  return { label: breed, group: bodyType };
-}
-
-function index({ breed }) {
+function mapOption({ breed }) {
   return breed;
 }
 
@@ -33,8 +38,13 @@ function highlighter(term, query, options, state) {
 export function Example() {
   const [value, setValue] = useState(null);
   const [search, setSearch] = useState(null);
-  const filteredOptions = useTokenSearch(search, { options: cats, index });
-  const onExpandListBox = useLayoutListBox(layoutMaxWidth, layoutMaxHeight, layoutColumnsAlignLeft);
+  const filteredOptions = useTokenSearch(search, { options: cats, index: mapOption });
+
+  const onDisplayOptions = useLayoutListBox(
+    layoutMaxWidth,
+    layoutMaxHeight,
+    layoutColumnsAlignLeft,
+  );
 
   return (
     <>
@@ -50,11 +60,12 @@ export function Example() {
         value={value}
         onValue={setValue}
         onSearch={setSearch}
+        onDisplayOptions={onDisplayOptions}
         options={filteredOptions}
         columns={columns}
         renderColumnValue={highlightValue(highlighter)}
         mapOption={mapOption}
-        onExpandListBox={onExpandListBox}
+        size={100}
       />
 
       <label htmlFor="output">

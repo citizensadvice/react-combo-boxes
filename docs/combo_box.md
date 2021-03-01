@@ -59,7 +59,8 @@ The `onSearch` function is called with the current search value and should be us
 | `onChange`          | `Function`              | Handler for typing in the input.                                                  |
 | `onFocus`           | `Function`              | Handler for when the component is focused                                         |
 | `onSearch`          | `Function`              | Handler for searching.  See [Searchers][2]                                        |
-| `onLayoutListBox`   | `Function`              | Handler for custom listbox positioning. See [onLayoutListBox][3]                  |
+| `onExpandListBox`   | `Function`              | Handler for custom listbox positioning. See [list box layout][3]                  |
+| `onFocusOption`     | `Function`              | Handler for when an option is focused                                             |
 | `onValue`           | `Function`              | Handler for when a value is selected                                              |
 | `managedFocus`      | `Boolean`               | Use managed focus                                                                 |
 | `autoselect`        | `Boolean` or `"inline"` | If set the first matching option will be automatically selected                   |
@@ -144,13 +145,13 @@ By default this is `true`, expect on non-Safari browser on a Mac.  It means the 
 
 If `false` the combo box element remains focused and the current selected option is marked with `aria-activedescendant`.
 
-### `onLayoutListBox` (`Function`)
+### `onDisplayOptions` (`Function`)
 
 This is called when the list box is displayed or the options change.
 
 It has the signature `Function ({ expanded: Boolean, listbox: Element, combobox: Element })`
 
-See [onLayoutListBox][2]
+See [list box layout][2]
 
 ### `skipOption` (`Function`)
 
@@ -170,5 +171,5 @@ move the focus to the next control.
 
 [1]: options.md
 [2]: searchers.md
-[3]: on_layout_list_box.md
+[3]: list_box_layout.md
 [4]: highlighters.md

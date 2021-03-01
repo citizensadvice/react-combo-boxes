@@ -135,7 +135,7 @@
   }
 
   &__table-cell {
-    padding: $react-combo-boxes-padding-y $react-combo-boxes-padding-x;
+    padding: $react-combo-boxes-padding-y 2 * $react-combo-boxes-padding-x $react-combo-boxes-padding-y $react-combo-boxes-padding-x;
     border: none;
     vertical-align: top;
   }

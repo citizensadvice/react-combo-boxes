@@ -21,7 +21,7 @@ import { classPrefix as defaultClassPrefix } from '../constants/class_prefix';
 import { visuallyHiddenClassName } from '../constants/visually_hidden_class_name';
 import { isSafari } from '../sniffers/is_safari';
 import { isMac } from '../sniffers/is_mac';
-import { scrollIntoView as defaultScrollIntoView } from '../helpers/scroll_into_view';
+import { scrollIntoView } from '../layout/scroll_into_view';
 
 function defaultFoundOptionsMessage(options) {
   return `${options.length} option${options.length > 1 ? 's' : ''} found`;
@@ -56,8 +56,9 @@ export const ComboBox = forwardRef((rawProps, ref) => {
     notFoundMessage,
     nullOptions,
     onBlur: passedOnBlur,
+    onDisplayOptions,
     onFocus: passedOnFocus,
-    onLayoutListBox,
+    onFocusOption,
     onSearch,
     options,
     pattern,
@@ -71,7 +72,6 @@ export const ComboBox = forwardRef((rawProps, ref) => {
     renderErrorMessage,
     renderWrapper,
     required,
-    scrollIntoView,
     selectedOption,
     showSelectedLabel,
     size,
@@ -182,8 +182,19 @@ export const ComboBox = forwardRef((rawProps, ref) => {
   ), [expanded, options, selectedOption, search, value, errorMessage]);
 
   useLayoutEffect(() => {
-    if (showListBox && focusedRef.current) {
-      scrollIntoView(focusedRef.current);
+    if (!onDisplayOptions) {
+      return;
+    }
+    onDisplayOptions({
+      expanded: showListBox,
+      listbox: listRef.current,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showListBox, options]);
+
+  useLayoutEffect(() => {
+    if (showListBox && focusedRef.current && onFocusOption) {
+      onFocusOption({ option: focusedRef.current, listbox: listRef.current });
     }
     if (focusedOption && focusListBox && showListBox) {
       if (managedFocus) {
@@ -192,7 +203,8 @@ export const ComboBox = forwardRef((rawProps, ref) => {
     } else if (expanded && document.activeElement !== inputRef.current) {
       inputRef.current.focus();
     }
-  }, [expanded, managedFocus, focusedOption, focusListBox, showListBox, scrollIntoView]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [expanded, managedFocus, focusedOption, focusListBox, showListBox]);
 
   useEffect(() => {
     if (busy && !busyDebounce) {
@@ -208,19 +220,6 @@ export const ComboBox = forwardRef((rawProps, ref) => {
       clearTimeout(busyTimeoutRef.current);
     };
   }, [busy, busyDebounce, busyTimeoutRef]);
-
-  const lastExpandedRef = useRef(showListBox);
-  useLayoutEffect(() => {
-    if (!onLayoutListBox || (!showListBox && !lastExpandedRef.current)) {
-      return;
-    }
-    lastExpandedRef.current = showListBox;
-    onLayoutListBox({
-      listbox: listRef.current,
-      combobox: inputRef.current,
-      expanded: showListBox,
-    });
-  }, [onLayoutListBox, showListBox, options]);
 
   const showNotFound = notFoundMessage
     && !busy
@@ -378,8 +377,9 @@ ComboBox.propTypes = {
 
   onBlur: PropTypes.func,
   onChange: PropTypes.func,
+  onDisplayOptions: PropTypes.func,
   onFocus: PropTypes.func,
-  onLayoutListBox: PropTypes.func,
+  onFocusOption: PropTypes.func,
   onSearch: PropTypes.func,
   onValue: PropTypes.func,
 
@@ -387,7 +387,6 @@ ComboBox.propTypes = {
   expandOnFocus: PropTypes.bool,
   findSuggestion: PropTypes.func,
   managedFocus: PropTypes.bool,
-  scrollIntoView: PropTypes.func,
   selectOnBlur: PropTypes.bool,
   showSelectedLabel: PropTypes.bool,
   skipOption: PropTypes.func,
@@ -444,9 +443,10 @@ ComboBox.defaultProps = {
   foundOptionsMessage: defaultFoundOptionsMessage,
 
   onBlur: null,
+  onDisplayOptions: null,
   onChange: null,
   onFocus: null,
-  onLayoutListBox: null,
+  onFocusOption: ({ option }) => scrollIntoView(option),
   onSearch: null,
   onValue: null,
 
@@ -454,7 +454,6 @@ ComboBox.defaultProps = {
   expandOnFocus: true,
   findSuggestion: findOption,
   managedFocus: !(isMac() && !isSafari()),
-  scrollIntoView: defaultScrollIntoView,
   selectOnBlur: true,
   skipOption: undefined,
   showSelectedLabel: undefined,
