@@ -40,7 +40,7 @@ export function Example() {
   const [search, setSearch] = useState(null);
   const filteredOptions = useTokenSearch(search, { options: cats, index: mapOption });
 
-  const onDisplayOptions = useLayoutListBox(
+  const onLayoutListBox = useLayoutListBox(
     layoutMaxWidth,
     layoutMaxHeight,
     layoutColumnsAlignLeft,
@@ -60,7 +60,7 @@ export function Example() {
         value={value}
         onValue={setValue}
         onSearch={setSearch}
-        onDisplayOptions={onDisplayOptions}
+        onLayoutListBox={onLayoutListBox}
         options={filteredOptions}
         columns={columns}
         renderColumnValue={highlightValue(highlighter)}

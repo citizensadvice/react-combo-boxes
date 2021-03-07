@@ -56,9 +56,9 @@ export const ComboBox = forwardRef((rawProps, ref) => {
     notFoundMessage,
     nullOptions,
     onBlur: passedOnBlur,
-    onDisplayOptions,
     onFocus: passedOnFocus,
-    onFocusOption: layoutFocusOption,
+    onLayoutFocusedOption,
+    onLayoutListBox,
     onSearch,
     options,
     pattern,
@@ -183,10 +183,10 @@ export const ComboBox = forwardRef((rawProps, ref) => {
   ), [expanded, options, selectedOption, search, value, errorMessage]);
 
   useLayoutEffect(() => {
-    if (!onDisplayOptions) {
+    if (!onLayoutListBox) {
       return;
     }
-    onDisplayOptions({
+    onLayoutListBox({
       expanded: showListBox,
       listbox: listRef.current,
     });
@@ -194,8 +194,8 @@ export const ComboBox = forwardRef((rawProps, ref) => {
   }, [showListBox, options]);
 
   useLayoutEffect(() => {
-    if (showListBox && focusedRef.current && onFocusOption) {
-      layoutFocusOption({ option: focusedRef.current, listbox: listRef.current });
+    if (showListBox && focusedRef.current && onLayoutFocusedOption) {
+      onLayoutFocusedOption({ option: focusedRef.current, listbox: listRef.current });
     }
     if (focusedOption && focusListBox && showListBox) {
       if (managedFocus) {
@@ -380,9 +380,9 @@ ComboBox.propTypes = {
 
   onBlur: PropTypes.func,
   onChange: PropTypes.func,
-  onDisplayOptions: PropTypes.func,
   onFocus: PropTypes.func,
-  onFocusOption: PropTypes.func,
+  onLayoutFocusedOption: PropTypes.func,
+  onLayoutListBox: PropTypes.func,
   onSearch: PropTypes.func,
   onValue: PropTypes.func,
 
@@ -447,10 +447,10 @@ ComboBox.defaultProps = {
   foundOptionsMessage: defaultFoundOptionsMessage,
 
   onBlur: null,
-  onDisplayOptions: null,
   onChange: null,
   onFocus: null,
-  onFocusOption: ({ option }) => scrollIntoView(option),
+  onLayoutFocusedOption: ({ option }) => scrollIntoView(option),
+  onLayoutListBox: null,
   onSearch: null,
   onValue: null,
 

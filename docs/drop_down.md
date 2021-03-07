@@ -39,29 +39,29 @@ If you wish to submit the value add a `<input type="hidden" name="name" value="v
 
 ## Props
 
-| Prop                | Type               | Purpose                                                              |
-| ----                | ----               | ----                                                                 |
-| `value`             | Any                | The currently selected option                                        |
-| `options`           | `Array`            | The set of options. [See options][1]                                 |
-| `placeholderOption` | `String`           | Set a placeholder option                                             |
-| `mapOption`         | `Function`         | Use to map options. [See options][1]                                 |
-| `id`                | `String`           | id of the component (required)                                       |
-| `className`         | `String`           | Class name of the wrapper                                            |
-| `classPrefix`       | `String` or `null` | Class prefix for each component.  Set to null to remove class names. |
-| `children`          | `Node`             | Will override the displayed value of the combo box                   |
-| `ref`               | React ref          | Will be passed to combo box element                                  |
-| `aria-labelledby`   | `string`           | Specify the id of the label of the control                           |
-| `aria-invalid`      | `string`           | Specify the validity state of the control                            |
-| `disabled`          | `Boolean`          | Make the control disabled                                            |
-| `required`          | `Boolean`          | Mark the control as required (sets `aria-required`                   |
-| `onBlur`            | `Function`         | Handler for when the component is blured                             |
-| `onFocus`           | `Function`         | Handler for when the component is focused                            |
-| `onValue`           | `Function`         | Handler for when a value is selected                                 |
-| `onDisplayOptions`  | `Function`         | Handler for custom listbox positioning. See [list box layout][2]     |
-| `onFocusOption`     | `Function`         | Handler for when an option is focused                                |
-| `skipOption`        | `Function`         | Allows options to be skipped with keyboard navigation                |
-| `findOption`        | `Function`         | Customise finding an option when typing                              |
-| `managedFocus`      | `Function`         | Use managed focus                                                    |
+| Prop                    | Type               | Purpose                                                              |
+| ----                    | ----               | ----                                                                 |
+| `value`                 | Any                | The currently selected option                                        |
+| `options`               | `Array`            | The set of options. [See options][1]                                 |
+| `placeholderOption`     | `String`           | Set a placeholder option                                             |
+| `mapOption`             | `Function`         | Use to map options. [See options][1]                                 |
+| `id`                    | `String`           | id of the component (required)                                       |
+| `className`             | `String`           | Class name of the wrapper                                            |
+| `classPrefix`           | `String` or `null` | Class prefix for each component.  Set to null to remove class names. |
+| `children`              | `Node`             | Will override the displayed value of the combo box                   |
+| `ref`                   | React ref          | Will be passed to combo box element                                  |
+| `aria-labelledby`       | `string`           | Specify the id of the label of the control                           |
+| `aria-invalid`          | `string`           | Specify the validity state of the control                            |
+| `disabled`              | `Boolean`          | Make the control disabled                                            |
+| `required`              | `Boolean`          | Mark the control as required (sets `aria-required`                   |
+| `onBlur`                | `Function`         | Handler for when the component is blured                             |
+| `onFocus`               | `Function`         | Handler for when the component is focused                            |
+| `onValue`               | `Function`         | Handler for when a value is selected                                 |
+| `onLayoutListBox`       | `Function`         | Handler for custom listbox positioning. See [list box layout][2]     |
+| `onLayoutFocusedOption` | `Function`         | Handler for when an option is focused                                |
+| `skipOption`            | `Function`         | Allows options to be skipped with keyboard navigation                |
+| `findOption`            | `Function`         | Customise finding an option when typing                              |
+| `managedFocus`          | `Function`         | Use managed focus                                                    |
 
 Additional props can be used to customise the component.  See customisation.
 
@@ -115,7 +115,7 @@ This function can be used to customise finding an option in response to keystrok
 It has the signature `function (option: Object, search: String): boolean`.
 Return true if an option matching the search string is found.
 
-#### `onDisplayOptions` (`Function`)
+#### `onLayoutListBox` (`Function`)
 
 This is called when the list box is displayed or the options change.
 

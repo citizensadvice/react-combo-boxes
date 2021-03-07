@@ -18,7 +18,7 @@ function mapOption({ breed }) {
 export function Example() {
   const [value, setValue] = useState(null);
   const ref = useRef();
-  const onExpandListBox = useLayoutListBox(layoutMaxWidth, layoutMaxHeight);
+  const onLayoutListBox = useLayoutListBox(layoutMaxWidth, layoutMaxHeight);
 
   return (
     <>
@@ -35,7 +35,7 @@ export function Example() {
         ref={ref}
         value={value}
         onValue={setValue}
-        onExpandListBox={onExpandListBox}
+        onLayoutListBox={onLayoutListBox}
         options={cats}
         columns={columns}
         mapOption={mapOption}

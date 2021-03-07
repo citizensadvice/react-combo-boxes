@@ -39,8 +39,8 @@ export const DropDown = forwardRef((rawProps, ref) => {
     managedFocus,
     onBlur: passedOnBlur,
     onFocus: passedOnFocus,
-    onDisplayOptions,
-    onFocusOption,
+    onLayoutFocusedOption,
+    onLayoutListBox,
     options,
     renderComboBox,
     renderWrapper,
@@ -90,10 +90,10 @@ export const DropDown = forwardRef((rawProps, ref) => {
   }, [options, search, expanded, currentFindOption]);
 
   useEffect(() => {
-    if (!onDisplayOptions) {
+    if (!onLayoutListBox) {
       return;
     }
-    onDisplayOptions({
+    onLayoutListBox({
       expanded,
       listbox: listRef.current,
     });
@@ -101,8 +101,8 @@ export const DropDown = forwardRef((rawProps, ref) => {
   }, [expanded, options]);
 
   useLayoutEffect(() => {
-    if (expanded && focusedRef.current && onFocusOption) {
-      onFocusOption({ option: focusedRef.current, listbox: listRef.current });
+    if (expanded && focusedRef.current && onLayoutFocusedOption) {
+      onLayoutFocusedOption({ option: focusedRef.current, listbox: listRef.current });
     }
     if (expanded && focusedOption && managedFocus) {
       focusedRef.current?.focus();
@@ -197,8 +197,8 @@ DropDown.propTypes = {
   onBlur: PropTypes.func,
   onFocus: PropTypes.func,
   onValue: PropTypes.func,
-  onDisplayOptions: PropTypes.func,
-  onFocusOption: PropTypes.func,
+  onLayoutFocusedOption: PropTypes.func,
+  onLayoutListBox: PropTypes.func,
 
   renderWrapper: PropTypes.func,
   renderListBox: PropTypes.func,
@@ -231,9 +231,9 @@ DropDown.defaultProps = {
 
   onBlur: null,
   onFocus: null,
+  onLayoutFocusedOption: ({ option }) => scrollIntoView(option),
+  onLayoutListBox: null,
   onValue: null,
-  onDisplayOptions: null,
-  onFocusOption: ({ option }) => scrollIntoView(option),
 
   renderWrapper: (props) => <div {...props} />,
   renderListBox: (props) => <ul {...props} />,

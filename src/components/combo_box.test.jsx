@@ -175,10 +175,10 @@ describe('options', () => {
             expectToBeOpen(getByRole('combobox'));
           });
 
-          it('calls onFocusOption', () => {
+          it('calls onLayoutFocusedOption', () => {
             const spy = jest.fn();
             const { getByRole } = render((
-              <ComboBoxWrapper options={options} onFocusOption={spy} />
+              <ComboBoxWrapper options={options} onLayoutFocusedOption={spy} />
             ));
             getByRole('combobox').focus();
             fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
@@ -216,10 +216,10 @@ describe('options', () => {
             expectToBeOpen(getByRole('combobox'));
           });
 
-          it('calls onFocusOption', () => {
+          it('calls onLayoutFocusedOption', () => {
             const spy = jest.fn();
             const { getByRole } = render((
-              <ComboBoxWrapper options={options} onFocusOption={spy} />
+              <ComboBoxWrapper options={options} onLayoutFocusedOption={spy} />
             ));
             getByRole('combobox').focus();
             fireEvent.keyDown(document.activeElement, { key: 'ArrowUp' });
@@ -1174,11 +1174,11 @@ describe('value', () => {
     expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[1]);
   });
 
-  it('calls onFocusOption', () => {
+  it('calls onLayoutFocusedOption', () => {
     const options = ['Apple', 'Banana', 'Orange'];
     const spy = jest.fn();
     const { getByRole } = render((
-      <ComboBoxWrapper options={options} value="Banana" onFocusOption={spy} />
+      <ComboBoxWrapper options={options} value="Banana" onLayoutFocusedOption={spy} />
     ));
     getByRole('combobox').focus();
     expect(spy).toHaveBeenCalledWith({ option: getByRole('option', { name: 'Banana' }), listbox: getByRole('listbox') });
@@ -1628,13 +1628,13 @@ describe('onSearch', () => {
   });
 });
 
-describe('onFocusOption', () => {
+describe('onLayoutFocusedOption', () => {
   const options = ['Apple', 'Banana', 'Orange'];
 
   it('is called when an option is selected', () => {
     const spy = jest.fn();
     const { getByRole } = render(
-      <ComboBoxWrapper options={options} onFocusOption={spy} />,
+      <ComboBoxWrapper options={options} onLayoutFocusedOption={spy} />,
     );
     const comboBox = getByRole('combobox');
     comboBox.focus();
@@ -3563,27 +3563,27 @@ describe('visuallyHiddenClassName', () => {
   });
 });
 
-describe('onDisplayOptions', () => {
+describe('onLayoutListBox', () => {
   const options = ['Apple', 'Banana', 'Orange'];
 
   it('is called when the component is rendered', () => {
-    const onDisplayOptions = jest.fn();
+    const onLayoutListBox = jest.fn();
     const { getByRole } = render(
-      <ComboBoxWrapper options={options} onDisplayOptions={onDisplayOptions} />,
+      <ComboBoxWrapper options={options} onLayoutListBox={onLayoutListBox} />,
     );
-    expect(onDisplayOptions).toHaveBeenCalledWith({
+    expect(onLayoutListBox).toHaveBeenCalledWith({
       expanded: false,
       listbox: getByRole('listbox', { hidden: true }),
     });
   });
 
   it('is called when the listbox is displayed', () => {
-    const onDisplayOptions = jest.fn();
+    const onLayoutListBox = jest.fn();
     const { getByRole } = render(
-      <ComboBoxWrapper options={options} onDisplayOptions={onDisplayOptions} />,
+      <ComboBoxWrapper options={options} onLayoutListBox={onLayoutListBox} />,
     );
     getByRole('combobox').focus();
-    expect(onDisplayOptions).toHaveBeenCalledWith({
+    expect(onLayoutListBox).toHaveBeenCalledWith({
       expanded: true,
       listbox: getByRole('listbox'),
     });
@@ -3591,33 +3591,33 @@ describe('onDisplayOptions', () => {
 
   it('is called when the listbox options change', () => {
     const propUpdater = new PropUpdater();
-    const onDisplayOptions = jest.fn();
+    const onLayoutListBox = jest.fn();
     const { getByRole } = render((
       <ComboBoxWrapper
         options={options}
-        onDisplayOptions={onDisplayOptions}
+        onLayoutListBox={onLayoutListBox}
         propUpdater={propUpdater}
       />
     ));
     getByRole('combobox').focus();
     propUpdater.update((props) => ({ ...props, options: ['strawberry'] }));
-    expect(onDisplayOptions).toHaveBeenLastCalledWith({
+    expect(onLayoutListBox).toHaveBeenLastCalledWith({
       expanded: true,
       listbox: getByRole('listbox'),
     });
   });
 
   it('when the listbox is closed', () => {
-    const onDisplayOptions = jest.fn();
+    const onLayoutListBox = jest.fn();
     const { getByRole } = render((
       <ComboBoxWrapper
         options={options}
-        onDisplayOptions={onDisplayOptions}
+        onLayoutListBox={onLayoutListBox}
       />
     ));
     getByRole('combobox').focus();
     fireEvent.keyDown(document.activeElement, { key: 'Escape' });
-    expect(onDisplayOptions).toHaveBeenLastCalledWith({
+    expect(onLayoutListBox).toHaveBeenLastCalledWith({
       expanded: false,
       listbox: getByRole('listbox', { hidden: true }),
     });
@@ -3625,16 +3625,16 @@ describe('onDisplayOptions', () => {
 
   it('is called while the listbox is closed', () => {
     const propUpdater = new PropUpdater();
-    const onDisplayOptions = jest.fn();
+    const onLayoutListBox = jest.fn();
     const { getByRole } = render((
       <ComboBoxWrapper
         options={options}
-        onDisplayOptions={onDisplayOptions}
+        onLayoutListBox={onLayoutListBox}
         propUpdater={propUpdater}
       />
     ));
     propUpdater.update((props) => ({ ...props, options: ['strawberry'] }));
-    expect(onDisplayOptions).toHaveBeenCalledWith({
+    expect(onLayoutListBox).toHaveBeenCalledWith({
       expanded: false,
       listbox: getByRole('listbox', { hidden: true }),
     });

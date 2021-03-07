@@ -37,7 +37,7 @@ export function Example() {
   const [value, setValue] = useState(null);
   const [search, setSearch] = useState(null);
   const filteredOptions = useTokenSearch(search, { options: cats, index: mapOption });
-  const onExpandListBox = useLayoutListBox(layoutMaxWidth, layoutMaxHeight, layoutColumnsAlignLeft);
+  const onLayoutListBox = useLayoutListBox(layoutMaxWidth, layoutMaxHeight, layoutColumnsAlignLeft);
   const [managedFocus, setManagedFocus] = useState(true);
 
   return (
@@ -58,7 +58,7 @@ export function Example() {
         columns={columns}
         renderColumnValue={highlightValue(highlighter)}
         mapOption={mapOption}
-        onExpandListBox={onExpandListBox}
+        onLayoutListBox={onLayoutListBox}
         managedFocus={managedFocus}
       />
 
