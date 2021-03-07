@@ -70,6 +70,7 @@ The `onSearch` function is called with the current search value and should be us
 | `showSelectedLabel` | `Boolean`               | When true, the value in the `<input>` will match the selected label               |
 | `skipOption`        | `Function`              | Allows options to be skipped with keyboard navigation                             |
 | `tabAutocomplete`   | `Boolean`               | When true, pressing tab will select an autocompleted option                       |
+| `tabBetweenOptions` | `Boolean`               | When true, pressing tab move between displayed options                            |
 
 The following properties will be passed directly to the `<input>`: `autoCapitalize`, `disabled`,
 `inputMode`, `maxLength`, `minLength`, `pattern`, `placeholder`, `readOnly`, `required`, `size` and `spellCheck`.

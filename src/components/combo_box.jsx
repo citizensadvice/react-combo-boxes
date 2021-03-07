@@ -5,7 +5,7 @@ import { reducer } from './combo_box/reducer';
 import { initialState } from './combo_box/initial_state';
 import {
   onKeyDown, onChange, onFocus, onInputMouseUp, onClearValue, onBlur,
-  onClick, onOptionsChanged, onValueChanged, onFocusInput,
+  onClickOption, onOptionsChanged, onValueChanged, onFocusInput, onFocusOption,
 } from './combo_box/actions';
 import { useNormalisedOptions } from '../hooks/use_normalised_options';
 import { useOnBlur } from '../hooks/use_on_blur';
@@ -58,7 +58,7 @@ export const ComboBox = forwardRef((rawProps, ref) => {
     onBlur: passedOnBlur,
     onDisplayOptions,
     onFocus: passedOnFocus,
-    onFocusOption,
+    onFocusOption: layoutFocusOption,
     onSearch,
     options,
     pattern,
@@ -76,6 +76,7 @@ export const ComboBox = forwardRef((rawProps, ref) => {
     showSelectedLabel,
     size,
     spellCheck,
+    tabBetweenOptions,
     value,
     visuallyHiddenClassName: providedVisuallyHiddenClassName,
   } = optionisedProps;
@@ -194,7 +195,7 @@ export const ComboBox = forwardRef((rawProps, ref) => {
 
   useLayoutEffect(() => {
     if (showListBox && focusedRef.current && onFocusOption) {
-      onFocusOption({ option: focusedRef.current, listbox: listRef.current });
+      layoutFocusOption({ option: focusedRef.current, listbox: listRef.current });
     }
     if (focusedOption && focusListBox && showListBox) {
       if (managedFocus) {
@@ -241,7 +242,8 @@ export const ComboBox = forwardRef((rawProps, ref) => {
     'aria-busy': ariaBusy,
     'aria-autocomplete': ariaAutocomplete,
   });
-  const clickOption = useCallback((e, option) => dispatch(onClick(e, option)), []);
+  const clickOption = useCallback((e, option) => dispatch(onClickOption(e, option)), []);
+  const focusOption = useCallback((e, option) => dispatch(onFocusOption(option)), []);
 
   return renderWrapper({
     'aria-busy': ariaBusy ? 'true' : 'false',
@@ -268,7 +270,7 @@ export const ComboBox = forwardRef((rawProps, ref) => {
           onMouseUp: (e) => dispatch(onInputMouseUp(e)),
           onFocus: (e) => dispatch(onFocusInput(e)),
           ref: combinedRef,
-          tabIndex: managedFocus && showListBox && focusListBox ? -1 : null,
+          tabIndex: managedFocus && showListBox && focusListBox && !tabBetweenOptions ? -1 : null,
           'aria-invalid': ariaInvalid,
           autoCapitalize,
           autoComplete,
@@ -310,6 +312,7 @@ export const ComboBox = forwardRef((rawProps, ref) => {
           aria-labelledby={joinTokens(ariaLabelledBy)}
           onKeyDown={(e) => dispatch(onKeyDown(e))}
           onSelectOption={clickOption}
+          onFocusOption={focusOption}
           focusedRef={focusedRef}
           componentProps={optionisedProps}
           componentState={componentState}
@@ -391,6 +394,7 @@ ComboBox.propTypes = {
   showSelectedLabel: PropTypes.bool,
   skipOption: PropTypes.func,
   tabAutocomplete: PropTypes.bool,
+  tabBetweenOptions: PropTypes.bool,
 
   renderWrapper: PropTypes.func,
   renderInput: PropTypes.func,
@@ -458,6 +462,7 @@ ComboBox.defaultProps = {
   skipOption: undefined,
   showSelectedLabel: undefined,
   tabAutocomplete: false,
+  tabBetweenOptions: false,
 
   renderWrapper: (props) => <div {...props} />,
   renderInput: (props) => <input {...props} />,

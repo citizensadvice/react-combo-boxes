@@ -7,9 +7,11 @@ export const ListBox = forwardRef((
   {
     focusedRef,
     onSelectOption,
+    onFocusOption,
     componentProps,
     componentProps: {
       classPrefix,
+      managedFocus,
       options,
       renderListBox,
       renderGroup,
@@ -18,6 +20,7 @@ export const ListBox = forwardRef((
       renderOption,
       renderValue,
       visuallyHiddenClassName,
+      tabBetweenOptions,
     },
     componentState,
     componentState: {
@@ -60,12 +63,13 @@ export const ListBox = forwardRef((
           key,
           role: 'option',
           className: makeBEMClass(classPrefix, 'option'),
-          tabIndex: -1,
+          tabIndex: tabBetweenOptions && managedFocus ? 0 : -1,
           'aria-selected': selected ? 'true' : null,
           'aria-disabled': disabled ? 'true' : null,
           ref: selected ? focusedRef : null,
           ...html,
           onClick: disabled ? null : (e) => onSelectOption(e, option),
+          onFocus: onFocusOption ? (e) => onFocusOption(e, option) : null,
           children: (
             <>
               {group ? renderGroupAccessibleLabel({
@@ -89,6 +93,7 @@ ListBox.propTypes = {
   'aria-activedescendant': PropTypes.string,
   componentProps: PropTypes.shape({
     classPrefix: PropTypes.string,
+    managedFocus: PropTypes.bool,
     options: PropTypes.array.isRequired,
     renderListBox: PropTypes.func.isRequired,
     renderGroup: PropTypes.func.isRequired,
@@ -96,6 +101,7 @@ ListBox.propTypes = {
     renderGroupAccessibleLabel: PropTypes.func.isRequired,
     renderOption: PropTypes.func.isRequired,
     renderValue: PropTypes.func.isRequired,
+    tabBetweenOptions: PropTypes.bool,
     visuallyHiddenClassName: PropTypes.string.isRequired,
   }).isRequired,
   componentState: PropTypes.shape({
@@ -109,12 +115,14 @@ ListBox.propTypes = {
   hidden: PropTypes.bool,
   id: PropTypes.string.isRequired,
   onSelectOption: PropTypes.func.isRequired,
+  onFocusOption: PropTypes.func,
 };
 
 ListBox.defaultProps = {
+  'aria-activedescendant': null,
   focusedRef: null,
   hidden: false,
-  'aria-activedescendant': null,
+  onFocusOption: null,
 };
 
 ListBox.displayName = 'ListBox';

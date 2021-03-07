@@ -42,7 +42,7 @@ function onSelectValue(newValue, expanded = false) {
 export function onKeyDown(event) {
   return (dispatch, getState, getProps) => {
     const { expanded, focusListBox, focusedOption, suggestedOption } = getState();
-    const { options, inputRef, managedFocus, lastKeyRef, skipOption: skip } = getProps();
+    const { options, inputRef, lastKeyRef, skipOption: skip } = getProps();
     const { altKey, metaKey, ctrlKey, shiftKey } = event;
     const key = getKey(event);
 
@@ -77,7 +77,7 @@ export function onKeyDown(event) {
       dispatch({ type: SET_FOCUSED_OPTION, focusedOption: null });
     }
 
-    if (managedFocus
+    if (event.target !== inputRef.current
       && focusListBox
       && (
         ['Delete', 'Backspace', 'ArrowLeft', 'ArrowRight'].includes(key)
@@ -184,13 +184,33 @@ export function onKeyDown(event) {
         }
         break;
       case 'Tab': {
-        const { tabAutocomplete, value } = getProps();
+        const { tabBetweenOptions, tabAutocomplete, value } = getProps();
         if (tabAutocomplete && suggestedOption && expanded && !focusListBox
           && suggestedOption.identity !== value?.identity
           && !shiftKey && !altKey && !ctrlKey && !metaKey
         ) {
           event.preventDefault();
           dispatch(onSelectValue(suggestedOption));
+          break;
+        }
+
+        if (tabBetweenOptions && event.target === inputRef.current && expanded) {
+          let option;
+          if (shiftKey) {
+            if (index === -1) {
+              break;
+            }
+            option = previousInList(options, index, { skip, allowEmpty: true });
+          } else {
+            option = nextInList(options, index, { skip, allowEmpty: true });
+          }
+          if (option || shiftKey) {
+            dispatch(setFocusedOption({
+              focusedOption: option,
+              focusListBox: true,
+            }));
+            event.preventDefault();
+          }
         }
         break;
       }
@@ -228,6 +248,13 @@ export function onFocusInput() {
   return { type: SET_FOCUS_LIST_BOX, focusListBox: false };
 }
 
+export function onFocusOption(focusedOption) {
+  return setFocusedOption({
+    focusedOption,
+    focusListBox: true,
+  });
+}
+
 export function onInputMouseUp(e) {
   return (dispatch, getState, getProps) => {
     const { expanded } = getState();
@@ -242,9 +269,13 @@ export function onInputMouseUp(e) {
 export function onBlur() {
   return (dispatch, getState, getProps) => {
     const { focusedOption } = getState();
-    const { value, selectOnBlur } = getProps();
+    const { value, selectOnBlur, tabBetweenOptions } = getProps();
 
-    if (selectOnBlur && focusedOption && value?.identify !== focusedOption?.identity) {
+    if (selectOnBlur
+      && !tabBetweenOptions
+      && focusedOption
+      && value?.identify !== focusedOption?.identity
+    ) {
       dispatch(onSelectValue(focusedOption));
       return;
     }
@@ -253,7 +284,7 @@ export function onBlur() {
   };
 }
 
-export function onClick(event, option) {
+export function onClickOption(event, option) {
   return (dispatch, getState, getProps) => {
     if (event.button > 0) {
       return;

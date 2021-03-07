@@ -92,6 +92,20 @@ function expectToHaveSelectedOption(combobox, option) {
   expectNotToHaveNotFoundMessage(combobox);
 }
 
+function expectToHaveActiveOption(combobox, option) {
+  expect(combobox).toHaveAttribute('role', 'combobox');
+  const listbox = document.getElementById(combobox.getAttribute('aria-controls'));
+  expect(listbox).toHaveAttribute('role', 'listbox');
+  expect(listbox).toBeVisible();
+  expect(combobox).toHaveAttribute('aria-expanded', 'true');
+  expect(combobox).toHaveAttribute('aria-activedescendant', option.id);
+  expect(listbox).toHaveAttribute('aria-activedescendant', option.id);
+  expect(option).toHaveAttribute('role', 'option');
+  expect(option).toHaveAttribute('aria-selected', 'true');
+  expect(combobox).toHaveFocus();
+  expectNotToHaveNotFoundMessage(combobox);
+}
+
 describe('options', () => {
   describe('as array of objects', () => {
     describe('label', () => {
@@ -2271,6 +2285,200 @@ describe('tabAutocomplete', () => {
         fireEvent.keyDown(document.activeElement, { key: 'Tab' });
         expect(spy).toHaveBeenCalledWith('foo');
       });
+    });
+  });
+});
+
+describe('tabBetweenOptions', () => {
+  const options = ['Apple', 'Banana'];
+
+  describe('without managedFocus', () => {
+    it('pressing tab moves to the next option', () => {
+      const { getByRole } = render((
+        <ComboBoxWrapper options={options} managedFocus={false} tabBetweenOptions />
+      ));
+      getByRole('combobox').focus();
+
+      userEvent.tab();
+      expectToHaveActiveOption(getByRole('combobox'), getByRole('option', { name: 'Apple' }));
+
+      userEvent.tab();
+      expectToHaveActiveOption(getByRole('combobox'), getByRole('option', { name: 'Banana' }));
+    });
+
+    it('pressing tab on the last option moves out of the listbox without selecting an option', async () => {
+      const spy = jest.fn();
+      const { getByRole } = render((
+        <ComboBoxWrapper options={options} managedFocus={false} tabBetweenOptions onValue={spy} />
+      ));
+      getByRole('combobox').focus();
+
+      userEvent.tab();
+      userEvent.tab();
+      userEvent.tab();
+
+      await waitFor(() => {
+        expect(getByRole('listbox', { hidden: true })).not.toBeVisible();
+      });
+      expect(getByRole('combobox')).not.toHaveValue();
+      expect(spy).not.toHaveBeenCalled();
+      expect(document.body).toHaveFocus();
+    });
+
+    it('pressing down arrow and tab moves between options', () => {
+      const { getByRole } = render((
+        <ComboBoxWrapper options={options} managedFocus={false} tabBetweenOptions />
+      ));
+      getByRole('combobox').focus();
+
+      fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
+
+      userEvent.tab();
+      expectToHaveActiveOption(getByRole('combobox'), getByRole('option', { name: 'Banana' }));
+    });
+
+    it('pressing shift tab moves to the previous option', () => {
+      const { getByRole } = render((
+        <ComboBoxWrapper options={options} managedFocus={false} tabBetweenOptions />
+      ));
+      getByRole('combobox').focus();
+
+      fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
+      fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
+
+      userEvent.tab({ shift: true });
+      expectToHaveActiveOption(getByRole('combobox'), getByRole('option', { name: 'Apple' }));
+    });
+
+    it('pressing shift tab on the first option focuses the input', () => {
+      const { getByRole } = render((
+        <ComboBoxWrapper options={options} managedFocus={false} tabBetweenOptions />
+      ));
+      getByRole('combobox').focus();
+
+      fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
+
+      userEvent.tab({ shift: true });
+      expect(getByRole('combobox')).toHaveFocus();
+    });
+
+    it('pressing tab with focus on the input and a selected option moves to the next option', () => {
+      const { getByRole } = render((
+        <ComboBoxWrapper options={options} managedFocus={false} value="Apple" tabBetweenOptions />
+      ));
+      getByRole('combobox').focus();
+
+      userEvent.tab();
+      expectToHaveActiveOption(getByRole('combobox'), getByRole('option', { name: 'Banana' }));
+    });
+
+    it('pressing shift tab on the input moves focus up the page', async () => {
+      const { getByRole } = render((
+        <ComboBoxWrapper options={options} managedFocus={false} tabBetweenOptions />
+      ));
+      getByRole('combobox').focus();
+
+      userEvent.tab({ shift: true });
+
+      await waitFor(() => {
+        expect(getByRole('listbox', { hidden: true })).not.toBeVisible();
+      });
+      expect(document.body).toHaveFocus();
+    });
+  });
+
+  describe('with managedFocus', () => {
+    it('pressing tab moves to the next option', () => {
+      const { getByRole } = render((
+        <ComboBoxWrapper options={options} managedFocus tabBetweenOptions />
+      ));
+      getByRole('combobox').focus();
+
+      userEvent.tab();
+      expectToHaveFocusedOption(getByRole('combobox'), getByRole('option', { name: 'Apple' }));
+
+      userEvent.tab();
+      expectToHaveFocusedOption(getByRole('combobox'), getByRole('option', { name: 'Banana' }));
+    });
+
+    it('pressing tab on the last option moves out of the listbox without selecting an option', async () => {
+      const spy = jest.fn();
+      const { getByRole } = render((
+        <ComboBoxWrapper options={options} managedFocus tabBetweenOptions onValue={spy} />
+      ));
+      getByRole('combobox').focus();
+
+      userEvent.tab();
+      userEvent.tab();
+      userEvent.tab();
+
+      await waitFor(() => {
+        expect(getByRole('listbox', { hidden: true })).not.toBeVisible();
+      });
+      expect(getByRole('combobox')).not.toHaveValue();
+      expect(spy).not.toHaveBeenCalled();
+      expect(document.body).toHaveFocus();
+    });
+
+    it('pressing down arrow and tab moves between options', () => {
+      const { getByRole } = render((
+        <ComboBoxWrapper options={options} managedFocus tabBetweenOptions />
+      ));
+      getByRole('combobox').focus();
+
+      fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
+
+      userEvent.tab();
+      expectToHaveFocusedOption(getByRole('combobox'), getByRole('option', { name: 'Banana' }));
+    });
+
+    it('pressing shift tab moves to the previous option', () => {
+      const { getByRole } = render((
+        <ComboBoxWrapper options={options} managedFocus tabBetweenOptions />
+      ));
+      getByRole('combobox').focus();
+
+      fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
+      fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
+
+      userEvent.tab({ shift: true });
+      expectToHaveFocusedOption(getByRole('combobox'), getByRole('option', { name: 'Apple' }));
+    });
+
+    it('pressing shift tab on the first option focuses the input', () => {
+      const { getByRole } = render((
+        <ComboBoxWrapper options={options} managedFocus tabBetweenOptions />
+      ));
+      getByRole('combobox').focus();
+
+      fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
+
+      userEvent.tab({ shift: true });
+      expect(getByRole('combobox')).toHaveFocus();
+    });
+
+    it('pressing tab with focus on the input and a selected option moves to the next option', () => {
+      const { getByRole } = render((
+        <ComboBoxWrapper options={options} managedFocus value="Apple" tabBetweenOptions />
+      ));
+      getByRole('combobox').focus();
+
+      userEvent.tab();
+      expectToHaveFocusedOption(getByRole('combobox'), getByRole('option', { name: 'Banana' }));
+    });
+
+    it('pressing shift tab on the input moves focus up the page', async () => {
+      const { getByRole } = render((
+        <ComboBoxWrapper options={options} managedFocus tabBetweenOptions />
+      ));
+      getByRole('combobox').focus();
+
+      userEvent.tab({ shift: true });
+
+      await waitFor(() => {
+        expect(getByRole('listbox', { hidden: true })).not.toBeVisible();
+      });
+      expect(document.body).toHaveFocus();
     });
   });
 });
