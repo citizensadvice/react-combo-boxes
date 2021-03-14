@@ -17,83 +17,87 @@ exports[`cells with html renders a table with colgroups 1`] = `
       Apple
     </div>
     <div
-      class="react-combo-boxes-dropdown__listbox react-combo-boxes-dropdown__false"
-      hidden=""
+      class="react-combo-boxes-dropdown__listbox-wrapper"
     >
-      <table
-        aria-labelledby="id-label"
-        class="react-combo-boxes-dropdown__table"
-        id="id_listbox"
-        role="listbox"
-        tabindex="-1"
+      <div
+        class="react-combo-boxes-dropdown__listbox react-combo-boxes-dropdown__false"
+        hidden=""
       >
-        <colgroup>
-          <col />
-          <col />
-        </colgroup>
-        <tbody
-          role="presentation"
+        <table
+          aria-labelledby="id-label"
+          class="react-combo-boxes-dropdown__table"
+          id="id_listbox"
+          role="listbox"
+          tabindex="-1"
         >
-          <tr
-            aria-selected="true"
-            class="react-combo-boxes-dropdown__table-row"
-            id="id_option_apple"
-            role="option"
-            tabindex="-1"
+          <colgroup>
+            <col />
+            <col />
+          </colgroup>
+          <tbody
+            role="presentation"
           >
-            <td
-              class="foo"
-              role="presentation"
+            <tr
+              aria-selected="true"
+              class="react-combo-boxes-dropdown__table-row"
+              id="id_option_apple"
+              role="option"
+              tabindex="-1"
             >
-              Apple
-            </td>
-            <td
-              class="bar"
-              role="presentation"
+              <td
+                class="foo"
+                role="presentation"
+              >
+                Apple
+              </td>
+              <td
+                class="bar"
+                role="presentation"
+              >
+                Fruit
+              </td>
+            </tr>
+            <tr
+              class="react-combo-boxes-dropdown__table-row"
+              id="id_option_banana"
+              role="option"
+              tabindex="-1"
             >
-              Fruit
-            </td>
-          </tr>
-          <tr
-            class="react-combo-boxes-dropdown__table-row"
-            id="id_option_banana"
-            role="option"
-            tabindex="-1"
-          >
-            <td
-              class="foo"
-              role="presentation"
+              <td
+                class="foo"
+                role="presentation"
+              >
+                Banana
+              </td>
+              <td
+                class="bar"
+                role="presentation"
+              >
+                Fruit
+              </td>
+            </tr>
+            <tr
+              class="react-combo-boxes-dropdown__table-row"
+              id="id_option_potato"
+              role="option"
+              tabindex="-1"
             >
-              Banana
-            </td>
-            <td
-              class="bar"
-              role="presentation"
-            >
-              Fruit
-            </td>
-          </tr>
-          <tr
-            class="react-combo-boxes-dropdown__table-row"
-            id="id_option_potato"
-            role="option"
-            tabindex="-1"
-          >
-            <td
-              class="foo"
-              role="presentation"
-            >
-              Potato
-            </td>
-            <td
-              class="bar"
-              role="presentation"
-            >
-              Vegetable
-            </td>
-          </tr>
-        </tbody>
-      </table>
+              <td
+                class="foo"
+                role="presentation"
+              >
+                Potato
+              </td>
+              <td
+                class="bar"
+                role="presentation"
+              >
+                Vegetable
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>
@@ -116,103 +120,107 @@ exports[`columns as names only renders a table as the list box 1`] = `
       Apple
     </div>
     <div
-      class="react-combo-boxes-dropdown__listbox react-combo-boxes-dropdown__false"
-      hidden=""
+      class="react-combo-boxes-dropdown__listbox-wrapper"
     >
-      <table
-        aria-labelledby="id-label"
-        class="react-combo-boxes-dropdown__table"
-        id="id_listbox"
-        role="listbox"
-        tabindex="-1"
+      <div
+        class="react-combo-boxes-dropdown__listbox react-combo-boxes-dropdown__false"
+        hidden=""
       >
-        <colgroup>
-          <col />
-          <col />
-        </colgroup>
-        <tbody
-          role="presentation"
+        <table
+          aria-labelledby="id-label"
+          class="react-combo-boxes-dropdown__table"
+          id="id_listbox"
+          role="listbox"
+          tabindex="-1"
         >
-          <tr
-            aria-selected="true"
-            class="react-combo-boxes-dropdown__table-row"
-            id="id_option_apple"
-            role="option"
-            tabindex="-1"
+          <colgroup>
+            <col />
+            <col />
+          </colgroup>
+          <tbody
+            role="presentation"
           >
-            <td
-              class="react-combo-boxes-dropdown__table-cell"
-              role="presentation"
+            <tr
+              aria-selected="true"
+              class="react-combo-boxes-dropdown__table-row"
+              id="id_option_apple"
+              role="option"
+              tabindex="-1"
             >
-              Apple
-            </td>
-            <td
-              class="react-combo-boxes-dropdown__table-cell"
-              role="presentation"
+              <td
+                class="react-combo-boxes-dropdown__table-cell"
+                role="presentation"
+              >
+                Apple
+              </td>
+              <td
+                class="react-combo-boxes-dropdown__table-cell"
+                role="presentation"
+              >
+                Fruit
+              </td>
+            </tr>
+            <tr
+              class="react-combo-boxes-dropdown__table-row"
+              id="id_option_banana"
+              role="option"
+              tabindex="-1"
             >
-              Fruit
-            </td>
-          </tr>
-          <tr
-            class="react-combo-boxes-dropdown__table-row"
-            id="id_option_banana"
-            role="option"
-            tabindex="-1"
-          >
-            <td
-              class="react-combo-boxes-dropdown__table-cell"
-              role="presentation"
+              <td
+                class="react-combo-boxes-dropdown__table-cell"
+                role="presentation"
+              >
+                Banana
+              </td>
+              <td
+                class="react-combo-boxes-dropdown__table-cell"
+                role="presentation"
+              >
+                Fruit
+              </td>
+            </tr>
+            <tr
+              class="react-combo-boxes-dropdown__table-row"
+              id="id_option_potato"
+              role="option"
+              tabindex="-1"
             >
-              Banana
-            </td>
-            <td
-              class="react-combo-boxes-dropdown__table-cell"
-              role="presentation"
+              <td
+                class="react-combo-boxes-dropdown__table-cell"
+                role="presentation"
+              >
+                Potato
+              </td>
+              <td
+                class="react-combo-boxes-dropdown__table-cell"
+                role="presentation"
+              >
+                Vegetable
+              </td>
+            </tr>
+            <tr
+              aria-disabled="true"
+              class="react-combo-boxes-dropdown__table-row"
+              id="id_option_tomato"
+              role="option"
+              tabindex="-1"
             >
-              Fruit
-            </td>
-          </tr>
-          <tr
-            class="react-combo-boxes-dropdown__table-row"
-            id="id_option_potato"
-            role="option"
-            tabindex="-1"
-          >
-            <td
-              class="react-combo-boxes-dropdown__table-cell"
-              role="presentation"
-            >
-              Potato
-            </td>
-            <td
-              class="react-combo-boxes-dropdown__table-cell"
-              role="presentation"
-            >
-              Vegetable
-            </td>
-          </tr>
-          <tr
-            aria-disabled="true"
-            class="react-combo-boxes-dropdown__table-row"
-            id="id_option_tomato"
-            role="option"
-            tabindex="-1"
-          >
-            <td
-              class="react-combo-boxes-dropdown__table-cell"
-              role="presentation"
-            >
-              Tomato
-            </td>
-            <td
-              class="react-combo-boxes-dropdown__table-cell"
-              role="presentation"
-            >
-              Vegetable
-            </td>
-          </tr>
-        </tbody>
-      </table>
+              <td
+                class="react-combo-boxes-dropdown__table-cell"
+                role="presentation"
+              >
+                Tomato
+              </td>
+              <td
+                class="react-combo-boxes-dropdown__table-cell"
+                role="presentation"
+              >
+                Vegetable
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>
@@ -235,133 +243,137 @@ exports[`columns with headers renders a table with headers 1`] = `
       Apple
     </div>
     <div
-      class="react-combo-boxes-dropdown__listbox react-combo-boxes-dropdown__listbox--header"
-      hidden=""
+      class="react-combo-boxes-dropdown__listbox-wrapper"
     >
-      <table
-        aria-labelledby="id-label"
-        class="react-combo-boxes-dropdown__table"
-        id="id_listbox"
-        role="listbox"
-        tabindex="-1"
+      <div
+        class="react-combo-boxes-dropdown__listbox react-combo-boxes-dropdown__listbox--header"
+        hidden=""
       >
-        <colgroup>
-          <col />
-          <col />
-        </colgroup>
-        <thead
-          role="presentation"
+        <table
+          aria-labelledby="id-label"
+          class="react-combo-boxes-dropdown__table"
+          id="id_listbox"
+          role="listbox"
+          tabindex="-1"
         >
-          <tr
+          <colgroup>
+            <col />
+            <col />
+          </colgroup>
+          <thead
             role="presentation"
           >
-            <th
-              aria-hidden="true"
-              class="react-combo-boxes-dropdown__table-header"
+            <tr
+              role="presentation"
             >
-              Name
-            </th>
-            <th
-              aria-hidden="true"
-              class="react-combo-boxes-dropdown__table-header"
-            >
-              Type
-            </th>
-          </tr>
-        </thead>
-        <tbody
-          role="presentation"
-        >
-          <tr
-            aria-selected="true"
-            class="react-combo-boxes-dropdown__table-row"
-            id="id_option_apple"
-            role="option"
-            tabindex="-1"
+              <th
+                aria-hidden="true"
+                class="react-combo-boxes-dropdown__table-header"
+              >
+                Name
+              </th>
+              <th
+                aria-hidden="true"
+                class="react-combo-boxes-dropdown__table-header"
+              >
+                Type
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            role="presentation"
           >
-            <td
-              class="react-combo-boxes-dropdown__table-cell"
-              role="presentation"
+            <tr
+              aria-selected="true"
+              class="react-combo-boxes-dropdown__table-row"
+              id="id_option_apple"
+              role="option"
+              tabindex="-1"
             >
-              <span
-                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+              <td
+                class="react-combo-boxes-dropdown__table-cell"
+                role="presentation"
               >
-                Name 
-              </span>
-              Apple
-            </td>
-            <td
-              class="react-combo-boxes-dropdown__table-cell"
-              role="presentation"
+                <span
+                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+                >
+                  Name 
+                </span>
+                Apple
+              </td>
+              <td
+                class="react-combo-boxes-dropdown__table-cell"
+                role="presentation"
+              >
+                <span
+                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+                >
+                  Type 
+                </span>
+                Fruit
+              </td>
+            </tr>
+            <tr
+              class="react-combo-boxes-dropdown__table-row"
+              id="id_option_banana"
+              role="option"
+              tabindex="-1"
             >
-              <span
-                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+              <td
+                class="react-combo-boxes-dropdown__table-cell"
+                role="presentation"
               >
-                Type 
-              </span>
-              Fruit
-            </td>
-          </tr>
-          <tr
-            class="react-combo-boxes-dropdown__table-row"
-            id="id_option_banana"
-            role="option"
-            tabindex="-1"
-          >
-            <td
-              class="react-combo-boxes-dropdown__table-cell"
-              role="presentation"
+                <span
+                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+                >
+                  Name 
+                </span>
+                Banana
+              </td>
+              <td
+                class="react-combo-boxes-dropdown__table-cell"
+                role="presentation"
+              >
+                <span
+                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+                >
+                  Type 
+                </span>
+                Fruit
+              </td>
+            </tr>
+            <tr
+              class="react-combo-boxes-dropdown__table-row"
+              id="id_option_potato"
+              role="option"
+              tabindex="-1"
             >
-              <span
-                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+              <td
+                class="react-combo-boxes-dropdown__table-cell"
+                role="presentation"
               >
-                Name 
-              </span>
-              Banana
-            </td>
-            <td
-              class="react-combo-boxes-dropdown__table-cell"
-              role="presentation"
-            >
-              <span
-                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+                <span
+                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+                >
+                  Name 
+                </span>
+                Potato
+              </td>
+              <td
+                class="react-combo-boxes-dropdown__table-cell"
+                role="presentation"
               >
-                Type 
-              </span>
-              Fruit
-            </td>
-          </tr>
-          <tr
-            class="react-combo-boxes-dropdown__table-row"
-            id="id_option_potato"
-            role="option"
-            tabindex="-1"
-          >
-            <td
-              class="react-combo-boxes-dropdown__table-cell"
-              role="presentation"
-            >
-              <span
-                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-              >
-                Name 
-              </span>
-              Potato
-            </td>
-            <td
-              class="react-combo-boxes-dropdown__table-cell"
-              role="presentation"
-            >
-              <span
-                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-              >
-                Type 
-              </span>
-              Vegetable
-            </td>
-          </tr>
-        </tbody>
-      </table>
+                <span
+                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+                >
+                  Type 
+                </span>
+                Vegetable
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>
@@ -384,87 +396,91 @@ exports[`columns with html renders a table with colgroups 1`] = `
       Apple
     </div>
     <div
-      class="react-combo-boxes-dropdown__listbox react-combo-boxes-dropdown__false"
-      hidden=""
+      class="react-combo-boxes-dropdown__listbox-wrapper"
     >
-      <table
-        aria-labelledby="id-label"
-        class="react-combo-boxes-dropdown__table"
-        id="id_listbox"
-        role="listbox"
-        tabindex="-1"
+      <div
+        class="react-combo-boxes-dropdown__listbox react-combo-boxes-dropdown__false"
+        hidden=""
       >
-        <colgroup>
-          <col
-            class="foo"
-          />
-          <col
-            class="bar"
-          />
-        </colgroup>
-        <tbody
-          role="presentation"
+        <table
+          aria-labelledby="id-label"
+          class="react-combo-boxes-dropdown__table"
+          id="id_listbox"
+          role="listbox"
+          tabindex="-1"
         >
-          <tr
-            aria-selected="true"
-            class="react-combo-boxes-dropdown__table-row"
-            id="id_option_apple"
-            role="option"
-            tabindex="-1"
+          <colgroup>
+            <col
+              class="foo"
+            />
+            <col
+              class="bar"
+            />
+          </colgroup>
+          <tbody
+            role="presentation"
           >
-            <td
-              class="react-combo-boxes-dropdown__table-cell"
-              role="presentation"
+            <tr
+              aria-selected="true"
+              class="react-combo-boxes-dropdown__table-row"
+              id="id_option_apple"
+              role="option"
+              tabindex="-1"
             >
-              Apple
-            </td>
-            <td
-              class="react-combo-boxes-dropdown__table-cell"
-              role="presentation"
+              <td
+                class="react-combo-boxes-dropdown__table-cell"
+                role="presentation"
+              >
+                Apple
+              </td>
+              <td
+                class="react-combo-boxes-dropdown__table-cell"
+                role="presentation"
+              >
+                Fruit
+              </td>
+            </tr>
+            <tr
+              class="react-combo-boxes-dropdown__table-row"
+              id="id_option_banana"
+              role="option"
+              tabindex="-1"
             >
-              Fruit
-            </td>
-          </tr>
-          <tr
-            class="react-combo-boxes-dropdown__table-row"
-            id="id_option_banana"
-            role="option"
-            tabindex="-1"
-          >
-            <td
-              class="react-combo-boxes-dropdown__table-cell"
-              role="presentation"
+              <td
+                class="react-combo-boxes-dropdown__table-cell"
+                role="presentation"
+              >
+                Banana
+              </td>
+              <td
+                class="react-combo-boxes-dropdown__table-cell"
+                role="presentation"
+              >
+                Fruit
+              </td>
+            </tr>
+            <tr
+              class="react-combo-boxes-dropdown__table-row"
+              id="id_option_potato"
+              role="option"
+              tabindex="-1"
             >
-              Banana
-            </td>
-            <td
-              class="react-combo-boxes-dropdown__table-cell"
-              role="presentation"
-            >
-              Fruit
-            </td>
-          </tr>
-          <tr
-            class="react-combo-boxes-dropdown__table-row"
-            id="id_option_potato"
-            role="option"
-            tabindex="-1"
-          >
-            <td
-              class="react-combo-boxes-dropdown__table-cell"
-              role="presentation"
-            >
-              Potato
-            </td>
-            <td
-              class="react-combo-boxes-dropdown__table-cell"
-              role="presentation"
-            >
-              Vegetable
-            </td>
-          </tr>
-        </tbody>
-      </table>
+              <td
+                class="react-combo-boxes-dropdown__table-cell"
+                role="presentation"
+              >
+                Potato
+              </td>
+              <td
+                class="react-combo-boxes-dropdown__table-cell"
+                role="presentation"
+              >
+                Vegetable
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>
@@ -487,120 +503,124 @@ exports[`grouped renders a table with groups 1`] = `
       Apple
     </div>
     <div
-      class="react-combo-boxes-dropdown__listbox react-combo-boxes-dropdown__false"
-      hidden=""
+      class="react-combo-boxes-dropdown__listbox-wrapper"
     >
-      <table
-        aria-labelledby="id-label"
-        class="react-combo-boxes-dropdown__table"
-        id="id_listbox"
-        role="listbox"
-        tabindex="-1"
+      <div
+        class="react-combo-boxes-dropdown__listbox react-combo-boxes-dropdown__false"
+        hidden=""
       >
-        <colgroup>
-          <col />
-          <col />
-        </colgroup>
-        <tbody
-          role="presentation"
+        <table
+          aria-labelledby="id-label"
+          class="react-combo-boxes-dropdown__table"
+          id="id_listbox"
+          role="listbox"
+          tabindex="-1"
         >
-          <tr
-            class="react-combo-boxes-dropdown__table-group-row"
+          <colgroup>
+            <col />
+            <col />
+          </colgroup>
+          <tbody
+            role="presentation"
           >
-            <th
-              aria-hidden="true"
-              class="react-combo-boxes-dropdown__table-group-header"
-              colspan="2"
+            <tr
+              class="react-combo-boxes-dropdown__table-group-row"
             >
-              Fruit
-            </th>
-          </tr>
-          <tr
-            aria-selected="true"
-            class="react-combo-boxes-dropdown__table-row"
-            id="id_option_apple"
-            role="option"
-            tabindex="-1"
-          >
-            <td
-              class="react-combo-boxes-dropdown__table-cell"
-              role="presentation"
-            >
-              <span
-                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+              <th
+                aria-hidden="true"
+                class="react-combo-boxes-dropdown__table-group-header"
+                colspan="2"
               >
-                Fruit 
-              </span>
-              Apple
-            </td>
-            <td
-              class="react-combo-boxes-dropdown__table-cell"
-              role="presentation"
+                Fruit
+              </th>
+            </tr>
+            <tr
+              aria-selected="true"
+              class="react-combo-boxes-dropdown__table-row"
+              id="id_option_apple"
+              role="option"
+              tabindex="-1"
             >
-              Green
-            </td>
-          </tr>
-          <tr
-            class="react-combo-boxes-dropdown__table-row"
-            id="id_option_banana"
-            role="option"
-            tabindex="-1"
-          >
-            <td
-              class="react-combo-boxes-dropdown__table-cell"
-              role="presentation"
-            >
-              <span
-                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+              <td
+                class="react-combo-boxes-dropdown__table-cell"
+                role="presentation"
               >
-                Fruit 
-              </span>
-              Banana
-            </td>
-            <td
-              class="react-combo-boxes-dropdown__table-cell"
-              role="presentation"
-            >
-              Yellow
-            </td>
-          </tr>
-          <tr
-            class="react-combo-boxes-dropdown__table-group-row"
-          >
-            <th
-              aria-hidden="true"
-              class="react-combo-boxes-dropdown__table-group-header"
-              colspan="2"
-            >
-              Vegetable
-            </th>
-          </tr>
-          <tr
-            class="react-combo-boxes-dropdown__table-row"
-            id="id_option_potato"
-            role="option"
-            tabindex="-1"
-          >
-            <td
-              class="react-combo-boxes-dropdown__table-cell"
-              role="presentation"
-            >
-              <span
-                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+                <span
+                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+                >
+                  Fruit 
+                </span>
+                Apple
+              </td>
+              <td
+                class="react-combo-boxes-dropdown__table-cell"
+                role="presentation"
               >
-                Vegetable 
-              </span>
-              Potato
-            </td>
-            <td
-              class="react-combo-boxes-dropdown__table-cell"
-              role="presentation"
+                Green
+              </td>
+            </tr>
+            <tr
+              class="react-combo-boxes-dropdown__table-row"
+              id="id_option_banana"
+              role="option"
+              tabindex="-1"
             >
-              Brown
-            </td>
-          </tr>
-        </tbody>
-      </table>
+              <td
+                class="react-combo-boxes-dropdown__table-cell"
+                role="presentation"
+              >
+                <span
+                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+                >
+                  Fruit 
+                </span>
+                Banana
+              </td>
+              <td
+                class="react-combo-boxes-dropdown__table-cell"
+                role="presentation"
+              >
+                Yellow
+              </td>
+            </tr>
+            <tr
+              class="react-combo-boxes-dropdown__table-group-row"
+            >
+              <th
+                aria-hidden="true"
+                class="react-combo-boxes-dropdown__table-group-header"
+                colspan="2"
+              >
+                Vegetable
+              </th>
+            </tr>
+            <tr
+              class="react-combo-boxes-dropdown__table-row"
+              id="id_option_potato"
+              role="option"
+              tabindex="-1"
+            >
+              <td
+                class="react-combo-boxes-dropdown__table-cell"
+                role="presentation"
+              >
+                <span
+                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+                >
+                  Vegetable 
+                </span>
+                Potato
+              </td>
+              <td
+                class="react-combo-boxes-dropdown__table-cell"
+                role="presentation"
+              >
+                Brown
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>

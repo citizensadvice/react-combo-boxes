@@ -17,33 +17,37 @@ exports[`options as array of objects disabled sets the aria-disabled attribute 1
     >
       Apple
     </div>
-    <ul
-      aria-activedescendant="id_option_apple"
-      aria-labelledby="id-label"
-      class="react-combo-boxes-dropdown__listbox"
-      id="id_listbox"
-      role="listbox"
-      tabindex="-1"
+    <div
+      class="react-combo-boxes-dropdown__listbox-wrapper"
     >
-      <li
-        aria-selected="true"
-        class="react-combo-boxes-dropdown__option"
-        id="id_option_apple"
-        role="option"
+      <ul
+        aria-activedescendant="id_option_apple"
+        aria-labelledby="id-label"
+        class="react-combo-boxes-dropdown__listbox"
+        id="id_listbox"
+        role="listbox"
         tabindex="-1"
       >
-        Apple
-      </li>
-      <li
-        aria-disabled="true"
-        class="react-combo-boxes-dropdown__option"
-        id="id_option_banana"
-        role="option"
-        tabindex="-1"
-      >
-        Banana
-      </li>
-    </ul>
+        <li
+          aria-selected="true"
+          class="react-combo-boxes-dropdown__option"
+          id="id_option_apple"
+          role="option"
+          tabindex="-1"
+        >
+          Apple
+        </li>
+        <li
+          aria-disabled="true"
+          class="react-combo-boxes-dropdown__option"
+          id="id_option_banana"
+          role="option"
+          tabindex="-1"
+        >
+          Banana
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
 `;
@@ -64,88 +68,92 @@ exports[`options as array of objects group renders grouped options 1`] = `
     >
       Apple
     </div>
-    <ul
-      aria-labelledby="id-label"
-      class="react-combo-boxes-dropdown__listbox"
-      hidden=""
-      id="id_listbox"
-      role="listbox"
-      tabindex="-1"
+    <div
+      class="react-combo-boxes-dropdown__listbox-wrapper"
     >
-      <li
-        aria-selected="true"
-        class="react-combo-boxes-dropdown__option"
-        id="id_option_apple"
-        role="option"
+      <ul
+        aria-labelledby="id-label"
+        class="react-combo-boxes-dropdown__listbox"
+        hidden=""
+        id="id_listbox"
+        role="listbox"
         tabindex="-1"
       >
-        Apple
-      </li>
-      <li
-        aria-hidden="true"
-        class="react-combo-boxes-dropdown__group-label"
-      >
-        Citrus
-      </li>
-      <li
-        class="react-combo-boxes-dropdown__option"
-        id="id_option_orange"
-        role="option"
-        tabindex="-1"
-      >
-        <span
-          class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+        <li
+          aria-selected="true"
+          class="react-combo-boxes-dropdown__option"
+          id="id_option_apple"
+          role="option"
+          tabindex="-1"
         >
-          Citrus 
-        </span>
-        Orange
-      </li>
-      <li
-        class="react-combo-boxes-dropdown__option"
-        id="id_option_lemon"
-        role="option"
-        tabindex="-1"
-      >
-        <span
-          class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+          Apple
+        </li>
+        <li
+          aria-hidden="true"
+          class="react-combo-boxes-dropdown__group-label"
         >
-          Citrus 
-        </span>
-        Lemon
-      </li>
-      <li
-        aria-hidden="true"
-        class="react-combo-boxes-dropdown__group-label"
-      >
-        Berry
-      </li>
-      <li
-        class="react-combo-boxes-dropdown__option"
-        id="id_option_raspberry"
-        role="option"
-        tabindex="-1"
-      >
-        <span
-          class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+          Citrus
+        </li>
+        <li
+          class="react-combo-boxes-dropdown__option"
+          id="id_option_orange"
+          role="option"
+          tabindex="-1"
         >
-          Berry 
-        </span>
-        Raspberry
-      </li>
-      <li
-        class="react-combo-boxes-dropdown__option"
-        id="id_option_strawberry"
-        role="option"
-        tabindex="-1"
-      >
-        <span
-          class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+          <span
+            class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+          >
+            Citrus 
+          </span>
+          Orange
+        </li>
+        <li
+          class="react-combo-boxes-dropdown__option"
+          id="id_option_lemon"
+          role="option"
+          tabindex="-1"
         >
-          Berry 
-        </span>
-        Strawberry
-      </li>
-    </ul>
+          <span
+            class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+          >
+            Citrus 
+          </span>
+          Lemon
+        </li>
+        <li
+          aria-hidden="true"
+          class="react-combo-boxes-dropdown__group-label"
+        >
+          Berry
+        </li>
+        <li
+          class="react-combo-boxes-dropdown__option"
+          id="id_option_raspberry"
+          role="option"
+          tabindex="-1"
+        >
+          <span
+            class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+          >
+            Berry 
+          </span>
+          Raspberry
+        </li>
+        <li
+          class="react-combo-boxes-dropdown__option"
+          id="id_option_strawberry"
+          role="option"
+          tabindex="-1"
+        >
+          <span
+            class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+          >
+            Berry 
+          </span>
+          Strawberry
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
 `;
@@ -166,40 +174,44 @@ exports[`options as array of objects label renders a closed drop down 1`] = `
     >
       Apple
     </div>
-    <ul
-      aria-labelledby="id-label"
-      class="react-combo-boxes-dropdown__listbox"
-      hidden=""
-      id="id_listbox"
-      role="listbox"
-      tabindex="-1"
+    <div
+      class="react-combo-boxes-dropdown__listbox-wrapper"
     >
-      <li
-        aria-selected="true"
-        class="react-combo-boxes-dropdown__option"
-        id="id_option_apple"
-        role="option"
+      <ul
+        aria-labelledby="id-label"
+        class="react-combo-boxes-dropdown__listbox"
+        hidden=""
+        id="id_listbox"
+        role="listbox"
         tabindex="-1"
       >
-        Apple
-      </li>
-      <li
-        class="react-combo-boxes-dropdown__option"
-        id="id_option_banana"
-        role="option"
-        tabindex="-1"
-      >
-        Banana
-      </li>
-      <li
-        class="react-combo-boxes-dropdown__option"
-        id="id_option_orange"
-        role="option"
-        tabindex="-1"
-      >
-        Orange
-      </li>
-    </ul>
+        <li
+          aria-selected="true"
+          class="react-combo-boxes-dropdown__option"
+          id="id_option_apple"
+          role="option"
+          tabindex="-1"
+        >
+          Apple
+        </li>
+        <li
+          class="react-combo-boxes-dropdown__option"
+          id="id_option_banana"
+          role="option"
+          tabindex="-1"
+        >
+          Banana
+        </li>
+        <li
+          class="react-combo-boxes-dropdown__option"
+          id="id_option_orange"
+          role="option"
+          tabindex="-1"
+        >
+          Orange
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
 `;
@@ -220,22 +232,26 @@ exports[`options as array of objects missing label treats as a blank string 1`] 
     >
        
     </div>
-    <ul
-      aria-labelledby="id-label"
-      class="react-combo-boxes-dropdown__listbox"
-      hidden=""
-      id="id_listbox"
-      role="listbox"
-      tabindex="-1"
+    <div
+      class="react-combo-boxes-dropdown__listbox-wrapper"
     >
-      <li
-        aria-selected="true"
-        class="react-combo-boxes-dropdown__option"
-        id="id_option_undefined"
-        role="option"
+      <ul
+        aria-labelledby="id-label"
+        class="react-combo-boxes-dropdown__listbox"
+        hidden=""
+        id="id_listbox"
+        role="listbox"
         tabindex="-1"
-      />
-    </ul>
+      >
+        <li
+          aria-selected="true"
+          class="react-combo-boxes-dropdown__option"
+          id="id_option_undefined"
+          role="option"
+          tabindex="-1"
+        />
+      </ul>
+    </div>
   </div>
 </div>
 `;
@@ -256,48 +272,52 @@ exports[`options options as array of numbers renders a closed drop down 1`] = `
     >
       0
     </div>
-    <ul
-      aria-labelledby="id-label"
-      class="react-combo-boxes-dropdown__listbox"
-      hidden=""
-      id="id_listbox"
-      role="listbox"
-      tabindex="-1"
+    <div
+      class="react-combo-boxes-dropdown__listbox-wrapper"
     >
-      <li
-        aria-selected="true"
-        class="react-combo-boxes-dropdown__option"
-        id="id_option_0"
-        role="option"
+      <ul
+        aria-labelledby="id-label"
+        class="react-combo-boxes-dropdown__listbox"
+        hidden=""
+        id="id_listbox"
+        role="listbox"
         tabindex="-1"
       >
-        0
-      </li>
-      <li
-        class="react-combo-boxes-dropdown__option"
-        id="id_option_1"
-        role="option"
-        tabindex="-1"
-      >
-        1
-      </li>
-      <li
-        class="react-combo-boxes-dropdown__option"
-        id="id_option_2"
-        role="option"
-        tabindex="-1"
-      >
-        2
-      </li>
-      <li
-        class="react-combo-boxes-dropdown__option"
-        id="id_option_3"
-        role="option"
-        tabindex="-1"
-      >
-        3
-      </li>
-    </ul>
+        <li
+          aria-selected="true"
+          class="react-combo-boxes-dropdown__option"
+          id="id_option_0"
+          role="option"
+          tabindex="-1"
+        >
+          0
+        </li>
+        <li
+          class="react-combo-boxes-dropdown__option"
+          id="id_option_1"
+          role="option"
+          tabindex="-1"
+        >
+          1
+        </li>
+        <li
+          class="react-combo-boxes-dropdown__option"
+          id="id_option_2"
+          role="option"
+          tabindex="-1"
+        >
+          2
+        </li>
+        <li
+          class="react-combo-boxes-dropdown__option"
+          id="id_option_3"
+          role="option"
+          tabindex="-1"
+        >
+          3
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
 `;
@@ -318,40 +338,44 @@ exports[`options options as array of strings renders a closed drop down 1`] = `
     >
       Apple
     </div>
-    <ul
-      aria-labelledby="id-label"
-      class="react-combo-boxes-dropdown__listbox"
-      hidden=""
-      id="id_listbox"
-      role="listbox"
-      tabindex="-1"
+    <div
+      class="react-combo-boxes-dropdown__listbox-wrapper"
     >
-      <li
-        aria-selected="true"
-        class="react-combo-boxes-dropdown__option"
-        id="id_option_apple"
-        role="option"
+      <ul
+        aria-labelledby="id-label"
+        class="react-combo-boxes-dropdown__listbox"
+        hidden=""
+        id="id_listbox"
+        role="listbox"
         tabindex="-1"
       >
-        Apple
-      </li>
-      <li
-        class="react-combo-boxes-dropdown__option"
-        id="id_option_banana"
-        role="option"
-        tabindex="-1"
-      >
-        Banana
-      </li>
-      <li
-        class="react-combo-boxes-dropdown__option"
-        id="id_option_orange"
-        role="option"
-        tabindex="-1"
-      >
-        Orange
-      </li>
-    </ul>
+        <li
+          aria-selected="true"
+          class="react-combo-boxes-dropdown__option"
+          id="id_option_apple"
+          role="option"
+          tabindex="-1"
+        >
+          Apple
+        </li>
+        <li
+          class="react-combo-boxes-dropdown__option"
+          id="id_option_banana"
+          role="option"
+          tabindex="-1"
+        >
+          Banana
+        </li>
+        <li
+          class="react-combo-boxes-dropdown__option"
+          id="id_option_orange"
+          role="option"
+          tabindex="-1"
+        >
+          Orange
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
 `;
@@ -372,24 +396,28 @@ exports[`options options as null renders a closed drop down with the option as a
     >
        
     </div>
-    <ul
-      aria-labelledby="id-label"
-      class="react-combo-boxes-dropdown__listbox"
-      hidden=""
-      id="id_listbox"
-      role="listbox"
-      tabindex="-1"
+    <div
+      class="react-combo-boxes-dropdown__listbox-wrapper"
     >
-      <li
-        aria-selected="true"
-        class="react-combo-boxes-dropdown__option"
-        id="id_option_"
-        role="option"
+      <ul
+        aria-labelledby="id-label"
+        class="react-combo-boxes-dropdown__listbox"
+        hidden=""
+        id="id_listbox"
+        role="listbox"
         tabindex="-1"
       >
-        
-      </li>
-    </ul>
+        <li
+          aria-selected="true"
+          class="react-combo-boxes-dropdown__option"
+          id="id_option_"
+          role="option"
+          tabindex="-1"
+        >
+          
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
 `;
@@ -410,24 +438,28 @@ exports[`options options as undefined renders a closed drop down with the option
     >
        
     </div>
-    <ul
-      aria-labelledby="id-label"
-      class="react-combo-boxes-dropdown__listbox"
-      hidden=""
-      id="id_listbox"
-      role="listbox"
-      tabindex="-1"
+    <div
+      class="react-combo-boxes-dropdown__listbox-wrapper"
     >
-      <li
-        aria-selected="true"
-        class="react-combo-boxes-dropdown__option"
-        id="id_option_"
-        role="option"
+      <ul
+        aria-labelledby="id-label"
+        class="react-combo-boxes-dropdown__listbox"
+        hidden=""
+        id="id_listbox"
+        role="listbox"
         tabindex="-1"
       >
-        
-      </li>
-    </ul>
+        <li
+          aria-selected="true"
+          class="react-combo-boxes-dropdown__option"
+          id="id_option_"
+          role="option"
+          tabindex="-1"
+        >
+          
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
 `;
@@ -449,40 +481,44 @@ exports[`options updating options updates the options 1`] = `
     >
       Strawberry
     </div>
-    <ul
-      aria-activedescendant="id_option_strawberry"
-      aria-labelledby="id-label"
-      class="react-combo-boxes-dropdown__listbox"
-      id="id_listbox"
-      role="listbox"
-      tabindex="-1"
+    <div
+      class="react-combo-boxes-dropdown__listbox-wrapper"
     >
-      <li
-        aria-selected="true"
-        class="react-combo-boxes-dropdown__option"
-        id="id_option_strawberry"
-        role="option"
+      <ul
+        aria-activedescendant="id_option_strawberry"
+        aria-labelledby="id-label"
+        class="react-combo-boxes-dropdown__listbox"
+        id="id_listbox"
+        role="listbox"
         tabindex="-1"
       >
-        Strawberry
-      </li>
-      <li
-        class="react-combo-boxes-dropdown__option"
-        id="id_option_raspberry"
-        role="option"
-        tabindex="-1"
-      >
-        Raspberry
-      </li>
-      <li
-        class="react-combo-boxes-dropdown__option"
-        id="id_option_banana"
-        role="option"
-        tabindex="-1"
-      >
-        Banana
-      </li>
-    </ul>
+        <li
+          aria-selected="true"
+          class="react-combo-boxes-dropdown__option"
+          id="id_option_strawberry"
+          role="option"
+          tabindex="-1"
+        >
+          Strawberry
+        </li>
+        <li
+          class="react-combo-boxes-dropdown__option"
+          id="id_option_raspberry"
+          role="option"
+          tabindex="-1"
+        >
+          Raspberry
+        </li>
+        <li
+          class="react-combo-boxes-dropdown__option"
+          id="id_option_banana"
+          role="option"
+          tabindex="-1"
+        >
+          Banana
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
 `;
@@ -503,48 +539,52 @@ exports[`placeholderOption renders a placeholder option 1`] = `
     >
       Please select…
     </div>
-    <ul
-      aria-labelledby="id-label"
-      class="react-combo-boxes-dropdown__listbox"
-      hidden=""
-      id="id_listbox"
-      role="listbox"
-      tabindex="-1"
+    <div
+      class="react-combo-boxes-dropdown__listbox-wrapper"
     >
-      <li
-        aria-selected="true"
-        class="react-combo-boxes-dropdown__option"
-        id="id_option_placeholder"
-        role="option"
+      <ul
+        aria-labelledby="id-label"
+        class="react-combo-boxes-dropdown__listbox"
+        hidden=""
+        id="id_listbox"
+        role="listbox"
         tabindex="-1"
       >
-        Please select…
-      </li>
-      <li
-        class="react-combo-boxes-dropdown__option"
-        id="id_option_apple"
-        role="option"
-        tabindex="-1"
-      >
-        Apple
-      </li>
-      <li
-        class="react-combo-boxes-dropdown__option"
-        id="id_option_banana"
-        role="option"
-        tabindex="-1"
-      >
-        Banana
-      </li>
-      <li
-        class="react-combo-boxes-dropdown__option"
-        id="id_option_orange"
-        role="option"
-        tabindex="-1"
-      >
-        Orange
-      </li>
-    </ul>
+        <li
+          aria-selected="true"
+          class="react-combo-boxes-dropdown__option"
+          id="id_option_placeholder"
+          role="option"
+          tabindex="-1"
+        >
+          Please select…
+        </li>
+        <li
+          class="react-combo-boxes-dropdown__option"
+          id="id_option_apple"
+          role="option"
+          tabindex="-1"
+        >
+          Apple
+        </li>
+        <li
+          class="react-combo-boxes-dropdown__option"
+          id="id_option_banana"
+          role="option"
+          tabindex="-1"
+        >
+          Banana
+        </li>
+        <li
+          class="react-combo-boxes-dropdown__option"
+          id="id_option_orange"
+          role="option"
+          tabindex="-1"
+        >
+          Orange
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
 `;

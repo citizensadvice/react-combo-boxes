@@ -1796,6 +1796,40 @@ describe('renderComboBox', () => {
   });
 });
 
+describe('renderListBoxWrapper', () => {
+  it('allows the list box wrapper to be replaced', () => {
+    const { getByRole } = render(
+      <DropDownWrapper options={['foo']} renderListBoxWrapper={(props) => <dl data-foo="bar" {...props} />} />,
+    );
+    expect(getByRole('listbox', { hidden: true }).parentNode.tagName).toEqual('DL');
+    expect(getByRole('listbox', { hidden: true }).parentNode).toHaveAttribute('data-foo', 'bar');
+  });
+
+  it('is called with context and props', () => {
+    const spy = jest.fn(() => null);
+    render((
+      <DropDownWrapper options={['foo']} renderListBoxWrapper={spy} test="foo" />
+    ));
+
+    expect(spy).toHaveBeenCalledWith(
+      expect.any(Object),
+      {
+        'aria-autocomplete': 'none',
+        'aria-busy': false,
+        expanded: false,
+        search: null,
+        currentOption: expect.objectContaining({
+          label: 'foo',
+        }),
+        notFound: null,
+        suggestedOption: null,
+        [DISPATCH]: expect.any(Function),
+      },
+      expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
+    );
+  });
+});
+
 describe('additional props', () => {
   const options = ['Apple', 'Banana', 'Orange'];
 

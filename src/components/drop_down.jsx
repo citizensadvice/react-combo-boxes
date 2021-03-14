@@ -133,12 +133,24 @@ export const DropDown = forwardRef((props, ref) => {
     );
   }
 
+  function renderListBox(wrapperProps, componentState, componentProps) {
+    return componentProps.renderListBoxWrapper(
+      {
+        className: makeBEMClass(componentProps.classPrefix, 'listbox-wrapper'),
+        children: props.renderListBox(wrapperProps, componentState, componentProps),
+      },
+      componentState,
+      componentProps,
+    );
+  }
+
   return (
     <ComboBox
       ref={ref}
       renderInput={renderInput}
       {...props}
       renderWrapper={renderWrapper}
+      renderListBox={renderListBox}
     />
   );
 });
@@ -156,6 +168,8 @@ DropDown.propTypes = {
   renderComboBox: PropTypes.func,
   renderDownArrow: PropTypes.func,
   renderDropDown: PropTypes.func,
+  renderListBox: PropTypes.func,
+  renderListBoxWrapper: PropTypes.func,
   selectOnly: PropTypes.bool,
   findOption: PropTypes.func,
 };
@@ -173,6 +187,8 @@ DropDown.defaultProps = {
   renderDownArrow: renderNull,
   renderComboBox: (props) => <div {...props} />,
   renderDropDown: renderNull,
+  renderListBox: (props) => <ul {...props} />,
+  renderListBoxWrapper: (props) => <div {...props} />,
   selectOnly: true,
   findOption: defaultFindOption,
 };

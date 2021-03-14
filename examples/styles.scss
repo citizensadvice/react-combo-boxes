@@ -133,6 +133,11 @@ label,
   font-weight: bold;
 }
 
+input[type=text] {
+  width: 30em;
+  max-width: 100%;
+}
+
 fieldset {
   border: 1px solid #ddd;
   display: flex;
