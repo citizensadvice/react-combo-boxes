@@ -2,6 +2,7 @@ import React, { useState, forwardRef } from 'react';
 import { render, fireEvent, waitFor, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ComboBox } from './combo_box';
+import { DISPATCH } from '../constants/dispatch';
 
 class PropUpdater {
   setUpdater(fn) {
@@ -136,22 +137,22 @@ describe('options', () => {
       describe('navigating options in an open listbox', () => {
         describe('pressing the down arrow', () => {
           it('moves to the first option from the input', () => {
-            const { getByRole, getAllByRole } = render((
+            const { getByRole } = render((
               <ComboBoxWrapper options={options} />
             ));
             getByRole('combobox').focus();
             fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
-            expectToHaveFocusedOption(getByRole('combobox'), getAllByRole('option')[0]);
+            expectToHaveFocusedOption(getByRole('combobox'), getByRole('option', { name: 'Apple' }));
           });
 
           it('moves to the next option', () => {
-            const { getByRole, getAllByRole } = render((
+            const { getByRole } = render((
               <ComboBoxWrapper options={options} />
             ));
             getByRole('combobox').focus();
             fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
             fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
-            expectToHaveFocusedOption(getByRole('combobox'), getAllByRole('option')[1]);
+            expectToHaveFocusedOption(getByRole('combobox'), getByRole('option', { name: 'Banana' }));
           });
 
           it('moves from the last option to the input', () => {
@@ -188,22 +189,22 @@ describe('options', () => {
 
         describe('pressing the up arrow', () => {
           it('moves from the input to the last option', () => {
-            const { getByRole, getAllByRole } = render((
+            const { getByRole } = render((
               <ComboBoxWrapper options={options} />
             ));
             getByRole('combobox').focus();
             fireEvent.keyDown(document.activeElement, { key: 'ArrowUp' });
-            expectToHaveFocusedOption(getByRole('combobox'), getAllByRole('option')[2]);
+            expectToHaveFocusedOption(getByRole('combobox'), getByRole('option', { name: 'Orange' }));
           });
 
           it('moves to the previous option', () => {
-            const { getByRole, getAllByRole } = render((
+            const { getByRole } = render((
               <ComboBoxWrapper options={options} />
             ));
             getByRole('combobox').focus();
             fireEvent.keyDown(document.activeElement, { key: 'ArrowUp' });
             fireEvent.keyDown(document.activeElement, { key: 'ArrowUp' });
-            expectToHaveFocusedOption(getByRole('combobox'), getAllByRole('option')[1]);
+            expectToHaveFocusedOption(getByRole('combobox'), getByRole('option', { name: 'Banana' }));
           });
 
           it('moves from the first option to the input', () => {
@@ -241,13 +242,13 @@ describe('options', () => {
 
         describe('pressing the end key', () => {
           it('moves focus back to the list box', () => {
-            const { getByRole, getAllByRole } = render((
+            const { getByRole } = render((
               <ComboBoxWrapper options={options} />
             ));
             getByRole('combobox').focus();
             fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
             fireEvent.keyDown(document.activeElement, { key: 'End' });
-            expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[0]);
+            expectToHaveSelectedOption(getByRole('combobox'), getByRole('option', { name: 'Apple' }));
           });
         });
 
@@ -278,49 +279,49 @@ describe('options', () => {
 
         describe('typing', () => {
           it('moves focus back to the list box', async () => {
-            const { getByRole, getAllByRole } = render((
+            const { getByRole } = render((
               <ComboBoxWrapper options={options} />
             ));
             getByRole('combobox').focus();
             fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
             await userEvent.type(document.activeElement, 'a');
-            expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[0]);
+            expectToHaveSelectedOption(getByRole('combobox'), getByRole('option', { name: 'Apple' }));
           });
         });
 
         describe('pressing backspace', () => {
           it('moves focus back to the list box', () => {
-            const { getByRole, getAllByRole } = render((
+            const { getByRole } = render((
               <ComboBoxWrapper options={options} />
             ));
             getByRole('combobox').focus();
             fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
             fireEvent.keyDown(document.activeElement, { key: 'Backspace' });
-            expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[0]);
+            expectToHaveSelectedOption(getByRole('combobox'), getByRole('option', { name: 'Apple' }));
           });
         });
 
         describe('pressing arrow left', () => {
           it('moves focus back to the list box', () => {
-            const { getByRole, getAllByRole } = render((
+            const { getByRole } = render((
               <ComboBoxWrapper options={options} />
             ));
             getByRole('combobox').focus();
             fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
             fireEvent.keyDown(document.activeElement, { key: 'ArrowLeft' });
-            expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[0]);
+            expectToHaveSelectedOption(getByRole('combobox'), getByRole('option', { name: 'Apple' }));
           });
         });
 
         describe('pressing arrow right', () => {
           it('moves focus back to the list box', () => {
-            const { getByRole, getAllByRole } = render((
+            const { getByRole } = render((
               <ComboBoxWrapper options={options} />
             ));
             getByRole('combobox').focus();
             fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
             fireEvent.keyDown(document.activeElement, { key: 'ArrowRight' });
-            expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[0]);
+            expectToHaveSelectedOption(getByRole('combobox'), getByRole('option', { name: 'Apple' }));
           });
         });
 
@@ -338,25 +339,25 @@ describe('options', () => {
 
         describe('pressing Ctrl+d', () => {
           it('moves focus back to the list box removing the selected option', () => {
-            const { getByRole, getAllByRole } = render((
+            const { getByRole } = render((
               <ComboBoxWrapper options={options} />
             ));
             getByRole('combobox').focus();
             fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
             fireEvent.keyDown(document.activeElement, { key: 'd', ctrlKey: true });
-            expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[0]);
+            expectToHaveSelectedOption(getByRole('combobox'), getByRole('option', { name: 'Apple' }));
           });
         });
 
         describe('pressing Ctrl+k', () => {
           it('moves focus back to the list box removing the selected option', () => {
-            const { getByRole, getAllByRole } = render((
+            const { getByRole } = render((
               <ComboBoxWrapper options={options} />
             ));
             getByRole('combobox').focus();
             fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
             fireEvent.keyDown(document.activeElement, { key: 'k', ctrlKey: true });
-            expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[0]);
+            expectToHaveSelectedOption(getByRole('combobox'), getByRole('option', { name: 'Apple' }));
           });
         });
       });
@@ -365,35 +366,35 @@ describe('options', () => {
         describe('when clicking on an option', () => {
           it('calls onValue', () => {
             const spy = jest.fn();
-            const { getByRole, getAllByRole } = render((
+            const { getByRole } = render((
               <ComboBoxWrapper options={options} onValue={spy} />
             ));
             getByRole('combobox').focus();
-            fireEvent.click(getAllByRole('option')[1]);
+            userEvent.click(getByRole('option', { name: 'Banana' }));
             expect(spy).toHaveBeenCalledWith({ label: 'Banana' });
           });
 
           it('closes the list box and selects the combobox', () => {
-            const { getByRole, getAllByRole } = render(<ComboBoxWrapper options={options} />);
+            const { getByRole } = render(<ComboBoxWrapper options={options} />);
             getByRole('combobox').focus();
-            fireEvent.click(getAllByRole('option')[1]);
+            userEvent.click(getByRole('option', { name: 'Banana' }));
             expectToBeClosed(getByRole('combobox'));
           });
 
           it('updates the displayed value', () => {
-            const { getByRole, getAllByRole } = render(<ComboBoxWrapper options={options} />);
+            const { getByRole } = render(<ComboBoxWrapper options={options} />);
             getByRole('combobox').focus();
-            fireEvent.click(getAllByRole('option')[1]);
+            userEvent.click(getByRole('option', { name: 'Banana' }));
             expect(getByRole('combobox')).toHaveValue('Banana');
           });
 
           it('does nothing if a different mouse button is pressed', () => {
             const spy = jest.fn();
-            const { getByRole, getAllByRole } = render((
+            const { getByRole } = render((
               <ComboBoxWrapper options={options} onValue={spy} />
             ));
             getByRole('combobox').focus();
-            fireEvent.click(getAllByRole('option')[1], { button: 1 });
+            fireEvent.click(getByRole('option', { name: 'Banana' }), { button: 1 });
             expect(spy).not.toHaveBeenCalled();
             expectToBeOpen(getByRole('combobox'));
           });
@@ -401,11 +402,11 @@ describe('options', () => {
           it('cancels mousedown', () => {
             const spy = jest.fn();
             document.addEventListener('mousedown', spy);
-            const { getByRole, getAllByRole } = render((
+            const { getByRole } = render((
               <ComboBoxWrapper options={options} onValue={spy} />
             ));
             getByRole('combobox').focus();
-            fireEvent.mouseDown(getAllByRole('option')[1]);
+            fireEvent.mouseDown(getByRole('option', { name: 'Banana' }));
             expect(spy.mock.calls[0][0].defaultPrevented).toEqual(true);
             document.removeEventListener('mousedown', spy);
           });
@@ -565,7 +566,7 @@ describe('options', () => {
 
         describe('with a value', () => {
           it('resets focused value', () => {
-            const { getByRole, getAllByRole } = render(<ComboBoxWrapper options={options} />);
+            const { getByRole } = render(<ComboBoxWrapper options={options} />);
             getByRole('combobox').focus();
             fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
             fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
@@ -574,7 +575,7 @@ describe('options', () => {
             fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' }); // Change the selection
             fireEvent.keyDown(document.activeElement, { key: 'ArrowUp', altKey: true });
             fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
-            expectToHaveFocusedOption(getByRole('combobox'), getAllByRole('option')[1]);
+            expectToHaveFocusedOption(getByRole('combobox'), getByRole('option', { name: 'Banana' }));
           });
         });
       });
@@ -686,15 +687,15 @@ describe('options', () => {
 
       describe('refocusing the listbox', () => {
         it('removes focus from the list box keeping the current selection', () => {
-          const { getByRole, getAllByRole } = render((
+          const { getByRole } = render((
             <ComboBoxWrapper options={options} value="Orange" />
           ));
           getByRole('combobox').focus();
-          expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[2]);
+          expectToHaveSelectedOption(getByRole('combobox'), getByRole('option', { name: 'Orange' }));
           fireEvent.keyDown(document.activeElement, { key: 'ArrowUp' });
-          expectToHaveFocusedOption(getByRole('combobox'), getAllByRole('option')[1]);
+          expectToHaveFocusedOption(getByRole('combobox'), getByRole('option', { name: 'Banana' }));
           getByRole('combobox').focus();
-          expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[1]);
+          expectToHaveSelectedOption(getByRole('combobox'), getByRole('option', { name: 'Banana' }));
         });
       });
 
@@ -728,7 +729,7 @@ describe('options', () => {
 
         describe('multiple options with matching value', () => {
           it('does show the listbox if the search matches the value', () => {
-            const { getByRole, getAllByRole } = render((
+            const { getByRole } = render((
               <ComboBoxWrapper options={['foo', 'foo bar']} />
             ));
             getByRole('combobox').focus();
@@ -738,9 +739,9 @@ describe('options', () => {
             expectToBeClosed(getByRole('combobox'));
 
             fireEvent.change(document.activeElement, { target: { value: 'fo' } });
-            expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[0]);
+            expectToHaveSelectedOption(getByRole('combobox'), getByRole('option', { name: 'foo' }));
             userEvent.type(getByRole('combobox'), 'o');
-            expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[0]);
+            expectToHaveSelectedOption(getByRole('combobox'), getByRole('option', { name: 'foo' }));
           });
         });
       });
@@ -799,31 +800,31 @@ describe('options', () => {
       const options = [{ label: 'Apple' }, { label: 'Banana', disabled: true }];
 
       it('sets the aria-disabled attribute', () => {
-        const { container, getByRole, getAllByRole } = render((
+        const { container, getByRole } = render((
           <ComboBoxWrapper options={options} />
         ));
         getByRole('combobox').focus();
         expect(container).toMatchSnapshot();
-        expect(getAllByRole('option')[1]).toHaveAttribute('aria-disabled', 'true');
+        expect(getByRole('option', { name: 'Banana' })).toHaveAttribute('aria-disabled', 'true');
       });
 
       it('selects a disabled option with the arrow keys', () => {
-        const { getByRole, getAllByRole } = render(<ComboBoxWrapper options={options} />);
+        const { getByRole } = render(<ComboBoxWrapper options={options} />);
         getByRole('combobox').focus();
         fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
         fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
-        expectToHaveFocusedOption(getByRole('combobox'), getAllByRole('option')[1]);
+        expectToHaveFocusedOption(getByRole('combobox'), getByRole('option', { name: 'Banana' }));
       });
 
       describe('selecting a disabled option', () => {
         describe('when clicking on an option', () => {
           it('does not close the listbox or select the item', () => {
             const spy = jest.fn();
-            const { getByRole, getAllByRole } = render((
+            const { getByRole } = render((
               <ComboBoxWrapper options={options} onValue={spy} />
             ));
             getByRole('combobox').focus();
-            fireEvent.click(getAllByRole('option')[1]);
+            userEvent.click(getByRole('option', { name: 'Banana' }));
             expect(spy).not.toHaveBeenCalled();
             expectToBeOpen(getByRole('combobox'));
           });
@@ -832,7 +833,7 @@ describe('options', () => {
         describe('when pressing enter on an option', () => {
           it('does not close the listbox or select the item', () => {
             const spy = jest.fn();
-            const { getByRole, getAllByRole } = render((
+            const { getByRole } = render((
               <ComboBoxWrapper options={options} onValue={spy} />
             ));
             getByRole('combobox').focus();
@@ -840,7 +841,7 @@ describe('options', () => {
             fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
             fireEvent.keyDown(document.activeElement, { key: 'Enter' });
             expect(spy).not.toHaveBeenCalled();
-            expectToHaveFocusedOption(getByRole('combobox'), getAllByRole('option')[1]);
+            expectToHaveFocusedOption(getByRole('combobox'), getByRole('option', { name: 'Banana' }));
           });
         });
 
@@ -920,13 +921,13 @@ describe('options', () => {
 
         it('will not use duplicate ids', () => {
           const options = [{ label: 'foo', html: { id: 'xxx' } }, { label: 'bar', html: { id: 'xxx' } }];
-          const { getByRole, getAllByRole } = render(
+          const { getByRole } = render(
             <ComboBoxWrapper options={options} />,
           );
           getByRole('combobox').focus();
           fireEvent.keyDown(document.activeElement, { key: 'ArrowUp' });
-          expect(getAllByRole('option')[0]).toHaveAttribute('id', 'xxx');
-          expect(getAllByRole('option')[1]).toHaveAttribute('id', 'xxx_1');
+          expect(getByRole('option', { name: 'foo' })).toHaveAttribute('id', 'xxx');
+          expect(getByRole('option', { name: 'bar' })).toHaveAttribute('id', 'xxx_1');
         });
       });
     });
@@ -946,12 +947,11 @@ describe('options', () => {
       });
 
       it('does not select a group with the arrow keys', () => {
-        const { getByRole, getAllByRole } = render(<ComboBoxWrapper options={options} />);
+        const { getByRole } = render(<ComboBoxWrapper options={options} />);
         getByRole('combobox').focus();
         fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
         fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
-        expectToHaveFocusedOption(getByRole('combobox'), getAllByRole('option')[1]);
-        expect(getAllByRole('option')[1]).toHaveTextContent('Orange');
+        expectToHaveFocusedOption(getByRole('combobox'), getByRole('option', { name: /Orange/ }));
       });
 
       it('triggers onValue when an option is selected', () => {
@@ -980,7 +980,7 @@ describe('options', () => {
             <ComboBoxWrapper options={options} onValue={spy} />,
           );
           getByRole('combobox').focus();
-          fireEvent.click(getAllByText('Citrus')[0]);
+          userEvent.click(getAllByText('Citrus')[0]);
           expect(spy).not.toHaveBeenCalled();
           expectToBeOpen(getByRole('combobox'));
         });
@@ -1148,7 +1148,7 @@ describe('options', () => {
         mapOption={({ name }) => ({ label: name })}
       />);
       getByRole('combobox').focus();
-      fireEvent.click(getByText('Orange'));
+      userEvent.click(getByText('Orange'));
       expect(spy).toHaveBeenCalledWith({ name: 'Orange' });
     });
 
@@ -1158,7 +1158,7 @@ describe('options', () => {
         mapOption={({ name }) => ({ label: name })}
       />);
       getByRole('combobox').focus();
-      fireEvent.click(getByText('Orange'));
+      userEvent.click(getByText('Orange'));
       expect(getByRole('combobox')).toHaveValue('Orange');
     });
   });
@@ -1167,11 +1167,11 @@ describe('options', () => {
 describe('value', () => {
   it('sets the initial selected option', () => {
     const options = ['Apple', 'Banana', 'Orange'];
-    const { getAllByRole, getByRole } = render((
+    const { getByRole } = render((
       <ComboBoxWrapper options={options} value="Banana" />
     ));
     getByRole('combobox').focus();
-    expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[1]);
+    expectToHaveSelectedOption(getByRole('combobox'), getByRole('option', { name: 'Banana' }));
   });
 
   it('calls onLayoutFocusedOption', () => {
@@ -1207,11 +1207,11 @@ describe('value', () => {
   describe('value is disabled', () => {
     it('selects the disabled option', () => {
       const options = [{ label: 'Apple', disabled: true }, 'Banana'];
-      const { getByRole, getAllByRole } = render((
+      const { getByRole } = render((
         <ComboBoxWrapper options={options} value="Apple" />
       ));
       getByRole('combobox').focus();
-      expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[0]);
+      expectToHaveSelectedOption(getByRole('combobox'), getByRole('option', { name: 'Apple' }));
     });
   });
 
@@ -1251,31 +1251,31 @@ describe('value', () => {
 
     it('updates the aria-selected value of an open listbox', () => {
       const propUpdater = new PropUpdater();
-      const { getByRole, getAllByRole } = render(<ComboBoxWrapper
+      const { getByRole } = render(<ComboBoxWrapper
         options={options}
         propUpdater={propUpdater}
         value="Orange"
       />);
       getByRole('combobox').focus();
       propUpdater.update((props) => ({ ...props, value: 'Apple' }));
-      expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[0]);
+      expectToHaveSelectedOption(getByRole('combobox'), getByRole('option', { name: 'Apple' }));
     });
 
     it('changes the focused value of an open listbox', () => {
       const propUpdater = new PropUpdater();
-      const { getByRole, getAllByRole } = render(<ComboBoxWrapper
+      const { getByRole } = render(<ComboBoxWrapper
         options={options}
         propUpdater={propUpdater}
       />);
       getByRole('combobox').focus();
       fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
       propUpdater.update((props) => ({ ...props, value: 'Banana' }));
-      expectToHaveFocusedOption(getByRole('combobox'), getAllByRole('option')[1]);
+      expectToHaveFocusedOption(getByRole('combobox'), getByRole('option', { name: 'Banana' }));
     });
 
     it('changes the value of a closed listbox', () => {
       const propUpdater = new PropUpdater();
-      const { getByRole, getAllByRole } = render(<ComboBoxWrapper
+      const { getByRole } = render(<ComboBoxWrapper
         options={options}
         propUpdater={propUpdater}
       />);
@@ -1285,7 +1285,7 @@ describe('value', () => {
       propUpdater.update((props) => ({ ...props, value: 'Banana' }));
       expect(document.activeElement).toHaveValue('Banana');
       fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
-      expectToHaveFocusedOption(getByRole('combobox'), getAllByRole('option')[1]);
+      expectToHaveFocusedOption(getByRole('combobox'), getByRole('option', { name: 'Banana' }));
     });
   });
 });
@@ -1648,7 +1648,7 @@ describe('managedFocus', () => {
 
   describe('when false', () => {
     it('does not set the focus to options', () => {
-      const { getByRole, getAllByRole } = render(
+      const { getByRole } = render(
         <ComboBoxWrapper options={options} managedFocus={false} />,
       );
       const comboBox = getByRole('combobox');
@@ -1656,8 +1656,8 @@ describe('managedFocus', () => {
       fireEvent.keyDown(comboBox, { key: 'ArrowDown' });
       fireEvent.keyDown(comboBox, { key: 'ArrowDown' });
       expect(comboBox).toHaveFocus();
-      expect(comboBox).toHaveAttribute('aria-activedescendant', getAllByRole('option')[1].id);
-      expect(getAllByRole('option')[1]).toHaveAttribute('aria-selected', 'true');
+      expect(comboBox).toHaveAttribute('aria-activedescendant', getByRole('option', { name: 'Banana' }).id);
+      expect(getByRole('option', { name: 'Banana' })).toHaveAttribute('aria-selected', 'true');
     });
 
     it('allows an option to be selected', () => {
@@ -1778,21 +1778,21 @@ describe('autoselect', () => {
 
     describe('when typing', () => {
       it('auto selects the first matching option', async () => {
-        const { getByRole, getAllByRole } = render(
+        const { getByRole } = render(
           <ComboBoxWrapper options={['foo', 'bar']} autoselect />,
         );
         getByRole('combobox').focus();
         await userEvent.type(document.activeElement, 'f');
-        expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[0]);
+        expectToHaveSelectedOption(getByRole('combobox'), getByRole('option', { name: 'foo' }));
       });
 
       it('auto selects the first non-disabled option', async () => {
-        const { getByRole, getAllByRole } = render(
+        const { getByRole } = render(
           <ComboBoxWrapper options={[{ disabled: true, label: 'frog' }, 'foo']} autoselect />,
         );
         getByRole('combobox').focus();
         await userEvent.type(document.activeElement, 'f');
-        expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[1]);
+        expectToHaveSelectedOption(getByRole('combobox'), getByRole('option', { name: 'foo' }));
       });
 
       it('does not auto select no matching option', async () => {
@@ -1827,13 +1827,13 @@ describe('autoselect', () => {
 
       describe('ctrl+d', () => {
         it('continues to auto-select an option', async () => {
-          const { getByRole, getAllByRole } = render(
+          const { getByRole } = render(
             <ComboBoxWrapper options={['food', 'bar']} autoselect />,
           );
           getByRole('combobox').focus();
           await userEvent.type(document.activeElement, 'foo');
           fireEvent.keyDown(getByRole('combobox'), { key: 'd', ctrlKey: true });
-          expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[0]);
+          expectToHaveSelectedOption(getByRole('combobox'), getByRole('option', { name: 'food' }));
         });
       });
     });
@@ -1852,47 +1852,47 @@ describe('autoselect', () => {
 
       describe('ctrl+h', () => {
         it('continues to auto-select an option', async () => {
-          const { getByRole, getAllByRole } = render(
+          const { getByRole } = render(
             <ComboBoxWrapper options={['fooh', 'bar']} autoselect />,
           );
           getByRole('combobox').focus();
           await userEvent.type(document.activeElement, 'foo');
           fireEvent.keyDown(getByRole('combobox'), { key: 'h', ctrlKey: true });
           fireEvent.change(getByRole('combobox'), { target: { value: 'fooh' } });
-          expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[0]);
+          expectToHaveSelectedOption(getByRole('combobox'), getByRole('option', { name: 'fooh' }));
         });
       });
 
       describe('ctrl+k', () => {
         it('continues to auto-select an option', async () => {
-          const { getByRole, getAllByRole } = render(
+          const { getByRole } = render(
             <ComboBoxWrapper options={['fook', 'bar']} autoselect />,
           );
           getByRole('combobox').focus();
           await userEvent.type(document.activeElement, 'foo');
           fireEvent.keyDown(getByRole('combobox'), { key: 'k', ctrlKey: true });
           fireEvent.change(getByRole('combobox'), { target: { value: 'fok' } });
-          expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[0]);
+          expectToHaveSelectedOption(getByRole('combobox'), getByRole('option', { name: 'fook' }));
         });
       });
 
       describe('selecting options', () => {
         it('allows other options to be selected', async () => {
-          const { getByRole, getAllByRole } = render(
+          const { getByRole } = render(
             <ComboBoxWrapper options={['foo', 'bar']} autoselect />,
           );
           getByRole('combobox').focus();
           await userEvent.type(document.activeElement, 'foo');
-          expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[0]);
+          expectToHaveSelectedOption(getByRole('combobox'), getByRole('option', { name: 'foo' }));
           fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
-          expectToHaveFocusedOption(getByRole('combobox'), getAllByRole('option')[1]);
+          expectToHaveFocusedOption(getByRole('combobox'), getByRole('option', { name: 'bar' }));
         });
       });
 
       describe('updates to options', () => {
         it('autoselects a new value if no value is autoselected', async () => {
           const propUpdater = new PropUpdater();
-          const { getByRole, getAllByRole } = render(<ComboBoxWrapper
+          const { getByRole } = render(<ComboBoxWrapper
             options={['foo', 'bar']}
             autoselect
             propUpdater={propUpdater}
@@ -1901,40 +1901,40 @@ describe('autoselect', () => {
           await userEvent.type(document.activeElement, 'ba');
           expectToBeOpen(getByRole('combobox'));
           propUpdater.update((props) => ({ ...props, options: ['bar', 'foo'] }));
-          expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[0]);
+          expectToHaveSelectedOption(getByRole('combobox'), getByRole('option', { name: 'bar' }));
         });
 
         it('autoselects a new value if a value is autoselected', async () => {
           const propUpdater = new PropUpdater();
-          const { getByRole, getAllByRole } = render(<ComboBoxWrapper
+          const { getByRole } = render(<ComboBoxWrapper
             options={['foo', 'bar']}
             autoselect
             propUpdater={propUpdater}
           />);
           getByRole('combobox').focus();
           await userEvent.type(document.activeElement, 'fo');
-          expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[0]);
+          expectToHaveSelectedOption(getByRole('combobox'), getByRole('option', { name: 'foo' }));
           propUpdater.update((props) => ({ ...props, options: ['food', 'bard'] }));
-          expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[0]);
+          expectToHaveSelectedOption(getByRole('combobox'), getByRole('option', { name: 'food' }));
         });
 
         it('removes the autoselect if there is no matching value', async () => {
           const propUpdater = new PropUpdater();
-          const { getByRole, getAllByRole } = render(<ComboBoxWrapper
+          const { getByRole } = render(<ComboBoxWrapper
             options={['foo', 'bar']}
             autoselect
             propUpdater={propUpdater}
           />);
           getByRole('combobox').focus();
           await userEvent.type(document.activeElement, 'fo');
-          expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[0]);
+          expectToHaveSelectedOption(getByRole('combobox'), getByRole('option', { name: 'foo' }));
           propUpdater.update((props) => ({ ...props, options: ['bar', 'foo'] }));
           expectToBeOpen(getByRole('combobox'));
         });
 
         it('does not autoselect if a different value is focused', async () => {
           const propUpdater = new PropUpdater();
-          const { getByRole, getAllByRole } = render(<ComboBoxWrapper
+          const { getByRole } = render(<ComboBoxWrapper
             options={['foo', 'bar']}
             autoselect
             propUpdater={propUpdater}
@@ -1942,9 +1942,9 @@ describe('autoselect', () => {
           getByRole('combobox').focus();
           await userEvent.type(document.activeElement, 'fo');
           fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
-          expectToHaveFocusedOption(getByRole('combobox'), getAllByRole('option')[1]);
+          expectToHaveFocusedOption(getByRole('combobox'), getByRole('option', { name: 'bar' }));
           propUpdater.update((props) => ({ ...props, options: ['food', 'bar'] }));
-          expectToHaveFocusedOption(getByRole('combobox'), getAllByRole('option')[1]);
+          expectToHaveFocusedOption(getByRole('combobox'), getByRole('option', { name: 'bar' }));
         });
       });
 
@@ -2072,30 +2072,30 @@ describe('autoselect', () => {
     describe('moving between options', () => {
       describe('when showSelectedLabel is true', () => {
         it('updates the value to the selected label', () => {
-          const { getByRole, getAllByRole } = render(
+          const { getByRole } = render(
             <ComboBoxWrapper options={['foo', 'foe']} autoselect="inline" showSelectedLabel />,
           );
           getByRole('combobox').focus();
           // can't use userEvent.type, as it ignores selection ranges
           fireEvent.change(document.activeElement, { target: { value: 'fo' } });
-          expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[0]);
+          expectToHaveSelectedOption(getByRole('combobox'), getByRole('option', { name: 'foo' }));
 
           const spy = jest.spyOn(document.activeElement, 'setSelectionRange');
           fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
-          expectToHaveFocusedOption(getByRole('combobox'), getAllByRole('option')[1]);
+          expectToHaveFocusedOption(getByRole('combobox'), getByRole('option', { name: 'foe' }));
           expect(getByRole('combobox')).toHaveValue('foe');
           expect(spy).not.toHaveBeenCalled();
         });
 
         describe('when returning to the original option', () => {
           it('sets the search string without selecting the text', () => {
-            const { getByRole, getAllByRole } = render(
+            const { getByRole } = render(
               <ComboBoxWrapper options={['foo', 'foe']} autoselect="inline" showSelectedLabel />,
             );
             getByRole('combobox').focus();
             // can't use userEvent.type, as it ignores selection ranges
             fireEvent.change(document.activeElement, { target: { value: 'fo' } });
-            expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[0]);
+            expectToHaveSelectedOption(getByRole('combobox'), getByRole('option', { name: 'foo' }));
 
             const spy = jest.spyOn(document.activeElement, 'setSelectionRange');
             fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
@@ -2109,17 +2109,17 @@ describe('autoselect', () => {
 
       describe('when showSelectedLabel is false', () => {
         it('does not update the value to the selected label', () => {
-          const { getByRole, getAllByRole } = render(
+          const { getByRole } = render(
             <ComboBoxWrapper options={['foo', 'foe']} autoselect="inline" showSelectedLabel={false} />,
           );
           getByRole('combobox').focus();
           // can't use userEvent.type, as it ignores selection ranges
           fireEvent.change(document.activeElement, { target: { value: 'fo' } });
-          expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[0]);
+          expectToHaveSelectedOption(getByRole('combobox'), getByRole('option', { name: 'foo' }));
 
           const spy = jest.spyOn(document.activeElement, 'setSelectionRange');
           fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
-          expectToHaveFocusedOption(getByRole('combobox'), getAllByRole('option')[1]);
+          expectToHaveFocusedOption(getByRole('combobox'), getByRole('option', { name: 'foe' }));
           expect(getByRole('combobox')).toHaveValue('fo');
           expect(spy).not.toHaveBeenCalled();
         });
@@ -2128,13 +2128,13 @@ describe('autoselect', () => {
 
     describe('selecting an option', () => {
       it('removes the text selection', () => {
-        const { getByRole, getAllByRole } = render(
+        const { getByRole } = render(
           <ComboBoxWrapper options={['foo', 'foe']} autoselect="inline" />,
         );
         getByRole('combobox').focus();
         // can't use userEvent.type, as it ignores selection ranges
         fireEvent.change(document.activeElement, { target: { value: 'fo' } });
-        expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[0]);
+        expectToHaveSelectedOption(getByRole('combobox'), getByRole('option', { name: 'foo' }));
 
         const spy = jest.spyOn(document.activeElement, 'setSelectionRange');
         fireEvent.keyDown(document.activeElement, { key: 'Enter' });
@@ -2144,7 +2144,7 @@ describe('autoselect', () => {
       });
 
       it('does not change the selection without focus', async () => {
-        const { getByRole, getAllByRole } = render((
+        const { getByRole } = render((
           <>
             <ComboBoxWrapper options={['foo', 'foe']} autoselect="inline" />
             <input />
@@ -2153,7 +2153,7 @@ describe('autoselect', () => {
         getByRole('combobox').focus();
         // can't use userEvent.type, as it ignores selection ranges
         fireEvent.change(document.activeElement, { target: { value: 'fo' } });
-        expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[0]);
+        expectToHaveSelectedOption(getByRole('combobox'), getByRole('option', { name: 'foo' }));
 
         const spy = jest.spyOn(document.activeElement, 'setSelectionRange');
         userEvent.tab();
@@ -2239,23 +2239,23 @@ describe('tabAutocomplete', () => {
 
     it('pressing tab does not select a focused item', async () => {
       const spy = jest.fn();
-      const { getByRole, getAllByRole } = render((
+      const { getByRole } = render((
         <ComboBoxWrapper options={['foo', 'foe']} tabAutocomplete onValue={spy} />
       ));
       getByRole('combobox').focus();
       fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
-      expectToHaveFocusedOption(getByRole('combobox'), getAllByRole('option')[0]);
+      expectToHaveFocusedOption(getByRole('combobox'), getByRole('option', { name: 'foo' }));
       fireEvent.keyDown(document.activeElement, { key: 'Tab' });
       expect(spy).not.toHaveBeenCalled();
     });
 
     it('pressing tab does not reselect the suggested item current item', async () => {
       const spy = jest.fn();
-      const { getByRole, getAllByRole } = render((
+      const { getByRole } = render((
         <ComboBoxWrapper options={['foo', 'foe']} tabAutocomplete onValue={spy} value="foo" />
       ));
       getByRole('combobox').focus();
-      expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[0]);
+      expectToHaveSelectedOption(getByRole('combobox'), getByRole('option', { name: 'foo' }));
       fireEvent.keyDown(document.activeElement, { key: 'Tab' });
       expect(spy).not.toHaveBeenCalled();
     });
@@ -2599,12 +2599,12 @@ describe('findSuggestion', () => {
       }
       return true;
     });
-    const { getByRole, getAllByRole } = render((
+    const { getByRole } = render((
       <ComboBoxWrapper options={options} autoselect findSuggestion={findSuggestion} />
     ));
     getByRole('combobox').focus();
     await userEvent.type(document.activeElement, 'o');
-    expectToHaveSelectedOption(getByRole('combobox'), getAllByRole('option')[2]);
+    expectToHaveSelectedOption(getByRole('combobox'), getByRole('option', { name: 'Orange' }));
     expect(findSuggestion.mock.calls).toEqual([
       [expect.objectContaining({ value: 'Apple' }), 'o'],
       [expect.objectContaining({ value: 'Pear' }), 'o'],
@@ -2915,26 +2915,26 @@ describe('skipOption', () => {
     function skipOption(option) {
       return option.label === 'Pear';
     }
-    const { getByRole, getAllByRole } = render(
+    const { getByRole } = render(
       <ComboBoxWrapper options={options} skipOption={skipOption} />,
     );
     getByRole('combobox').focus();
     fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
     fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
-    expectToHaveFocusedOption(getByRole('combobox'), getAllByRole('option')[2]);
+    expectToHaveFocusedOption(getByRole('combobox'), getByRole('option', { name: 'Orange' }));
   });
 
   it('allows options to be skipped moving backwards', () => {
     function skipOption(option) {
       return option.label === 'Pear';
     }
-    const { getByRole, getAllByRole } = render(
+    const { getByRole } = render(
       <ComboBoxWrapper options={options} skipOption={skipOption} />,
     );
     getByRole('combobox').focus();
     fireEvent.keyDown(document.activeElement, { key: 'ArrowUp' });
     fireEvent.keyDown(document.activeElement, { key: 'ArrowUp' });
-    expectToHaveFocusedOption(getByRole('combobox'), getAllByRole('option')[0]);
+    expectToHaveFocusedOption(getByRole('combobox'), getByRole('option', { name: 'Apple' }));
   });
 });
 
@@ -3112,6 +3112,7 @@ describe('renderWrapper', () => {
         currentOption: null,
         notFound: false,
         suggestedOption: null,
+        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -3143,6 +3144,7 @@ describe('renderInput', () => {
         currentOption: null,
         notFound: false,
         suggestedOption: null,
+        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -3175,6 +3177,7 @@ describe('renderListBox', () => {
         currentOption: null,
         notFound: false,
         suggestedOption: null,
+        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -3211,6 +3214,7 @@ describe('renderGroup', () => {
         suggestedOption: null,
         group: expect.objectContaining({ label: 'bar' }),
         groupChildren: expect.any(Array),
+        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -3247,6 +3251,7 @@ describe('renderGroupLabel', () => {
         currentOption: null,
         suggestedOption: null,
         group: expect.objectContaining({ label: 'bar' }),
+        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -3282,6 +3287,7 @@ describe('renderOption', () => {
         option: expect.objectContaining({ label: 'foo' }),
         selected: false,
         group: undefined,
+        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -3317,6 +3323,7 @@ describe('renderGroupAccessibleLabel', () => {
         currentOption: null,
         suggestedOption: null,
         group: expect.objectContaining({ label: 'bar' }),
+        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -3352,6 +3359,7 @@ describe('renderValue', () => {
         option: expect.objectContaining({ label: 'foo' }),
         selected: false,
         group: undefined,
+        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -3384,6 +3392,7 @@ describe('renderDownArrow', () => {
         currentOption: null,
         notFound: false,
         suggestedOption: null,
+        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -3416,6 +3425,7 @@ describe('renderClearButton', () => {
         currentOption: null,
         notFound: false,
         suggestedOption: null,
+        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -3448,6 +3458,7 @@ describe('renderAriaDescription', () => {
         currentOption: null,
         notFound: false,
         suggestedOption: null,
+        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -3480,6 +3491,7 @@ describe('renderNotFound', () => {
         currentOption: null,
         notFound: false,
         suggestedOption: null,
+        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -3512,6 +3524,7 @@ describe('renderErrorMessage', () => {
         currentOption: null,
         notFound: false,
         suggestedOption: null,
+        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -3544,6 +3557,7 @@ describe('renderAriaLiveMessage', () => {
         currentOption: null,
         notFound: false,
         suggestedOption: null,
+        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );

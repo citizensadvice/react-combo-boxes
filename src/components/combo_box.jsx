@@ -22,6 +22,7 @@ import { visuallyHiddenClassName } from '../constants/visually_hidden_class_name
 import { isSafari } from '../sniffers/is_safari';
 import { isMac } from '../sniffers/is_mac';
 import { scrollIntoView } from '../layout/scroll_into_view';
+import { DISPATCH } from '../constants/dispatch';
 
 function defaultFoundOptionsMessage(options) {
   return `${options.length} option${options.length > 1 ? 's' : ''} found`;
@@ -30,7 +31,7 @@ function defaultFoundOptionsMessage(options) {
 export const ComboBox = forwardRef((rawProps, ref) => {
   const optionisedProps = Object.freeze({
     ...rawProps,
-    ...useNormalisedOptions(rawProps),
+    ...useNormalisedOptions(rawProps, { mustHaveSelection: rawProps.selectOnly }),
   });
   const {
     'aria-describedby': ariaDescribedBy,
@@ -241,6 +242,7 @@ export const ComboBox = forwardRef((rawProps, ref) => {
     suggestedOption,
     'aria-busy': ariaBusy,
     'aria-autocomplete': ariaAutocomplete,
+    [DISPATCH]: dispatch,
   });
   const clickOption = useCallback((e, option) => dispatch(onClickOption(e, option)), []);
   const focusOption = useCallback((e, option) => dispatch(onFocusOption(option)), []);
@@ -262,7 +264,7 @@ export const ComboBox = forwardRef((rawProps, ref) => {
           'aria-controls': `${id}_listbox`,
           'aria-expanded': showListBox ? 'true' : 'false',
           'aria-activedescendant': (showListBox && focusListBox && focusedOption?.key) || null,
-          'aria-describedby': joinTokens(showNotFound && `${id}_not_found`, errorMessage && `${id}_error_message`, `${id}_aria_description`, ariaDescribedBy),
+          'aria-describedby': joinTokens(showNotFound && `${id}_not_found`, errorMessage && `${id}_error_message`, foundOptionsMessage && `${id}_aria_description`, ariaDescribedBy),
           'aria-labelledby': joinTokens(ariaLabelledBy),
           value: inputLabel || '',
           onKeyDown: (e) => dispatch(onKeyDown(e)),
@@ -334,11 +336,13 @@ export const ComboBox = forwardRef((rawProps, ref) => {
           hidden: !errorMessage,
           children: errorMessage,
         }, componentState, optionisedProps)}
-        <AriaLiveMessage
-          hidden={!showNotFound && !showListBox}
-          componentProps={optionisedProps}
-          componentState={componentState}
-        />
+        {foundOptionsMessage && (
+          <AriaLiveMessage
+            hidden={!showNotFound && !showListBox}
+            componentProps={optionisedProps}
+            componentState={componentState}
+          />
+        )}
       </>
     ),
   }, componentState, optionisedProps);
@@ -391,6 +395,7 @@ ComboBox.propTypes = {
   findSuggestion: PropTypes.func,
   managedFocus: PropTypes.bool,
   selectOnBlur: PropTypes.bool,
+  selectOnly: PropTypes.bool,
   showSelectedLabel: PropTypes.bool,
   skipOption: PropTypes.func,
   tabAutocomplete: PropTypes.bool,
@@ -459,6 +464,7 @@ ComboBox.defaultProps = {
   findSuggestion: findOption,
   managedFocus: !(isMac() && !isSafari()),
   selectOnBlur: true,
+  selectOnly: false,
   skipOption: undefined,
   showSelectedLabel: undefined,
   tabAutocomplete: false,

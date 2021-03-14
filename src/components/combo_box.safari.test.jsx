@@ -25,7 +25,7 @@ function ComboBoxWrapper(props) {
 }
 
 it('uses managedFocus = true on a mac in safari', () => {
-  const { getByRole, getAllByRole } = render(
+  const { getByRole } = render(
     <ComboBoxWrapper options={['foo', 'bar']} />,
   );
   const comboBox = getByRole('combobox');
@@ -33,5 +33,5 @@ it('uses managedFocus = true on a mac in safari', () => {
   comboBox.focus();
   fireEvent.keyDown(comboBox, { key: 'ArrowDown' });
   fireEvent.keyDown(comboBox, { key: 'ArrowDown' });
-  expect(getAllByRole('option')[1]).toHaveFocus();
+  expect(getByRole('option', { name: 'bar' })).toHaveFocus();
 });

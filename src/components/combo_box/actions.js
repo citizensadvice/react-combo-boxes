@@ -11,7 +11,17 @@ export const SET_CLOSED = 'SET_CLOSED';
 export const SET_FOCUSED_OPTION = 'SET_FOCUSED_OPTION';
 export const SET_FOCUS_LIST_BOX = 'SET_FOCUS_LIST_BOX';
 
-function setFocusedOption({ focusedOption, focusListBox, autoselect, expanded, selectionStart }) {
+export function setExpanded() {
+  return { type: SET_EXPANDED };
+}
+
+export function setFocusedOption({
+  focusedOption,
+  focusListBox,
+  autoselect,
+  expanded,
+  selectionStart,
+}) {
   return {
     type: SET_FOCUSED_OPTION,
     focusedOption,
@@ -22,7 +32,7 @@ function setFocusedOption({ focusedOption, focusListBox, autoselect, expanded, s
   };
 }
 
-function onSelectValue(newValue, expanded = false) {
+export function onSelectValue(newValue, expanded = false) {
   return (dispatch, getState, getProps) => {
     const { onValue, inputRef } = getProps();
     dispatch({ type: SET_CLOSED, expanded });
@@ -31,8 +41,7 @@ function onSelectValue(newValue, expanded = false) {
     }
     const { current: input } = inputRef;
     input.value = newValue?.label ?? '';
-    input.dispatchEvent(new Event('click', { bubbles: true }));
-    if (document.activeElement === input) {
+    if (document.activeElement === input && input.setSelectionRange) {
       input.setSelectionRange(input.value.length, input.value.length, 'forward');
     }
     onValue?.(newValue ? newValue.value : null);
@@ -42,7 +51,7 @@ function onSelectValue(newValue, expanded = false) {
 export function onKeyDown(event) {
   return (dispatch, getState, getProps) => {
     const { expanded, focusListBox, focusedOption, suggestedOption } = getState();
-    const { options, inputRef, lastKeyRef, skipOption: skip } = getProps();
+    const { options, inputRef, lastKeyRef, skipOption: skip, selectOnly } = getProps();
     const { altKey, metaKey, ctrlKey, shiftKey } = event;
     const key = getKey(event);
 
@@ -78,6 +87,7 @@ export function onKeyDown(event) {
     }
 
     if (event.target !== inputRef.current
+      && !selectOnly
       && focusListBox
       && (
         ['Delete', 'Backspace', 'ArrowLeft', 'ArrowRight'].includes(key)
@@ -106,11 +116,15 @@ export function onKeyDown(event) {
         // Close if altKey, otherwise next item and show
         event.preventDefault();
         if (altKey) {
-          dispatch({ type: SET_CLOSED });
+          if (selectOnly) {
+            dispatch(onSelectValue(focusedOption));
+          } else {
+            dispatch({ type: SET_CLOSED });
+          }
           inputRef.current.focus();
         } else if (expanded) {
           dispatch(setFocusedOption({
-            focusedOption: previousInList(options, index, { skip, allowEmpty: true }),
+            focusedOption: previousInList(options, index, { skip, allowEmpty: !selectOnly }),
             focusListBox: true,
           }));
         } else {
@@ -122,7 +136,7 @@ export function onKeyDown(event) {
         event.preventDefault();
         if (expanded && !altKey) {
           dispatch(setFocusedOption({
-            focusedOption: nextInList(options, index, { skip, allowEmpty: true }),
+            focusedOption: nextInList(options, index, { skip, allowEmpty: !selectOnly }),
             focusListBox: true,
           }));
         } else {
@@ -130,8 +144,8 @@ export function onKeyDown(event) {
         }
         break;
       case 'Home':
-        // First item
-        if (expanded && isMac()) {
+        // First item - on Windows on an editable combo box Home moves the cursor to the start
+        if (expanded && (isMac() || selectOnly)) {
           event.preventDefault();
           dispatch(setFocusedOption({
             focusedOption: nextInList(options, -1, { skip }),
@@ -140,8 +154,8 @@ export function onKeyDown(event) {
         }
         break;
       case 'End':
-        // Last item
-        if (expanded && isMac()) {
+        // Last item - on Windows on an editable combo box End moves the cursor to the end
+        if (expanded && (isMac() || selectOnly)) {
           event.preventDefault();
           dispatch(setFocusedOption({
             focusedOption: previousInList(options, -1, { skip }),
@@ -172,6 +186,9 @@ export function onKeyDown(event) {
       case 'Enter':
         // Select current item if one is selected
         if (!expanded) {
+          if (selectOnly) {
+            dispatch({ type: SET_EXPANDED });
+          }
           break;
         }
         event.preventDefault();
@@ -200,9 +217,9 @@ export function onKeyDown(event) {
             if (index === -1) {
               break;
             }
-            option = previousInList(options, index, { skip, allowEmpty: true });
+            option = previousInList(options, index, { skip, allowEmpty: !selectOnly });
           } else {
-            option = nextInList(options, index, { skip, allowEmpty: true });
+            option = nextInList(options, index, { skip, allowEmpty: !selectOnly });
           }
           if (option || shiftKey) {
             dispatch(setFocusedOption({
@@ -211,6 +228,18 @@ export function onKeyDown(event) {
             }));
             event.preventDefault();
           }
+          break;
+        }
+
+        // Native select uses tab to select an option
+        if (expanded && selectOnly) {
+          event.preventDefault();
+          if (focusedOption && !focusedOption?.unselectable) {
+            dispatch(onSelectValue(focusedOption));
+          } else {
+            dispatch({ type: SET_CLOSED });
+          }
+          inputRef.current.focus();
         }
         break;
       }
@@ -268,10 +297,11 @@ export function onInputMouseUp(e) {
 
 export function onBlur() {
   return (dispatch, getState, getProps) => {
-    const { focusedOption } = getState();
+    const { expanded, focusedOption } = getState();
     const { value, selectOnBlur, tabBetweenOptions } = getProps();
 
     if (selectOnBlur
+      && expanded
       && !tabBetweenOptions
       && focusedOption
       && value?.identify !== focusedOption?.identity
@@ -315,8 +345,11 @@ export function onOptionsChanged() {
     if (!expanded) {
       return;
     }
-    const { options, inputRef } = getProps();
-    const newOption = options.find((o) => o.identity === focusedOption?.identity);
+    const { options, inputRef, selectOnly, selectedOption } = getProps();
+    let newOption = options.find((o) => o.identity === focusedOption?.identity);
+    if (selectOnly && !newOption) {
+      newOption = selectedOption;
+    }
 
     dispatch(setFocusedOption({
       focusedOption: newOption,
@@ -328,14 +361,19 @@ export function onOptionsChanged() {
 
 export function onValueChanged() {
   return (dispatch, getState, getProps) => {
-    const { expanded } = getState();
+    const { expanded, focusedOption } = getState();
     if (!expanded) {
       return;
     }
-    const { options, value } = getProps();
+    const { options, selectOnly, value } = getProps();
+
+    let newOption = options.find((o) => o.identity === value?.identity) || null;
+    if (selectOnly && !newOption) {
+      newOption = focusedOption;
+    }
 
     dispatch(setFocusedOption({
-      focusedOption: options.find((o) => o.identity === value?.identity) || null,
+      focusedOption: newOption,
     }));
   };
 }

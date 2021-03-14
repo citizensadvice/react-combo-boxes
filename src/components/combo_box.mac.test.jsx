@@ -44,22 +44,22 @@ const options = ['Apple', 'Banana', 'Orange'];
 
 describe('with an open list box', () => {
   it('moves to the first option with the home key', () => {
-    const { getByRole, getAllByRole } = render((
+    const { getByRole } = render((
       <ComboBoxWrapper options={options} />
     ));
     getByRole('combobox').focus();
     fireEvent.keyDown(document.activeElement, { key: 'ArrowUp' });
     fireEvent.keyDown(document.activeElement, { key: 'Home' });
-    expectToHaveFocusedOption(getByRole('combobox'), getAllByRole('option')[0]);
+    expectToHaveFocusedOption(getByRole('combobox'), getByRole('option', { name: 'Apple' }));
   });
 
   it('moves to the last option with the end key', () => {
-    const { getByRole, getAllByRole } = render((
+    const { getByRole } = render((
       <ComboBoxWrapper options={options} />
     ));
     getByRole('combobox').focus();
     fireEvent.keyDown(document.activeElement, { key: 'End' });
-    expectToHaveFocusedOption(getByRole('combobox'), getAllByRole('option')[2]);
+    expectToHaveFocusedOption(getByRole('combobox'), getByRole('option', { name: 'Orange' }));
   });
 
   describe('with a selected option', () => {
@@ -93,24 +93,24 @@ describe('with an open list box', () => {
       function skipOption(option) {
         return option.label === 'Apple';
       }
-      const { getByRole, getAllByRole } = render(
+      const { getByRole } = render(
         <ComboBoxWrapper options={options} skipOption={skipOption} />,
       );
       getByRole('combobox').focus();
       fireEvent.keyDown(document.activeElement, { key: 'Home' });
-      expectToHaveFocusedOption(getByRole('combobox'), getAllByRole('option')[1]);
+      expectToHaveFocusedOption(getByRole('combobox'), getByRole('option', { name: 'Banana' }));
     });
 
     it('allows options to be skipped pressing end', () => {
       function skipOption(option) {
         return option.label === 'Orange';
       }
-      const { getByRole, getAllByRole } = render(
+      const { getByRole } = render(
         <ComboBoxWrapper options={options} skipOption={skipOption} />,
       );
       getByRole('combobox').focus();
       fireEvent.keyDown(document.activeElement, { key: 'End' });
-      expectToHaveFocusedOption(getByRole('combobox'), getAllByRole('option')[1]);
+      expectToHaveFocusedOption(getByRole('combobox'), getByRole('option', { name: 'Banana' }));
     });
   });
 });
@@ -118,7 +118,7 @@ describe('with an open list box', () => {
 describe('with a closed list box', () => {
   describe('pressing the Home key', () => {
     it('does not change the option', () => {
-      const { getByRole, getAllByRole } = render((
+      const { getByRole } = render((
         <ComboBoxWrapper options={options} />
       ));
       getByRole('combobox').focus();
@@ -127,13 +127,13 @@ describe('with a closed list box', () => {
       fireEvent.keyDown(document.activeElement, { key: 'Enter' });
       fireEvent.keyDown(document.activeElement, { key: 'Home' });
       fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
-      expectToHaveFocusedOption(getByRole('combobox'), getAllByRole('option')[1]);
+      expectToHaveFocusedOption(getByRole('combobox'), getByRole('option', { name: 'Banana' }));
     });
   });
 
   describe('pressing the End key', () => {
     it('does not change the option', () => {
-      const { getByRole, getAllByRole } = render((
+      const { getByRole } = render((
         <ComboBoxWrapper options={options} />
       ));
       getByRole('combobox').focus();
@@ -142,7 +142,7 @@ describe('with a closed list box', () => {
       fireEvent.keyDown(document.activeElement, { key: 'Enter' });
       fireEvent.keyDown(document.activeElement, { key: 'End' });
       fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
-      expectToHaveFocusedOption(getByRole('combobox'), getAllByRole('option')[1]);
+      expectToHaveFocusedOption(getByRole('combobox'), getByRole('option', { name: 'Banana' }));
     });
   });
 });
