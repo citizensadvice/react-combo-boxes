@@ -35,7 +35,7 @@ function renderInput(props, state, componentProps) {
       autoComplete: null,
       children: (children ?? value?.label ?? selectedOption?.label) || '\u00A0',
       className: makeBEMClass(classPrefix, 'combobox'),
-      tabIndex: disabled || !options?.length ? null : 0,
+      tabIndex: (disabled || !options?.length) ? null : 0,
       type: null,
       value: null,
     },
@@ -94,7 +94,7 @@ const ComboBoxWrapper = forwardRef((props, ref) => {
   }
 
   function onClick(e) {
-    if (e.button > 0 || expanded) {
+    if (e.button > 0 || expanded || disabled) {
       return;
     }
     dispatch(setExpanded());
