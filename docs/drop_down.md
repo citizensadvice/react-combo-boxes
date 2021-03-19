@@ -25,6 +25,7 @@ const [value, setValue] = useState(initialValue);
 </label>
 <DropDown
   id="id"
+  // This is required as the component cannot use a html `<label>`
   aria-labelledby="id-label"
   options={options}
   value={value}
@@ -38,6 +39,23 @@ Unlike a regular `<select>` the value of this component will not be submitted wi
 If you wish to submit the value add a `<input type="hidden" name="name" value="value" />` element.
 
 ## Props
+
+This uses the same properties as [ComboBox][ComboBox], the the following additions:
+
+### `placeholderOption: string`
+
+An additional blank option.
+
+### `aria-labelledby: string | string[]`
+
+**Required**. This is required as you cannot label a `<div>` using a `<label>`.
+
+### `children: React.ReactNode`
+
+Overrides the ComboBox displayed value.
+
+
+
 
 | Prop                    | Type               | Purpose                                                              |
 | ----                    | ----               | ----                                                                 |

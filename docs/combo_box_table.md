@@ -2,7 +2,7 @@
 
 An alternative layout for a combo box.  This places the results in a table which is more readable for tabulated data.
 
-This is not the same as the [Combo box grid pattern][1], which has poor screen-reader compatibility.
+This is not the same as the [combo-box grid pattern][aria-practices-combo-box-grid], which has poor screen-reader compatibility.
 
 ## Usage
 
@@ -27,7 +27,7 @@ const options = [
 
 ## Props
 
-The props are the same as `ComboBox`, with the addition of `columns`.
+The props are the same as `<ComboBox>`, with the addition of `columns`.
 
 Columns is an array of:
 
@@ -63,23 +63,23 @@ Each render method has the signature `render(props, state, componentProps)` wher
 
 The render functions available are:
 
-| Name                                   | Default element | Description                                                                         |
-| `renderWrapper`                        | `<div>`         | Renders the component wrapper                                                       |
-| `renderInput`                          | `<input>`       | Renders the combo-box input                                                         |
-| `renderDownArrow`                      | `<span>`        | Renders down arrow displayed when options are available                             |
-| `renderClearButton`                    | `<span>`        | Renders '×' button displayed when an option is selected                             |
-| `renderListBox`                        | `<div>`         | Renders the list-box wrapper                                                        |
-| `renderTable`                          | `<table>`       | Renders a table, which is the list box                                              |
-| `renderTableHeaderCell`                | `<th>`          | Renders a thead header cell with a column name                                      |
-| `renderTableGroupRow`                  | `<tr>`          | Renders a row containing a group header                                             |
-| `renderTableGroupHeaderCell`           | `<th>`          | Renders a cell containing the group label. This will be ignored by a screen-reader  |
-| `renderTableRow`                       | `<tr>`          | Renders a table row, which is a list box option                                     |
-| `renderTableCell`                      | `<td>`          | Renders a table cell, one cell is rendered for each column                          |
-| `renderGroupAccessibleLabel`           | `<span>`        | Renders the accessible label for a group.  This will be read out before each option |
-| `renderTableCellColumnAccessibleLabel` | `<span>`        | Renders the accessible label for column.  This will be read out before each option  |
-| `renderColumnValue`                    | `<Fragment>`    | Renders the value within a table cell                                               |
-| `renderNotFound`                       | `<div>`         | Renders the not found message                                                       |
-| `renderAriaDescription`                | `<div>`         | Renders the aria description of the combo box                                       |
-| `renderAriaLiveMessage`                | `<div>`         | Renders an aria live message that alerts users new options have been found          |
+| Name                                   | Default                           | Description                                                                         |
+| `renderWrapper`                        | `(props) => <div {...props} />`   | Renders the component wrapper                                                       |
+| `renderInput`                          | `(props) => <input {...props} />` | Renders the combo-box input                                                         |
+| `renderDownArrow`                      | `<span>`                          | Renders down arrow displayed when options are available                             |
+| `renderClearButton`                    | `<span>`                          | Renders '×' button displayed when an option is selected                             |
+| `renderListBox`                        | `<div>`                           | Renders the list-box wrapper                                                        |
+| `renderTable`                          | `<table>`                         | Renders a table, which is the list box                                              |
+| `renderTableHeaderCell`                | `<th>`                            | Renders a thead header cell with a column name                                      |
+| `renderTableGroupRow`                  | `<tr>`                            | Renders a row containing a group header                                             |
+| `renderTableGroupHeaderCell`           | `<th>`                            | Renders a cell containing the group label. This will be ignored by a screen-reader  |
+| `renderTableRow`                       | `<tr>`                            | Renders a table row, which is a list box option                                     |
+| `renderTableCell`                      | `<td>`                            | Renders a table cell, one cell is rendered for each column                          |
+| `renderGroupAccessibleLabel`           | `<span>`                          | Renders the accessible label for a group.  This will be read out before each option |
+| `renderTableCellColumnAccessibleLabel` | `<span>`                          | Renders the accessible label for column.  This will be read out before each option  |
+| `renderColumnValue`                    | `<Fragment>`                      | Renders the value within a table cell                                               |
+| `renderNotFound`                       | `<div>`                           | Renders the not found message                                                       |
+| `renderAriaDescription`                | `<div>`                           | Renders the aria description of the combo box                                       |
+| `renderAriaLiveMessage`                | `<div>`                           | Renders an aria live message that alerts users new options have been found          |
 
-[1]: https://w3c.github.io/aria-practices/#grid-popup-keyboard-interaction
+[aria-practices-combo-box-grid]: https://w3c.github.io/aria-practices/#grid-popup-keyboard-interaction

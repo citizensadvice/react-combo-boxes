@@ -1,23 +1,29 @@
 # Options
 
-Options are an array whose element can be any of:
+When passing options into a combobox they have the type:
 
-- `String`
-- `Number`
-- `null` or `undefined` - will be treated as an empty string
-- an object with the following properties:
+```js
+options: Array<Option | string | number | null | undefined>
+```
 
-| Prop               | Type      | Purpose                                              |
-| ----               | ----      | ----                                                 |
-| `label`            | `String`  | The label of the option (required)                   |
-| `disabled`         | `Boolean` | Is the option disabled                               |
-| `group`            | `String`  | Label to group options under                         |
-| `value`            | `Object`  | Object value used to compare options                 |
-| `id`               | `Object`  | Fallback value used to compare options               |
-| `html`             | `Object`  | Additional html attributes to be added to the option |
-| Any other property |           | Ignored                                              |
+Where `Option` has the type:
 
-When an option is selected `onValue` will be called with the selected option.
+```js
+type Option = {
+  // The visible label
+  label?: string;
+  // Is the option disabled and unselectable
+  disabled?: boolean;
+  // Group the option by this key
+  group?: string;
+  // Used to calculate the options identity
+  value?: any;
+  // Used to calculate the options identity
+  id?: string;
+  // HTML attributes to add to the option
+  html?: object;
+};
+```
 
 ## Option identity
 
@@ -31,9 +37,13 @@ String(option?.value ?? option?.id ?? option?.label ?? option ?? '')
 
 ## `mapOption`
 
-If your options don't match the object signature you can use `mapOption` to map the options.
+If your options don't match this signature you can use the `mapOption` to map them to the signature.
 
-When using `mapOption`, the original option is still returned by `onValue` when a value is selected.
+```js
+mapOption: (option: any) => Option
+```
+
+Example:
 
 ```js
 const [value, setValue] = useState(initialValue);
@@ -50,16 +60,5 @@ const mapOption = useCallback(({ name, deleted }) => {
   value={value}
   setValue={setValue}
   mapOption={mapOption}
-/>
-```
-
-## `placeholder`
-
-This will add a placeholder label option to the start of the options.
-
-```js
-<Select
-  options={options}
-  placeholderOption="Please choose…"
 />
 ```
