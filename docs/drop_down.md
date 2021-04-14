@@ -2,8 +2,7 @@
 
 A custom control that works like a HTML `<select>`.
 
-This follows the ARIA 1.2 non-editable [combo box][aria-pracices]
-design pattern.
+This follows the ARIA non-editable [combo box][aria-pracices] design pattern.
 
 > :warning: **Warning** the native `<select>` will be more accessible and easier to use on many devices.
 >

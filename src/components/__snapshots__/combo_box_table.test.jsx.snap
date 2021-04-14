@@ -8,10 +8,10 @@ exports[`cells with html renders a table with colgroups 1`] = `
   >
     <input
       aria-autocomplete="none"
-      aria-controls="id_listbox"
       aria-describedby="id_aria_description"
       aria-expanded="false"
       aria-labelledby="id-label"
+      aria-owns="id_listbox"
       autocomplete="off"
       class="react-combo-boxes-combobox__input"
       id="id"
@@ -136,10 +136,10 @@ exports[`columns as names only renders a table as the list box 1`] = `
   >
     <input
       aria-autocomplete="none"
-      aria-controls="id_listbox"
       aria-describedby="id_aria_description"
       aria-expanded="false"
       aria-labelledby="id-label"
+      aria-owns="id_listbox"
       autocomplete="off"
       class="react-combo-boxes-combobox__input"
       id="id"
@@ -284,10 +284,10 @@ exports[`columns with headers renders a table with headers 1`] = `
   >
     <input
       aria-autocomplete="none"
-      aria-controls="id_listbox"
       aria-describedby="id_aria_description"
       aria-expanded="false"
       aria-labelledby="id-label"
+      aria-owns="id_listbox"
       autocomplete="off"
       class="react-combo-boxes-combobox__input"
       id="id"
@@ -462,10 +462,10 @@ exports[`columns with html renders a table with colgroups 1`] = `
   >
     <input
       aria-autocomplete="none"
-      aria-controls="id_listbox"
       aria-describedby="id_aria_description"
       aria-expanded="false"
       aria-labelledby="id-label"
+      aria-owns="id_listbox"
       autocomplete="off"
       class="react-combo-boxes-combobox__input"
       id="id"
@@ -594,10 +594,10 @@ exports[`grouped renders a table with groups 1`] = `
   >
     <input
       aria-autocomplete="none"
-      aria-controls="id_listbox"
       aria-describedby="id_aria_description"
       aria-expanded="false"
       aria-labelledby="id-label"
+      aria-owns="id_listbox"
       autocomplete="off"
       class="react-combo-boxes-combobox__input"
       id="id"

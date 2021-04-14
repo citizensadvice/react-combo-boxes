@@ -28,7 +28,7 @@ function expectToBeClosed() { // and focused
   const listbox = screen.getByRole('listbox', { hidden: true });
   expect(combobox).toHaveAttribute('role', 'combobox');
   expect(combobox).toHaveFocus();
-  expect(combobox).toHaveAttribute('aria-controls', listbox.id);
+  expect(combobox).toHaveAttribute('aria-owns', listbox.id);
   expect(listbox).not.toBeVisible();
   expect(combobox).toHaveAttribute('aria-expanded', 'false');
   expect(combobox).not.toHaveAttribute('aria-activedescendant');
@@ -39,7 +39,7 @@ function expectToBeOpen() { // and focused with no selected or focused option
   const combobox = screen.getByRole('combobox');
   const listbox = screen.getByRole('listbox', { hidden: true });
   expect(combobox).toHaveFocus();
-  expect(combobox).toHaveAttribute('aria-controls', listbox.id);
+  expect(combobox).toHaveAttribute('aria-owns', listbox.id);
   expect(listbox).toBeVisible();
   expect(combobox).toHaveAttribute('aria-expanded', 'true');
   expect(combobox).not.toHaveAttribute('aria-activedescendant');
@@ -50,7 +50,7 @@ function expectToBeOpen() { // and focused with no selected or focused option
 function expectToHaveFocusedOption(option) {
   const combobox = screen.getByRole('combobox');
   const listbox = screen.getByRole('listbox', { hidden: true });
-  expect(combobox).toHaveAttribute('aria-controls', listbox.id);
+  expect(combobox).toHaveAttribute('aria-owns', listbox.id);
   expect(listbox).toBeVisible();
   expect(combobox).toHaveAttribute('aria-expanded', 'true');
   expect(combobox).toHaveAttribute('aria-activedescendant', option.id);
@@ -64,7 +64,7 @@ function expectToHaveFocusedOption(option) {
 function expectToHaveSelectedOption(option) {
   const combobox = screen.getByRole('combobox');
   const listbox = screen.getByRole('listbox', { hidden: true });
-  expect(combobox).toHaveAttribute('aria-controls', listbox.id);
+  expect(combobox).toHaveAttribute('aria-owns', listbox.id);
   expect(listbox).toBeVisible();
   expect(combobox).toHaveAttribute('aria-expanded', 'true');
   expect(combobox).not.toHaveAttribute('aria-activedescendant');
@@ -78,7 +78,7 @@ function expectToHaveSelectedOption(option) {
 function expectToHaveActiveOption(option) {
   const combobox = screen.getByRole('combobox');
   const listbox = screen.getByRole('listbox', { hidden: true });
-  expect(combobox).toHaveAttribute('aria-controls', listbox.id);
+  expect(combobox).toHaveAttribute('aria-owns', listbox.id);
   expect(listbox).toBeVisible();
   expect(combobox).toHaveAttribute('aria-expanded', 'true');
   expect(combobox).toHaveAttribute('aria-activedescendant', option.id);
@@ -2266,7 +2266,7 @@ describe('expandOnFocus', () => {
       const combobox = screen.getByRole('combobox');
       combobox.focus();
       userEvent.click(screen.getByRole('button', { name: /Clear/ }));
-      const listbox = document.getElementById(combobox.getAttribute('aria-controls'));
+      const listbox = document.getElementById(combobox.getAttribute('aria-owns'));
       expect(listbox).toHaveAttribute('role', 'listbox');
       expect(listbox).not.toBeVisible();
     });

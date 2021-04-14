@@ -57,7 +57,7 @@ export async function selectComboBoxOption({ from, searchFor, select, container 
   let option;
   try {
     await waitFor(() => {
-      const ids = (comboBox.getAttribute('aria-controls') || '').split(/\s+/).filter(Boolean);
+      const ids = [comboBox.getAttribute('aria-controls'), comboBox.getAttribute('aria-owns')].join(' ').split(/\s+/).filter(Boolean);
       listBox = document.querySelector(ids.map((id) => `[role="listbox"]#${id}`).join(','));
       expect(listBox).toBeInstanceOf(HTMLElement);
       expect(listBox).toBeVisible();

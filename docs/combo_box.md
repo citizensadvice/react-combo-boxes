@@ -3,7 +3,7 @@
 Creates drop-down combined with an editable text-box. Also referred to as a typeahead or autocomplete.
 Typing will suggest options which the user can then select.
 
-This uses the ARIA 1.2 editable [combo box][aria-practices-combo-box] design pattern.
+This uses the ARIA editable [combo box][aria-practices-combo-box] design pattern.
 
 Combo-boxes like this are used in multiple different ways with many different interaction patterns.
 This implementation is flexible and can be used, for example, as both a search autocomplete or to restrict select to a set of predefined options.

@@ -9,11 +9,11 @@ const options = [
   'Ugli fruit',
 ];
 
-function renderInput({ 'aria-controls': ariaOwns, ...props }) {
+function renderInput({ 'aria-owns': ariaControls, ...props }) {
   return (
     <input
       {...props}
-      aria-owns={ariaOwns}
+      aria-controls={ariaControls}
     />
   );
 }

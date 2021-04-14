@@ -8,10 +8,10 @@ exports[`onSearch updating options updates the displayed options 1`] = `
   >
     <input
       aria-autocomplete="none"
-      aria-controls="id_listbox"
       aria-describedby="id_aria_description"
       aria-expanded="true"
       aria-labelledby="id-label"
+      aria-owns="id_listbox"
       autocomplete="off"
       class="react-combo-boxes-combobox__input"
       id="id"
@@ -92,10 +92,10 @@ exports[`options as array of objects disabled sets the aria-disabled attribute 1
   >
     <input
       aria-autocomplete="none"
-      aria-controls="id_listbox"
       aria-describedby="id_aria_description"
       aria-expanded="true"
       aria-labelledby="id-label"
+      aria-owns="id_listbox"
       autocomplete="off"
       class="react-combo-boxes-combobox__input"
       id="id"
@@ -169,10 +169,10 @@ exports[`options as array of objects group renders grouped options 1`] = `
   >
     <input
       aria-autocomplete="none"
-      aria-controls="id_listbox"
       aria-describedby="id_aria_description"
       aria-expanded="false"
       aria-labelledby="id-label"
+      aria-owns="id_listbox"
       autocomplete="off"
       class="react-combo-boxes-combobox__input"
       id="id"
@@ -300,10 +300,10 @@ exports[`options as array of objects label renders a closed combo box 1`] = `
   >
     <input
       aria-autocomplete="none"
-      aria-controls="id_listbox"
       aria-describedby="id_aria_description"
       aria-expanded="false"
       aria-labelledby="id-label"
+      aria-owns="id_listbox"
       autocomplete="off"
       class="react-combo-boxes-combobox__input"
       id="id"
@@ -383,10 +383,10 @@ exports[`options as array of objects missing label treats as a blank string 1`] 
   >
     <input
       aria-autocomplete="none"
-      aria-controls="id_listbox"
       aria-describedby="id_aria_description"
       aria-expanded="false"
       aria-labelledby="id-label"
+      aria-owns="id_listbox"
       autocomplete="off"
       class="react-combo-boxes-combobox__input"
       id="id"
@@ -449,10 +449,10 @@ exports[`options options as array of numbers renders a closed combo box 1`] = `
   >
     <input
       aria-autocomplete="none"
-      aria-controls="id_listbox"
       aria-describedby="id_aria_description"
       aria-expanded="false"
       aria-labelledby="id-label"
+      aria-owns="id_listbox"
       autocomplete="off"
       class="react-combo-boxes-combobox__input"
       id="id"
@@ -532,10 +532,10 @@ exports[`options options as array of strings renders a closed combo box 1`] = `
   >
     <input
       aria-autocomplete="none"
-      aria-controls="id_listbox"
       aria-describedby="id_aria_description"
       aria-expanded="false"
       aria-labelledby="id-label"
+      aria-owns="id_listbox"
       autocomplete="off"
       class="react-combo-boxes-combobox__input"
       id="id"
@@ -615,10 +615,10 @@ exports[`options options as null renders an option with an empty string 1`] = `
   >
     <input
       aria-autocomplete="none"
-      aria-controls="id_listbox"
       aria-describedby="id_aria_description"
       aria-expanded="false"
       aria-labelledby="id-label"
+      aria-owns="id_listbox"
       autocomplete="off"
       class="react-combo-boxes-combobox__input"
       id="id"
@@ -691,10 +691,10 @@ exports[`options options as undefined renders an option with an empty string 1`]
   >
     <input
       aria-autocomplete="none"
-      aria-controls="id_listbox"
       aria-describedby="id_aria_description"
       aria-expanded="false"
       aria-labelledby="id-label"
+      aria-owns="id_listbox"
       autocomplete="off"
       class="react-combo-boxes-combobox__input"
       id="id"

@@ -261,7 +261,7 @@ export const ComboBox = forwardRef((rawProps, ref) => {
           type: 'text',
           role: 'combobox',
           'aria-autocomplete': ariaAutocomplete,
-          'aria-controls': `${id}_listbox`,
+          'aria-owns': `${id}_listbox`,
           'aria-expanded': showListBox ? 'true' : 'false',
           'aria-activedescendant': (showListBox && focusListBox && focusedOption?.key) || null,
           'aria-describedby': joinTokens(showNotFound && `${id}_not_found`, errorMessage && `${id}_error_message`, foundOptionsMessage && `${id}_aria_description`, ariaDescribedBy),
