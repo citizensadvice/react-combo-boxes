@@ -58,7 +58,7 @@ The currently selected option
 
 #### `onValue: (option: any) => void`
 
-Called when the selected option when a user selects an option.
+Called with the selected option when a user selects an option.
 
 #### `onSearch: (search: string) => void`
 
@@ -233,8 +233,6 @@ The render functions available are:
 | `renderErrorMessage`         | `(props) => <div {...props} />`      | Renders the error message                                                           |
 | `renderAriaDescription`      | `(props) => <div {...props} />`      | Renders the aria description of the combo box                                       |
 | `renderAriaLiveMessage`      | `(props) => <div {...props} />`      | Renders an aria live message that alerts users new options have been found          |
-
-
 
 [options]: options.md
 [list-box-layout]: list_box_layout.md

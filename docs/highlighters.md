@@ -88,7 +88,7 @@ You can pass this highlighter to `highlightValue`.
 />
 ```
 
-You can compose a higlighter using the existing highlighters.  They are:
+You can compose a highlighter using the existing highlighters.  They are:
 
 - `delimitedHighlighter`
 - `passThroughHighlighter`
