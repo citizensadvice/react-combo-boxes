@@ -1,5 +1,7 @@
+/* eslint-disable testing-library/no-node-access */
+
 import React, { useState, forwardRef } from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { DropDownTable } from './drop_down_table';
 
@@ -39,21 +41,21 @@ describe('columns as names only', () => {
 
   it('allows selection by click', () => {
     const spy = jest.fn();
-    const { getByRole } = render((
+    render((
       <DropDownWrapper
         options={options}
         columns={columns}
         onValue={spy}
       />
     ));
-    userEvent.click(getByRole('combobox'));
-    userEvent.click(getByRole('option', { name: /Banana/ }));
+    userEvent.click(screen.getByRole('combobox'));
+    userEvent.click(screen.getByRole('option', { name: /Banana/ }));
     expect(spy).toHaveBeenCalledWith({ label: 'Banana', type: 'Fruit', colour: 'Yellow' });
   });
 
   it('allows selection by keyboard', () => {
     const spy = jest.fn();
-    const { getByRole } = render((
+    render((
       <DropDownWrapper
         options={options}
         columns={columns}
@@ -61,7 +63,7 @@ describe('columns as names only', () => {
       />
     ));
 
-    getByRole('combobox').focus();
+    screen.getByRole('combobox').focus();
     fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
     fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
     fireEvent.keyDown(document.activeElement, { key: 'Enter' });
@@ -94,28 +96,28 @@ describe('columns with headers', () => {
 
   it('allows selection by click', () => {
     const spy = jest.fn();
-    const { getByRole } = render((
+    render((
       <DropDownWrapper
         options={options}
         columns={columns}
         onValue={spy}
       />
     ));
-    userEvent.click(getByRole('combobox'));
-    userEvent.click(getByRole('option', { name: /Banana/ }));
+    userEvent.click(screen.getByRole('combobox'));
+    userEvent.click(screen.getByRole('option', { name: /Banana/ }));
     expect(spy).toHaveBeenCalledWith({ label: 'Banana', type: 'Fruit', colour: 'Yellow' });
   });
 
   it('allows selection by keyboard', () => {
     const spy = jest.fn();
-    const { getByRole } = render((
+    render((
       <DropDownWrapper
         options={options}
         columns={columns}
         onValue={spy}
       />
     ));
-    getByRole('combobox').focus();
+    screen.getByRole('combobox').focus();
     fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
     fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
     fireEvent.keyDown(document.activeElement, { key: 'Enter' });
@@ -199,7 +201,7 @@ describe('grouped', () => {
 
   it('allows selection by click', () => {
     const spy = jest.fn();
-    const { getByRole } = render((
+    render((
       <DropDownWrapper
         options={options}
         columns={columns}
@@ -207,14 +209,14 @@ describe('grouped', () => {
         mapOption={map}
       />
     ));
-    userEvent.click(getByRole('combobox'));
-    userEvent.click(getByRole('option', { name: /Banana/ }));
+    userEvent.click(screen.getByRole('combobox'));
+    userEvent.click(screen.getByRole('option', { name: /Banana/ }));
     expect(spy).toHaveBeenCalledWith({ name: 'Banana', type: 'Fruit', colour: 'Yellow' });
   });
 
   it('allows selection by keyboard', () => {
     const spy = jest.fn();
-    const { getByRole } = render((
+    render((
       <DropDownWrapper
         options={options}
         columns={columns}
@@ -222,7 +224,7 @@ describe('grouped', () => {
         mapOption={map}
       />
     ));
-    getByRole('combobox').focus();
+    screen.getByRole('combobox').focus();
     fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
     fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
     fireEvent.keyDown(document.activeElement, { key: 'Enter' });

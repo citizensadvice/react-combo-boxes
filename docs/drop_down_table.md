@@ -2,7 +2,7 @@
 
 An alternative layout for a drop down.  This places the results in a table which is more readable for tabulated data.
 
-This has the same options as [DropDown](drop-down) and [ComboBoxTable](combo-box-table).
+This has the same options as [DropDown][drop-down] and [ComboBoxTable][combo-box-table].
 
 ## Usage
 

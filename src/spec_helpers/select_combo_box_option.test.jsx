@@ -115,6 +115,7 @@ describe('selecting a value from a combo box', () => {
         </div>
       </>
     ));
+    // eslint-disable-next-line testing-library/no-node-access
     await selectComboBoxOption({ from: 'Label', select: 'foe', container: document.getElementById('bar') });
     expect(screen.getAllByLabelText('Output')[1]).toHaveValue('foe');
   });

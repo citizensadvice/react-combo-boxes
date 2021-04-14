@@ -1,5 +1,5 @@
 {
-  "parser": "babel-eslint",
+  "parser": "@babel/eslint-parser",
   "extends": [
     "airbnb",
     "plugin:jest/recommended"
@@ -48,7 +48,6 @@
         "testing-library"
       ],
       "extends": [
-        "plugin:testing-library/recommended",
         "plugin:testing-library/react",
         "plugin:jest-dom/recommended"
       ],

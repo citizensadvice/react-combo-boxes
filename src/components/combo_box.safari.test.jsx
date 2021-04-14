@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 
 Object.defineProperties(global.navigator, {
   vendor: {
@@ -25,13 +25,11 @@ function ComboBoxWrapper(props) {
 }
 
 it('uses managedFocus = true on a mac in safari', () => {
-  const { getByRole } = render(
-    <ComboBoxWrapper options={['foo', 'bar']} />,
-  );
-  const comboBox = getByRole('combobox');
+  render(<ComboBoxWrapper options={['foo', 'bar']} />);
+  const comboBox = screen.getByRole('combobox');
 
   comboBox.focus();
   fireEvent.keyDown(comboBox, { key: 'ArrowDown' });
   fireEvent.keyDown(comboBox, { key: 'ArrowDown' });
-  expect(getByRole('option', { name: 'bar' })).toHaveFocus();
+  expect(screen.getByRole('option', { name: 'bar' })).toHaveFocus();
 });
