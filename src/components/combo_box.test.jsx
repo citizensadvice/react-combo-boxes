@@ -32,7 +32,6 @@ function expectToBeClosed() { // and focused
   expect(listbox).not.toBeVisible();
   expect(combobox).toHaveAttribute('aria-expanded', 'false');
   expect(combobox).not.toHaveAttribute('aria-activedescendant');
-  expect(combobox).not.toHaveDescription(new RegExp(ComboBox.defaultProps.notFoundMessage));
 }
 
 function expectToBeOpen() { // and focused with no selected or focused option
@@ -44,7 +43,6 @@ function expectToBeOpen() { // and focused with no selected or focused option
   expect(combobox).toHaveAttribute('aria-expanded', 'true');
   expect(combobox).not.toHaveAttribute('aria-activedescendant');
   expect(listbox).not.toHaveAttribute('aria-activedescendant');
-  expect(combobox).not.toHaveDescription(new RegExp(ComboBox.defaultProps.notFoundMessage));
 }
 
 function expectToHaveFocusedOption(option) {
@@ -58,7 +56,6 @@ function expectToHaveFocusedOption(option) {
   expect(option).toHaveAttribute('role', 'option');
   expect(option).toHaveAttribute('aria-selected', 'true');
   expect(option).toHaveFocus();
-  expect(combobox).not.toHaveDescription(new RegExp(ComboBox.defaultProps.notFoundMessage));
 }
 
 function expectToHaveSelectedOption(option) {
@@ -72,7 +69,6 @@ function expectToHaveSelectedOption(option) {
   expect(option).toHaveAttribute('role', 'option');
   expect(option).toHaveAttribute('aria-selected', 'true');
   expect(combobox).toHaveFocus();
-  expect(combobox).not.toHaveDescription(new RegExp(ComboBox.defaultProps.notFoundMessage));
 }
 
 function expectToHaveActiveOption(option) {
@@ -86,7 +82,6 @@ function expectToHaveActiveOption(option) {
   expect(option).toHaveAttribute('role', 'option');
   expect(option).toHaveAttribute('aria-selected', 'true');
   expect(combobox).toHaveFocus();
-  expect(combobox).not.toHaveDescription(new RegExp(ComboBox.defaultProps.notFoundMessage));
 }
 
 function getLiveMessage() {
@@ -2355,7 +2350,7 @@ describe('notFoundMessage', () => {
       ));
       screen.getByRole('combobox').focus();
       await userEvent.type(document.activeElement, 'foo');
-      expect(screen.getByRole('combobox')).toHaveDescription('No matches found');
+      expect(screen.getByText('No results found')).toBeInTheDocument();
     });
 
     it('does not display a not found if busy', async () => {
@@ -2364,7 +2359,7 @@ describe('notFoundMessage', () => {
       ));
       screen.getByRole('combobox').focus();
       await userEvent.type(document.activeElement, 'foo');
-      expect(screen.getByRole('combobox')).not.toHaveDescription('No matches found');
+      expect(screen.queryByText('No results found')).not.toBeInTheDocument();
     });
 
     it('does not display a not found if options are null', async () => {
@@ -2373,7 +2368,7 @@ describe('notFoundMessage', () => {
       ));
       screen.getByRole('combobox').focus();
       await userEvent.type(document.activeElement, 'foo');
-      expect(screen.getByRole('combobox')).not.toHaveDescription('No matches found');
+      expect(screen.queryByText('No results found')).not.toBeInTheDocument();
     });
 
     it('does not display a not found if options are undefined', async () => {
@@ -2382,7 +2377,7 @@ describe('notFoundMessage', () => {
       ));
       screen.getByRole('combobox').focus();
       await userEvent.type(document.activeElement, 'foo');
-      expect(screen.getByRole('combobox')).not.toHaveDescription('No matches found');
+      expect(screen.queryByText('No results found')).not.toBeInTheDocument();
     });
 
     it('does not display a not found if there is no search', async () => {
@@ -2390,7 +2385,7 @@ describe('notFoundMessage', () => {
         <ComboBoxWrapper options={[]} />
       ));
       screen.getByRole('combobox').focus();
-      expect(screen.getByRole('combobox')).not.toHaveDescription('No matches found');
+      expect(screen.queryByText('No results found')).not.toBeInTheDocument();
     });
 
     it('does not display a not found if the list box is closed', async () => {
@@ -2400,7 +2395,7 @@ describe('notFoundMessage', () => {
       screen.getByRole('combobox').focus();
       await userEvent.type(document.activeElement, 'foo');
       fireEvent.keyDown(document.activeElement, { key: 'ArrowUp', altKey: true });
-      expect(screen.getByRole('combobox')).not.toHaveDescription('No matches found');
+      expect(screen.queryByText('No results found')).not.toBeInTheDocument();
     });
 
     it('does not display a not found if the search term matches the current option', async () => {
@@ -2408,18 +2403,18 @@ describe('notFoundMessage', () => {
         <ComboBoxWrapper options={[]} value="foo" />
       ));
       screen.getByRole('combobox').focus();
-      expect(screen.getByRole('combobox')).not.toHaveDescription('No matches found');
+      expect(screen.queryByText('No results found')).not.toBeInTheDocument();
     });
   });
 
   describe('with custom message', () => {
     it('displays custom not found if search returns no results', async () => {
       render((
-        <ComboBoxWrapper options={[]} notFoundMessage={<b>custom message</b>} />
+        <ComboBoxWrapper options={[]} notFoundMessage={() => 'custom message'} />
       ));
       screen.getByRole('combobox').focus();
       await userEvent.type(document.activeElement, 'foo');
-      expect(screen.getByRole('combobox')).toHaveDescription('custom message');
+      expect(screen.getByText('custom message')).toBeInTheDocument();
     });
   });
 
@@ -2430,68 +2425,41 @@ describe('notFoundMessage', () => {
       ));
       screen.getByRole('combobox').focus();
       await userEvent.type(document.activeElement, 'foo');
-      expect(document.getElementById('id_error_message')).toBeFalsy();
+      expect(screen.queryByText('No results found')).not.toBeInTheDocument();
     });
   });
 });
 
-describe('errorMessage', () => {
-  it('displays the error message if supplied', async () => {
-    render((
-      <ComboBoxWrapper options={['Foo']} errorMessage="Error" />
-    ));
-    screen.getByRole('combobox').focus();
-    expect(screen.getByRole('combobox')).toHaveDescription('Error');
-    expectToBeClosed();
-  });
-});
-
-describe('hint', () => {
-  it('is empty with no results', () => {
-    render((
-      <ComboBoxWrapper options={[]} />
-    ));
-    screen.getByRole('combobox').focus();
-    expect(screen.getByRole('combobox')).toHaveDescription('');
-  });
-
-  it('is empty if list box is not showing', () => {
-    render((
-      <ComboBoxWrapper options={['foo']} value="foo" />
-    ));
-    screen.getByRole('combobox').focus();
-    expect(screen.getByRole('combobox')).toHaveDescription('');
-  });
-
-  it('lists the number of options', () => {
-    render((
-      <ComboBoxWrapper options={['foo', 'bar']} />
-    ));
-    screen.getByRole('combobox').focus();
-    expect(screen.getByRole('combobox')).toHaveDescription('2 options found');
-  });
-
-  it('lists one option', () => {
-    render((
-      <ComboBoxWrapper options={['foo']} />
-    ));
-    screen.getByRole('combobox').focus();
-    expect(screen.getByRole('combobox')).toHaveDescription('1 option found');
-  });
-
-  describe('foundOptionsMessage', () => {
-    it('customises the found options message', () => {
-      const spy = jest.fn((options) => `found ${options.length} options`);
+describe('assistiveHint', () => {
+  describe('by default', () => {
+    it('describes the combo box', () => {
       render((
-        <ComboBoxWrapper options={['foo', 'bar']} foundOptionsMessage={spy} />
+        <ComboBoxWrapper options={['foo', 'bar']} />
       ));
-      screen.getByRole('combobox').focus();
-      expect(screen.getByRole('combobox')).toHaveDescription('found 2 options');
+      expect(screen.getByRole('combobox')).toHaveDescription('When results are available use up and down arrows to review and enter to select');
+    });
+  });
+
+  describe('when falsey', () => {
+    it('the combo box has no descripton', () => {
+      render((
+        <ComboBoxWrapper options={['foo', 'bar']} assistiveHint={null} />
+      ));
+      expect(screen.getByRole('combobox')).toHaveDescription('');
+    });
+  });
+
+  describe('when a custom value', () => {
+    it('describes the combo box', () => {
+      render((
+        <ComboBoxWrapper options={['foo', 'bar']} assistiveHint="foo bar" />
+      ));
+      expect(screen.getByRole('combobox')).toHaveDescription('foo bar');
     });
   });
 });
 
-describe('screen reader message', () => {
+describe('aria live message', () => {
   const options = ['foo'];
 
   it('adds a debounced message', async () => {
@@ -2501,19 +2469,24 @@ describe('screen reader message', () => {
     screen.getByRole('combobox').focus();
 
     expect(getLiveMessage()).toEqual('');
-    act(() => jest.advanceTimersByTime(500));
-    expect(getLiveMessage()).toEqual('1 option found');
+    act(() => jest.advanceTimersByTime(1400));
+    expect(getLiveMessage()).toEqual('1 result is available');
 
     rerender(<ComboBoxWrapper options={['foo', 'bar']} />);
-    expect(getLiveMessage()).toEqual('1 option found');
-    act(() => jest.advanceTimersByTime(500));
-    expect(getLiveMessage()).toEqual('2 options found');
+    expect(getLiveMessage()).toEqual('1 result is available');
+    act(() => jest.advanceTimersByTime(1400));
+    expect(getLiveMessage()).toEqual('2 results are available');
+
+    fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
+    expect(getLiveMessage()).toEqual('2 results are available');
+    act(() => jest.advanceTimersByTime(1400));
+    expect(getLiveMessage()).toEqual('2 results are available foo 1 of 2 is highlighted');
 
     rerender(<ComboBoxWrapper options={[]} />);
     await userEvent.type(document.activeElement, 'a');
-    expect(getLiveMessage()).toEqual('2 options found');
-    act(() => jest.advanceTimersByTime(500));
-    expect(getLiveMessage()).toEqual('No matches found');
+    expect(getLiveMessage()).toEqual('2 results are available foo 1 of 2 is highlighted');
+    act(() => jest.advanceTimersByTime(1400));
+    expect(getLiveMessage()).toEqual('No results found');
   });
 
   it('does not update the message if not focused', () => {
@@ -2521,7 +2494,7 @@ describe('screen reader message', () => {
     render(<ComboBoxWrapper options={options} />);
 
     expect(getLiveMessage()).toEqual('');
-    act(() => jest.advanceTimersByTime(500));
+    act(() => jest.advanceTimersByTime(1400));
     expect(getLiveMessage()).toEqual('');
   });
 
@@ -2533,7 +2506,7 @@ describe('screen reader message', () => {
         <ComboBoxWrapper options={['foo', 'bar']} foundOptionsMessage={spy} />
       ));
       screen.getByRole('combobox').focus();
-      act(() => jest.advanceTimersByTime(500));
+      act(() => jest.advanceTimersByTime(1400));
       expect(getLiveMessage()).toEqual('found 2 options');
     });
   });
@@ -2541,11 +2514,22 @@ describe('screen reader message', () => {
   describe('notFoundMessage', () => {
     it('customises the not found message', async () => {
       jest.useFakeTimers();
-      render(<ComboBoxWrapper options={[]} notFoundMessage="not found" />);
+      render(<ComboBoxWrapper options={[]} notFoundMessage={() => 'not found'} />);
       screen.getByRole('combobox').focus();
       await userEvent.type(document.activeElement, 'a');
-      act(() => jest.advanceTimersByTime(500));
+      act(() => jest.advanceTimersByTime(1400));
       expect(getLiveMessage()).toEqual('not found');
+    });
+  });
+
+  describe('selectedOptionMessage', () => {
+    it('customises the not found message', async () => {
+      jest.useFakeTimers();
+      render(<ComboBoxWrapper options={['foo']} selectedOptionMessage={(opt, opts) => `${opt.label} is one of ${opts.length}`} />);
+      screen.getByRole('combobox').focus();
+      fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
+      act(() => jest.advanceTimersByTime(1400));
+      expect(getLiveMessage()).toEqual('1 result is available foo is one of 1');
     });
   });
 });
@@ -2706,16 +2690,7 @@ describe('aria-describedby', () => {
       <ComboBoxWrapper options={['foo']} aria-describedby="foo" />
     ));
     screen.getByRole('combobox').focus();
-    expect(screen.getByRole('combobox')).toHaveAttribute('aria-describedby', 'id_aria_description foo');
-  });
-
-  it('is appended to the input when not found is showing', async () => {
-    render((
-      <ComboBoxWrapper options={[]} aria-describedby="foo" />
-    ));
-    screen.getByRole('combobox').focus();
-    await userEvent.type(document.activeElement, 'foo');
-    expect(screen.getByRole('combobox')).toHaveAttribute('aria-describedby', 'id_not_found id_aria_description foo');
+    expect(screen.getByRole('combobox')).toHaveAttribute('aria-describedby', 'foo id_aria_description');
   });
 });
 
@@ -3163,85 +3138,17 @@ describe('renderAriaDescription', () => {
 });
 
 describe('renderNotFound', () => {
-  it('allows the not found message to be replaced', () => {
+  it('allows the not found message to be replaced', async () => {
     render(
-      <ComboBoxWrapper options={['foo']} value="foo" renderNotFound={(props) => <dl data-foo="bar" {...props} />} />,
+      <ComboBoxWrapper options={['foo']} renderNotFound={(props) => <div data-testid="notfound" {...props} />} />,
     );
-    const description = document.getElementById('id_not_found');
-    expect(description.tagName).toEqual('DL');
-    expect(description).toHaveAttribute('data-foo', 'bar');
+    expect(screen.getByTestId('notfound')).toBeInTheDocument();
   });
 
   it('is called with context and props', () => {
     const spy = jest.fn(() => null);
     render((
       <ComboBoxWrapper options={['foo']} renderNotFound={spy} test="foo" />
-    ));
-
-    expect(spy).toHaveBeenCalledWith(
-      expect.any(Object),
-      {
-        'aria-autocomplete': 'none',
-        'aria-busy': false,
-        expanded: false,
-        search: null,
-        currentOption: null,
-        notFound: false,
-        suggestedOption: null,
-        [DISPATCH]: expect.any(Function),
-      },
-      expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
-    );
-  });
-});
-
-describe('renderErrorMessage', () => {
-  it('allows the error message to be replaced', () => {
-    render(
-      <ComboBoxWrapper options={['foo']} errorMessage="error" renderErrorMessage={(props) => <dl data-foo="bar" {...props} />} />,
-    );
-    const description = document.getElementById('id_error_message');
-    expect(description.tagName).toEqual('DL');
-    expect(description).toHaveAttribute('data-foo', 'bar');
-  });
-
-  it('is called with context and props', () => {
-    const spy = jest.fn(() => null);
-    render((
-      <ComboBoxWrapper options={['foo']} errorMessage="error" renderErrorMessage={spy} test="foo" />
-    ));
-
-    expect(spy).toHaveBeenCalledWith(
-      expect.any(Object),
-      {
-        'aria-autocomplete': 'none',
-        'aria-busy': false,
-        expanded: false,
-        search: null,
-        currentOption: null,
-        notFound: false,
-        suggestedOption: null,
-        [DISPATCH]: expect.any(Function),
-      },
-      expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
-    );
-  });
-});
-
-describe('renderAriaLiveMessage', () => {
-  it('allows the aria live message to be replaced', () => {
-    render(
-      <ComboBoxWrapper options={['foo']} value="foo" renderAriaLiveMessage={(props) => <dl data-foo="bar" {...props} />} />,
-    );
-    const description = document.querySelector('[aria-live=polite]');
-    expect(description.tagName).toEqual('DL');
-    expect(description).toHaveAttribute('data-foo', 'bar');
-  });
-
-  it('is called with context and props', () => {
-    const spy = jest.fn(() => null);
-    render((
-      <ComboBoxWrapper options={['foo']} renderAriaLiveMessage={spy} test="foo" />
     ));
 
     expect(spy).toHaveBeenCalledWith(

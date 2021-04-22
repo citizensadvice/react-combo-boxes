@@ -6,6 +6,7 @@ exports[`cells with html renders a table with colgroups 1`] = `
     class="react-combo-boxes-dropdown"
   >
     <div
+      aria-describedby="id_aria_description"
       aria-expanded="false"
       aria-labelledby="id-label id"
       aria-owns="id_listbox"
@@ -99,6 +100,26 @@ exports[`cells with html renders a table with colgroups 1`] = `
         </table>
       </div>
     </div>
+    <div
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+      id="id_aria_description"
+    >
+      When results are available use up and down arrows to review and enter to select
+    </div>
+    <div
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+    >
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+    </div>
   </div>
 </div>
 `;
@@ -109,6 +130,7 @@ exports[`columns as names only renders a table as the list box 1`] = `
     class="react-combo-boxes-dropdown"
   >
     <div
+      aria-describedby="id_aria_description"
       aria-expanded="false"
       aria-labelledby="id-label id"
       aria-owns="id_listbox"
@@ -222,6 +244,26 @@ exports[`columns as names only renders a table as the list box 1`] = `
         </table>
       </div>
     </div>
+    <div
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+      id="id_aria_description"
+    >
+      When results are available use up and down arrows to review and enter to select
+    </div>
+    <div
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+    >
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+    </div>
   </div>
 </div>
 `;
@@ -232,6 +274,7 @@ exports[`columns with headers renders a table with headers 1`] = `
     class="react-combo-boxes-dropdown"
   >
     <div
+      aria-describedby="id_aria_description"
       aria-expanded="false"
       aria-labelledby="id-label id"
       aria-owns="id_listbox"
@@ -375,6 +418,26 @@ exports[`columns with headers renders a table with headers 1`] = `
         </table>
       </div>
     </div>
+    <div
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+      id="id_aria_description"
+    >
+      When results are available use up and down arrows to review and enter to select
+    </div>
+    <div
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+    >
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+    </div>
   </div>
 </div>
 `;
@@ -385,6 +448,7 @@ exports[`columns with html renders a table with colgroups 1`] = `
     class="react-combo-boxes-dropdown"
   >
     <div
+      aria-describedby="id_aria_description"
       aria-expanded="false"
       aria-labelledby="id-label id"
       aria-owns="id_listbox"
@@ -482,6 +546,26 @@ exports[`columns with html renders a table with colgroups 1`] = `
         </table>
       </div>
     </div>
+    <div
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+      id="id_aria_description"
+    >
+      When results are available use up and down arrows to review and enter to select
+    </div>
+    <div
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+    >
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+    </div>
   </div>
 </div>
 `;
@@ -492,6 +576,7 @@ exports[`grouped renders a table with groups 1`] = `
     class="react-combo-boxes-dropdown"
   >
     <div
+      aria-describedby="id_aria_description"
       aria-expanded="false"
       aria-labelledby="id-label id"
       aria-owns="id_listbox"
@@ -621,6 +706,26 @@ exports[`grouped renders a table with groups 1`] = `
           </tbody>
         </table>
       </div>
+    </div>
+    <div
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+      id="id_aria_description"
+    >
+      When results are available use up and down arrows to review and enter to select
+    </div>
+    <div
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+    >
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
     </div>
   </div>
 </div>

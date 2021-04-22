@@ -7,6 +7,7 @@ exports[`options as array of objects disabled sets the aria-disabled attribute 1
   >
     <div
       aria-activedescendant="id_option_apple"
+      aria-describedby="id_aria_description"
       aria-expanded="true"
       aria-labelledby="id-label id"
       aria-owns="id_listbox"
@@ -48,6 +49,26 @@ exports[`options as array of objects disabled sets the aria-disabled attribute 1
         </li>
       </ul>
     </div>
+    <div
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+      id="id_aria_description"
+    >
+      When results are available use up and down arrows to review and enter to select
+    </div>
+    <div
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+    >
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+    </div>
   </div>
 </div>
 `;
@@ -58,6 +79,7 @@ exports[`options as array of objects group renders grouped options 1`] = `
     class="react-combo-boxes-dropdown"
   >
     <div
+      aria-describedby="id_aria_description"
       aria-expanded="false"
       aria-labelledby="id-label id"
       aria-owns="id_listbox"
@@ -154,6 +176,26 @@ exports[`options as array of objects group renders grouped options 1`] = `
         </li>
       </ul>
     </div>
+    <div
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+      id="id_aria_description"
+    >
+      When results are available use up and down arrows to review and enter to select
+    </div>
+    <div
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+    >
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+    </div>
   </div>
 </div>
 `;
@@ -164,6 +206,7 @@ exports[`options as array of objects label renders a closed drop down 1`] = `
     class="react-combo-boxes-dropdown"
   >
     <div
+      aria-describedby="id_aria_description"
       aria-expanded="false"
       aria-labelledby="id-label id"
       aria-owns="id_listbox"
@@ -212,6 +255,26 @@ exports[`options as array of objects label renders a closed drop down 1`] = `
         </li>
       </ul>
     </div>
+    <div
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+      id="id_aria_description"
+    >
+      When results are available use up and down arrows to review and enter to select
+    </div>
+    <div
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+    >
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+    </div>
   </div>
 </div>
 `;
@@ -222,6 +285,7 @@ exports[`options as array of objects missing label treats as a blank string 1`] 
     class="react-combo-boxes-dropdown"
   >
     <div
+      aria-describedby="id_aria_description"
       aria-expanded="false"
       aria-labelledby="id-label id"
       aria-owns="id_listbox"
@@ -252,6 +316,26 @@ exports[`options as array of objects missing label treats as a blank string 1`] 
         />
       </ul>
     </div>
+    <div
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+      id="id_aria_description"
+    >
+      When results are available use up and down arrows to review and enter to select
+    </div>
+    <div
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+    >
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+    </div>
   </div>
 </div>
 `;
@@ -262,6 +346,7 @@ exports[`options options as array of numbers renders a closed drop down 1`] = `
     class="react-combo-boxes-dropdown"
   >
     <div
+      aria-describedby="id_aria_description"
       aria-expanded="false"
       aria-labelledby="id-label id"
       aria-owns="id_listbox"
@@ -318,6 +403,26 @@ exports[`options options as array of numbers renders a closed drop down 1`] = `
         </li>
       </ul>
     </div>
+    <div
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+      id="id_aria_description"
+    >
+      When results are available use up and down arrows to review and enter to select
+    </div>
+    <div
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+    >
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+    </div>
   </div>
 </div>
 `;
@@ -328,6 +433,7 @@ exports[`options options as array of strings renders a closed drop down 1`] = `
     class="react-combo-boxes-dropdown"
   >
     <div
+      aria-describedby="id_aria_description"
       aria-expanded="false"
       aria-labelledby="id-label id"
       aria-owns="id_listbox"
@@ -376,6 +482,26 @@ exports[`options options as array of strings renders a closed drop down 1`] = `
         </li>
       </ul>
     </div>
+    <div
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+      id="id_aria_description"
+    >
+      When results are available use up and down arrows to review and enter to select
+    </div>
+    <div
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+    >
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+    </div>
   </div>
 </div>
 `;
@@ -386,6 +512,7 @@ exports[`options options as null renders a closed drop down with the option as a
     class="react-combo-boxes-dropdown"
   >
     <div
+      aria-describedby="id_aria_description"
       aria-expanded="false"
       aria-labelledby="id-label id"
       aria-owns="id_listbox"
@@ -417,6 +544,26 @@ exports[`options options as null renders a closed drop down with the option as a
           
         </li>
       </ul>
+    </div>
+    <div
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+      id="id_aria_description"
+    >
+      When results are available use up and down arrows to review and enter to select
+    </div>
+    <div
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+    >
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
     </div>
   </div>
 </div>
@@ -428,6 +575,7 @@ exports[`options options as undefined renders a closed drop down with the option
     class="react-combo-boxes-dropdown"
   >
     <div
+      aria-describedby="id_aria_description"
       aria-expanded="false"
       aria-labelledby="id-label id"
       aria-owns="id_listbox"
@@ -459,6 +607,26 @@ exports[`options options as undefined renders a closed drop down with the option
           
         </li>
       </ul>
+    </div>
+    <div
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+      id="id_aria_description"
+    >
+      When results are available use up and down arrows to review and enter to select
+    </div>
+    <div
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+    >
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
     </div>
   </div>
 </div>
@@ -471,6 +639,7 @@ exports[`options updating options updates the options 1`] = `
   >
     <div
       aria-activedescendant="id_option_strawberry"
+      aria-describedby="id_aria_description"
       aria-expanded="true"
       aria-labelledby="id-label id"
       aria-owns="id_listbox"
@@ -519,6 +688,26 @@ exports[`options updating options updates the options 1`] = `
         </li>
       </ul>
     </div>
+    <div
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+      id="id_aria_description"
+    >
+      When results are available use up and down arrows to review and enter to select
+    </div>
+    <div
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+    >
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+    </div>
   </div>
 </div>
 `;
@@ -529,6 +718,7 @@ exports[`placeholderOption renders a placeholder option 1`] = `
     class="react-combo-boxes-dropdown"
   >
     <div
+      aria-describedby="id_aria_description"
       aria-expanded="false"
       aria-labelledby="id-label id"
       aria-owns="id_listbox"
@@ -584,6 +774,26 @@ exports[`placeholderOption renders a placeholder option 1`] = `
           Orange
         </li>
       </ul>
+    </div>
+    <div
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+      id="id_aria_description"
+    >
+      When results are available use up and down arrows to review and enter to select
+    </div>
+    <div
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+    >
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
     </div>
   </div>
 </div>

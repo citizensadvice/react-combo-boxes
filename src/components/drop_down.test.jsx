@@ -1701,7 +1701,7 @@ describe('renderWrapper', () => {
         currentOption: expect.objectContaining({
           label: 'foo',
         }),
-        notFound: null,
+        notFound: false,
         suggestedOption: null,
         [DISPATCH]: expect.any(Function),
       },
@@ -1735,7 +1735,7 @@ describe('renderComboBox', () => {
         currentOption: expect.objectContaining({
           label: 'foo',
         }),
-        notFound: null,
+        notFound: false,
         suggestedOption: null,
         [DISPATCH]: expect.any(Function),
       },
@@ -1769,7 +1769,7 @@ describe('renderListBoxWrapper', () => {
         currentOption: expect.objectContaining({
           label: 'foo',
         }),
-        notFound: null,
+        notFound: false,
         suggestedOption: null,
         [DISPATCH]: expect.any(Function),
       },

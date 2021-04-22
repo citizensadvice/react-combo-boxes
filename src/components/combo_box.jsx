@@ -19,14 +19,8 @@ import { ListBox } from './list_box';
 import { AriaLiveMessage } from './aria_live_message';
 import { classPrefix as defaultClassPrefix } from '../constants/class_prefix';
 import { visuallyHiddenClassName } from '../constants/visually_hidden_class_name';
-import { isSafari } from '../sniffers/is_safari';
-import { isMac } from '../sniffers/is_mac';
 import { scrollIntoView } from '../layout/scroll_into_view';
 import { DISPATCH } from '../constants/dispatch';
-
-function defaultFoundOptionsMessage(options) {
-  return `${options.length} option${options.length > 1 ? 's' : ''} found`;
-}
 
 export const ComboBox = forwardRef((rawProps, ref) => {
   const optionisedProps = Object.freeze({
@@ -42,12 +36,12 @@ export const ComboBox = forwardRef((rawProps, ref) => {
     autoCorrect,
     autoFocus,
     autoselect,
+    assistiveHint,
     busy,
     busyDebounce,
     className,
     classPrefix,
     disabled,
-    errorMessage,
     foundOptionsMessage,
     id,
     inputMode,
@@ -70,10 +64,10 @@ export const ComboBox = forwardRef((rawProps, ref) => {
     renderDownArrow,
     renderInput,
     renderNotFound,
-    renderErrorMessage,
     renderWrapper,
     required,
     selectedOption,
+    selectedOptionMessage,
     showSelectedLabel,
     size,
     spellCheck,
@@ -175,13 +169,12 @@ export const ComboBox = forwardRef((rawProps, ref) => {
   // Do not show the list box is the only option is the currently selected option
   const showListBox = useMemo(() => (
     expanded
-      && !errorMessage
       && !!options.length
       && !(options.length === 1
         && options[0].identity === selectedOption?.identity
         && options[0].label === (search ?? value?.label)
       )
-  ), [expanded, options, selectedOption, search, value, errorMessage]);
+  ), [expanded, options, selectedOption, search, value]);
 
   useLayoutEffect(() => {
     if (!onLayoutListBox) {
@@ -223,13 +216,11 @@ export const ComboBox = forwardRef((rawProps, ref) => {
     };
   }, [busy, busyDebounce, busyTimeoutRef]);
 
-  const showNotFound = notFoundMessage
-    && !busy
+  const showNotFound = !busy
     && expanded
     && !options.length
     && !nullOptions
-    && !errorMessage
-    && search?.trim()
+    && !!search?.trim()
     && search !== value?.label;
 
   const ariaBusy = showBusy && search?.trim() && search !== (value?.label);
@@ -264,7 +255,7 @@ export const ComboBox = forwardRef((rawProps, ref) => {
           'aria-owns': `${id}_listbox`,
           'aria-expanded': showListBox ? 'true' : 'false',
           'aria-activedescendant': (showListBox && focusListBox && focusedOption?.key) || null,
-          'aria-describedby': joinTokens(showNotFound && `${id}_not_found`, errorMessage && `${id}_error_message`, foundOptionsMessage && `${id}_aria_description`, ariaDescribedBy),
+          'aria-describedby': joinTokens(ariaDescribedBy, assistiveHint && `${id}_aria_description`),
           'aria-labelledby': joinTokens(ariaLabelledBy),
           value: inputLabel || '',
           onKeyDown: (e) => dispatch(onKeyDown(e)),
@@ -319,30 +310,27 @@ export const ComboBox = forwardRef((rawProps, ref) => {
           componentProps={optionisedProps}
           componentState={componentState}
         />
-        {foundOptionsMessage && renderAriaDescription({
+        {assistiveHint && renderAriaDescription({
           id: `${id}_aria_description`,
           className: providedVisuallyHiddenClassName,
-          children: showListBox ? foundOptionsMessage(options) : null,
+          children: assistiveHint,
         }, componentState, optionisedProps)}
         {notFoundMessage && renderNotFound({
           id: `${id}_not_found`,
           className: makeBEMClass(classPrefix, 'not-found'),
           hidden: !showNotFound,
-          children: showNotFound ? notFoundMessage : null,
+          children: showNotFound ? notFoundMessage() : null,
         }, componentState, optionisedProps)}
-        {errorMessage && renderErrorMessage({
-          id: `${id}_error_message`,
-          className: makeBEMClass(classPrefix, 'error-message'),
-          hidden: !errorMessage,
-          children: errorMessage,
-        }, componentState, optionisedProps)}
-        {foundOptionsMessage && (
-          <AriaLiveMessage
-            hidden={!showNotFound && !showListBox}
-            componentProps={optionisedProps}
-            componentState={componentState}
-          />
-        )}
+        <AriaLiveMessage
+          visuallyHiddenClassName={visuallyHiddenClassName}
+          options={options}
+          showNotFound={showNotFound}
+          showListBox={showListBox}
+          focusedOption={focusedOption}
+          notFoundMessage={notFoundMessage}
+          foundOptionsMessage={foundOptionsMessage}
+          selectedOptionMessage={selectedOptionMessage}
+        />
       </>
     ),
   }, componentState, optionisedProps);
@@ -378,10 +366,6 @@ ComboBox.propTypes = {
   size: PropTypes.number,
   spellCheck: PropTypes.string,
 
-  errorMessage: PropTypes.node,
-  notFoundMessage: PropTypes.node,
-  foundOptionsMessage: PropTypes.func,
-
   onBlur: PropTypes.func,
   onChange: PropTypes.func,
   onFocus: PropTypes.func,
@@ -401,6 +385,11 @@ ComboBox.propTypes = {
   tabAutocomplete: PropTypes.bool,
   tabBetweenOptions: PropTypes.bool,
 
+  assistiveHint: PropTypes.string,
+  notFoundMessage: PropTypes.func,
+  foundOptionsMessage: PropTypes.func,
+  selectedOptionMessage: PropTypes.func,
+
   renderWrapper: PropTypes.func,
   renderInput: PropTypes.func,
   renderListBox: PropTypes.func,
@@ -412,9 +401,7 @@ ComboBox.propTypes = {
   renderDownArrow: PropTypes.func,
   renderClearButton: PropTypes.func,
   renderNotFound: PropTypes.func,
-  renderErrorMessage: PropTypes.func,
   renderAriaDescription: PropTypes.func,
-  renderAriaLiveMessage: PropTypes.func,
 
   visuallyHiddenClassName: PropTypes.string,
 };
@@ -447,10 +434,6 @@ ComboBox.defaultProps = {
   size: null,
   spellCheck: null,
 
-  errorMessage: null,
-  notFoundMessage: 'No matches found',
-  foundOptionsMessage: defaultFoundOptionsMessage,
-
   onBlur: null,
   onChange: null,
   onFocus: null,
@@ -462,13 +445,22 @@ ComboBox.defaultProps = {
   autoselect: false,
   expandOnFocus: true,
   findSuggestion: findOption,
-  managedFocus: !(isMac() && !isSafari()),
+  managedFocus: true,
   selectOnBlur: true,
   selectOnly: false,
   skipOption: undefined,
   showSelectedLabel: undefined,
   tabAutocomplete: false,
   tabBetweenOptions: false,
+
+  assistiveHint: 'When results are available use up and down arrows to review and enter to select',
+  notFoundMessage: () => 'No results found',
+  foundOptionsMessage: (options) => (
+    `${options.length} result${options.length > 1 ? 's are' : ' is'} available`
+  ),
+  selectedOptionMessage: (option, options) => (
+    `${option.label} ${option.index + 1} of ${options.length} is highlighted`
+  ),
 
   renderWrapper: (props) => <div {...props} />,
   renderInput: (props) => <input {...props} />,
@@ -481,9 +473,7 @@ ComboBox.defaultProps = {
   renderDownArrow: (props) => <span {...props} />,
   renderClearButton: (props) => <span {...props} />,
   renderNotFound: (props) => <div {...props} />,
-  renderErrorMessage: (props) => <div {...props} />,
   renderAriaDescription: (props) => <div {...props} />,
-  renderAriaLiveMessage: (props) => <div {...props} />,
 
   visuallyHiddenClassName,
 };
