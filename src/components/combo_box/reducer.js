@@ -1,7 +1,6 @@
 import { shallowEqualObjects } from 'shallow-equal';
 import { SET_SEARCH, SET_EXPANDED, SET_CLOSED, SET_FOCUSED_OPTION, SET_FOCUS_LIST_BOX } from './actions';
 
-// AT RISK: It is debatable autoselect in this form is actually useful
 function applyAutoselect(state, { type, ...params }, props) {
   const { autoselect } = props;
 

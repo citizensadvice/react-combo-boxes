@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
-import { ComboBox, useAsyncSearch } from '../../../src';
+import { ComboBox, useTokenSearch, tokenHighlight } from '../../../src';
 
-async function searcher(query) {
-  if (!query) {
-    return ['Apple', 'Banana', 'Orange'];
-  }
-
-  throw new Error('Something went wrong');
-}
+const options = [
+  'Apple',
+  'Orange',
+  'Blood orange',
+  'Lemon',
+  'Raspberry',
+  'Strawberry',
+];
 
 export function Example() {
   const [value, setValue] = useState(null);
   const [search, setSearch] = useState(null);
-  const [filteredOptions, busy, error] = useAsyncSearch(search, { searcher, catchErrors: true });
+  const filteredOptions = useTokenSearch(search, { options });
+  const [managedFocus, setManagedFocus] = useState(false);
 
   return (
     <>
@@ -29,8 +31,9 @@ export function Example() {
         onValue={setValue}
         onSearch={setSearch}
         options={filteredOptions}
-        busy={busy}
-        errorMessage={error ? `⚠️ ${error.message}` : null}
+        renderValue={tokenHighlight()}
+        tabBetweenOptions
+        managedFocus={managedFocus}
       />
 
       <label htmlFor="output">
@@ -39,6 +42,16 @@ export function Example() {
       <output htmlFor="select" id="output">
         {JSON.stringify(value, undefined, ' ')}
       </output>
+
+      <label>
+        <input
+          type="checkbox"
+          onChange={({ target: { checked } }) => setManagedFocus(checked)}
+          checked={managedFocus}
+        />
+        {' '}
+        Toggle managed focus
+      </label>
     </>
   );
 }

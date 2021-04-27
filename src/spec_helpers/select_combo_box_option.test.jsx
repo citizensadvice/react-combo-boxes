@@ -9,8 +9,8 @@ import { selectComboBoxOption } from './select_combo_box_option';
 
 const values = ['foo', 'bar', 'foe', 'fee'];
 
-function ComboBoxWrapper({ id = 'id' }) {
-  const [value, onValue] = useState(null);
+function ComboBoxWrapper({ id = 'id', value: _value = null, ...props }) {
+  const [value, onValue] = useState(_value);
   const [search, setSearch] = useState(null);
   const options = useTokenSearch(search, { options: values });
 
@@ -29,6 +29,7 @@ function ComboBoxWrapper({ id = 'id' }) {
         onValue={onValue}
         onSearch={setSearch}
         options={options}
+        {...props}
       />
       <label htmlFor={`output-${id}`}>Output</label>
       <output
@@ -104,6 +105,12 @@ describe('selecting a value from a combo box', () => {
     expect(screen.getByLabelText('Output')).toHaveValue('foe');
   });
 
+  it('selects with an empty search', async () => {
+    render(<ComboBoxWrapper value="fee" options={values} />);
+    await selectComboBoxOption({ from: 'Label', searchFor: '', select: 'foe' });
+    expect(screen.getByLabelText('Output')).toHaveValue('foe');
+  });
+
   it('selects from a specific container', async () => {
     render((
       <>
@@ -115,6 +122,7 @@ describe('selecting a value from a combo box', () => {
         </div>
       </>
     ));
+    // eslint-disable-next-line testing-library/no-node-access
     await selectComboBoxOption({ from: 'Label', select: 'foe', container: document.getElementById('bar') });
     expect(screen.getAllByLabelText('Output')[1]).toHaveValue('foe');
   });

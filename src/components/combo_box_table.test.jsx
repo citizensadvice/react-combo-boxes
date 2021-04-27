@@ -1,8 +1,11 @@
+/* eslint-disable testing-library/no-node-access */
+
 import React, { useState, forwardRef } from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ComboBoxTable } from './combo_box_table';
 import { visuallyHiddenClassName } from '../constants/visually_hidden_class_name';
+import { DISPATCH } from '../constants/dispatch';
 
 const ComboBoxWrapper = forwardRef(({ value: initialValue, ...props }, ref) => {
   const [value, onValue] = useState(initialValue);
@@ -40,28 +43,28 @@ describe('columns as names only', () => {
 
   it('allows selection by click', () => {
     const spy = jest.fn();
-    const { getByRole, getAllByRole } = render((
+    render((
       <ComboBoxWrapper
         options={options}
         columns={columns}
         onValue={spy}
       />
     ));
-    getByRole('combobox').focus();
-    userEvent.click(getAllByRole('option')[1]);
+    screen.getByRole('combobox').focus();
+    userEvent.click(screen.getByRole('option', { name: /Banana/ }));
     expect(spy).toHaveBeenCalledWith({ label: 'Banana', type: 'Fruit', colour: 'Yellow' });
   });
 
   it('allows selection by keyboard', () => {
     const spy = jest.fn();
-    const { getByRole } = render((
+    render((
       <ComboBoxWrapper
         options={options}
         columns={columns}
         onValue={spy}
       />
     ));
-    getByRole('combobox').focus();
+    screen.getByRole('combobox').focus();
     fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
     fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
     fireEvent.keyDown(document.activeElement, { key: 'Enter' });
@@ -94,28 +97,28 @@ describe('columns with headers', () => {
 
   it('allows selection by click', () => {
     const spy = jest.fn();
-    const { getByRole, getAllByRole } = render((
+    render((
       <ComboBoxWrapper
         options={options}
         columns={columns}
         onValue={spy}
       />
     ));
-    getByRole('combobox').focus();
-    userEvent.click(getAllByRole('option')[1]);
+    screen.getByRole('combobox').focus();
+    userEvent.click(screen.getByRole('option', { name: /Banana/ }));
     expect(spy).toHaveBeenCalledWith({ label: 'Banana', type: 'Fruit', colour: 'Yellow' });
   });
 
   it('allows selection by keyboard', () => {
     const spy = jest.fn();
-    const { getByRole } = render((
+    render((
       <ComboBoxWrapper
         options={options}
         columns={columns}
         onValue={spy}
       />
     ));
-    getByRole('combobox').focus();
+    screen.getByRole('combobox').focus();
     fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
     fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
     fireEvent.keyDown(document.activeElement, { key: 'Enter' });
@@ -132,8 +135,31 @@ describe('columns with html', () => {
   ];
 
   const columns = [
-    { name: 'label', html: { className: 'foo' } },
-    { name: 'type', html: { className: 'bar' } },
+    { name: 'label', colHtml: { className: 'foo' } },
+    { name: 'type', colHtml: { className: 'bar' } },
+  ];
+
+  it('renders a table with colgroups', () => {
+    const { container } = render((
+      <ComboBoxWrapper
+        options={options}
+        columns={columns}
+      />
+    ));
+    expect(container).toMatchSnapshot();
+  });
+});
+
+describe('cells with html', () => {
+  const options = [
+    { label: 'Apple', type: 'Fruit', colour: 'Green' },
+    { label: 'Banana', type: 'Fruit', colour: 'Yellow' },
+    { label: 'Potato', type: 'Vegetable', colour: 'Brown' },
+  ];
+
+  const columns = [
+    { name: 'label', cellHtml: { className: 'foo' } },
+    { name: 'type', cellHtml: { className: 'bar' } },
   ];
 
   it('renders a table with colgroups', () => {
@@ -176,7 +202,7 @@ describe('grouped', () => {
 
   it('allows selection by click', () => {
     const spy = jest.fn();
-    const { getByRole, getAllByRole } = render((
+    render((
       <ComboBoxWrapper
         options={options}
         columns={columns}
@@ -184,14 +210,14 @@ describe('grouped', () => {
         mapOption={map}
       />
     ));
-    getByRole('combobox').focus();
-    userEvent.click(getAllByRole('option')[1]);
+    screen.getByRole('combobox').focus();
+    userEvent.click(screen.getByRole('option', { name: /Banana/ }));
     expect(spy).toHaveBeenCalledWith({ name: 'Banana', type: 'Fruit', colour: 'Yellow' });
   });
 
   it('allows selection by keyboard', () => {
     const spy = jest.fn();
-    const { getByRole } = render((
+    render((
       <ComboBoxWrapper
         options={options}
         columns={columns}
@@ -199,7 +225,7 @@ describe('grouped', () => {
         mapOption={map}
       />
     ));
-    getByRole('combobox').focus();
+    screen.getByRole('combobox').focus();
     fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
     fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
     fireEvent.keyDown(document.activeElement, { key: 'Enter' });
@@ -228,20 +254,20 @@ describe('customisation', () => {
     };
   }
 
-  describe('renderListBox', () => {
+  describe('renderTableWrapper', () => {
     it('allows the list box to be replaced', () => {
-      const { getByRole } = render(
-        <ComboBoxWrapper options={options} columns={columns} mapOption={map} renderListBox={(props) => <dl data-foo="bar" {...props} />} />,
+      render(
+        <ComboBoxWrapper options={options} columns={columns} mapOption={map} renderTableWrapper={(props) => <dl data-foo="bar" {...props} />} />,
       );
-      getByRole('combobox').focus();
-      expect(getByRole('listbox').parentNode.tagName).toEqual('DL');
-      expect(getByRole('listbox').parentNode).toHaveAttribute('data-foo', 'bar');
+      screen.getByRole('combobox').focus();
+      expect(screen.getByRole('listbox').parentNode.tagName).toEqual('DL');
+      expect(screen.getByRole('listbox').parentNode).toHaveAttribute('data-foo', 'bar');
     });
 
     it('is called with context and props', () => {
       const spy = jest.fn(() => null);
       render((
-        <ComboBoxWrapper options={options} columns={columns} mapOption={map} renderListBox={spy} test="foo" />
+        <ComboBoxWrapper options={options} columns={columns} mapOption={map} renderTableWrapper={spy} test="foo" />
       ));
       expect(spy).toHaveBeenLastCalledWith(
         expect.any(Object),
@@ -253,6 +279,7 @@ describe('customisation', () => {
           currentOption: null,
           notFound: false,
           suggestedOption: null,
+          [DISPATCH]: expect.any(Function),
         },
         expect.objectContaining({ options: expect.any(Array), test: 'foo', columns: expect.any(Array) }),
       );
@@ -261,11 +288,11 @@ describe('customisation', () => {
 
   describe('renderTable', () => {
     it('allows the table to be replaced', () => {
-      const { getByRole } = render(
+      render(
         <ComboBoxWrapper options={options} columns={columns} mapOption={map} renderTable={(props) => <table data-foo="bar" {...props} />} />,
       );
-      getByRole('combobox').focus();
-      expect(getByRole('listbox')).toHaveAttribute('data-foo', 'bar');
+      screen.getByRole('combobox').focus();
+      expect(screen.getByRole('listbox')).toHaveAttribute('data-foo', 'bar');
     });
 
     it('is called with context and props', () => {
@@ -283,6 +310,7 @@ describe('customisation', () => {
           currentOption: null,
           notFound: false,
           suggestedOption: null,
+          [DISPATCH]: expect.any(Function),
         },
         expect.objectContaining({ options: expect.any(Array), test: 'foo', columns: expect.any(Array) }),
       );
@@ -291,10 +319,10 @@ describe('customisation', () => {
 
   describe('renderTableHeaderCell', () => {
     it('allows a table header cell to be replaced', () => {
-      const { container } = render(
+      render(
         <ComboBoxWrapper options={options} columns={columns} mapOption={map} renderTableHeaderCell={(props) => <th data-foo="bar" {...props} />} />,
       );
-      const el = container.querySelector('table[role=listbox] > thead > tr > th');
+      const el = document.querySelector('table[role=listbox] > thead > tr > th');
       expect(el).toHaveAttribute('data-foo', 'bar');
     });
 
@@ -314,6 +342,7 @@ describe('customisation', () => {
           notFound: false,
           suggestedOption: null,
           column: { label: 'Type', name: 'type' },
+          [DISPATCH]: expect.any(Function),
         },
         expect.objectContaining({ options: expect.any(Array), test: 'foo', columns: expect.any(Array) }),
       );
@@ -322,10 +351,10 @@ describe('customisation', () => {
 
   describe('renderTableGroupRow', () => {
     it('allows a table group row to be replaced', () => {
-      const { container } = render(
+      render(
         <ComboBoxWrapper options={options} columns={columns} mapOption={map} renderTableGroupRow={(props) => <tr data-foo="bar" {...props} />} />,
       );
-      const el = container.querySelector('table[role=listbox] > tbody> tr:not([role="option"])');
+      const el = document.querySelector('table[role=listbox] > tbody> tr:not([role="option"])');
       expect(el).toHaveAttribute('data-foo', 'bar');
     });
 
@@ -345,6 +374,7 @@ describe('customisation', () => {
           notFound: false,
           suggestedOption: null,
           group: expect.objectContaining({ label: 'Vegetable' }),
+          [DISPATCH]: expect.any(Function),
         },
         expect.objectContaining({ options: expect.any(Array), test: 'foo', columns: expect.any(Array) }),
       );
@@ -353,10 +383,10 @@ describe('customisation', () => {
 
   describe('renderTableGroupHeaderCell', () => {
     it('allows a table group header cell to be replaced', () => {
-      const { container } = render(
+      render(
         <ComboBoxWrapper options={options} columns={columns} mapOption={map} renderTableGroupHeaderCell={(props) => <th data-foo="bar" {...props} />} />,
       );
-      const el = container.querySelector('table[role=listbox] > tbody> tr:not([role="option"]) > th');
+      const el = document.querySelector('table[role=listbox] > tbody> tr:not([role="option"]) > th');
       expect(el).toHaveAttribute('data-foo', 'bar');
     });
 
@@ -376,6 +406,7 @@ describe('customisation', () => {
           notFound: false,
           suggestedOption: null,
           group: expect.objectContaining({ label: 'Vegetable' }),
+          [DISPATCH]: expect.any(Function),
         },
         expect.objectContaining({ options: expect.any(Array), test: 'foo', columns: expect.any(Array) }),
       );
@@ -384,11 +415,11 @@ describe('customisation', () => {
 
   describe('renderTableRow', () => {
     it('allows a table row to be replaced', () => {
-      const { getByRole, getAllByRole } = render(
+      render(
         <ComboBoxWrapper options={options} columns={columns} mapOption={map} renderTableRow={(props) => <tr data-foo="bar" {...props} />} />,
       );
-      getByRole('combobox').focus();
-      expect(getAllByRole('option')[0]).toHaveAttribute('data-foo', 'bar');
+      screen.getByRole('combobox').focus();
+      expect(screen.getAllByRole('option')[0]).toHaveAttribute('data-foo', 'bar');
     });
 
     it('is called with context and props', () => {
@@ -409,6 +440,7 @@ describe('customisation', () => {
           group: expect.objectContaining({ label: 'Vegetable' }),
           option: expect.objectContaining({ label: 'Potato' }),
           selected: false,
+          [DISPATCH]: expect.any(Function),
         },
         expect.objectContaining({ options: expect.any(Array), test: 'foo', columns: expect.any(Array) }),
       );
@@ -417,11 +449,11 @@ describe('customisation', () => {
 
   describe('renderTableCell', () => {
     it('allows a table cell to be replaced', () => {
-      const { getByRole, getAllByRole } = render(
+      render(
         <ComboBoxWrapper options={options} columns={columns} mapOption={map} renderTableCell={(props) => <td data-foo="bar" {...props} />} />,
       );
-      getByRole('combobox').focus();
-      expect(getAllByRole('option')[0].querySelector('td')).toHaveAttribute('data-foo', 'bar');
+      screen.getByRole('combobox').focus();
+      expect(screen.getAllByRole('option')[0].querySelector('td')).toHaveAttribute('data-foo', 'bar');
     });
 
     it('is called with context and props', () => {
@@ -443,6 +475,7 @@ describe('customisation', () => {
           option: expect.objectContaining({ label: 'Potato' }),
           selected: false,
           column: { label: 'Type', name: 'type' },
+          [DISPATCH]: expect.any(Function),
         },
         expect.objectContaining({ options: expect.any(Array), test: 'foo', columns: expect.any(Array) }),
       );
@@ -451,11 +484,11 @@ describe('customisation', () => {
 
   describe('renderGroupAccessibleLabel', () => {
     it('allows a table cell accessible label to be replaced', () => {
-      const { getByRole, getAllByRole } = render(
+      render(
         <ComboBoxWrapper options={options} columns={columns} mapOption={map} renderGroupAccessibleLabel={(props) => <kbd data-foo="bar" {...props} />} />,
       );
-      userEvent.click(getByRole('combobox'));
-      expect(getAllByRole('option')[0].querySelector('td > kbd')).toHaveAttribute('data-foo', 'bar');
+      userEvent.click(screen.getByRole('combobox'));
+      expect(screen.getAllByRole('option')[0].querySelector('td > kbd')).toHaveAttribute('data-foo', 'bar');
     });
 
     it('is called with context and props', () => {
@@ -464,7 +497,7 @@ describe('customisation', () => {
         <ComboBoxWrapper options={options} columns={columns} mapOption={map} renderGroupAccessibleLabel={spy} test="foo" />
       ));
       expect(spy).toHaveBeenLastCalledWith(
-        { children: 'Vegetable', className: visuallyHiddenClassName },
+        { children: 'Vegetable ', className: visuallyHiddenClassName },
         {
           'aria-autocomplete': 'none',
           'aria-busy': false,
@@ -476,6 +509,7 @@ describe('customisation', () => {
           group: expect.objectContaining({ label: 'Vegetable' }),
           option: expect.objectContaining({ label: 'Potato' }),
           selected: false,
+          [DISPATCH]: expect.any(Function),
         },
         expect.objectContaining({ options: expect.any(Array), test: 'foo', columns: expect.any(Array) }),
       );
@@ -484,11 +518,11 @@ describe('customisation', () => {
 
   describe('renderTableCellColumnAccessibleLabel', () => {
     it('allows a table cell accessible label to be replaced', () => {
-      const { getByRole, getAllByRole } = render(
+      render(
         <ComboBoxWrapper options={options} columns={columns} mapOption={map} renderTableCellColumnAccessibleLabel={(props) => <kbd data-foo="bar" {...props} />} />,
       );
-      userEvent.click(getByRole('combobox'));
-      expect(getAllByRole('option')[0].querySelector('td > kbd')).toHaveAttribute('data-foo', 'bar');
+      userEvent.click(screen.getByRole('combobox'));
+      expect(screen.getAllByRole('option')[0].querySelector('td > kbd')).toHaveAttribute('data-foo', 'bar');
     });
 
     it('is called with context and props', () => {
@@ -497,7 +531,7 @@ describe('customisation', () => {
         <ComboBoxWrapper options={options} columns={columns} mapOption={map} renderTableCellColumnAccessibleLabel={spy} test="foo" />
       ));
       expect(spy).toHaveBeenLastCalledWith(
-        { children: 'Type', className: visuallyHiddenClassName },
+        { children: 'Type ', className: visuallyHiddenClassName },
         {
           'aria-autocomplete': 'none',
           'aria-busy': false,
@@ -510,19 +544,40 @@ describe('customisation', () => {
           option: expect.objectContaining({ label: 'Potato' }),
           selected: false,
           column: { label: 'Type', name: 'type' },
+          [DISPATCH]: expect.any(Function),
         },
         expect.objectContaining({ options: expect.any(Array), test: 'foo', columns: expect.any(Array) }),
+      );
+    });
+
+    it('is has empty children if the column is empty', () => {
+      const testOptions = [
+        { name: 'Apple', type: 'Fruit', colour: '' },
+      ];
+      const spy = jest.fn();
+      render((
+        <ComboBoxWrapper options={testOptions} columns={columns} mapOption={map} renderTableCellColumnAccessibleLabel={spy} test="foo" />
+      ));
+      expect(spy).toHaveBeenCalledWith(
+        { children: null, className: visuallyHiddenClassName },
+        expect.objectContaining({
+          group: expect.objectContaining({ label: 'Fruit' }),
+          option: expect.objectContaining({ label: 'Apple' }),
+          column: { label: 'Colour', name: 'colour' },
+          [DISPATCH]: expect.any(Function),
+        }),
+        expect.anything(),
       );
     });
   });
 
   describe('renderColumnValue', () => {
     it('allows a table cell value to be replaced', () => {
-      const { getByRole, getAllByRole } = render(
+      render(
         <ComboBoxWrapper options={options} columns={columns} mapOption={map} renderColumnValue={(props) => <kbd data-foo="bar" {...props} />} />,
       );
-      getByRole('combobox').focus();
-      expect(getAllByRole('option')[0].querySelector('td > kbd')).toHaveAttribute('data-foo', 'bar');
+      screen.getByRole('combobox').focus();
+      expect(screen.getAllByRole('option')[0].querySelector('td > kbd')).toHaveAttribute('data-foo', 'bar');
     });
 
     it('is called with context and props', () => {
@@ -544,6 +599,7 @@ describe('customisation', () => {
           option: expect.objectContaining({ label: 'Potato' }),
           selected: false,
           column: { label: 'Type', name: 'type' },
+          [DISPATCH]: expect.any(Function),
         },
         expect.objectContaining({ options: expect.any(Array), test: 'foo', columns: expect.any(Array) }),
       );

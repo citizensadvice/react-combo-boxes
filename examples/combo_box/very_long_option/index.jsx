@@ -1,28 +1,16 @@
 import React, { useState } from 'react';
-import { ComboBox, useTokenSearch } from '../../../src';
+import { ComboBox, useTokenSearch, tokenHighlight } from '../../../src';
 
 const options = [
   'Apple',
   'Banana',
-  'Cherry',
-  'Mango',
-  'Ugli fruit',
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
 ];
-
-function renderInput({ 'aria-controls': ariaOwns, ...props }) {
-  return (
-    <input
-      {...props}
-      aria-owns={ariaOwns}
-    />
-  );
-}
 
 export function Example() {
   const [value, setValue] = useState(null);
   const [search, setSearch] = useState(null);
   const filteredOptions = useTokenSearch(search, { options });
-  const [managedFocus, setManagedFocus] = useState(true);
 
   return (
     <>
@@ -39,19 +27,8 @@ export function Example() {
         onValue={setValue}
         onSearch={setSearch}
         options={filteredOptions}
-        renderInput={renderInput}
-        managedFocus={managedFocus}
+        renderValue={tokenHighlight()}
       />
-
-      <label>
-        <input
-          type="checkbox"
-          onChange={({ target: { checked } }) => setManagedFocus(checked)}
-          checked={managedFocus}
-        />
-        {' '}
-        Toggle managed focus
-      </label>
 
       <label htmlFor="output">
         Current value

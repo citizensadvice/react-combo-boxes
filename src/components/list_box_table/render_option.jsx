@@ -21,15 +21,16 @@ export function renderOption({ children: _, ...props }, state, componentProps) {
       role: 'presentation',
       className: makeBEMClass(classPrefix, 'table-cell'),
       key: index,
+      ...column.cellHtml,
       children: (
         <>
           {group && index === 0 && renderGroupAccessibleLabel({
             className: visuallyHiddenClassName,
-            children: group.label,
+            children: `${group.label} `,
           }, state, componentProps)}
           {column.label && renderTableCellColumnAccessibleLabel({
             className: visuallyHiddenClassName,
-            children: column.label,
+            children: option.value[column.name] ? `${column.label} ` : null,
           }, { ...state, column }, componentProps)}
           {renderColumnValue({
             children: option.value[column.name],

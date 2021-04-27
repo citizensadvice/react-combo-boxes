@@ -1,5 +1,144 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`cells with html renders a table with colgroups 1`] = `
+<div>
+  <div
+    aria-busy="false"
+    class="react-combo-boxes-combobox"
+  >
+    <input
+      aria-autocomplete="none"
+      aria-describedby="id_aria_description"
+      aria-expanded="false"
+      aria-labelledby="id-label"
+      aria-owns="id_listbox"
+      autocomplete="off"
+      class="react-combo-boxes-combobox__input"
+      id="id"
+      role="combobox"
+      type="text"
+      value=""
+    />
+    <span
+      class="react-combo-boxes-combobox__down-arrow"
+      id="id_down_arrow"
+    />
+    <span
+      aria-label="Clear"
+      aria-labelledby="id_clear_button id-label id"
+      class="react-combo-boxes-combobox__clear-button"
+      hidden=""
+      id="id_clear_button"
+      role="button"
+      tabindex="-1"
+    />
+    <div
+      class="react-combo-boxes-combobox__listbox react-combo-boxes-combobox__false"
+      hidden=""
+    >
+      <table
+        aria-labelledby="id-label"
+        class="react-combo-boxes-combobox__table"
+        id="id_listbox"
+        role="listbox"
+        tabindex="-1"
+      >
+        <colgroup>
+          <col />
+          <col />
+        </colgroup>
+        <tbody
+          role="presentation"
+        >
+          <tr
+            class="react-combo-boxes-combobox__table-row"
+            id="id_option_apple"
+            role="option"
+            tabindex="-1"
+          >
+            <td
+              class="foo"
+              role="presentation"
+            >
+              Apple
+            </td>
+            <td
+              class="bar"
+              role="presentation"
+            >
+              Fruit
+            </td>
+          </tr>
+          <tr
+            class="react-combo-boxes-combobox__table-row"
+            id="id_option_banana"
+            role="option"
+            tabindex="-1"
+          >
+            <td
+              class="foo"
+              role="presentation"
+            >
+              Banana
+            </td>
+            <td
+              class="bar"
+              role="presentation"
+            >
+              Fruit
+            </td>
+          </tr>
+          <tr
+            class="react-combo-boxes-combobox__table-row"
+            id="id_option_potato"
+            role="option"
+            tabindex="-1"
+          >
+            <td
+              class="foo"
+              role="presentation"
+            >
+              Potato
+            </td>
+            <td
+              class="bar"
+              role="presentation"
+            >
+              Vegetable
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+      id="id_aria_description"
+    >
+      When results are available use up and down arrows to review and enter to select
+    </div>
+    <div
+      class="react-combo-boxes-combobox__not-found"
+      hidden=""
+      id="id_not_found"
+    />
+    <div
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+    >
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+    </div>
+  </div>
+</div>
+`;
+
 exports[`columns as names only renders a table as the list box 1`] = `
 <div>
   <div
@@ -8,10 +147,10 @@ exports[`columns as names only renders a table as the list box 1`] = `
   >
     <input
       aria-autocomplete="none"
-      aria-controls="id_listbox"
       aria-describedby="id_aria_description"
       aria-expanded="false"
       aria-labelledby="id-label"
+      aria-owns="id_listbox"
       autocomplete="off"
       class="react-combo-boxes-combobox__input"
       id="id"
@@ -133,17 +272,28 @@ exports[`columns as names only renders a table as the list box 1`] = `
     <div
       class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
       id="id_aria_description"
-    />
+    >
+      When results are available use up and down arrows to review and enter to select
+    </div>
     <div
       class="react-combo-boxes-combobox__not-found"
       hidden=""
       id="id_not_found"
     />
     <div
-      aria-atomic="true"
-      aria-live="polite"
       class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-    />
+    >
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+    </div>
   </div>
 </div>
 `;
@@ -156,10 +306,10 @@ exports[`columns with headers renders a table with headers 1`] = `
   >
     <input
       aria-autocomplete="none"
-      aria-controls="id_listbox"
       aria-describedby="id_aria_description"
       aria-expanded="false"
       aria-labelledby="id-label"
+      aria-owns="id_listbox"
       autocomplete="off"
       class="react-combo-boxes-combobox__input"
       id="id"
@@ -231,7 +381,7 @@ exports[`columns with headers renders a table with headers 1`] = `
               <span
                 class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
-                Name
+                Name 
               </span>
               Apple
             </td>
@@ -242,7 +392,7 @@ exports[`columns with headers renders a table with headers 1`] = `
               <span
                 class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
-                Type
+                Type 
               </span>
               Fruit
             </td>
@@ -260,7 +410,7 @@ exports[`columns with headers renders a table with headers 1`] = `
               <span
                 class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
-                Name
+                Name 
               </span>
               Banana
             </td>
@@ -271,7 +421,7 @@ exports[`columns with headers renders a table with headers 1`] = `
               <span
                 class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
-                Type
+                Type 
               </span>
               Fruit
             </td>
@@ -289,7 +439,7 @@ exports[`columns with headers renders a table with headers 1`] = `
               <span
                 class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
-                Name
+                Name 
               </span>
               Potato
             </td>
@@ -300,7 +450,7 @@ exports[`columns with headers renders a table with headers 1`] = `
               <span
                 class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
-                Type
+                Type 
               </span>
               Vegetable
             </td>
@@ -311,17 +461,28 @@ exports[`columns with headers renders a table with headers 1`] = `
     <div
       class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
       id="id_aria_description"
-    />
+    >
+      When results are available use up and down arrows to review and enter to select
+    </div>
     <div
       class="react-combo-boxes-combobox__not-found"
       hidden=""
       id="id_not_found"
     />
     <div
-      aria-atomic="true"
-      aria-live="polite"
       class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-    />
+    >
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+    </div>
   </div>
 </div>
 `;
@@ -334,10 +495,10 @@ exports[`columns with html renders a table with colgroups 1`] = `
   >
     <input
       aria-autocomplete="none"
-      aria-controls="id_listbox"
       aria-describedby="id_aria_description"
       aria-expanded="false"
       aria-labelledby="id-label"
+      aria-owns="id_listbox"
       autocomplete="off"
       class="react-combo-boxes-combobox__input"
       id="id"
@@ -443,17 +604,28 @@ exports[`columns with html renders a table with colgroups 1`] = `
     <div
       class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
       id="id_aria_description"
-    />
+    >
+      When results are available use up and down arrows to review and enter to select
+    </div>
     <div
       class="react-combo-boxes-combobox__not-found"
       hidden=""
       id="id_not_found"
     />
     <div
-      aria-atomic="true"
-      aria-live="polite"
       class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-    />
+    >
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+    </div>
   </div>
 </div>
 `;
@@ -466,10 +638,10 @@ exports[`grouped renders a table with groups 1`] = `
   >
     <input
       aria-autocomplete="none"
-      aria-controls="id_listbox"
       aria-describedby="id_aria_description"
       aria-expanded="false"
       aria-labelledby="id-label"
+      aria-owns="id_listbox"
       autocomplete="off"
       class="react-combo-boxes-combobox__input"
       id="id"
@@ -532,7 +704,7 @@ exports[`grouped renders a table with groups 1`] = `
               <span
                 class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
-                Fruit
+                Fruit 
               </span>
               Apple
             </td>
@@ -556,7 +728,7 @@ exports[`grouped renders a table with groups 1`] = `
               <span
                 class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
-                Fruit
+                Fruit 
               </span>
               Banana
             </td>
@@ -591,7 +763,7 @@ exports[`grouped renders a table with groups 1`] = `
               <span
                 class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
-                Vegetable
+                Vegetable 
               </span>
               Potato
             </td>
@@ -608,17 +780,28 @@ exports[`grouped renders a table with groups 1`] = `
     <div
       class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
       id="id_aria_description"
-    />
+    >
+      When results are available use up and down arrows to review and enter to select
+    </div>
     <div
       class="react-combo-boxes-combobox__not-found"
       hidden=""
       id="id_not_found"
     />
     <div
-      aria-atomic="true"
-      aria-live="polite"
       class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-    />
+    >
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+    </div>
   </div>
 </div>
 `;

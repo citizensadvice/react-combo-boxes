@@ -1,47 +1,81 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
 
+const debouceMilliseconds = 1400; // https://github.com/alphagov/accessible-autocomplete/blob/935f0d43aea1c606e6b38985e3fe7049ddbe98be/src/status.js#L18
+
+function reducer({ swap }, message) {
+  return { swap: !swap, message };
+}
+
 export function AriaLiveMessage({
-  hidden,
-  componentProps,
-  componentProps: {
-    options,
-    notFoundMessage,
-    foundOptionsMessage,
-    visuallyHiddenClassName,
-    renderAriaLiveMessage,
-  },
-  componentState,
+  showListBox,
+  showNotFound,
+  options,
+  focusedOption,
+  visuallyHiddenClassName,
+  notFoundMessage,
+  foundOptionsMessage,
+  selectedOptionMessage,
 }) {
-  const [message, setMessage] = useState(null);
+  const [{ message, swap }, dispatch] = useReducer(reducer, '');
 
   useEffect(() => {
-    if (hidden) {
-      return undefined;
+    let newMessage = '';
+
+    if (showNotFound) {
+      newMessage = notFoundMessage?.();
+    } else if (showListBox) {
+      newMessage = foundOptionsMessage?.(options);
+      if (focusedOption) {
+        newMessage += ` ${selectedOptionMessage?.(focusedOption, options)}`;
+      }
     }
 
-    const timeout = setTimeout(() => {
-      setMessage(options.length ? foundOptionsMessage(options) : notFoundMessage);
-    }, 500);
+    const timeout = setTimeout(() => dispatch(newMessage), debouceMilliseconds);
 
     return () => clearTimeout(timeout);
-  }, [options, hidden, foundOptionsMessage, notFoundMessage]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [options, focusedOption, options, showNotFound, showListBox]);
 
-  return renderAriaLiveMessage({
-    'aria-atomic': 'true',
-    'aria-live': 'polite',
-    className: visuallyHiddenClassName,
-    children: message,
-  }, componentState, componentProps);
+  return (
+    // Alternate the message between two status
+    // Apparently this is better https://github.com/alphagov/accessible-autocomplete/commit/309836e12d8cfc0eea36d57e11ebf20fb885b447
+    <div className={visuallyHiddenClassName}>
+      <div
+        role="status"
+        aria-atomic="true"
+        aria-live="polite"
+      >
+        {!swap ? message : '' }
+      </div>
+      <div
+        role="status"
+        aria-atomic="true"
+        aria-live="polite"
+      >
+        {swap ? message : '' }
+      </div>
+    </div>
+  );
 }
 
 AriaLiveMessage.propTypes = {
-  hidden: PropTypes.bool.isRequired,
-  componentProps: PropTypes.shape({
-    options: PropTypes.array.isRequired,
-    notFoundMessage: PropTypes.node,
-    foundOptionsMessage: PropTypes.func.isRequired,
-    visuallyHiddenClassName: PropTypes.string.isRequired,
-    renderAriaLiveMessage: PropTypes.func.isRequired,
-  }).isRequired,
+  showListBox: PropTypes.bool.isRequired,
+  showNotFound: PropTypes.bool.isRequired,
+  options: PropTypes.array,
+  focusedOption: PropTypes.shape({
+    label: PropTypes.string,
+  }),
+  visuallyHiddenClassName: PropTypes.string.isRequired,
+  notFoundMessage: PropTypes.func,
+  foundOptionsMessage: PropTypes.func,
+  selectedOptionMessage: PropTypes.func,
+};
+
+AriaLiveMessage.defaultProps = {
+  options: null,
+  focusedOption: null,
+  notFoundMessage: null,
+  foundOptionsMessage: null,
+  selectedOptionMessage: null,
 };

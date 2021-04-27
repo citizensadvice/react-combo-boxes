@@ -28,9 +28,6 @@ export function useAsyncSearch(
         results = await searcher(query, { signal: cancel.signal });
       } catch (e) {
         if (e instanceof DOMException && e.name === 'AbortError') {
-          if (!stop) {
-            dispatch({ busy: false, error: null });
-          }
           return;
         }
 

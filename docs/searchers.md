@@ -24,7 +24,8 @@ const options = useMemo(() => (
   onSearch={setSearch}
 />
 ```
-## `useAsyncSearch(term, { searcher, debounce, catchErrors })`
+
+## `useAsyncSearch(term: string, { searcher: Searcher, debounce: number, catchErrors: boolean = false })`
 
 This wraps a search function.  It supports debouncing, catching errors and cancelling requests.
 
@@ -36,10 +37,10 @@ Returns an array of `[results: any, busy: boolean, error: Error]`
 
 Options:
 
-- `searcher` (`async function (search: string, { signal }: { signal: AbortSignal }): any`) **Required**, a function to search.
+- `searcher` (`async (search: string, { signal }: { signal: AbortSignal }) => any`) **Required**, a function to search.
   First argument is the query.  Also passes the signal of an `AbortController` for cancelling requests.
-- `debounce` (`Number`) milliseconds to debounce the search 
-- `catchErrors` (`Boolean`) if true, catch errors and return them as the third array argument.
+- `debounce` (`number`) milliseconds to debounce the search 
+- `catchErrors` (`boolean`) if true, catch errors and return them as the third array argument.
 
 Example:
 
@@ -75,8 +76,8 @@ const [options, busy, error] = useSearch(search, { searcher, catchErrors: true }
 const filteredOptions = useTokenSearch(query, { options });
 ```
 
-Searches an array of options.  The options are split into tokenised into words.
-Any options containing a word starting with the search term will be returned.
+Searches an array of options.  The options are split into words.  When searching
+any options containing a word starting with the search term will be returned.
 
 By default it will search either strings, or `label` property if the options are objects.
 

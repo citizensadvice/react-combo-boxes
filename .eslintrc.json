@@ -1,5 +1,5 @@
 {
-  "parser": "babel-eslint",
+  "parser": "@babel/eslint-parser",
   "extends": [
     "airbnb",
     "plugin:jest/recommended"
@@ -17,6 +17,7 @@
     "import/prefer-default-export": "off",
     "import/no-default-export": "error",
     "object-curly-newline": ["error", { "consistent": true }],
+    "no-restricted-syntax": "off",
     "no-unused-vars": ["error", { "vars": "all", "args": "after-used", "varsIgnorePattern": "^_\\d*$", "argsIgnorePattern": "^_\\d*$" }],
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "error",
@@ -47,7 +48,6 @@
         "testing-library"
       ],
       "extends": [
-        "plugin:testing-library/recommended",
         "plugin:testing-library/react",
         "plugin:jest-dom/recommended"
       ],

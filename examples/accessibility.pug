@@ -1,0 +1,8 @@
+extends layout.pug
+
+block variables
+  - const title = 'Accessibility'
+  - const path = '~/accessibility.pug'
+
+block main
+  include:markdown ../docs/accessibility.md

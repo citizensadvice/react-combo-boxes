@@ -8,10 +8,10 @@ exports[`onSearch updating options updates the displayed options 1`] = `
   >
     <input
       aria-autocomplete="none"
-      aria-controls="id_listbox"
       aria-describedby="id_aria_description"
       aria-expanded="true"
       aria-labelledby="id-label"
+      aria-owns="id_listbox"
       autocomplete="off"
       class="react-combo-boxes-combobox__input"
       id="id"
@@ -68,7 +68,7 @@ exports[`onSearch updating options updates the displayed options 1`] = `
       class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
       id="id_aria_description"
     >
-      3 options found
+      When results are available use up and down arrows to review and enter to select
     </div>
     <div
       class="react-combo-boxes-combobox__not-found"
@@ -76,10 +76,19 @@ exports[`onSearch updating options updates the displayed options 1`] = `
       id="id_not_found"
     />
     <div
-      aria-atomic="true"
-      aria-live="polite"
       class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-    />
+    >
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+    </div>
   </div>
 </div>
 `;
@@ -92,10 +101,10 @@ exports[`options as array of objects disabled sets the aria-disabled attribute 1
   >
     <input
       aria-autocomplete="none"
-      aria-controls="id_listbox"
       aria-describedby="id_aria_description"
       aria-expanded="true"
       aria-labelledby="id-label"
+      aria-owns="id_listbox"
       autocomplete="off"
       class="react-combo-boxes-combobox__input"
       id="id"
@@ -145,7 +154,7 @@ exports[`options as array of objects disabled sets the aria-disabled attribute 1
       class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
       id="id_aria_description"
     >
-      2 options found
+      When results are available use up and down arrows to review and enter to select
     </div>
     <div
       class="react-combo-boxes-combobox__not-found"
@@ -153,10 +162,19 @@ exports[`options as array of objects disabled sets the aria-disabled attribute 1
       id="id_not_found"
     />
     <div
-      aria-atomic="true"
-      aria-live="polite"
       class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-    />
+    >
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+    </div>
   </div>
 </div>
 `;
@@ -169,10 +187,10 @@ exports[`options as array of objects group renders grouped options 1`] = `
   >
     <input
       aria-autocomplete="none"
-      aria-controls="id_listbox"
       aria-describedby="id_aria_description"
       aria-expanded="false"
       aria-labelledby="id-label"
+      aria-owns="id_listbox"
       autocomplete="off"
       class="react-combo-boxes-combobox__input"
       id="id"
@@ -224,7 +242,7 @@ exports[`options as array of objects group renders grouped options 1`] = `
         <span
           class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
         >
-          Citrus
+          Citrus 
         </span>
         Orange
       </li>
@@ -237,7 +255,7 @@ exports[`options as array of objects group renders grouped options 1`] = `
         <span
           class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
         >
-          Citrus
+          Citrus 
         </span>
         Lemon
       </li>
@@ -256,7 +274,7 @@ exports[`options as array of objects group renders grouped options 1`] = `
         <span
           class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
         >
-          Berry
+          Berry 
         </span>
         Raspberry
       </li>
@@ -269,7 +287,7 @@ exports[`options as array of objects group renders grouped options 1`] = `
         <span
           class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
         >
-          Berry
+          Berry 
         </span>
         Strawberry
       </li>
@@ -277,17 +295,28 @@ exports[`options as array of objects group renders grouped options 1`] = `
     <div
       class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
       id="id_aria_description"
-    />
+    >
+      When results are available use up and down arrows to review and enter to select
+    </div>
     <div
       class="react-combo-boxes-combobox__not-found"
       hidden=""
       id="id_not_found"
     />
     <div
-      aria-atomic="true"
-      aria-live="polite"
       class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-    />
+    >
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+    </div>
   </div>
 </div>
 `;
@@ -300,10 +329,10 @@ exports[`options as array of objects label renders a closed combo box 1`] = `
   >
     <input
       aria-autocomplete="none"
-      aria-controls="id_listbox"
       aria-describedby="id_aria_description"
       aria-expanded="false"
       aria-labelledby="id-label"
+      aria-owns="id_listbox"
       autocomplete="off"
       class="react-combo-boxes-combobox__input"
       id="id"
@@ -360,17 +389,28 @@ exports[`options as array of objects label renders a closed combo box 1`] = `
     <div
       class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
       id="id_aria_description"
-    />
+    >
+      When results are available use up and down arrows to review and enter to select
+    </div>
     <div
       class="react-combo-boxes-combobox__not-found"
       hidden=""
       id="id_not_found"
     />
     <div
-      aria-atomic="true"
-      aria-live="polite"
       class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-    />
+    >
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+    </div>
   </div>
 </div>
 `;
@@ -383,10 +423,10 @@ exports[`options as array of objects missing label treats as a blank string 1`] 
   >
     <input
       aria-autocomplete="none"
-      aria-controls="id_listbox"
       aria-describedby="id_aria_description"
       aria-expanded="false"
       aria-labelledby="id-label"
+      aria-owns="id_listbox"
       autocomplete="off"
       class="react-combo-boxes-combobox__input"
       id="id"
@@ -426,17 +466,28 @@ exports[`options as array of objects missing label treats as a blank string 1`] 
     <div
       class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
       id="id_aria_description"
-    />
+    >
+      When results are available use up and down arrows to review and enter to select
+    </div>
     <div
       class="react-combo-boxes-combobox__not-found"
       hidden=""
       id="id_not_found"
     />
     <div
-      aria-atomic="true"
-      aria-live="polite"
       class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-    />
+    >
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+    </div>
   </div>
 </div>
 `;
@@ -449,10 +500,10 @@ exports[`options options as array of numbers renders a closed combo box 1`] = `
   >
     <input
       aria-autocomplete="none"
-      aria-controls="id_listbox"
       aria-describedby="id_aria_description"
       aria-expanded="false"
       aria-labelledby="id-label"
+      aria-owns="id_listbox"
       autocomplete="off"
       class="react-combo-boxes-combobox__input"
       id="id"
@@ -509,17 +560,28 @@ exports[`options options as array of numbers renders a closed combo box 1`] = `
     <div
       class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
       id="id_aria_description"
-    />
+    >
+      When results are available use up and down arrows to review and enter to select
+    </div>
     <div
       class="react-combo-boxes-combobox__not-found"
       hidden=""
       id="id_not_found"
     />
     <div
-      aria-atomic="true"
-      aria-live="polite"
       class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-    />
+    >
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+    </div>
   </div>
 </div>
 `;
@@ -532,10 +594,10 @@ exports[`options options as array of strings renders a closed combo box 1`] = `
   >
     <input
       aria-autocomplete="none"
-      aria-controls="id_listbox"
       aria-describedby="id_aria_description"
       aria-expanded="false"
       aria-labelledby="id-label"
+      aria-owns="id_listbox"
       autocomplete="off"
       class="react-combo-boxes-combobox__input"
       id="id"
@@ -592,17 +654,28 @@ exports[`options options as array of strings renders a closed combo box 1`] = `
     <div
       class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
       id="id_aria_description"
-    />
+    >
+      When results are available use up and down arrows to review and enter to select
+    </div>
     <div
       class="react-combo-boxes-combobox__not-found"
       hidden=""
       id="id_not_found"
     />
     <div
-      aria-atomic="true"
-      aria-live="polite"
       class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-    />
+    >
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+    </div>
   </div>
 </div>
 `;
@@ -615,10 +688,10 @@ exports[`options options as null renders an option with an empty string 1`] = `
   >
     <input
       aria-autocomplete="none"
-      aria-controls="id_listbox"
       aria-describedby="id_aria_description"
       aria-expanded="false"
       aria-labelledby="id-label"
+      aria-owns="id_listbox"
       autocomplete="off"
       class="react-combo-boxes-combobox__input"
       id="id"
@@ -668,17 +741,28 @@ exports[`options options as null renders an option with an empty string 1`] = `
     <div
       class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
       id="id_aria_description"
-    />
+    >
+      When results are available use up and down arrows to review and enter to select
+    </div>
     <div
       class="react-combo-boxes-combobox__not-found"
       hidden=""
       id="id_not_found"
     />
     <div
-      aria-atomic="true"
-      aria-live="polite"
       class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-    />
+    >
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+    </div>
   </div>
 </div>
 `;
@@ -691,10 +775,10 @@ exports[`options options as undefined renders an option with an empty string 1`]
   >
     <input
       aria-autocomplete="none"
-      aria-controls="id_listbox"
       aria-describedby="id_aria_description"
       aria-expanded="false"
       aria-labelledby="id-label"
+      aria-owns="id_listbox"
       autocomplete="off"
       class="react-combo-boxes-combobox__input"
       id="id"
@@ -744,17 +828,28 @@ exports[`options options as undefined renders an option with an empty string 1`]
     <div
       class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
       id="id_aria_description"
-    />
+    >
+      When results are available use up and down arrows to review and enter to select
+    </div>
     <div
       class="react-combo-boxes-combobox__not-found"
       hidden=""
       id="id_not_found"
     />
     <div
-      aria-atomic="true"
-      aria-live="polite"
       class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-    />
+    >
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      />
+    </div>
   </div>
 </div>
 `;

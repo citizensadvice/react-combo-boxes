@@ -28,7 +28,8 @@ export const DropDownTable = forwardRef(({ columns: rawColumns, ...props }, ref)
       columns={columns}
       renderValue={renderNothing}
       renderListBox={renderListBox}
-      renderTableWrapper={props.renderListBox}
+      renderOption={renderOption}
+      renderGroupLabel={renderGroupLabel}
     />
   );
 });
@@ -42,9 +43,7 @@ DropDownTable.propTypes = {
       html: PropTypes.object,
     }),
   ])).isRequired,
-  renderListBox: PropTypes.func,
-  renderGroupLabel: PropTypes.func,
-  renderOption: PropTypes.func,
+  renderTableWrapper: PropTypes.func,
   renderTable: PropTypes.func,
   renderTableHeaderCell: PropTypes.func,
   renderTableGroupRow: PropTypes.func,
@@ -56,9 +55,7 @@ DropDownTable.propTypes = {
 };
 
 DropDownTable.defaultProps = {
-  renderListBox: (props) => <div {...props} />,
-  renderGroupLabel,
-  renderOption,
+  renderTableWrapper: (props) => <div {...props} />,
   renderTable: (props) => <table {...props} />,
   renderTableHeaderCell: (props) => <th {...props} />,
   renderTableGroupRow: (props) => <tr {...props} />,

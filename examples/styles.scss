@@ -133,6 +133,11 @@ label,
   font-weight: bold;
 }
 
+input[type=text] {
+  width: 30em;
+  max-width: 100%;
+}
+
 fieldset {
   border: 1px solid #ddd;
   display: flex;
@@ -140,6 +145,15 @@ fieldset {
   label {
     margin-right: 1.5em;
   }
+}
+
+kbd {
+  font-family: monospace;
+  border: 1px solid #ddd;
+  box-shadow: inset 0 -1px 0 #ddd;
+  border-radius: 0.3em;
+  display: inline-block;
+  padding: 0.2em 0.5em;
 }
 
 [data-react-example] {

@@ -29,7 +29,7 @@ export function Example() {
         onValue={setValue}
         onSearch={setSearch}
         options={filteredOptions}
-        renderValue={tokenHighlight}
+        renderValue={tokenHighlight()}
       />
 
       <label htmlFor="output">

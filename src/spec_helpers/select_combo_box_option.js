@@ -1,7 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { waitFor, findByRole, getByRole, queryAllByRole, isInaccessible, prettyDOM, act } from '@testing-library/react';
+import { waitFor, findByRole, getByRole, getAllByRole, queryByRole, queryAllByRole, isInaccessible, prettyDOM } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { computeAccessibleDescription } from 'dom-accessibility-api';
 
 function options(name) {
   if (typeof name === 'string' || name instanceof RegExp) {
@@ -41,26 +40,37 @@ function options(name) {
  */
 export async function selectComboBoxOption({ from, searchFor, select, container = document.body }) {
   const comboBox = await findByRole(container, 'combobox', options(from));
-
-  userEvent.click(comboBox);
-
-  if (searchFor) {
-    userEvent.clear(comboBox);
-    userEvent.type(comboBox, searchFor);
+  // Suport ARIA 1.1
+  let textBox = comboBox;
+  if (!textBox.matches('input')) {
+    const ids = (comboBox.getAttribute('aria-owns') || '').split(/\s+/).filter(Boolean);
+    // Technically the textbox can be child, or owned by the combobox
+    // If it is a readonly combobox there will be no textbox
+    textBox = queryByRole(comboBox, 'textbox') || queryAllByRole(container, 'textbox').find((id) => ids.include(id)) || comboBox;
   }
 
-  // If the box contains previous or default options then allow the update to complete
-  await act(async () => {});
+  userEvent.click(textBox);
+
+  if (typeof searchFor === 'string') {
+    userEvent.clear(textBox);
+    if (searchFor) {
+      await userEvent.type(textBox, searchFor);
+    }
+  }
 
   // Wait for the list box and option to appear
   let listBox;
   let option;
   try {
     await waitFor(() => {
-      const ids = (comboBox.getAttribute('aria-controls') || '').split(/\s+/).filter(Boolean);
-      listBox = document.querySelector(ids.map((id) => `[role="listbox"]#${id}`).join(','));
-      expect(listBox).toBeInstanceOf(HTMLElement);
-      expect(listBox).toBeVisible();
+      // Support ARIA 1.0, 1.1 and 1.2
+      const ids = [
+        comboBox.getAttribute('aria-controls'), // ARIA 1.2
+        comboBox.getAttribute('aria-owns'), // ARIA 1.0 / 1.1
+        textBox.getAttribute('aria-controls'), // ARIA 1.1
+      ].join(' ').split(/\s+/).filter(Boolean);
+      listBox = getAllByRole(container, 'listbox').find((listbox) => ids.includes(listbox.id));
+      expect(listBox).toBeInTheDocument();
       option = getByRole(listBox, 'option', options(select));
     });
   } catch (e) {
@@ -71,11 +81,10 @@ export async function selectComboBoxOption({ from, searchFor, select, container 
     if (!listBox || isInaccessible(listBox)) {
       let message = 'Unable to find visible listbox for combobox';
       message += `\n\n${prettyDOM(comboBox)}`;
-      message += `\n\nwith description:\n\n"${computeAccessibleDescription(comboBox).trim()}"`;
       message += '\n\n--------------------------------------------------';
 
       const listBoxes = queryAllByRole(document.body, 'listbox', { hidden: true });
-      if (!listBox) {
+      if (!listBoxes) {
         message += `\n\nNo elements with the role "listbox" found in document:\n\n${prettyDOM(document.body)}`;
       } else {
         message += '\n\nHere are the found elements with the role "listbox":';
@@ -90,7 +99,6 @@ export async function selectComboBoxOption({ from, searchFor, select, container 
     } catch (error) {
       error.message += '\n\n--------------------------------------------------';
       error.message += `\n\nFor combobox:\n\n${prettyDOM(comboBox)}`;
-      error.message += `\n\nwith description:\n\n"${computeAccessibleDescription(comboBox).trim()}"`;
       throw error;
     }
   }

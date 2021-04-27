@@ -1,5 +1,15 @@
 import React, { useState } from 'react';
-import { ComboBoxTable, useTokenSearch, tokenHighlighter, passThroughHighlighter, highlightValue, useConfineListBox } from '../../../src';
+import {
+  ComboBoxTable,
+  useTokenSearch,
+  tokenHighlighter,
+  passThroughHighlighter,
+  highlightValue,
+  useLayoutListBox,
+  layoutMaxWidth,
+  layoutMaxHeight,
+  layoutColumnsAlignLeft,
+} from '../../../src';
 import cats from '../../data/cats.json';
 
 const columns = ['breed', 'country', 'origin', 'coatLength', 'pattern'];
@@ -24,7 +34,7 @@ export function Example() {
   const [value, setValue] = useState(null);
   const [search, setSearch] = useState(null);
   const filteredOptions = useTokenSearch(search, { options: cats, index });
-  const [onLayoutListBox] = useConfineListBox();
+  const onLayoutListBox = useLayoutListBox(layoutMaxWidth, layoutMaxHeight, layoutColumnsAlignLeft);
 
   return (
     <>

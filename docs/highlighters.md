@@ -2,9 +2,9 @@
 
 Highlighters can be used to highlight which parts of the search results match the search term.
 
-To use the `renderValue` prop should be replaced with an appropriate highlight function for the search type.
-
 ```js
+// Example that will highlight a token search
+
 const [options, onSearch] = useTokenSearch(initialOptions);
 
 <ComboBox
@@ -34,6 +34,8 @@ For example elastic search will return highlighted strings that look like:
 
 You need to pass the start and end delimiters to the highlight.
 
+Example: `foo <em>bar</em>` => "foo **bar**"
+
 ```js
 <ComboBox
   {...props}
@@ -45,11 +47,15 @@ You need to pass the start and end delimiters to the highlight.
 
 This passes the input through without highlighting anything.
 
+This has no practical use.
+
 ## `prefixHighlight`
 
 Highlights where the search term appears at the start of the string.
 
 Left trims and matches case insensitively.
+
+Example: highlight "foo" in `foo bar foo` => "**foo** bar foo"
 
 ## `substringHighlight`
 
@@ -59,15 +65,19 @@ Left trims and matches case insensitively.
 
 Useful for highlighting a database ilike query.
 
+Example: highlight "foo" in `barfoo` => "bar**foo**"
+
 ## `tokenHighlight`
 
 Highlights matching tokens from a token search.
+
+Example: highlight "foo" in `barfoo foobar` => "barfoo **foo**bar"
 
 ## Custom highlighters and `highlightValue`
 
 To create your own highlighter you need to create a method with the following signature:
 
-`function (term: String, query: String, options: Object, state, props): Array<String|Array<String>>,`
+`(term: string, query: string, options: Any, state: Object, props: Object): Array<string | Array<string>>,`
 
 - `term` The term to highlight
 - `query` The search query to highlight with
@@ -88,7 +98,7 @@ You can pass this highlighter to `highlightValue`.
 />
 ```
 
-You can compose a higlighter using the existing highlighters.  They are:
+You can compose a highlighter using the existing highlighters.  They are:
 
 - `delimitedHighlighter`
 - `passThroughHighlighter`
@@ -98,6 +108,8 @@ You can compose a higlighter using the existing highlighters.  They are:
 - `tokenHighlighter`
 
 ```javascript
+import { tokenHighlighter, passThoughHighlighter } from '@citizensadvice/react-combo-boxes';
+
 function highlight(term, search, options, state, props) {
   // If the term is foo highlight
   if (term === 'foo') {

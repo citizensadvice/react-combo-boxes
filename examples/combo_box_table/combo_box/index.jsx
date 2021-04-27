@@ -1,5 +1,15 @@
 import React, { useState } from 'react';
-import { ComboBoxTable, useTokenSearch, tokenHighlighter, passThroughHighlighter, highlightValue, useConfineListBox } from '../../../src';
+import {
+  ComboBoxTable,
+  useTokenSearch,
+  tokenHighlighter,
+  passThroughHighlighter,
+  highlightValue,
+  useLayoutListBox,
+  layoutMaxWidth,
+  layoutMaxHeight,
+  layoutColumnsAlignLeft,
+} from '../../../src';
 import cats from '../../data/cats.json';
 
 const columns = ['breed', 'country', 'origin', 'bodyType', 'coatLength', 'pattern'];
@@ -20,7 +30,8 @@ export function Example() {
   const [value, setValue] = useState(null);
   const [search, setSearch] = useState(null);
   const filteredOptions = useTokenSearch(search, { options: cats, index: mapOption });
-  const [onLayoutListBox] = useConfineListBox();
+
+  const onLayoutListBox = useLayoutListBox(layoutMaxWidth, layoutMaxHeight, layoutColumnsAlignLeft);
 
   return (
     <>
@@ -36,11 +47,11 @@ export function Example() {
         value={value}
         onValue={setValue}
         onSearch={setSearch}
+        onLayoutListBox={onLayoutListBox}
         options={filteredOptions}
         columns={columns}
         renderColumnValue={highlightValue(highlighter)}
         mapOption={mapOption}
-        onLayoutListBox={onLayoutListBox}
       />
 
       <label htmlFor="output">

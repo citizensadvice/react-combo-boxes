@@ -5,16 +5,32 @@
 .react-combo-boxes-dropdown {
   @include react-combo-boxes-listbox;
 
+  box-sizing: border-box;
   width: max-content;
-  position: relative;
   max-width: 100%;
+  position: relative;
+}
+
+.react-combo-boxes-dropdown__listbox-wrapper {
+  height: 0;
+  position: relative;
+  margin-top: -$react-combo-boxes-focus-border-width;
 }
 
 .react-combo-boxes-dropdown__listbox {
   margin-top: -$react-combo-boxes-focus-border-width;
+  position: static;
+
+  &[hidden] {
+    height: 0;
+    visibility: hidden;
+    display: block;
+  }
 }
 
 .react-combo-boxes-dropdown__combobox {
+  box-sizing: border-box;
+  width: 100%;
   outline: none;
   border: none;
   padding: ($react-combo-boxes-padding-y * 2) $react-combo-boxes-padding-x;
@@ -22,6 +38,7 @@
   cursor: pointer;
   border-radius: 1px;
   display: inline-block;
+  vertical-align: bottom;
   position: relative;
   white-space: nowrap;
   max-width: 100%;

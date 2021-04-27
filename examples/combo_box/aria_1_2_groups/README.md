@@ -2,7 +2,7 @@
 
 A combo box modified to use ARIA 1.2 groups.
 
-The group role is not allowed as a child of a listbox in ARIA 1.1 and consequently is not supported in the majority of screen readers.
+The _group_ role is not allowed as a child of a listbox in ARIA 1.0 or ARIA 1.1 and consequently is not supported in the majority of screen readers.
 
 In [ARIA 1.2][1] the group role is now allowed.
 

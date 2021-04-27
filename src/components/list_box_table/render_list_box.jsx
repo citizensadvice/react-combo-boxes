@@ -23,8 +23,8 @@ export function renderListBox({ children, hidden, ref, ...props }, componentStat
       children: (
         <>
           <colgroup>
-            {columns.map(({ name, html }) => (
-              <col key={name} {...html} />
+            {columns.map(({ name, colHtml }) => (
+              <col key={name} {...colHtml} />
             ))}
           </colgroup>
           {hasHeader && (

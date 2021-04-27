@@ -36,8 +36,9 @@ export function scrollIntoView(element) {
   const parentTop = parent.scrollTop;
   const parentBottom = parentTop + parent.clientHeight;
 
-  if (parentTop > elementTop) {
-    const scrollPaddingTop = parseFloat(window.getComputedStyle(parent).scrollPaddingTop) || 0;
+  const scrollPaddingTop = parseFloat(window.getComputedStyle(parent).scrollPaddingTop) || 0;
+
+  if (parentTop - scrollPaddingTop > elementTop) {
     parent.scrollTop = elementTop - scrollPaddingTop;
   } else if (parentBottom < elementBottom) {
     parent.scrollTop = elementBottom - (parentBottom - parentTop);
