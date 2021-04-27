@@ -5,14 +5,14 @@
 
 <span class="token keyword">import</span> <span class="token punctuation">{</span> useLayoutListBox<span class="token punctuation">,</span> layoutMaxWidth<span class="token punctuation">,</span> layoutMaxHeight <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'@citizensadvice/react-combo-boxes'</span><span class="token punctuation">;</span>
 
-<span class="token keyword">const</span> onDisplayListBox <span class="token operator">=</span> <span class="token function">useLayoutListBox</span><span class="token punctuation">(</span>
+<span class="token keyword">const</span> onLayoutListBox <span class="token operator">=</span> <span class="token function">useLayoutListBox</span><span class="token punctuation">(</span>
   layoutMaxHeight<span class="token punctuation">,</span>
   <span class="token punctuation">(</span><span class="token parameter">listbox</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token function">layoutMaxWidth</span><span class="token punctuation">(</span>listbox<span class="token punctuation">,</span> <span class="token punctuation">{</span> contain<span class="token operator">:</span> <span class="token string">'.parent-container'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
 <span class="token punctuation">)</span><span class="token punctuation">;</span>
 
 <span class="token operator">&lt;</span>ComboBox
   <span class="token punctuation">{</span><span class="token operator">...</span>rest<span class="token punctuation">}</span>
-  onLayoutListBox<span class="token operator">=</span><span class="token punctuation">{</span>onDisplayListBox<span class="token punctuation">}</span>
+  onLayoutListBox<span class="token operator">=</span><span class="token punctuation">{</span>onLayoutListBox<span class="token punctuation">}</span>
 <span class="token operator">/</span><span class="token operator">></span>
 </code></pre>
 <h2 id="uselayoutlistbox"><code>useLayoutListBox</code></h2>
@@ -47,4 +47,4 @@ left align the columns in the table.</p>
 This can result in a very sparse table that is difficult to read.</p>
 <pre><code class="language-js"><span class="token keyword">function</span> <span class="token function">layoutMaxWidth</span><span class="token punctuation">(</span><span class="token parameter">listbox<span class="token operator">:</span> Element</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token keyword">void</span>
 </code></pre>
-</main><script src="/react-combo-boxes/render.72893422.js"></script></body></html>
+</main><script src="/react-combo-boxes/render.01dca45f.js"></script></body></html>
