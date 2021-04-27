@@ -149,7 +149,7 @@ describe('catchErrors', () => {
       { initialProps: { query: null } },
     );
 
-    expect(result.current).toEqual([null, false, error]);
+    expect(result.current).toEqual([undefined, false, error]);
   });
 
   it('catches abort errors', async () => {

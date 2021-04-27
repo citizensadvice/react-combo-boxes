@@ -1,12 +1,17 @@
 # Change log
 
+## 1.0.0-rc.20
+
+- Fix useAsyncSearch should return undefined when catching errors
+
 ## 1.0.0-rc.19
 
 - fix accessible labels are not separated from value with a space
 - do not read accessible column header if the column is empty
 - allow custom cell classes in columns
-- refactor scrollIntoView to onLayoutFocusedOption
 - added tabBetweenOptions
+- switched to ARIA 1.0
+- redo layout handlers
 
 ## 1.0.0-rc.18
 

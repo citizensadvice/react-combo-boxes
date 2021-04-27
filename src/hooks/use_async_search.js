@@ -38,7 +38,7 @@ export function useAsyncSearch(
         if (stop) {
           return;
         }
-        dispatch({ busy: false, error: e, options: null });
+        dispatch({ busy: false, error: e, options: undefined });
         return;
       }
       if (stop) {

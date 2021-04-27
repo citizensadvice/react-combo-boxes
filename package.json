@@ -8,8 +8,8 @@
   "module": "es/index.js",
   "exports": {
     ".": "es/index.js",
-    "./spec-helpers": "es/spec_helpers",
-    "./helpers": "es/helpers"
+    "./spec-helpers": "es/spec_helpers/index.js",
+    "./helpers": "es/helpers/index.js"
   },
   "files": [
     "es/**/*",

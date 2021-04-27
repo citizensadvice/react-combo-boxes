@@ -10,14 +10,14 @@ The `onLayoutListBox` event can be used for this purpose.
 
 import { useLayoutListBox, layoutMaxWidth, layoutMaxHeight } from '@citizensadvice/react-combo-boxes';
 
-const onDisplayListBox = useLayoutListBox(
+const onLayoutListBox = useLayoutListBox(
   layoutMaxHeight,
   (listbox) => layoutMaxWidth(listbox, { contain: '.parent-container' }),
 );
 
 <ComboBox
   {...rest}
-  onLayoutListBox={onDisplayListBox}
+  onLayoutListBox={onLayoutListBox}
 />
 
 ```

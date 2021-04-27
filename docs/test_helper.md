@@ -5,6 +5,8 @@ and requires `@testing-libaray/react`;
 
 ```js
 import { selectComboBoxOption } from '@citizensadvice/react-combo-boxes/spec-helpers';
+// Depending on your build system you may need to use
+import { selectComboBoxOption } from '@citizensadvice/react-combo-boxes/es/spec_helpers';
 
 describe('a test', () => {
   it('helps select a combo box option', async () => {
