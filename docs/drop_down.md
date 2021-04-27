@@ -2,13 +2,13 @@
 
 A custom control that works like a HTML `<select>`.
 
-This follows the ARIA non-editable [combo box][aria-pracices] design pattern.
+This follows the ARIA non-editable [combo box][aria-practices] design pattern.
 
 > :warning: **Warning** the native `<select>` will be more accessible and easier to use on many devices.
 >
 > This control may be useful if options require complex styling.  However a radio group may also be more appropriate.
 >
-> There are significant differences between the way a `<select>` is represented with and interacted with
+> There are significant differences between the way a `<select>` is represented and interacted with
 > on different devices and in different operating systems.  This control has to take a single approach and
 > may confuse some users.
 
@@ -43,7 +43,7 @@ This uses the same properties as [ComboBox][combo-box], with the following addit
 
 ### `placeholderOption: string`
 
-An additional blank option.
+Add a placeholder option as the first option in the list.
 
 ### `aria-labelledby: string | string[]`
 

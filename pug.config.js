@@ -10,7 +10,8 @@ const originalLink = renderer.link;
 renderer.link = function link(href, title, text) {
   if (/^(?!\/\/|\w+:)/.test(href)) {
     const parts = path.parse(href);
-    href = path.join(parts.dir, `${parts.name}.pug`); // eslint-disable-line no-param-reassign
+    const url = new URL(href, 'http://invalid/');
+    href = path.join(parts.dir, `${parts.name}.pug${url.hash}`); // eslint-disable-line no-param-reassign
   }
   return originalLink.call(this, href, title, text);
 };

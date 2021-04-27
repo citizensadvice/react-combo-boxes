@@ -76,8 +76,8 @@ const [options, busy, error] = useSearch(search, { searcher, catchErrors: true }
 const filteredOptions = useTokenSearch(query, { options });
 ```
 
-Searches an array of options.  The options are split into tokenised into words.
-Any options containing a word starting with the search term will be returned.
+Searches an array of options.  The options are split into words.  When searching
+any options containing a word starting with the search term will be returned.
 
 By default it will search either strings, or `label` property if the options are objects.
 

@@ -254,10 +254,10 @@ describe('customisation', () => {
     };
   }
 
-  describe('renderListBox', () => {
+  describe('renderTableWrapper', () => {
     it('allows the list box to be replaced', () => {
       render(
-        <ComboBoxWrapper options={options} columns={columns} mapOption={map} renderListBox={(props) => <dl data-foo="bar" {...props} />} />,
+        <ComboBoxWrapper options={options} columns={columns} mapOption={map} renderTableWrapper={(props) => <dl data-foo="bar" {...props} />} />,
       );
       screen.getByRole('combobox').focus();
       expect(screen.getByRole('listbox').parentNode.tagName).toEqual('DL');
@@ -267,7 +267,7 @@ describe('customisation', () => {
     it('is called with context and props', () => {
       const spy = jest.fn(() => null);
       render((
-        <ComboBoxWrapper options={options} columns={columns} mapOption={map} renderListBox={spy} test="foo" />
+        <ComboBoxWrapper options={options} columns={columns} mapOption={map} renderTableWrapper={spy} test="foo" />
       ));
       expect(spy).toHaveBeenLastCalledWith(
         expect.any(Object),

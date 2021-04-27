@@ -4,8 +4,6 @@ Generates an HTML `<select>`, but with a more convenient way of setting the opti
 
 This uses the same basic props as `<DropDown>` and `<ComboBox>` and they maybe used somewhat interchangeably.
 
-> :warning: Some users find `<select>` controls difficult to use.  A radio group may be more appropriate.
-
 ## Usage
 
 This is a stateless controlled component.  You must respond to `onValue` or `onChange` to update the selected value.
@@ -20,16 +18,42 @@ const [value, setValue] = useState(initialValue);
 />
 ```
 
-| Prop                | Type       | Purpose                                  |
-| ----                | ----       | ----                                     |
-| `placeholderOption` | `String`   | Set a placeholder option                 |
-| `options`           | `Array`    | The set of options. [See options][1]     |
-| `value`             | `Any`      | The currently selected option            |
-| `onValue`           | `Function` | Called with the selected option          |
-| `mapOption`         | `Function` | Use to map options. [See options][1]     |
-| `renderOption`      | `Function` | Render function for options              |
-| `renderOptGroup`    | `Function` | Render function for optgroups            |
-| `ref`               | `ref`      | Will be forwarded to `<select>` element  |
-| Any other prop      |            | Will be passed to the `<select>` element |
+## Props
+
+### `placeholderOption: string`
+
+Set a placeholder option
+
+### `options: Array<any>`
+
+The options to display. [See options][options].  
+
+### `mapOption: (option: any) => Option | string`
+
+Map an option into label, value, disabled and group. [See options][options]  
+
+### `value: any`
+
+The currently selected option
+
+### `onValue: (option: any) => void`
+
+Called with the selected option when a user selects an option.
+
+### `ref`
+
+The ref will be passed to the `<select>` element.
+
+### `renderOption: (props) => React.ReactNode`
+
+Customise the rendering of an option.  Defaults to `(props) => <option {...props> />`.
+
+### `renderOptGroup: (props) => React.ReactNode`
+
+Customise the rendering of an optgroup.  Defaults to `(props) => <optgroup {...props> />`.
+
+### Other props
+
+All other props are passed to the `<select>` element.
 
 [1]: options.md

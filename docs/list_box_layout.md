@@ -3,9 +3,11 @@
 For the [ComboBox](combo_box.md) and [DropDown](drop_down.md) components it is 
 useful to be able to position the list box.
 
-The `onDisplayListBox` event can be used for this purpose.
+The `onLayoutListBox` event can be used for this purpose.
 
 ```js
+// Example that will prevent the listbox extending off the edge or bottom of the window
+
 import { useLayoutListBox, layoutMaxWidth, layoutMaxHeight } from '@citizensadvice/react-combo-boxes';
 
 const onDisplayListBox = useLayoutListBox(
@@ -15,12 +17,10 @@ const onDisplayListBox = useLayoutListBox(
 
 <ComboBox
   {...rest}
-  onDisplayListBox={onDisplayListBox}
+  onLayoutListBox={onDisplayListBox}
 />
 
 ```
-
-An effect is provided for some basic use cases:
 
 ## `useLayoutListBox`
 

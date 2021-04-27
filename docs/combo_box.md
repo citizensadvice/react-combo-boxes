@@ -1,9 +1,9 @@
 # `<ComboBox>`
 
-Creates drop-down combined with an editable text-box. Also referred to as a typeahead or autocomplete.
+Creates drop-down combined with an editable text-box. Also referred to as a typeahead or an autocomplete.
 Typing will suggest options which the user can then select.
 
-This uses the ARIA editable [combo box][aria-practices-combo-box] design pattern.
+This uses the ARIA 1.0 editable [combo box][aria-practices-combo-box] design pattern.
 
 Combo-boxes like this are used in multiple different ways with many different interaction patterns.
 This implementation is flexible and can be used, for example, as both a search autocomplete or to restrict select to a set of predefined options.
@@ -71,10 +71,6 @@ See [combo-box on ARIA practices][aria-practices-combo-box].
 
 Used with an async search to say the component is currently busy.  This sets `aria-busy`.
 
-#### `busyDebounce: number = 200`
-
-Setting `aria-busy` is debounced.  This prevents too many "loaded" messages being read by screen-readers.
-
 ### HTML attributes
 
 #### `id: string`
@@ -123,11 +119,11 @@ The following attributes will be passed to the `<input>` element.
 
 ### Behaviour switches
 
-#### `managedFocus: boolean`
+#### `managedFocus: boolean = true`
 
 When true, the document focus moves to the selected option.  When false the selected option is exposed to a screen-reader by `aria-activedescendant`.
 
-This is `true`, except on Firefox and Chrome on a Mac where it is `false`.  See [accessibility].
+This defaults to `true` for maximum compatibility with older screen-readers.
 
 #### `autoselect: boolean | "inline" = false`
 
@@ -137,47 +133,57 @@ If `"inline"` then `aria-autocomplete="inline"` is set and the text typed into t
 
 See [ARIA practices][aria-practices-combo-box] for an explanation of these modes.
 
-#### `findSuggestion: ({ option: any, search: string }) => boolean | null`
-
-Customise finding a suggested option.  By default the suggested option is the first selectable option providing it starts with the search string.
-
-Return `true` to select an option, `null` to continue finding an option, or `false` to stop searching.
-
 #### `expandOnFocus: boolean = true`
 
 Expand the list box when then component is focused.  If `false` the use must type before the list box is expanded.
 
 #### `selectOnBlur: boolean = true`
 
-Select the current only when blurring the component.  If false the user must explicitly select an option.
+Select the currently focused option when blurring the component.
+
+If `false` the user must explicitly select an option by pressing <kbd>Enter</kbd> or clicking on an option.
 
 #### `showSelectedLabel: boolean = false`
 
-If set to `true`, the value in the `input` will be updated to match the currently selected option.
+If set to `true`, the value in the `input` will be updated to match the currently focused option.
 
 #### `tabAutocomplete: boolean = false`
 
-If `true`, pressing <kbd>tab</kbd> on an autocompleted option will select it.  If `false` pressing tab moves to the next focusable element.
+If `true`, pressing <kbd>Tab</kbd> while an autocompleted option is displayed will select it without moving the focus.
+
+If `false` pressing <kbd>Tab</kbd> moves to the next focusable element.  The option may still be selected if `selectOnBlur` is `true`.
 
 #### `tabBetweenOptions: boolean = false`
 
-If `true`, pressing <kbd>tab</kbd> and <kbd>shift</kbd> + <kbd>tab</kbd> will move between options in the listbox.
+If `true`, pressing <kbd>Tab</kbd> and <kbd>Shift</kbd> + <kbd>Tab</kbd> will move between options in the listbox.
 
 This is against normal user interface guidelines but maybe preferable in some situations.
 
 ### Customisation
 
-#### `notFoundMessage: string | React.ReactNode`
+#### `assistiveHint`
 
-If there is a search string, and `options` is an empty array, display this message.
+Sets the description of the combo-box.
 
-#### `errorMessage: string | React.ReactNode`
+Defaults to "When results are available use up and down arrows to review and enter to select"
 
-Displays an error message.  Intended for use with an async search.
+#### `notFoundMessage: () => string`
 
-#### `onLayoutListBox: ({ expanded: boolean, listbox: Element }) => void`
+Set the message to be displayed or read or a screen-reader when the no search options are found.
 
-This can be used to "layout" the listbox.  It is called whenever the listbox is displayed or the options change.                   
+Defaults to: "No results found"
+
+#### `foundOptionsMessage: (options: Array<Option>) => string`
+
+Sets the message to be read to a screen-reader when options are found.
+
+Defaults to: "x results are available"
+
+#### `selectedOptionMessage: (option: Option, options: Array<Option>) => string`
+
+Sets the message to be read to a screen-reader when an option is highlighted.
+
+Defaults to: "label x of y is highlighted"
 
 #### render props
 
@@ -187,7 +193,7 @@ Each render method has the signature
 
 ```js
 (
-  // The props to apply to that component
+  // The props set on the <ComboBox>
   props: object,
   // The state of the component
   state: {
@@ -230,12 +236,18 @@ The render functions available are:
 | `renderGroupAccessibleLabel` | `(props) => <span {...props} />`     | Renders the accessible label for a group.  This will be read out before each option |
 | `renderValue`                | `(props) => <Fragment {...props} />` | Renders the value within an option.  See [Highlighters][highlighters].              |
 | `renderNotFound`             | `(props) => <div {...props} />`      | Renders the not found message                                                       |
-| `renderErrorMessage`         | `(props) => <div {...props} />`      | Renders the error message                                                           |
-| `renderAriaDescription`      | `(props) => <div {...props} />`      | Renders the aria description of the combo box                                       |
-| `renderAriaLiveMessage`      | `(props) => <div {...props} />`      | Renders an aria live message that alerts users new options have been found          |
+| `renderAriaDescription`      | `(props) => <div {...props} />`      | Renders the assistive hint of the combo box                                         |
+
+#### `onLayoutListBox: ({ expanded: boolean, listbox: Element }) => void`
+
+This is called whenever the listbox is displayed or the options change.                   
+
+This can be used to position or resize the listbox.
+
+See [list box layout][list-box-layout] for some supplied layout helpers.
 
 [options]: options.md
 [list-box-layout]: list_box_layout.md
 [highlighters]: highlighters.md
-[aria-practicesr-combo-box]: https://w3c.github.io/aria-practices/#combobox
+[aria-practices-combo-box]: https://w3c.github.io/aria-practices/#combobox
 [accessibility]: accessiblity.md

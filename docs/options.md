@@ -25,16 +25,6 @@ type Option = {
 };
 ```
 
-## Option identity
-
-When determining which option is selected the "identity" of the option is compared.
-
-The identity is calculated by the equivalent of:
-
-```js
-String(option?.value ?? option?.id ?? option?.label ?? option ?? '')
-```
-
 ## `mapOption`
 
 If your options don't match this signature you can use the `mapOption` to map them to the signature.
@@ -62,3 +52,14 @@ const mapOption = useCallback(({ name, deleted }) => {
   mapOption={mapOption}
 />
 ```
+
+## Option identity
+
+When determining which option is selected the "identity" of the option is compared.
+
+The identity is calculated by the equivalent of:
+
+```js
+String(option?.value ?? option?.id ?? option?.label ?? option ?? '')
+```
+

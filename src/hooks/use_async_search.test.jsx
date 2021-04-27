@@ -162,6 +162,6 @@ describe('catchErrors', () => {
       { initialProps: { query: null } },
     );
 
-    expect(result.current).toEqual([undefined, false, null]);
+    expect(result.current).toEqual([undefined, true, null]);
   });
 });

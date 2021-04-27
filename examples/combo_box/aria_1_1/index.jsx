@@ -14,19 +14,21 @@ function renderWrapper(props, { expanded }, { id, 'aria-labelledby': ariaLabelle
     <div
       {...props}
       role="combobox"
-      aria-owns={id}
+      aria-owns={`${id}_listbox`}
       aria-expanded={expanded ? 'true' : 'false'}
       aria-labelledby={ariaLabelledBy}
     />
   );
 }
 
-function renderInput(props) {
+function renderInput(props, state, { id }) {
   return (
     <input
       {...props}
       role={null}
       aria-expanded={null}
+      aria-owns={null}
+      aria-controls={`${id}_listbox`}
     />
   );
 }

@@ -1,4 +1,4 @@
 # TODO
 
-- review option names
-- Docs
+- inline keyboard nav
+- page up / down safari
