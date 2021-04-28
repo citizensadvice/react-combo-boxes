@@ -28,10 +28,10 @@ describe('when natural table width is the auto table width', () => {
     layoutColumnsAlignLeft(container);
 
     table.querySelectorAll('col').forEach((col) => {
-      expect(col).toHaveStyle({ 'min-width': '', width: '' });
+      expect(col).toHaveStyle({ width: '' });
     });
 
-    expect(table).toHaveStyle({ 'min-width': '', width: '' });
+    expect(table).toHaveStyle({ width: '' });
   });
 });
 
@@ -60,19 +60,17 @@ describe('when natural table width is less then the auto table width', () => {
       .mockImplementationOnce(() => 100)
       .mockImplementationOnce(() => 90);
 
-    table.querySelectorAll('col').forEach((col) => {
-      jest.spyOn(col, 'getBoundingClientRect').mockImplementation(() => ({ width: 20 }));
+    table.querySelectorAll('td').forEach((td) => {
+      jest.spyOn(td, 'getBoundingClientRect').mockImplementation(() => ({ width: 20 }));
     });
 
     layoutColumnsAlignLeft(container);
 
     expect(table.querySelector('col:first-child')).toHaveStyle({
-      'min-width': '20px',
-      width: '',
+      width: '20px',
     });
 
     expect(table.querySelector('col:last-child')).toHaveStyle({
-      'min-width': '',
       width: '100%',
     });
 

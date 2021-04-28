@@ -1,5 +1,9 @@
 # Change log
 
+## 1.0.0-rc.21
+
+- Fix layoutColumnsAlignLeft wrapping in Microsoft Edge
+
 ## 1.0.0-rc.20
 
 - Fix useAsyncSearch should return undefined when catching errors

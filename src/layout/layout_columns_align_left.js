@@ -15,7 +15,6 @@ export function layoutColumnsAlignLeft(listbox) {
   const cols = [...table.querySelectorAll('col')];
   cols.forEach((col) => {
     col.style.removeProperty('width');
-    col.style.removeProperty('min-width');
   });
 
   const width = table.clientWidth;
@@ -25,14 +24,15 @@ export function layoutColumnsAlignLeft(listbox) {
   const autoWidth = table.clientWidth;
 
   if (autoWidth < width) {
-    const columnWidths = cols.map((col) => col.getBoundingClientRect().width);
+    // Edge does not let you measure a col, although all other browsers do
+    const columnWidths = [...table.rows[0].cells].map((col) => col.getBoundingClientRect().width);
     cols.forEach((col, i) => {
       if (i === cols.length - 1) {
         // The last cell gets all the space
         col.style.setProperty('width', '100%');
       } else {
         // Make sure the other cells retain their natural width
-        col.style.setProperty('min-width', `${columnWidths[i]}px`);
+        col.style.setProperty('width', `${columnWidths[i]}px`);
       }
     });
   }
