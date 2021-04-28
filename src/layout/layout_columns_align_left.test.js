@@ -71,7 +71,7 @@ describe('when natural table width is less then the auto table width', () => {
     });
 
     expect(table.querySelector('col:last-child')).toHaveStyle({
-      width: '100%',
+      width: '',
     });
 
     expect(table).toHaveStyle({ 'min-width': '', width: '' });

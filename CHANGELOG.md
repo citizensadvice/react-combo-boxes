@@ -1,5 +1,9 @@
 # Change log
 
+## 1.0.0-rc.22
+
+- Fix layoutColumnsAlignLeft wrapping
+
 ## 1.0.0-rc.21
 
 - Fix layoutColumnsAlignLeft wrapping in Microsoft Edge

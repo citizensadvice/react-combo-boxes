@@ -29,7 +29,7 @@ export function layoutColumnsAlignLeft(listbox) {
     cols.forEach((col, i) => {
       if (i === cols.length - 1) {
         // The last cell gets all the space
-        col.style.setProperty('width', '100%');
+        col.style.setProperty('width', '');
       } else {
         // Make sure the other cells retain their natural width
         col.style.setProperty('width', `${columnWidths[i]}px`);
