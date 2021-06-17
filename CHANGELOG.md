@@ -1,5 +1,9 @@
 # Change log
 
+## 1.0.0
+
+- Remove bold from highlight style
+
 ## 1.0.0-rc.22
 
 - Fix layoutColumnsAlignLeft wrapping
