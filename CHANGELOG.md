@@ -1,5 +1,10 @@
 # Change log
 
+## 1.1.0
+
+- Added `property` option to highlighers
+- Adding highlighters examples
+
 ## 1.0.0
 
 - Remove bold from highlight style
