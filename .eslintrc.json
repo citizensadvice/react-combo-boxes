@@ -53,6 +53,7 @@
       ],
       "rules": {
         "import/no-extraneous-dependencies": "off",
+        "react/jsx-no-bind": "off",
         "react/prop-types": "off",
         "jest/expect-expect": "off",
         "jest/no-standalone-expect": "off"

@@ -2293,7 +2293,7 @@ describe('selectOnBlur', () => {
       userEvent.tab();
       expect(document.body).toHaveFocus();
       await waitFor(() => {
-        expect(screen.queryByRole('listbox')).toBeFalsy();
+        expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
       });
       expect(spy).not.toHaveBeenCalled();
     });
@@ -2436,7 +2436,7 @@ describe('assistiveHint', () => {
       render((
         <ComboBoxWrapper options={['foo', 'bar']} />
       ));
-      expect(screen.getByRole('combobox')).toHaveDescription('When results are available use up and down arrows to review and enter to select');
+      expect(screen.getByRole('combobox')).toHaveAccessibleDescription('When results are available use up and down arrows to review and enter to select');
     });
   });
 
@@ -2445,7 +2445,7 @@ describe('assistiveHint', () => {
       render((
         <ComboBoxWrapper options={['foo', 'bar']} assistiveHint={null} />
       ));
-      expect(screen.getByRole('combobox')).toHaveDescription('');
+      expect(screen.getByRole('combobox')).toHaveAccessibleDescription('');
     });
   });
 
@@ -2454,7 +2454,7 @@ describe('assistiveHint', () => {
       render((
         <ComboBoxWrapper options={['foo', 'bar']} assistiveHint="foo bar" />
       ));
-      expect(screen.getByRole('combobox')).toHaveDescription('foo bar');
+      expect(screen.getByRole('combobox')).toHaveAccessibleDescription('foo bar');
     });
   });
 });

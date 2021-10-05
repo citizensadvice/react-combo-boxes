@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useState } from 'react';
+import React, { forwardRef, useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { ComboBox } from './combo_box';
 import { classPrefix as defaultClassPrefix } from '../constants/class_prefix';
@@ -123,34 +123,34 @@ ComboBoxWrapper.propTypes = {
 };
 
 export const DropDown = forwardRef((props, ref) => {
-  function renderWrapper(wrapperProps, componentState, componentProps) {
-    return (
-      <ComboBoxWrapper
-        {...wrapperProps}
-        componentState={componentState}
-        componentProps={{ ...componentProps, renderWrapper: props.renderWrapper }}
-      />
-    );
-  }
+  const { renderWrapper, renderListBox } = props;
 
-  function renderListBox(wrapperProps, componentState, componentProps) {
-    return componentProps.renderListBoxWrapper(
+  const newRenderWrapper = useCallback((wrapperProps, componentState, componentProps) => (
+    <ComboBoxWrapper
+      {...wrapperProps}
+      componentState={componentState}
+      componentProps={{ ...componentProps, renderWrapper }}
+    />
+  ), [renderWrapper]);
+
+  const newRenderListBox = useCallback((wrapperProps, componentState, componentProps) => (
+    componentProps.renderListBoxWrapper(
       {
         className: makeBEMClass(componentProps.classPrefix, 'listbox-wrapper'),
-        children: props.renderListBox(wrapperProps, componentState, componentProps),
+        children: renderListBox(wrapperProps, componentState, componentProps),
       },
       componentState,
       componentProps,
-    );
-  }
+    )
+  ), [renderListBox]);
 
   return (
     <ComboBox
       ref={ref}
       renderInput={renderInput}
       {...props}
-      renderWrapper={renderWrapper}
-      renderListBox={renderListBox}
+      renderWrapper={newRenderWrapper}
+      renderListBox={newRenderListBox}
     />
   );
 });
