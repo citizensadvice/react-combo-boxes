@@ -49,6 +49,30 @@ it('calls the highlighter with a blank custom search', () => {
   expect(spy).toHaveBeenCalledWith('foo', '', {}, { search: 'bar' }, { value: { label: 'foo' } });
 });
 
+it('calls the highlighter with custom property', () => {
+  const spy = jest.fn(() => []);
+
+  highlightValue(spy, { property: 'foo' })({ children: 'foo' }, { search: 'bar', option: { value: { label: 'foo', foo: 'foe' } } }, {});
+
+  expect(spy).toHaveBeenCalledWith('foe', 'bar', {}, expect.anything(), expect.anything());
+});
+
+it('calls the highlighter with a blank custom property', () => {
+  const spy = jest.fn(() => []);
+
+  highlightValue(spy, { property: 'foo' })({ children: 'foo' }, { search: 'bar', option: { value: { label: 'foo', foo: '' } } }, {});
+
+  expect(spy).toHaveBeenCalledWith('', 'bar', {}, expect.anything(), expect.anything());
+});
+
+it('calls the highlighter with a missing custom property', () => {
+  const spy = jest.fn(() => []);
+
+  highlightValue(spy, { property: 'foo' })({ children: 'foo' }, { search: 'bar', option: { value: { label: 'foo' } } }, {});
+
+  expect(spy).toHaveBeenCalledWith('foo', 'bar', {}, expect.anything(), expect.anything());
+});
+
 it('calls the highlighter with a custom options', () => {
   const spy = jest.fn(() => []);
 

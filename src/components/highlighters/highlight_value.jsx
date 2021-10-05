@@ -6,17 +6,21 @@ function emptyHighlight(highlight) {
   return !highlight.length || (highlight.length === 1 && typeof highlight[0] === 'string');
 }
 
-export function highlightValue(highlighter, { inverse, search: _search, ...options } = {}) {
+export function highlightValue(
+  highlighter,
+  { inverse, search: _search, property, ...options } = {},
+) {
   // eslint-disable-next-line react/prop-types
   return ({ children }, state, componentProps) => {
     const { value, visuallyHiddenClassName } = componentProps;
-    const { search } = state;
+    const { search, option } = state;
 
     if (!children) {
       return children;
     }
 
-    const highlighted = highlighter(children, _search ?? (search || value?.label || ''), options, state, componentProps);
+    const term = property ? option?.value?.[property] ?? children : children;
+    const highlighted = highlighter(term, _search ?? (search || value?.label || ''), options, state, componentProps);
 
     if (emptyHighlight(highlighted)) {
       return highlighted.join('');
