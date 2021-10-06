@@ -51,7 +51,15 @@ export function onSelectValue(newValue, expanded = false) {
 export function onKeyDown(event) {
   return (dispatch, getState, getProps) => {
     const { expanded, focusListBox, focusedOption, suggestedOption } = getState();
-    const { options, inputRef, lastKeyRef, skipOption: skip, selectOnly } = getProps();
+    const {
+      options, inputRef, lastKeyRef, skipOption: skip,
+      selectOnly, disabled, readOnly,
+    } = getProps();
+
+    if (disabled || readOnly) {
+      return;
+    }
+
     const { altKey, metaKey, ctrlKey, shiftKey } = event;
     const key = getKey(event);
 
@@ -264,7 +272,12 @@ export function onChange(event) {
 
 export function onFocus() {
   return (dispatch, getState, getProps) => {
-    const { selectedOption, expandOnFocus } = getProps();
+    const { selectedOption, expandOnFocus, disabled, readOnly } = getProps();
+
+    if (disabled || readOnly) {
+      return;
+    }
+
     dispatch(setFocusedOption({
       focusedOption: selectedOption,
       expanded: expandOnFocus,
@@ -274,7 +287,15 @@ export function onFocus() {
 }
 
 export function onFocusInput() {
-  return { type: SET_FOCUS_LIST_BOX, focusListBox: false };
+  return (dispatch, getState, getProps) => {
+    const { disabled, readOnly } = getProps();
+
+    if (disabled || readOnly) {
+      return;
+    }
+
+    dispatch({ type: SET_FOCUS_LIST_BOX, focusListBox: false });
+  };
 }
 
 export function onFocusOption(focusedOption) {
@@ -290,7 +311,13 @@ export function onInputMouseUp(e) {
     if (expanded || e.button > 0) {
       return;
     }
-    const { selectedOption, expandOnFocus } = getProps();
+
+    const { selectedOption, expandOnFocus, disabled, readOnly } = getProps();
+
+    if (disabled || readOnly) {
+      return;
+    }
+
     dispatch(setFocusedOption({ focusedOption: selectedOption, expanded: expandOnFocus }));
   };
 }
@@ -298,7 +325,11 @@ export function onInputMouseUp(e) {
 export function onBlur() {
   return (dispatch, getState, getProps) => {
     const { expanded, focusedOption } = getState();
-    const { value, selectOnBlur, tabBetweenOptions } = getProps();
+    const { value, selectOnBlur, tabBetweenOptions, disabled, readOnly } = getProps();
+
+    if (disabled || readOnly) {
+      return;
+    }
 
     if (selectOnBlur
       && expanded

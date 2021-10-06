@@ -11,7 +11,7 @@ const options = [
 ];
 
 export function Example() {
-  const [value, setValue] = useState('Lemon');
+  const [value, setValue] = useState('Orange');
   const [search, setSearch] = useState(null);
   const filteredOptions = useTokenSearch(search, { options });
 

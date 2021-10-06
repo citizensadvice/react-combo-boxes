@@ -34,6 +34,17 @@ function expectToBeClosed() { // and focused
   expect(combobox).not.toHaveAttribute('aria-activedescendant');
 }
 
+function expectToBeClosedAndNotFocused() { // and focused
+  const combobox = screen.getByRole('combobox');
+  const listbox = screen.getByRole('listbox', { hidden: true });
+  expect(combobox).toHaveAttribute('role', 'combobox');
+  expect(combobox).not.toHaveFocus();
+  expect(combobox).toHaveAttribute('aria-owns', listbox.id);
+  expect(listbox).not.toBeVisible();
+  expect(combobox).toHaveAttribute('aria-expanded', 'false');
+  expect(combobox).not.toHaveAttribute('aria-activedescendant');
+}
+
 function expectToBeOpen() { // and focused with no selected or focused option
   const combobox = screen.getByRole('combobox');
   const listbox = screen.getByRole('listbox', { hidden: true });
@@ -112,6 +123,22 @@ describe('options', () => {
         describe('with no options it does not open the list box', () => {
           it('does not open the combo box', () => {
             render(<ComboBoxWrapper options={[]} />);
+            screen.getByRole('combobox').focus();
+            expectToBeClosed();
+          });
+        });
+
+        describe('when disabled', () => {
+          it('does not open the combo box', () => {
+            render(<ComboBoxWrapper options={options} disabled />);
+            screen.getByRole('combobox').focus();
+            expectToBeClosedAndNotFocused();
+          });
+        });
+
+        describe('when readOnly', () => {
+          it('does not open the combo box', () => {
+            render(<ComboBoxWrapper options={options} readOnly />);
             screen.getByRole('combobox').focus();
             expectToBeClosed();
           });
@@ -518,6 +545,24 @@ describe('options', () => {
             fireEvent.keyDown(document.activeElement, { key: 'ArrowUp', altKey: true });
             fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
             expectToBeOpen();
+          });
+
+          describe('when disabled', () => {
+            it('does not open the list box when using the keyboard', () => {
+              render(<ComboBoxWrapper options={options} disabled />);
+              screen.getByRole('combobox').focus();
+              fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
+              expectToBeClosedAndNotFocused();
+            });
+          });
+
+          describe('when readOnly', () => {
+            it('does not open the list box when using the keyboard', () => {
+              render(<ComboBoxWrapper options={options} readOnly />);
+              screen.getByRole('combobox').focus();
+              fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
+              expectToBeClosed();
+            });
           });
         });
 

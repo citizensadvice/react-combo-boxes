@@ -1,5 +1,9 @@
 # Change log
 
+## 1.2.1
+
+- Fix disabled and read-only could still open the combo-box
+
 ## 1.2.0
 
 - Disable the clear button if the combo-box is disabled or read-only
