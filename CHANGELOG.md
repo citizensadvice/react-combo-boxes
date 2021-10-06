@@ -1,8 +1,12 @@
 # Change log
 
+## 1.2.0
+
+- Disable the clear button if the combo-box is disabled or read-only
+
 ## 1.1.0
 
-- Added `property` option to highlighers
+- Added `property` option to highlighters
 - Adding highlighters examples
 
 ## 1.0.0

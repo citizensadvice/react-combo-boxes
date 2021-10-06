@@ -334,7 +334,10 @@ export function onClearValue(event) {
     if (event.type === 'keydown' && ![' ', 'Enter'].includes(event.key)) {
       return;
     }
-    const { expandOnFocus } = getProps();
+    const { expandOnFocus, disabled, readOnly } = getProps();
+    if (disabled || readOnly) {
+      return;
+    }
     dispatch(onSelectValue(null, expandOnFocus));
   };
 }

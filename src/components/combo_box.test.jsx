@@ -1151,6 +1151,18 @@ describe('clear button', () => {
     expect(remove).not.toBeVisible();
   });
 
+  it('is not present when disabled', () => {
+    render(<ComboBoxWrapper options={options} value="Apple" disabled />);
+    const remove = document.getElementById('id_clear_button');
+    expect(remove).not.toBeVisible();
+  });
+
+  it('is not present when readOnly', () => {
+    render(<ComboBoxWrapper options={options} value="Apple" readOnly />);
+    const remove = document.getElementById('id_clear_button');
+    expect(remove).not.toBeVisible();
+  });
+
   it('pressing the button removes the value', () => {
     const spy = jest.fn();
     render(<ComboBoxWrapper options={options} value="Apple" onValue={spy} />);

@@ -293,7 +293,7 @@ export const ComboBox = forwardRef((rawProps, ref) => {
           className: makeBEMClass(classPrefix, 'clear-button'),
           onClick: (e) => dispatch(onClearValue(e)),
           onKeyDown: (e) => dispatch(onClearValue(e)),
-          hidden: !value || search === '',
+          hidden: disabled || readOnly || !value || search === '',
           tabIndex: -1,
         }, componentState, optionisedProps)}
         <ListBox
