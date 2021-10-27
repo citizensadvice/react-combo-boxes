@@ -1,5 +1,9 @@
 # Change log
 
+## 1.3.0
+
+- Added the radios component
+
 ## 1.2.2
 
 - Fix using mapOption combined with setting the value using the option identity did not work.

@@ -167,3 +167,21 @@ kbd {
     margin-top: 1.5em;
   }
 }
+
+.radios {
+  display: block;
+}
+
+.react-combo-boxes-radio__input {
+  cursor: pointer;
+}
+
+.react-combo-boxes-radio__label {
+  display: inline;
+  margin-left: 0.5em;
+  cursor: pointer;
+}
+
+.react-combo-boxes-radio-group {
+  display: block;
+}

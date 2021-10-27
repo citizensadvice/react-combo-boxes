@@ -1,0 +1,134 @@
+import React, { useCallback } from 'react';
+import PropTypes from 'prop-types';
+import { useNormalisedOptions } from '../hooks/use_normalised_options';
+import { renderGroupedOptions } from '../helpers/render_grouped_options';
+import { classPrefix as defaultClassPrefix } from '../constants/class_prefix';
+import { makeBEMClass } from '../helpers/make_bem_class';
+import { visuallyHiddenClassName } from '../constants/visually_hidden_class_name';
+
+export function Radios(rawProps) {
+  const optionisedProps = Object.freeze({
+    ...rawProps,
+    ...useNormalisedOptions(rawProps),
+  });
+
+  const {
+    required,
+    classPrefix,
+    groupClassPrefix,
+    name,
+    onValue,
+    options,
+    renderRadioWrapper,
+    renderInput,
+    renderLabel,
+    renderDescription,
+    renderGroup,
+    renderGroupLabel,
+    renderGroupAccessibleLabel,
+    selectedOption,
+  } = optionisedProps;
+
+  const handleChange = useCallback((e) => {
+    onValue?.(options.find((o) => o.identity === e.target.value)?.value);
+  }, [onValue, options]);
+
+  return renderGroupedOptions({
+    options,
+    renderGroup(group) {
+      const { children, key, label, html } = group;
+      return renderGroup({
+        key,
+        className: makeBEMClass(groupClassPrefix),
+        children: (
+          <>
+            {renderGroupLabel({
+              children: label,
+              className: makeBEMClass(groupClassPrefix, 'label'),
+              ...html,
+            }, { group }, optionisedProps)}
+            {children}
+          </>
+        ),
+      }, { group }, optionisedProps);
+    },
+    renderOption(option) {
+      const { identity, label, key, html, disabled, description, group } = option;
+      const checked = selectedOption?.identity === identity;
+
+      return renderRadioWrapper({
+        className: makeBEMClass(classPrefix),
+        children: (
+          <>
+            {renderInput({
+              'aria-describedby': description ? `${key}_description` : null,
+              checked,
+              disabled,
+              id: key,
+              name,
+              onChange: handleChange,
+              type: 'radio',
+              value: identity,
+              required,
+              className: makeBEMClass(classPrefix, 'input'),
+              ...html,
+            }, { option, checked }, optionisedProps)}
+            {renderLabel({
+              htmlFor: key,
+              children: (
+                <>
+                  {group ? renderGroupAccessibleLabel({
+                    className: visuallyHiddenClassName,
+                    children: `${group.label} `,
+                  }, { group }, optionisedProps) : null}
+                  {label}
+                </>
+              ),
+              className: makeBEMClass(classPrefix, 'label'),
+            }, { option, checked }, optionisedProps)}
+            {!!description && (renderDescription({
+              id: `${key}_description`,
+              children: description,
+              className: makeBEMClass(classPrefix, 'description'),
+            }, { option, group, checked }, optionisedProps))}
+          </>
+        ),
+        key,
+      }, { option, group, checked }, optionisedProps);
+    },
+  });
+}
+
+Radios.propTypes = {
+  classPrefix: PropTypes.string,
+  groupClassPrefix: PropTypes.string,
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  onValue: PropTypes.func,
+  options: PropTypes.arrayOf(PropTypes.any).isRequired,
+  value: PropTypes.any,
+  required: PropTypes.bool,
+  renderRadioWrapper: PropTypes.func,
+  renderInput: PropTypes.func,
+  renderLabel: PropTypes.func,
+  renderDescription: PropTypes.func,
+  renderGroup: PropTypes.func,
+  renderGroupLabel: PropTypes.func,
+  renderGroupAccessibleLabel: PropTypes.func,
+};
+
+Radios.defaultProps = {
+  classPrefix: `${defaultClassPrefix}radio`,
+  groupClassPrefix: `${defaultClassPrefix}radio-group`,
+  value: null,
+  onChange: null,
+  onValue: null,
+  renderRadioWrapper: (props) => <div {...props} />,
+  renderInput: (props) => <input {...props} />,
+  renderLabel: (props) => <label {...props} />,
+  renderDescription: (props) => <div {...props} />,
+  renderGroup: (props) => <div {...props} />,
+  renderGroupLabel: (props) => <div {...props} />,
+  renderGroupAccessibleLabel: (props) => <span {...props} />,
+  required: false,
+};

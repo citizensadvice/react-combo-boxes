@@ -5,7 +5,7 @@ export function optionise(rawOption, mapOption) {
   }
 
   if (option != null && typeof option === 'object') {
-    const { label, group, value, disabled, html, id } = option;
+    const { label, group, value, disabled, html, id, description } = option;
     return {
       label,
       group,
@@ -13,6 +13,7 @@ export function optionise(rawOption, mapOption) {
       unselectable: !!disabled,
       identity: String(value ?? id ?? label ?? ''),
       value: rawOption,
+      description,
       html: { ...html },
     };
   }
