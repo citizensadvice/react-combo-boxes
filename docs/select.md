@@ -56,4 +56,4 @@ Customise the rendering of an optgroup.  Defaults to `(props) => <optgroup {...p
 
 All other props are passed to the `<select>` element.
 
-[1]: options.md
+[options]: options.md

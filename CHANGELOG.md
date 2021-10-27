@@ -1,5 +1,9 @@
 # Change log
 
+## 1.2.2
+
+- Fix using mapOption combined with setting the value using the option identity did not work.
+
 ## 1.2.1
 
 - Fix disabled and read-only could still open the combo-box

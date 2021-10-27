@@ -301,28 +301,74 @@ describe('options', () => {
   });
 
   describe('mapOption', () => {
-    const options = [{ name: 'Apple' }, { name: 'Banana' }, { name: 'Orange' }];
+    describe('mapOption returns an object', () => {
+      const options = [{ name: 'Apple' }, { name: 'Banana' }, { name: 'Orange' }];
 
-    it('maps options', () => {
-      const spy = jest.fn();
-      render(<SelectWrapper
-        options={options}
-        onValue={spy}
-        mapOption={({ name }) => ({ label: name })}
-      />);
-      fireEvent.change(screen.getByRole('combobox'), { target: { value: 'Orange' } });
-      expect(spy).toHaveBeenCalledWith({ name: 'Orange' });
+      it('maps options', () => {
+        const spy = jest.fn();
+        render(<SelectWrapper
+          options={options}
+          onValue={spy}
+          mapOption={({ name }) => ({ label: name })}
+        />);
+        fireEvent.change(screen.getByRole('combobox'), { target: { value: 'Orange' } });
+        expect(spy).toHaveBeenCalledWith({ name: 'Orange' });
+      });
+
+      it('selects a mapped option', () => {
+        render(<SelectWrapper
+          options={options}
+          value={{ name: 'Banana' }}
+          mapOption={({ name }) => ({ label: name })}
+        />);
+        expect(screen.getByRole('combobox')).toHaveValue('Banana');
+        fireEvent.change(screen.getByRole('combobox'), { target: { value: 'Orange' } });
+        expect(screen.getByRole('combobox')).toHaveValue('Orange');
+      });
+
+      it('accepts value as a primative', () => {
+        render(<SelectWrapper
+          options={options}
+          value="Banana"
+          mapOption={({ name }) => ({ label: name })}
+        />);
+        expect(screen.getByRole('combobox')).toHaveValue('Banana');
+      });
     });
 
-    it('selects a mapped option', () => {
-      render(<SelectWrapper
-        options={options}
-        value={{ name: 'Banana' }}
-        mapOption={({ name }) => ({ label: name })}
-      />);
-      expect(screen.getByRole('combobox')).toHaveValue('Banana');
-      fireEvent.change(screen.getByRole('combobox'), { target: { value: 'Orange' } });
-      expect(screen.getByRole('combobox')).toHaveValue('Orange');
+    describe('mapOption returns a string', () => {
+      const options = [{ name: 'Apple' }, { name: 'Banana' }, { name: 'Orange' }];
+
+      it('maps options', () => {
+        const spy = jest.fn();
+        render(<SelectWrapper
+          options={options}
+          onValue={spy}
+          mapOption={({ name }) => name}
+        />);
+        fireEvent.change(screen.getByRole('combobox'), { target: { value: 'Orange' } });
+        expect(spy).toHaveBeenCalledWith({ name: 'Orange' });
+      });
+
+      it('selects a mapped option', () => {
+        render(<SelectWrapper
+          options={options}
+          value={{ name: 'Banana' }}
+          mapOption={({ name }) => name}
+        />);
+        expect(screen.getByRole('combobox')).toHaveValue('Banana');
+        fireEvent.change(screen.getByRole('combobox'), { target: { value: 'Orange' } });
+        expect(screen.getByRole('combobox')).toHaveValue('Orange');
+      });
+
+      it('accepts value as a primative', () => {
+        render(<SelectWrapper
+          options={options}
+          value="Banana"
+          mapOption={({ name }) => name}
+        />);
+        expect(screen.getByRole('combobox')).toHaveValue('Banana');
+      });
     });
   });
 });

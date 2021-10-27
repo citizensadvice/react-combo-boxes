@@ -1,6 +1,10 @@
 export function optionise(rawOption, mapOption) {
-  const option = mapOption && rawOption != null ? mapOption(rawOption) : rawOption;
-  if (option !== null && typeof option === 'object') {
+  let option = rawOption;
+  if (option != null && typeof rawOption === 'object') {
+    option = mapOption ? mapOption(rawOption) : rawOption;
+  }
+
+  if (option != null && typeof option === 'object') {
     const { label, group, value, disabled, html, id } = option;
     return {
       label,
