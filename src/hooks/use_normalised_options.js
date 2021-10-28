@@ -80,7 +80,7 @@ export function useNormalisedOptions({
     const selected = [];
     values.forEach((v) => {
       const found = options.find((o) => o.identity === (v?.identity || ''));
-      if (found && !found.unselectable) {
+      if (found) {
         selected.push(found);
       }
     });

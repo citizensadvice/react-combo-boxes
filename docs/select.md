@@ -4,6 +4,8 @@ Generates an HTML `<select>`, but with a more convenient way of setting the opti
 
 This uses the same basic props as `<DropDown>` and `<ComboBox>` and they maybe used somewhat interchangeably.
 
+[`<Radios>`][radios] or [`<Checkboxes>`][checkboxes] are a practical alternative to a `<select>` that may users find easier to use.
+
 ## Usage
 
 This is a stateless controlled component.  You must respond to `onValue` or `onChange` to update the selected value.
@@ -69,3 +71,5 @@ Customise the rendering of an optgroup.  Defaults to `(props) => <optgroup {...p
 All other props are passed to the `<select>` element.
 
 [options]: options.md
+[radios]: radios.md
+[checkboxes]: checkboxes.md

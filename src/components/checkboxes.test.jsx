@@ -1,19 +1,19 @@
 /* eslint-disable testing-library/no-node-access */
 
-import React, { useState } from 'react';
+import React, { useState, createRef } from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Radios } from './radios';
+import { Checkboxes } from './checkboxes';
 
-function Test({ value: _value, ...props }) {
-  const [value, setValue] = useState(_value);
+function Test({ values: _values, ...props }) {
+  const [values, setValues] = useState(_values);
 
   return (
-    <Radios
+    <Checkboxes
       id="id"
       name="name"
-      value={value}
-      onValue={setValue}
+      values={values}
+      onValues={setValues}
       {...props}
     />
   );
@@ -23,64 +23,59 @@ describe('options', () => {
   describe('as array of strings', () => {
     const options = ['Apple', 'Banana', 'Orange'];
 
-    it('renders radio group', () => {
+    it('renders checkbox group', () => {
       const { container } = render(
         <Test options={options} />,
       );
       expect(container).toMatchSnapshot();
     });
 
-    it('renders radios with a selected value', () => {
+    it('renders checkboxes with selected values', () => {
       render(
-        <Test options={options} value="Orange" />,
+        <Test options={options} values={['Apple', 'Orange']} />,
       );
-      expect(screen.getByRole('radio', { checked: true })).toEqual(screen.getByRole('radio', { name: 'Orange' }));
+      expect(screen.getAllByRole('checkbox', { checked: true })).toEqual([
+        screen.getByRole('checkbox', { name: 'Apple' }),
+        screen.getByRole('checkbox', { name: 'Orange' }),
+      ]);
     });
 
-    it('triggers the onValue callback with the selected value', () => {
+    it('triggers the onValues callback', () => {
       const spy = jest.fn();
-      render(<Test options={options} onValue={spy} />);
-      userEvent.click(screen.getByRole('radio', { name: 'Banana' }));
-      expect(spy).toHaveBeenCalledWith('Banana');
+      render(<Test options={options} onValues={spy} values={['Apple']} />);
+      userEvent.click(screen.getByRole('checkbox', { name: 'Banana' }));
+      expect(spy).toHaveBeenCalledWith(['Apple', 'Banana']);
+    });
+
+    it('triggers the onValues callback when values are removed', () => {
+      const spy = jest.fn();
+      render(<Test options={options} onValues={spy} values={['Banana']} />);
+      userEvent.click(screen.getByRole('checkbox', { name: 'Banana' }));
+      expect(spy).toHaveBeenCalledWith([]);
     });
 
     it('updates when the value changes', () => {
       render(<Test options={options} />);
-      const option = screen.getByRole('radio', { name: 'Banana' });
-      userEvent.click(option);
-      expect(screen.getByRole('radio', { checked: true })).toEqual(option);
+      userEvent.click(screen.getByRole('checkbox', { name: 'Banana' }));
+      userEvent.click(screen.getByRole('checkbox', { name: 'Apple' }));
+      expect(screen.getAllByRole('checkbox', { checked: true })).toEqual([
+        screen.getByRole('checkbox', { name: 'Apple' }),
+        screen.getByRole('checkbox', { name: 'Banana' }),
+      ]);
     });
   });
 
   describe('options as array of numbers', () => {
     const options = [0, 1, 2, 3];
 
-    it('renders radio group', () => {
-      const { container } = render(
-        <Test options={options} />,
-      );
-      expect(container).toMatchSnapshot();
-    });
-
-    it('renders radios with a selected value', () => {
-      render(
-        <Test options={options} value={2} />,
-      );
-      expect(screen.getByRole('radio', { checked: true })).toEqual(screen.getByRole('radio', { name: '2' }));
-    });
-
-    it('triggers the onValue callback with the selected value', () => {
-      const spy = jest.fn();
-      render(<Test options={options} onValue={spy} />);
-      userEvent.click(screen.getByRole('radio', { name: '2' }));
-      expect(spy).toHaveBeenCalledWith(2);
-    });
-
     it('updates when the value changes', () => {
       render(<Test options={options} />);
-      const option = screen.getByRole('radio', { name: '2' });
-      userEvent.click(option);
-      expect(screen.getByRole('radio', { checked: true })).toEqual(option);
+      userEvent.click(screen.getByRole('checkbox', { name: '1' }));
+      userEvent.click(screen.getByRole('checkbox', { name: '2' }));
+      expect(screen.getAllByRole('checkbox', { checked: true })).toEqual([
+        screen.getByRole('checkbox', { name: '1' }),
+        screen.getByRole('checkbox', { name: '2' }),
+      ]);
     });
   });
 
@@ -88,54 +83,36 @@ describe('options', () => {
     describe('label', () => {
       const options = [{ label: 'Apple' }, { label: 'Banana' }, { label: 'Orange' }];
 
-      it('renders radio group', () => {
-        const { container } = render(
-          <Test options={options} />,
-        );
-        expect(container).toMatchSnapshot();
-      });
-
-      it('renders radios with a selected value', () => {
-        render(
-          <Test options={options} value={{ label: 'Banana' }} />,
-        );
-        expect(screen.getByRole('radio', { checked: true })).toEqual(screen.getByRole('radio', { name: 'Banana' }));
-      });
-
-      it('triggers the onValue callback with the selected value', () => {
-        const spy = jest.fn();
-        render(<Test options={options} onValue={spy} />);
-        userEvent.click(screen.getByRole('radio', { name: 'Banana' }));
-        expect(spy).toHaveBeenCalledWith({ label: 'Banana' });
-      });
-
       it('updates when the value changes', () => {
         render(<Test options={options} />);
-        const option = screen.getByRole('radio', { name: 'Banana' });
-        userEvent.click(option);
-        expect(screen.getByRole('radio', { checked: true })).toEqual(option);
+        userEvent.click(screen.getByRole('checkbox', { name: 'Banana' }));
+        userEvent.click(screen.getByRole('checkbox', { name: 'Orange' }));
+        expect(screen.getAllByRole('checkbox', { checked: true })).toEqual([
+          screen.getByRole('checkbox', { name: 'Banana' }),
+          screen.getByRole('checkbox', { name: 'Orange' }),
+        ]);
       });
     });
 
     describe('value', () => {
       it('is used as a options identity', () => {
         const options = [{ label: 'foo', value: 1 }, { label: 'foo', value: 2 }, { label: 'foo', value: 3 }];
-        render(<Test options={options} value={2} />);
-        expect(screen.getByRole('radio', { checked: true }).value).toEqual('2');
-        const radios = screen.getAllByRole('radio');
-        userEvent.click(radios[0]);
-        expect(screen.getByRole('radio', { checked: true })).toEqual(radios[0]);
+        render(<Test options={options} values={[2]} />);
+        expect(screen.getByRole('checkbox', { checked: true }).value).toEqual('2');
+        const checkboxes = screen.getAllByRole('checkbox');
+        userEvent.click(checkboxes[0]);
+        expect(screen.getAllByRole('checkbox', { checked: true })).toEqual([checkboxes[0], checkboxes[1]]);
       });
     });
 
     describe('id', () => {
       it('is used as a options identity', () => {
         const options = [{ label: 'foo', id: 1 }, { label: 'foo', id: 2 }, { label: 'foo', id: 3 }];
-        render(<Test options={options} value={2} />);
-        expect(screen.getByRole('radio', { checked: true }).value).toEqual('2');
-        const radios = screen.getAllByRole('radio');
-        userEvent.click(radios[0]);
-        expect(screen.getByRole('radio', { checked: true })).toEqual(radios[0]);
+        render(<Test options={options} values={[2]} />);
+        expect(screen.getByRole('checkbox', { checked: true }).value).toEqual('2');
+        const checkboxes = screen.getAllByRole('checkbox');
+        userEvent.click(checkboxes[0]);
+        expect(screen.getAllByRole('checkbox', { checked: true })).toEqual([checkboxes[0], checkboxes[1]]);
       });
     });
 
@@ -143,13 +120,13 @@ describe('options', () => {
       it('sets the disabled attribute', () => {
         const options = [{ label: 'foo', disabled: true }];
         render(<Test options={options} />);
-        expect(screen.getByRole('radio')).toBeDisabled();
+        expect(screen.getByRole('checkbox')).toBeDisabled();
       });
 
-      it('will display a disabled radio as checked', () => {
+      it('will display a disabled checkboz as checked', () => {
         const options = [{ label: 'foo', disabled: true }];
-        render(<Test options={options} value="foo" />);
-        expect(screen.getByRole('radio')).toBeChecked();
+        render(<Test options={options} values={['foo']} />);
+        expect(screen.getByRole('checkbox')).toBeChecked();
       });
     });
 
@@ -157,16 +134,32 @@ describe('options', () => {
       it('sets the description', () => {
         const options = [{ label: 'foo', description: 'foo bar' }];
         render(<Test options={options} />);
-        expect(screen.getByRole('radio')).toHaveAccessibleDescription('foo bar');
+        expect(screen.getByRole('checkbox')).toHaveAccessibleDescription('foo bar');
       });
     });
 
     describe('html', () => {
-      it('sets attributes on the radio', () => {
+      it('sets attributes on the checkbox', () => {
         const options = [{ label: 'foo', html: { 'data-foo': 'bar', className: 'class' } }];
         render(<Test options={options} />);
-        expect(screen.getByRole('radio')).toHaveAttribute('data-foo', 'bar');
-        expect(screen.getByRole('radio')).toHaveClass('class');
+        expect(screen.getByRole('checkbox')).toHaveAttribute('data-foo', 'bar');
+        expect(screen.getByRole('checkbox')).toHaveClass('class');
+      });
+
+      describe('ref', () => {
+        it('will use a callback ref', () => {
+          const ref = jest.fn();
+          const options = [{ label: 'foo', html: { ref } }];
+          render(<Test options={options} />);
+          expect(ref).toHaveBeenCalledWith(expect.any(HTMLInputElement));
+        });
+
+        it('will use an object ref', () => {
+          const ref = createRef();
+          const options = [{ label: 'foo', html: { ref } }];
+          render(<Test options={options} />);
+          expect(ref.current).toBeInstanceOf(HTMLInputElement);
+        });
       });
     });
 
@@ -186,9 +179,9 @@ describe('options', () => {
 
       it('selects an option', () => {
         render(<Test options={options} />);
-        const option = screen.getByRole('radio', { name: 'Citrus Lemon' });
+        const option = screen.getByRole('checkbox', { name: 'Citrus Lemon' });
         userEvent.click(option);
-        expect(screen.getByRole('radio', { checked: true })).toEqual(option);
+        expect(screen.getByRole('checkbox', { checked: true })).toEqual(option);
       });
     });
 
@@ -196,7 +189,7 @@ describe('options', () => {
       it('does not render them', () => {
         const options = [{ label: 'foo', 'data-foo': 'bar' }];
         render(<Test options={options} />);
-        expect(screen.getByRole('radio')).not.toHaveAttribute('data-foo', 'bar');
+        expect(screen.getByRole('checkbox')).not.toHaveAttribute('data-foo', 'bar');
       });
     });
   });
@@ -210,18 +203,18 @@ describe('options', () => {
           options={options}
           mapOption={({ name }) => ({ label: name })}
         />);
-        const option = screen.getByRole('radio', { name: 'Banana' });
+        const option = screen.getByRole('checkbox', { name: 'Banana' });
         userEvent.click(option);
-        expect(screen.getByRole('radio', { checked: true })).toEqual(option);
+        expect(screen.getByRole('checkbox', { checked: true })).toEqual(option);
       });
 
       it('accepts value as a primitive', () => {
         render(<Test
           options={options}
-          value="Banana"
+          values={['Banana']}
           mapOption={({ name }) => ({ label: name })}
         />);
-        expect(screen.getByRole('radio', { name: 'Banana', checked: true })).toBeInTheDocument();
+        expect(screen.getByRole('checkbox', { name: 'Banana', checked: true })).toBeInTheDocument();
       });
     });
 
@@ -233,38 +226,20 @@ describe('options', () => {
           options={options}
           mapOption={({ name }) => name}
         />);
-        const option = screen.getByRole('radio', { name: 'Banana' });
+        const option = screen.getByRole('checkbox', { name: 'Banana' });
         userEvent.click(option);
-        expect(screen.getByRole('radio', { checked: true })).toEqual(option);
+        expect(screen.getByRole('checkbox', { checked: true })).toEqual(option);
       });
 
       it('accepts value as a primitive', () => {
         render(<Test
           options={options}
-          value="Banana"
+          values={['Banana']}
           mapOption={({ name }) => name}
         />);
-        expect(screen.getByRole('radio', { name: 'Banana', checked: true })).toBeInTheDocument();
+        expect(screen.getByRole('checkbox', { name: 'Banana', checked: true })).toBeInTheDocument();
       });
     });
-  });
-});
-
-describe('required', () => {
-  it('sets required', () => {
-    const options = ['Apple'];
-    render(<Test options={options} required />);
-    const radio = screen.getByRole('radio');
-    expect(radio).toBeRequired();
-  });
-});
-
-describe('name', () => {
-  it('sets the name', () => {
-    const options = ['Apple'];
-    render(<Test options={options} name="foo" />);
-    const radio = screen.getByRole('radio');
-    expect(radio).toHaveProperty('name', 'foo');
   });
 });
 
@@ -272,15 +247,15 @@ describe('classPrefix', () => {
   it('when null removes the class', () => {
     const options = ['Apple'];
     render(<Test options={options} classPrefix={null} />);
-    const radio = screen.getByRole('radio');
-    expect(radio).not.toHaveClass();
+    const checkbox = screen.getByRole('checkbox');
+    expect(checkbox).not.toHaveClass();
   });
 
   it('sets the class', () => {
     const options = ['Apple'];
     render(<Test options={options} classPrefix="bar" />);
-    const radio = screen.getByRole('radio');
-    expect(radio).toHaveClass('bar__input');
+    const checkbox = screen.getByRole('checkbox');
+    expect(checkbox).toHaveClass('bar__input');
   });
 });
 
@@ -289,7 +264,7 @@ describe('renderWrapper', () => {
     const spy = jest.fn((props) => <div data-foo="bar" {...props} />);
     render(<Test options={['Apple']} renderWrapper={spy} test="foo" />);
 
-    expect(screen.getByRole('radio').parentNode).toHaveAttribute('data-foo', 'bar');
+    expect(screen.getByRole('checkbox').parentNode).toHaveAttribute('data-foo', 'bar');
     expect(spy).toHaveBeenCalledWith(
       expect.any(Object),
       {
@@ -310,7 +285,7 @@ describe('renderInput', () => {
     const spy = jest.fn((props) => <input data-foo="bar" {...props} />);
     render(<Test options={['Apple']} renderInput={spy} test="foo" />);
 
-    expect(screen.getByRole('radio')).toHaveAttribute('data-foo', 'bar');
+    expect(screen.getByRole('checkbox')).toHaveAttribute('data-foo', 'bar');
     expect(spy).toHaveBeenCalledWith(
       expect.any(Object),
       {
@@ -352,8 +327,8 @@ describe('renderDescription', () => {
     const spy = jest.fn((props) => <div data-foo="bar" {...props} />);
     render(<Test options={[{ label: 'Apple', description: 'fizz' }]} renderDescription={spy} test="foo" />);
 
-    const radio = screen.getByRole('radio');
-    expect(document.getElementById(radio.getAttribute('aria-describedby'))).toHaveAttribute('data-foo', 'bar');
+    const checkbox = screen.getByRole('checkbox');
+    expect(document.getElementById(checkbox.getAttribute('aria-describedby'))).toHaveAttribute('data-foo', 'bar');
     expect(spy).toHaveBeenCalledWith(
       expect.any(Object),
       {
@@ -374,8 +349,8 @@ describe('renderGroup', () => {
     const spy = jest.fn((props) => <div data-foo="bar" {...props} />);
     render(<Test options={[{ label: 'Apple', group: 'fizz' }]} renderGroup={spy} test="foo" />);
 
-    const radio = screen.getByRole('radio');
-    expect(radio.parentNode.parentNode).toHaveAttribute('data-foo', 'bar');
+    const checkbox = screen.getByRole('checkbox');
+    expect(checkbox.parentNode.parentNode).toHaveAttribute('data-foo', 'bar');
     expect(spy).toHaveBeenCalledWith(
       expect.any(Object),
       {
@@ -394,8 +369,8 @@ describe('renderGroupLabel', () => {
     const spy = jest.fn((props) => <div data-foo="bar" {...props} />);
     render(<Test options={[{ label: 'Apple', group: 'fizz' }]} renderGroupLabel={spy} test="foo" />);
 
-    const radio = screen.getByRole('radio');
-    expect(radio.parentNode.parentNode.firstElementChild).toHaveAttribute('data-foo', 'bar');
+    const checkbox = screen.getByRole('checkbox');
+    expect(checkbox.parentNode.parentNode.firstElementChild).toHaveAttribute('data-foo', 'bar');
     expect(spy).toHaveBeenCalledWith(
       expect.any(Object),
       {

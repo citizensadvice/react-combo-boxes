@@ -2,8 +2,9 @@
 
 ## 1.3.0
 
-- Added the radios component
-- Added multiple support to select
+- Added the `<Radios>` component
+- Added the `<Checkboxes>` component
+- Added `multiple` support to `<Select>` component
 
 ## 1.2.2
 

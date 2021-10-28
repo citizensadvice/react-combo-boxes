@@ -412,6 +412,20 @@ describe('multiple', () => {
       );
       expect(select).toHaveValue([]);
     });
+
+    it('updates options', () => {
+      const { rerender } = render(<TestMulitple
+        options={options}
+        values={['Banana', 'Pear']}
+      />);
+      const select = screen.getByRole('listbox');
+      expect(select).toHaveValue(['Banana']);
+      rerender(<TestMulitple
+        options={[...options, 'Pear']}
+        values={['Banana', 'Pear']}
+      />);
+      expect(select).toHaveValue(['Banana', 'Pear']);
+    });
   });
 
   describe('object options', () => {
@@ -429,6 +443,15 @@ describe('multiple', () => {
         [screen.getByRole('option', { name: 'Orange' }), screen.getByRole('option', { name: 'Apple' })],
       );
       expect(select).toHaveValue(['Apple', 'Banana', 'Orange']);
+    });
+
+    it('allows a disabled option to be marked as selected', () => {
+      render(<TestMulitple
+        options={[{ label: 'Banana', disabled: true }]}
+        values={['Banana']}
+      />);
+      const select = screen.getByRole('listbox');
+      expect(select).toHaveValue(['Banana']);
     });
   });
 });

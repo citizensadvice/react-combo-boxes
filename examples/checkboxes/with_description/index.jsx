@@ -1,25 +1,24 @@
 import React, { useState } from 'react';
-import { Radios } from '../../../src';
+import { Checkboxes } from '../../../src';
 
 const options = [
   { label: 'Apple' },
   { label: 'Orange' },
-  { label: 'Lemon', disabled: true },
+  { label: 'Lemon', description: 'Great for humous' },
   { label: 'Raspberry' },
   { label: 'Strawberry' },
 ];
 
 export function Example() {
-  const [value, setValue] = useState('Lemon');
+  const [values, setValues] = useState(null);
   return (
     <>
       <fieldset className="radios">
         <legend>What is your favourite fruit</legend>
-        <Radios
-          id="radios"
-          name="radios"
-          value={value}
-          onValue={setValue}
+        <Checkboxes
+          id="checkboxes"
+          values={values}
+          onValues={setValues}
           options={options}
         />
       </fieldset>
@@ -27,7 +26,7 @@ export function Example() {
         Current value
       </label>
       <output id="output">
-        {JSON.stringify(value, undefined, ' ')}
+        {JSON.stringify(values, undefined, ' ')}
       </output>
     </>
   );

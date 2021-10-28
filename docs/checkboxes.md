@@ -1,22 +1,21 @@
-# `<Radios>`
+# `<Checkboxes>`
 
-Generates a group of radios.
+Generates a group of checkboxes.
 
-Although radios are not a combo-box they are a good alternative.
-Many users find combo-boxes hard to use and radios perform a very
-similar function to a `<select>`.
+Although checkboxes are a practical alternative to a using a `<Select multiple />`
+and behave very like a list box.
 
 ## Usage
 
 This is a stateless controlled component.  You must respond to `onValue` to update the selected value.
 
 ```js
-const [value, setValue] = useState(initialValue);
+const [values, setValues] = useState(initialValues);
 
-<Radios
+<Checkboxes
   options={options}
-  value={value}
-  onValue={setValue}
+  values={values}
+  onValues={setValues}
 />
 ```
 
@@ -26,31 +25,27 @@ const [value, setValue] = useState(initialValue);
 
 The options to display. [See options][options].  
 
-Radios take an additional `description` property that allows an optional description to be added to a radio.
+Checkboxes take an additional `description` property that allows an optional description to be added to a checkbox.
 
 ### `mapOption: (option: any) => Option | string`
 
 Map an option into label, value, disabled and group. [See options][options]  
 
-### `value: any`
+### `values: Array<any>`
 
 The currently selected option
 
-### `onValue: (option: any) => void`
+### `onValues: (option: Array<any>) => void`
 
 Called with the selected option when a user selects an option.
 
-#### `required: boolean = false`
-
-Mark all the radios in the radio group as required.
-
-#### `classPrefix: string = "react-combo-boxes-radio'`
+#### `classPrefix: string = "react-combo-boxes-checkbox'`
 
 By default the component is built using BEM style class names.  This sets the prefix for all those classes.
 
 Set to falsey to remove the BEM classes.
 
-#### `groupClassPrefix: string = "react-combo-boxes-radio-group'`
+#### `groupClassPrefix: string = "react-combo-boxes-checkbox-group'`
 
 BEM class prefix for groups.
 
@@ -84,10 +79,10 @@ The render functions available are:
 
 | Name                         | Default value                     | Description                                                                         |
 | ----                         | ----                              | ----                                                                                |
-| `renderWrapper`              | `(props) => <div {...props} />`   | Renders the wrapper for each radio                                                  |
-| `renderInput`                | `(props) => <input {...props} />` | Renders the radio input                                                             |
-| `renderLabel`                | `(props) => <label {...props} />` | Renders label for a radio                                                           |
-| `renderDescription`          | `(props) => <div {...props} />`   | Renders the optional description for a radio                                        |
+| `renderWrapper`              | `(props) => <div {...props} />`   | Renders the wrapper for each checkbox                                               |
+| `renderInput`                | `(props) => <input {...props} />` | Renders the checkbox input                                                          |
+| `renderLabel`                | `(props) => <label {...props} />` | Renders label for a checkbox                                                        |
+| `renderDescription`          | `(props) => <div {...props} />`   | Renders the optional description for checkbox                                       |
 | `renderGroup`                | `(props) => <div {...props} />`   | Wraps a group of options                                                            |
 | `renderGroupLabel`           | `(props) => <div {...props} />`   | Renders the visible label for a group. This will be ignored by a screen-reader      |
 | `renderGroupAccessibleLabel` | `(props) => <span {...props} />`  | Renders the accessible label for a group.  This will be read out before each option |

@@ -43,8 +43,12 @@ nav {
     display: block;
     text-decoration: none;
     padding: 0.2em;
-    padding-left: 2em;
+    padding-left: 1em;
     color: $text-colour;
+  }
+
+  details a {
+    padding-left: 2em;
   }
 
   details details a {
@@ -176,7 +180,8 @@ kbd {
   cursor: pointer;
 }
 
-.react-combo-boxes-radio__label {
+.react-combo-boxes-radio__label,
+.react-combo-boxes-checkbox__label {
   display: inline;
   margin-left: 0.5em;
   cursor: pointer;
