@@ -3,10 +3,17 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Select } from './select';
 
-const SelectWrapper = forwardRef(({ value: initialValue, ...props }, ref) => {
+const Test = forwardRef(({ value: initialValue, ...props }, ref) => {
   const [value, setValue] = useState(initialValue);
   return (
     <Select value={value} onValue={setValue} {...props} ref={ref} />
+  );
+});
+
+const TestMulitple = forwardRef(({ values: initialValues, ...props }, ref) => {
+  const [values, setValues] = useState(initialValues);
+  return (
+    <Select multiple values={values} onValues={setValues} {...props} ref={ref} />
   );
 });
 
@@ -23,21 +30,21 @@ describe('options', () => {
 
     it('renders a select with a selected value', () => {
       render(
-        <SelectWrapper options={options} value="Orange" />,
+        <Test options={options} value="Orange" />,
       );
       expect(screen.getByRole('combobox')).toHaveValue('Orange');
     });
 
     it('triggers the onValue callback with the selected value', () => {
       const spy = jest.fn();
-      render(<SelectWrapper options={options} onValue={spy} />);
+      render(<Test options={options} onValue={spy} />);
       userEvent.selectOptions(screen.getByRole('combobox'), screen.getByRole('option', { name: 'Banana' }));
       expect(spy).toHaveBeenCalledWith('Banana');
     });
 
     it('triggers the onChange callback with the selected value', () => {
       const spy = jest.fn();
-      render(<SelectWrapper options={options} onChange={spy} />);
+      render(<Test options={options} onChange={spy} />);
       userEvent.selectOptions(screen.getByRole('combobox'), screen.getByRole('option', { name: 'Banana' }));
       expect(spy).toHaveBeenCalledWith(expect.objectContaining({
         target: expect.objectContaining({
@@ -48,14 +55,14 @@ describe('options', () => {
     });
 
     it('updates when the value changes', () => {
-      render(<SelectWrapper options={options} />);
+      render(<Test options={options} />);
       userEvent.selectOptions(screen.getByRole('combobox'), screen.getByRole('option', { name: 'Apple' }));
       expect(screen.getByRole('combobox')).toHaveValue('Apple');
     });
 
     it('triggers onValue when selecting an empty string', () => {
       const spy = jest.fn();
-      render(<SelectWrapper options={['foo', '']} onValue={spy} />);
+      render(<Test options={['foo', '']} onValue={spy} />);
       userEvent.selectOptions(screen.getByRole('combobox'), screen.getAllByRole('option')[1]);
       expect(spy).toHaveBeenCalledWith('');
     });
@@ -66,21 +73,21 @@ describe('options', () => {
 
     it('renders an select', () => {
       const { container } = render(
-        <SelectWrapper options={options} />,
+        <Test options={options} />,
       );
       expect(container).toMatchSnapshot();
     });
 
     it('triggers the onValue callback with the selected value', () => {
       const spy = jest.fn();
-      render(<SelectWrapper options={options} onValue={spy} />);
+      render(<Test options={options} onValue={spy} />);
       userEvent.selectOptions(screen.getByRole('combobox'), screen.getByRole('option', { name: '2' }));
       expect(spy).toHaveBeenCalledWith(2);
     });
 
     it('triggers the onChange callback with the selected value', () => {
       const spy = jest.fn((e) => e.persist());
-      render(<SelectWrapper options={options} onChange={spy} />);
+      render(<Test options={options} onChange={spy} />);
       userEvent.selectOptions(screen.getByRole('combobox'), screen.getByRole('option', { name: '2' }));
       expect(spy).toHaveBeenCalledWith(expect.objectContaining({
         target: expect.objectContaining({
@@ -91,14 +98,14 @@ describe('options', () => {
     });
 
     it('updates when the value changes', () => {
-      render(<SelectWrapper options={options} />);
+      render(<Test options={options} />);
       userEvent.selectOptions(screen.getByRole('combobox'), screen.getByRole('option', { name: '1' }));
       expect(screen.getByRole('combobox')).toHaveValue('1');
     });
 
     it('triggers onValue when selecting 0', () => {
       const spy = jest.fn();
-      render(<SelectWrapper options={options} onValue={spy} />);
+      render(<Test options={options} onValue={spy} />);
       userEvent.selectOptions(screen.getByRole('combobox'), screen.getByRole('option', { name: '0' }));
       expect(spy).toHaveBeenCalledWith(0);
     });
@@ -109,21 +116,21 @@ describe('options', () => {
 
     it('renders an select', () => {
       const { container } = render(
-        <SelectWrapper options={options} />,
+        <Test options={options} />,
       );
       expect(container).toMatchSnapshot();
     });
 
     it('triggers the onValue callback with the selected value', () => {
       const spy = jest.fn();
-      render(<SelectWrapper options={options} onValue={spy} />);
+      render(<Test options={options} onValue={spy} />);
       userEvent.selectOptions(screen.getByRole('combobox'), screen.getAllByRole('option')[1]);
       expect(spy).toHaveBeenCalledWith(null);
     });
 
     it('triggers the onChange callback with the selected value', () => {
       const spy = jest.fn((e) => e.persist());
-      render(<SelectWrapper options={options} value="foo" onChange={spy} />);
+      render(<Test options={options} value="foo" onChange={spy} />);
       userEvent.selectOptions(screen.getByRole('combobox'), screen.getAllByRole('option')[1]);
       expect(spy).toHaveBeenCalledWith(expect.objectContaining({
         target: expect.objectContaining({
@@ -134,7 +141,7 @@ describe('options', () => {
     });
 
     it('updates when the value changes', () => {
-      render(<SelectWrapper options={options} />);
+      render(<Test options={options} />);
       userEvent.selectOptions(screen.getByRole('combobox'), screen.getAllByRole('option')[1]);
       expect(screen.getByRole('combobox')).toHaveValue('');
     });
@@ -145,21 +152,21 @@ describe('options', () => {
 
     it('renders an select', () => {
       const { container } = render(
-        <SelectWrapper options={options} />,
+        <Test options={options} />,
       );
       expect(container).toMatchSnapshot();
     });
 
     it('triggers the onValue callback with the selected value', () => {
       const spy = jest.fn();
-      render(<SelectWrapper options={options} onValue={spy} />);
+      render(<Test options={options} onValue={spy} />);
       userEvent.selectOptions(screen.getByRole('combobox'), screen.getAllByRole('option')[1]);
       expect(spy).toHaveBeenCalledWith(undefined);
     });
 
     it('triggers the onChange callback with the selected value', () => {
       const spy = jest.fn((e) => e.persist());
-      render(<SelectWrapper options={options} onChange={spy} />);
+      render(<Test options={options} onChange={spy} />);
       userEvent.selectOptions(screen.getByRole('combobox'), screen.getAllByRole('option')[1]);
       expect(spy).toHaveBeenCalledWith(expect.objectContaining({
         target: expect.objectContaining({
@@ -170,7 +177,7 @@ describe('options', () => {
     });
 
     it('updates when the value changes', () => {
-      render(<SelectWrapper options={options} />);
+      render(<Test options={options} />);
       userEvent.selectOptions(screen.getByRole('combobox'), screen.getAllByRole('option')[1]);
       expect(screen.getByRole('combobox')).toHaveValue('');
     });
@@ -182,21 +189,21 @@ describe('options', () => {
 
       it('renders an select', () => {
         const { container } = render(
-          <SelectWrapper options={options} />,
+          <Test options={options} />,
         );
         expect(container).toMatchSnapshot();
       });
 
       it('triggers the onValue callback with the selected value', () => {
         const spy = jest.fn();
-        render(<SelectWrapper options={options} onValue={spy} />);
+        render(<Test options={options} onValue={spy} />);
         userEvent.selectOptions(screen.getByRole('combobox'), screen.getByRole('option', { name: 'Banana' }));
         expect(spy).toHaveBeenCalledWith({ label: 'Banana' });
       });
 
       it('triggers the onChange callback with the selected value', () => {
         const spy = jest.fn((e) => e.persist());
-        render(<SelectWrapper options={options} onChange={spy} />);
+        render(<Test options={options} onChange={spy} />);
         userEvent.selectOptions(screen.getByRole('combobox'), screen.getByRole('option', { name: 'Banana' }));
         expect(spy).toHaveBeenCalledWith(expect.objectContaining({
           target: expect.objectContaining({
@@ -207,7 +214,7 @@ describe('options', () => {
       });
 
       it('updates when the value changes', () => {
-        render(<SelectWrapper options={options} />);
+        render(<Test options={options} />);
         userEvent.selectOptions(screen.getByRole('combobox'), screen.getByRole('option', { name: 'Banana' }));
         expect(screen.getByRole('combobox')).toHaveValue('Banana');
       });
@@ -217,7 +224,7 @@ describe('options', () => {
       it('is used as a options identity', () => {
         const options = [{ label: 'foo', value: 1 }, { label: 'foo', value: 2 }, { label: 'foo', value: 3 }];
         const spy = jest.fn();
-        render(<SelectWrapper options={options} value={2} onValue={spy} />);
+        render(<Test options={options} value={2} onValue={spy} />);
         expect(screen.getByRole('combobox')).toHaveValue('2');
         userEvent.selectOptions(screen.getByRole('combobox'), screen.getAllByRole('option')[2]);
         expect(spy).toHaveBeenCalledWith({ label: 'foo', value: 3 });
@@ -228,7 +235,7 @@ describe('options', () => {
       it('is used as a options identity', () => {
         const options = [{ label: 'foo', id: 1 }, { label: 'foo', id: 2 }, { label: 'foo', id: 3 }];
         const spy = jest.fn();
-        render(<SelectWrapper options={options} value={2} onValue={spy} />);
+        render(<Test options={options} value={2} onValue={spy} />);
         expect(screen.getByRole('combobox')).toHaveValue('2');
         userEvent.selectOptions(screen.getByRole('combobox'), screen.getAllByRole('option')[2]);
         expect(spy).toHaveBeenCalledWith({ label: 'foo', id: 3 });
@@ -238,7 +245,7 @@ describe('options', () => {
     describe('disabled', () => {
       it('sets the disabled attribute', () => {
         const options = [{ label: 'foo', disabled: true }];
-        render(<SelectWrapper options={options} />);
+        render(<Test options={options} />);
         expect(screen.getAllByRole('option')[0]).toBeDisabled();
       });
     });
@@ -246,7 +253,7 @@ describe('options', () => {
     describe('html', () => {
       it('sets attributes on the element', () => {
         const options = [{ label: 'foo', html: { 'data-foo': 'bar', className: 'class' } }];
-        render(<SelectWrapper options={options} />);
+        render(<Test options={options} />);
         expect(screen.getByRole('option')).toHaveAttribute('data-foo', 'bar');
         expect(screen.getByRole('option')).toHaveClass('class');
       });
@@ -262,20 +269,20 @@ describe('options', () => {
       ];
 
       it('renders grouped options', () => {
-        const { container } = render(<SelectWrapper options={options} />);
+        const { container } = render(<Test options={options} />);
         expect(container).toMatchSnapshot();
       });
 
       it('triggers the onValue callback with the selected value', () => {
         const spy = jest.fn();
-        render(<SelectWrapper options={options} onValue={spy} />);
+        render(<Test options={options} onValue={spy} />);
         userEvent.selectOptions(screen.getByRole('combobox'), screen.getByRole('option', { name: 'Lemon' }));
         expect(spy).toHaveBeenCalledWith({ label: 'Lemon', group: 'Citrus' });
       });
 
       it('triggers the onChange callback with the selected value', () => {
         const spy = jest.fn((e) => e.persist());
-        render(<SelectWrapper options={options} onChange={spy} />);
+        render(<Test options={options} onChange={spy} />);
         userEvent.selectOptions(screen.getByRole('combobox'), screen.getByRole('option', { name: 'Lemon' }));
         expect(spy).toHaveBeenCalledWith(expect.objectContaining({
           target: expect.objectContaining({
@@ -286,7 +293,7 @@ describe('options', () => {
       });
 
       it('updates when the value changes', () => {
-        render(<SelectWrapper options={options} />);
+        render(<Test options={options} />);
         userEvent.selectOptions(screen.getByRole('combobox'), screen.getByRole('option', { name: 'Lemon' }));
         expect(screen.getByRole('combobox')).toHaveValue('Lemon');
       });
@@ -295,7 +302,7 @@ describe('options', () => {
     describe('other attributes', () => {
       it('does not render them', () => {
         const options = [{ label: 'foo', 'data-foo': 'bar' }];
-        render(<SelectWrapper options={options} />);
+        render(<Test options={options} />);
         expect(screen.getByRole('combobox')).not.toHaveAttribute('data-foo', 'bar');
       });
     });
@@ -307,7 +314,7 @@ describe('options', () => {
 
       it('maps options', () => {
         const spy = jest.fn();
-        render(<SelectWrapper
+        render(<Test
           options={options}
           onValue={spy}
           mapOption={({ name }) => ({ label: name })}
@@ -317,7 +324,7 @@ describe('options', () => {
       });
 
       it('selects a mapped option', () => {
-        render(<SelectWrapper
+        render(<Test
           options={options}
           value={{ name: 'Banana' }}
           mapOption={({ name }) => ({ label: name })}
@@ -328,7 +335,7 @@ describe('options', () => {
       });
 
       it('accepts value as a primative', () => {
-        render(<SelectWrapper
+        render(<Test
           options={options}
           value="Banana"
           mapOption={({ name }) => ({ label: name })}
@@ -342,7 +349,7 @@ describe('options', () => {
 
       it('maps options', () => {
         const spy = jest.fn();
-        render(<SelectWrapper
+        render(<Test
           options={options}
           onValue={spy}
           mapOption={({ name }) => name}
@@ -352,7 +359,7 @@ describe('options', () => {
       });
 
       it('selects a mapped option', () => {
-        render(<SelectWrapper
+        render(<Test
           options={options}
           value={{ name: 'Banana' }}
           mapOption={({ name }) => name}
@@ -363,7 +370,7 @@ describe('options', () => {
       });
 
       it('accepts value as a primative', () => {
-        render(<SelectWrapper
+        render(<Test
           options={options}
           value="Banana"
           mapOption={({ name }) => name}
@@ -374,17 +381,69 @@ describe('options', () => {
   });
 });
 
+describe('multiple', () => {
+  describe('string options', () => {
+    const options = ['Apple', 'Banana', 'Orange', 'Grape'];
+
+    it('allows multiple options to be selected', () => {
+      render(<TestMulitple
+        options={options}
+        values={['Banana']}
+      />);
+      const select = screen.getByRole('listbox');
+      expect(select).toHaveValue(['Banana']);
+      userEvent.selectOptions(
+        select,
+        [screen.getByRole('option', { name: 'Orange' }), screen.getByRole('option', { name: 'Apple' })],
+      );
+      expect(select).toHaveValue(['Apple', 'Banana', 'Orange']);
+    });
+
+    it('allows options to be deselected', () => {
+      render(<TestMulitple
+        options={options}
+        values={['Banana']}
+      />);
+      const select = screen.getByRole('listbox');
+      expect(select).toHaveValue(['Banana']);
+      userEvent.deselectOptions(
+        select,
+        [screen.getByRole('option', { name: 'Banana' })],
+      );
+      expect(select).toHaveValue([]);
+    });
+  });
+
+  describe('object options', () => {
+    const options = [{ label: 'Apple' }, { label: 'Banana' }, { label: 'Orange' }];
+
+    it('allows multiple options to be selected', () => {
+      render(<TestMulitple
+        options={options}
+        values={['Banana']}
+      />);
+      const select = screen.getByRole('listbox');
+      expect(select).toHaveValue(['Banana']);
+      userEvent.selectOptions(
+        select,
+        [screen.getByRole('option', { name: 'Orange' }), screen.getByRole('option', { name: 'Apple' })],
+      );
+      expect(select).toHaveValue(['Apple', 'Banana', 'Orange']);
+    });
+  });
+});
+
 describe('placeholderOption', () => {
   const options = ['Apple', 'Banana', 'Orange'];
 
   it('renders a placeholder option', () => {
-    render(<SelectWrapper options={options} placeholderOption="Please select…" />);
+    render(<Test options={options} placeholderOption="Please select…" />);
     expect(screen.getAllByRole('option')[0]).toHaveTextContent('Please select…');
     expect(screen.getByRole('combobox')).toHaveValue('');
   });
 
   it('renders with a selected value', () => {
-    render(<SelectWrapper options={options} placeholderOption="Please select…" value="Orange" />);
+    render(<Test options={options} placeholderOption="Please select…" value="Orange" />);
     expect(screen.getByRole('combobox')).toHaveValue('Orange');
   });
 });
@@ -394,7 +453,7 @@ describe('renderOption', () => {
 
   it('allows additional props to be added to all options', () => {
     render(
-      <SelectWrapper options={options} renderOption={(props) => <option {...props} data-foo="bar" />} />,
+      <Test options={options} renderOption={(props) => <option {...props} data-foo="bar" />} />,
     );
     screen.getAllByRole('option').forEach((option) => {
       expect(option).toHaveAttribute('data-foo', 'bar');
@@ -404,7 +463,7 @@ describe('renderOption', () => {
   it('is called with context and props', () => {
     const spy = jest.fn();
     render(
-      <SelectWrapper options={options} renderOption={spy} test="foo" />,
+      <Test options={options} renderOption={spy} test="foo" />,
     );
 
     expect(spy).toHaveBeenLastCalledWith(
@@ -429,7 +488,7 @@ describe('renderOptGroup', () => {
 
   it('allows additional props to be added to all options', () => {
     render(
-      <SelectWrapper options={options} renderOptGroup={(props) => <optgroup {...props} data-foo="bar" />} />,
+      <Test options={options} renderOptGroup={(props) => <optgroup {...props} data-foo="bar" />} />,
     );
     screen.getAllByRole('group').forEach((option) => {
       expect(option).toHaveAttribute('data-foo', 'bar');
@@ -439,7 +498,7 @@ describe('renderOptGroup', () => {
   it('is called with state and props', () => {
     const spy = jest.fn();
     render(
-      <SelectWrapper options={options} renderOptGroup={spy} test="foo" />,
+      <Test options={options} renderOptGroup={spy} test="foo" />,
     );
 
     expect(spy).toHaveBeenLastCalledWith(
@@ -457,7 +516,7 @@ describe('additional props', () => {
 
   it('includes them on the select', () => {
     render(
-      <SelectWrapper options={options} required data-foo="bar" />,
+      <Test options={options} required data-foo="bar" />,
     );
     expect(screen.getByRole('combobox')).toBeRequired();
     expect(screen.getByRole('combobox')).toHaveAttribute('data-foo', 'bar');
@@ -468,7 +527,7 @@ describe('ref', () => {
   it('references the select for an object ref', () => {
     const ref = { current: null };
     render((
-      <SelectWrapper options={['foo']} ref={ref} />
+      <Test options={['foo']} ref={ref} />
     ));
     expect(ref.current).toEqual(screen.getByRole('combobox'));
   });
@@ -479,7 +538,7 @@ describe('ref', () => {
       value = node;
     };
     render((
-      <SelectWrapper options={['foo']} ref={ref} />
+      <Test options={['foo']} ref={ref} />
     ));
     expect(value).toEqual(screen.getByRole('combobox'));
   });

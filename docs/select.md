@@ -36,13 +36,25 @@ Map an option into label, value, disabled and group. [See options][options]
 
 The currently selected option
 
+### `values: Array<any>`
+
+The currently selected options when using `multiple`.
+
 ### `onValue: (option: any) => void`
 
 Called with the selected option when a user selects an option.
 
+### `onValues: (options: Array<any>) => void`
+
+Called with the selected options when a user selects an option.
+
 ### `ref`
 
 The ref will be passed to the `<select>` element.
+
+### `multiple: boolean = false`
+
+Allow multiple options to be selected.  If this option is selected use `values` to set the values and `onValues` to get the values.
 
 ### `renderOption: (props) => React.ReactNode`
 

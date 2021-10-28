@@ -3,6 +3,7 @@
 ## 1.3.0
 
 - Added the radios component
+- Added multiple support to select
 
 ## 1.2.2
 

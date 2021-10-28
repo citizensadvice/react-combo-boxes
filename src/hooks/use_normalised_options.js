@@ -18,7 +18,7 @@ import { UniqueIdGenerator } from '../helpers/unique_id_generator';
  *   - html
  */
 export function useNormalisedOptions({
-  id, options: rawOptions, placeholderOption, value: rawValue, mapOption,
+  id, options: rawOptions, placeholderOption, value: rawValue, values: rawValues, mapOption,
 }, { mustHaveSelection = false } = {}) {
   const options = useMemo(() => {
     const idGenerator = new UniqueIdGenerator();
@@ -72,10 +72,27 @@ export function useNormalisedOptions({
     return options.find((o) => !o.unselectable);
   }, [value, options, mustHaveSelection]);
 
+  const values = useMemo(() => (
+    (rawValues || []).map((v) => (v !== null ? optionise(v, mapOption) : v))
+  ), [rawValues, mapOption]);
+
+  const selectedOptions = useMemo(() => {
+    const selected = [];
+    values.forEach((v) => {
+      const found = options.find((o) => o.identity === (v?.identity || ''));
+      if (found && !found.unselectable) {
+        selected.push(found);
+      }
+    });
+    return selected;
+  }, [values, options]);
+
   return {
     options,
     value,
     selectedOption,
+    values,
+    selectedOptions,
     nullOptions: rawOptions == null,
   };
 }
