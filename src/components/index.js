@@ -5,4 +5,5 @@ export { ComboBox } from './combo_box';
 export { ComboBoxTable } from './combo_box_table';
 export { Radios } from './radios';
 export { Checkboxes } from './checkboxes';
+export { MenuButton } from './menu_button';
 export * from './highlighters';
