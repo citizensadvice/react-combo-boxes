@@ -2818,10 +2818,9 @@ describe('ref', () => {
 describe('renderWrapper', () => {
   it('allows the wrapper to be replaced', () => {
     const { container } = render(
-      <ComboBoxWrapper options={['foo']} renderWrapper={(props) => <dl data-foo="bar" {...props} />} />,
+      <ComboBoxWrapper options={['foo']} renderWrapper={(props) => <div data-foo="bar" {...props} />} />,
     );
     const wrapper = container.firstChild;
-    expect(wrapper.tagName).toEqual('DL');
     expect(wrapper).toHaveAttribute('data-foo', 'bar');
   });
 
@@ -2841,7 +2840,6 @@ describe('renderWrapper', () => {
         currentOption: null,
         notFound: false,
         suggestedOption: null,
-        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -2851,9 +2849,8 @@ describe('renderWrapper', () => {
 describe('renderInput', () => {
   it('allows the input to be replaced', () => {
     render(
-      <ComboBoxWrapper options={['foo']} renderInput={(props) => <textarea data-foo="bar" {...props} />} />,
+      <ComboBoxWrapper options={['foo']} renderInput={(props) => <input data-foo="bar" {...props} />} />,
     );
-    expect(screen.getByRole('combobox').tagName).toEqual('TEXTAREA');
     expect(screen.getByRole('combobox')).toHaveAttribute('data-foo', 'bar');
   });
 
@@ -2873,7 +2870,6 @@ describe('renderInput', () => {
         currentOption: null,
         notFound: false,
         suggestedOption: null,
-        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -2883,10 +2879,9 @@ describe('renderInput', () => {
 describe('renderListBox', () => {
   it('allows the list box to be replaced', () => {
     render(
-      <ComboBoxWrapper options={['foo']} renderListBox={(props) => <dl data-foo="bar" {...props} />} />,
+      <ComboBoxWrapper options={['foo']} renderListBox={(props) => <div data-foo="bar" {...props} />} />,
     );
     screen.getByRole('combobox').focus();
-    expect(screen.getByRole('listbox').tagName).toEqual('DL');
     expect(screen.getByRole('listbox')).toHaveAttribute('data-foo', 'bar');
   });
 
@@ -2906,7 +2901,6 @@ describe('renderListBox', () => {
         currentOption: null,
         notFound: false,
         suggestedOption: null,
-        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -2916,11 +2910,10 @@ describe('renderListBox', () => {
 describe('renderGroup', () => {
   it('allows the group to be replaced', () => {
     render(
-      <ComboBoxWrapper options={[{ label: 'foo', group: 'bar' }]} renderGroup={(props) => <dl data-foo="bar" {...props} />} />,
+      <ComboBoxWrapper options={[{ label: 'foo', group: 'bar' }]} renderGroup={(props) => <div data-foo="bar" {...props} />} />,
     );
     screen.getByRole('combobox').focus();
     const group = screen.getByRole('listbox').firstChild;
-    expect(group.tagName).toEqual('DL');
     expect(group).toHaveAttribute('data-foo', 'bar');
   });
 
@@ -2941,9 +2934,7 @@ describe('renderGroup', () => {
         currentOption: null,
         notFound: false,
         suggestedOption: null,
-        group: expect.objectContaining({ label: 'bar' }),
-        groupChildren: expect.any(Array),
-        [DISPATCH]: expect.any(Function),
+        group: expect.objectContaining({ label: 'bar', children: expect.any(Array) }),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -2953,12 +2944,11 @@ describe('renderGroup', () => {
 describe('renderGroupLabel', () => {
   it('allows the group label to be replaced', () => {
     render(
-      <ComboBoxWrapper options={[{ label: 'foo', group: 'bar' }]} renderGroupLabel={(props) => <dl data-foo="bar" {...props} />} />,
+      <ComboBoxWrapper options={[{ label: 'foo', group: 'bar' }]} renderGroupLabel={(props) => <div data-foo="bar" {...props} />} />,
     );
     screen.getByRole('combobox').focus();
 
     const group = screen.getByRole('listbox').firstChild;
-    expect(group.tagName).toEqual('DL');
     expect(group).toHaveAttribute('data-foo', 'bar');
   });
 
@@ -2980,7 +2970,6 @@ describe('renderGroupLabel', () => {
         currentOption: null,
         suggestedOption: null,
         group: expect.objectContaining({ label: 'bar' }),
-        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -2990,10 +2979,9 @@ describe('renderGroupLabel', () => {
 describe('renderOption', () => {
   it('allows the option to be replaced', () => {
     render(
-      <ComboBoxWrapper options={['foo']} renderOption={(props) => <dl data-foo="bar" {...props} />} />,
+      <ComboBoxWrapper options={['foo']} renderOption={(props) => <div data-foo="bar" {...props} />} />,
     );
     screen.getByRole('combobox').focus();
-    expect(screen.getByRole('option').tagName).toEqual('DL');
     expect(screen.getByRole('option')).toHaveAttribute('data-foo', 'bar');
   });
 
@@ -3016,7 +3004,6 @@ describe('renderOption', () => {
         option: expect.objectContaining({ label: 'foo' }),
         selected: false,
         group: undefined,
-        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -3026,10 +3013,9 @@ describe('renderOption', () => {
 describe('renderGroupAccessibleLabel', () => {
   it('allows the group accessible label to be replaced', () => {
     render(
-      <ComboBoxWrapper options={[{ label: 'foo', group: 'bar' }]} renderGroupAccessibleLabel={(props) => <dl data-foo="bar" {...props} />} />,
+      <ComboBoxWrapper options={[{ label: 'foo', group: 'bar' }]} renderGroupAccessibleLabel={(props) => <div data-foo="bar" {...props} />} />,
     );
     screen.getByRole('combobox').focus();
-    expect(screen.getByRole('option').firstChild.tagName).toEqual('DL');
     expect(screen.getByRole('option').firstChild).toHaveAttribute('data-foo', 'bar');
   });
 
@@ -3051,8 +3037,9 @@ describe('renderGroupAccessibleLabel', () => {
         notFound: false,
         currentOption: null,
         suggestedOption: null,
+        selected: false,
+        option: expect.objectContaining({ label: 'foo' }),
         group: expect.objectContaining({ label: 'bar' }),
-        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -3062,10 +3049,9 @@ describe('renderGroupAccessibleLabel', () => {
 describe('renderValue', () => {
   it('allows the value to be replaced', () => {
     render(
-      <ComboBoxWrapper options={['foo']} renderValue={(props) => <dl data-foo="bar" {...props} />} />,
+      <ComboBoxWrapper options={['foo']} renderValue={(props) => <div data-foo="bar" {...props} />} />,
     );
     screen.getByRole('combobox').focus();
-    expect(screen.getByRole('option').firstChild.tagName).toEqual('DL');
     expect(screen.getByRole('option').firstChild).toHaveAttribute('data-foo', 'bar');
   });
 
@@ -3088,7 +3074,6 @@ describe('renderValue', () => {
         option: expect.objectContaining({ label: 'foo' }),
         selected: false,
         group: undefined,
-        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -3098,10 +3083,9 @@ describe('renderValue', () => {
 describe('renderDownArrow', () => {
   it('allows the down arrow to be replaced', () => {
     render(
-      <ComboBoxWrapper options={['foo']} renderDownArrow={(props) => <dl data-foo="bar" {...props} />} />,
+      <ComboBoxWrapper options={['foo']} renderDownArrow={(props) => <div data-foo="bar" {...props} />} />,
     );
     const arrow = document.getElementById('id_down_arrow');
-    expect(arrow.tagName).toEqual('DL');
     expect(arrow).toHaveAttribute('data-foo', 'bar');
   });
 
@@ -3121,7 +3105,6 @@ describe('renderDownArrow', () => {
         currentOption: null,
         notFound: false,
         suggestedOption: null,
-        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -3131,10 +3114,9 @@ describe('renderDownArrow', () => {
 describe('renderClearButton', () => {
   it('allows the clear button to be replaced', () => {
     render(
-      <ComboBoxWrapper options={['foo']} value="foo" renderClearButton={(props) => <dl data-foo="bar" {...props} />} />,
+      <ComboBoxWrapper options={['foo']} value="foo" renderClearButton={(props) => <div data-foo="bar" {...props} />} />,
     );
     const button = screen.getByRole('button', { name: 'Clear foo' });
-    expect(button.tagName).toEqual('DL');
     expect(button).toHaveAttribute('data-foo', 'bar');
   });
 
@@ -3154,7 +3136,6 @@ describe('renderClearButton', () => {
         currentOption: null,
         notFound: false,
         suggestedOption: null,
-        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -3164,10 +3145,9 @@ describe('renderClearButton', () => {
 describe('renderAriaDescription', () => {
   it('allows the clear button to be replaced', () => {
     render(
-      <ComboBoxWrapper options={['foo']} value="foo" renderAriaDescription={(props) => <dl data-foo="bar" {...props} />} />,
+      <ComboBoxWrapper options={['foo']} value="foo" renderAriaDescription={(props) => <div data-foo="bar" {...props} />} />,
     );
     const description = document.getElementById('id_aria_description');
-    expect(description.tagName).toEqual('DL');
     expect(description).toHaveAttribute('data-foo', 'bar');
   });
 
@@ -3187,7 +3167,6 @@ describe('renderAriaDescription', () => {
         currentOption: null,
         notFound: false,
         suggestedOption: null,
-        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -3218,7 +3197,6 @@ describe('renderNotFound', () => {
         currentOption: null,
         notFound: false,
         suggestedOption: null,
-        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );

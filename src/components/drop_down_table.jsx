@@ -1,13 +1,7 @@
-import React, { Fragment, forwardRef, useMemo } from 'react';
+import React, { forwardRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { DropDown } from './drop_down';
-import { renderListBox } from './list_box_table/render_list_box';
-import { renderGroupLabel } from './list_box_table/render_group_label';
-import { renderOption } from './list_box_table/render_option';
-
-function renderNothing() {
-  return null;
-}
+import { listBoxTableRenderer } from '../helpers/list_box_table_renderer';
 
 export const DropDownTable = forwardRef(({ columns: rawColumns, ...props }, ref) => {
   const columns = useMemo(() => (
@@ -26,10 +20,6 @@ export const DropDownTable = forwardRef(({ columns: rawColumns, ...props }, ref)
       ref={ref}
       {...props}
       columns={columns}
-      renderValue={renderNothing}
-      renderListBox={renderListBox}
-      renderOption={renderOption}
-      renderGroupLabel={renderGroupLabel}
     />
   );
 });
@@ -43,27 +33,13 @@ DropDownTable.propTypes = {
       html: PropTypes.object,
     }),
   ])).isRequired,
-  renderTableWrapper: PropTypes.func,
-  renderTable: PropTypes.func,
-  renderTableHeaderCell: PropTypes.func,
-  renderTableGroupRow: PropTypes.func,
-  renderTableGroupHeaderCell: PropTypes.func,
-  renderTableRow: PropTypes.func,
-  renderTableCellColumnAccessibleLabel: PropTypes.func,
-  renderTableCell: PropTypes.func,
-  renderColumnValue: PropTypes.func,
+  listBoxRenderer: PropTypes.func,
+  renderListBoxWrapper: PropTypes.func,
 };
 
 DropDownTable.defaultProps = {
-  renderTableWrapper: (props) => <div {...props} />,
-  renderTable: (props) => <table {...props} />,
-  renderTableHeaderCell: (props) => <th {...props} />,
-  renderTableGroupRow: (props) => <tr {...props} />,
-  renderTableGroupHeaderCell: (props) => <th {...props} />,
-  renderTableRow: (props) => <tr {...props} />,
-  renderTableCellColumnAccessibleLabel: (props) => <span {...props} />,
-  renderTableCell: (props) => <td {...props} />,
-  renderColumnValue: (props) => <Fragment {...props} />,
+  listBoxRenderer: listBoxTableRenderer,
+  renderListBoxWrapper: (props) => <div {...props} />,
 };
 
 DropDownTable.displayName = 'DropDownTable';

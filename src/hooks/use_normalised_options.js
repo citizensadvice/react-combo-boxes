@@ -18,8 +18,14 @@ import { UniqueIdGenerator } from '../helpers/unique_id_generator';
  *   - html
  */
 export function useNormalisedOptions({
-  id, options: rawOptions, placeholderOption, value: rawValue, values: rawValues, mapOption,
-}, { mustHaveSelection = false } = {}) {
+  id,
+  options: rawOptions,
+  placeholderOption,
+  value: rawValue,
+  values: rawValues,
+  mapOption,
+  mustHaveSelection,
+}) {
   const options = useMemo(() => {
     const idGenerator = new UniqueIdGenerator();
     const groups = new Map();

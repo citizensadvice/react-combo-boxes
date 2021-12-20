@@ -1,32 +1,27 @@
-import React, { useRef, useEffect, useLayoutEffect, Fragment, useMemo, forwardRef, useState, useCallback } from 'react';
+import React, { useRef, useEffect, useLayoutEffect, Fragment, useMemo, forwardRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useThunkReducer as useReducer } from '../hooks/use_thunk_reducer';
-import { reducer } from './combo_box/reducer';
-import { initialState } from './combo_box/initial_state';
-import {
-  onKeyDown, onChange, onFocus, onInputMouseUp, onClearValue, onBlur,
-  onClickOption, onOptionsChanged, onValueChanged, onFocusInput, onFocusOption,
-} from './combo_box/actions';
-import { useNormalisedOptions } from '../hooks/use_normalised_options';
-import { useOnBlur } from '../hooks/use_on_blur';
-import { useMounted } from '../hooks/use_mounted';
 import { makeBEMClass } from '../helpers/make_bem_class';
 import { joinTokens } from '../helpers/join_tokens';
 import { stringOrArray } from '../validators/string_or_array';
 import { findOption } from '../helpers/find_option';
 import { useCombineRefs } from '../hooks/use_combine_refs';
-import { ListBox } from './list_box';
 import { AriaLiveMessage } from './aria_live_message';
 import { classPrefix as defaultClassPrefix } from '../constants/class_prefix';
 import { visuallyHiddenClassName } from '../constants/visually_hidden_class_name';
 import { scrollIntoView } from '../layout/scroll_into_view';
-import { DISPATCH } from '../constants/dispatch';
+import { listBoxRenderer as defaultListBoxRenderer } from '../helpers/list_box_renderer';
+import { useComboBox } from '../hooks/use_combo_box';
 
 export const ComboBox = forwardRef((rawProps, ref) => {
-  const optionisedProps = Object.freeze({
-    ...rawProps,
-    ...useNormalisedOptions(rawProps, { mustHaveSelection: rawProps.selectOnly }),
-  });
+  const {
+    wrapperProps,
+    inputProps,
+    listBoxProps,
+    clearButtonProps,
+    state,
+    props: normalisedProps,
+  } = useComboBox({ ...rawProps, ref });
+
   const {
     'aria-describedby': ariaDescribedBy,
     'aria-invalid': ariaInvalid,
@@ -39,21 +34,16 @@ export const ComboBox = forwardRef((rawProps, ref) => {
     assistiveHint,
     busy,
     busyDebounce,
-    className,
     classPrefix,
     disabled,
     foundOptionsMessage,
     id,
     inputMode,
-    managedFocus,
+    listBoxRenderer,
     maxLength,
     minLength,
     notFoundMessage,
     nullOptions,
-    onBlur: passedOnBlur,
-    onFocus: passedOnFocus,
-    onLayoutFocusedOption,
-    onLayoutListBox,
     onSearch,
     options,
     pattern,
@@ -66,58 +56,22 @@ export const ComboBox = forwardRef((rawProps, ref) => {
     renderNotFound,
     renderWrapper,
     required,
-    selectedOption,
     selectedOptionMessage,
     showSelectedLabel,
     size,
     spellCheck,
-    tabBetweenOptions,
     value,
     visuallyHiddenClassName: providedVisuallyHiddenClassName,
-  } = optionisedProps;
-
-  const comboRef = useRef();
-  const inputRef = useRef();
-  const listRef = useRef();
-  const focusedRef = useRef();
-  const lastKeyRef = useRef();
-  const busyTimeoutRef = useRef();
-  const mounted = useMounted();
-
-  const [state, dispatch] = useReducer(
-    reducer,
-    { ...optionisedProps, inputRef, lastKeyRef },
-    initialState,
-  );
-  const [showBusy, setShowBusy] = useState(false);
+  } = normalisedProps;
 
   const {
     expanded, focusedOption, search,
-    focusListBox, inlineAutoselect, suggestedOption,
+    focusListBox, inlineAutoselect, suggestedOption, showListBox,
   } = state;
 
-  const [handleBlur, handleFocus] = useOnBlur(
-    comboRef,
-    useCallback(() => {
-      dispatch(onBlur());
-      passedOnBlur?.();
-    }, [passedOnBlur]),
-    useCallback(() => {
-      dispatch(onFocus());
-      passedOnFocus?.();
-    }, [passedOnFocus]),
-  );
-
-  const searchValue = (search ?? value?.label) || '';
-  useEffect(() => {
-    if (!mounted) {
-      return;
-    }
-    if (onSearch) {
-      onSearch(searchValue);
-    }
-    // Prevent infinite loop - onSearch can update with each render
-  }, [searchValue, mounted]); // eslint-disable-line react-hooks/exhaustive-deps
+  const busyTimeoutRef = useRef();
+  const inputRef = useRef();
+  const [showBusy, setShowBusy] = useState(false);
 
   const inputLabel = useMemo(() => {
     if (inlineAutoselect
@@ -150,57 +104,6 @@ export const ComboBox = forwardRef((rawProps, ref) => {
     return 'list';
   }, [onSearch, autoselect]);
 
-  const optionsCheck = options.length ? options : null;
-  useLayoutEffect(() => {
-    if (!mounted) {
-      return;
-    }
-    dispatch(onOptionsChanged());
-  }, [optionsCheck, mounted]);
-
-  const valueIdentity = value?.identity;
-  useLayoutEffect(() => {
-    if (!mounted) {
-      return;
-    }
-    dispatch(onValueChanged());
-  }, [valueIdentity, mounted]);
-
-  // Do not show the list box is the only option is the currently selected option
-  const showListBox = useMemo(() => (
-    expanded
-      && !!options.length
-      && !(options.length === 1
-        && options[0].identity === selectedOption?.identity
-        && options[0].label === (search ?? value?.label)
-      )
-  ), [expanded, options, selectedOption, search, value]);
-
-  useLayoutEffect(() => {
-    if (!onLayoutListBox) {
-      return;
-    }
-    onLayoutListBox({
-      expanded: showListBox,
-      listbox: listRef.current,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showListBox, options]);
-
-  useLayoutEffect(() => {
-    if (showListBox && focusedRef.current && onLayoutFocusedOption) {
-      onLayoutFocusedOption({ option: focusedRef.current, listbox: listRef.current });
-    }
-    if (focusedOption && focusListBox && showListBox) {
-      if (managedFocus) {
-        focusedRef.current?.focus();
-      }
-    } else if (expanded && document.activeElement !== inputRef.current) {
-      inputRef.current.focus();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [expanded, managedFocus, focusedOption, focusListBox, showListBox]);
-
   useEffect(() => {
     if (busy && !busyDebounce) {
       setShowBusy(true);
@@ -224,8 +127,8 @@ export const ComboBox = forwardRef((rawProps, ref) => {
     && search !== value?.label;
 
   const ariaBusy = showBusy && search?.trim() && search !== (value?.label);
-  const combinedRef = useCombineRefs(inputRef, ref);
-  const componentState = Object.freeze({
+  const combinedRef = useCombineRefs(inputProps.ref, inputRef, ref);
+  const renderState = Object.freeze({
     expanded: showListBox,
     notFound: showNotFound,
     currentOption: focusedOption,
@@ -233,37 +136,20 @@ export const ComboBox = forwardRef((rawProps, ref) => {
     suggestedOption,
     'aria-busy': ariaBusy,
     'aria-autocomplete': ariaAutocomplete,
-    [DISPATCH]: dispatch,
   });
-  const clickOption = useCallback((e, option) => dispatch(onClickOption(e, option)), []);
-  const focusOption = useCallback((e, option) => dispatch(onFocusOption(option)), []);
 
   return renderWrapper({
+    ...wrapperProps,
     'aria-busy': ariaBusy ? 'true' : 'false',
-    className: className || makeBEMClass(classPrefix),
-    onBlur: handleBlur,
-    onFocus: handleFocus,
-    ref: comboRef,
     children: (
       <>
         {renderInput({
-          id,
-          className: makeBEMClass(classPrefix, 'input'),
-          type: 'text',
-          role: 'combobox',
-          'aria-autocomplete': ariaAutocomplete,
-          'aria-owns': `${id}_listbox`,
-          'aria-expanded': showListBox ? 'true' : 'false',
-          'aria-activedescendant': (showListBox && focusListBox && focusedOption?.key) || null,
-          'aria-describedby': joinTokens(ariaDescribedBy, assistiveHint && `${id}_aria_description`),
-          'aria-labelledby': joinTokens(ariaLabelledBy),
-          value: inputLabel || '',
-          onKeyDown: (e) => dispatch(onKeyDown(e)),
-          onChange: (e) => dispatch(onChange(e)),
-          onMouseUp: (e) => dispatch(onInputMouseUp(e)),
-          onFocus: (e) => dispatch(onFocusInput(e)),
+          ...inputProps,
           ref: combinedRef,
-          tabIndex: managedFocus && showListBox && focusListBox && !tabBetweenOptions ? -1 : null,
+          type: 'text',
+          'aria-autocomplete': ariaAutocomplete,
+          'aria-describedby': joinTokens(ariaDescribedBy, assistiveHint && `${id}_aria_description`),
+          value: inputLabel || '',
           'aria-invalid': ariaInvalid,
           autoCapitalize,
           autoComplete,
@@ -279,48 +165,30 @@ export const ComboBox = forwardRef((rawProps, ref) => {
           required,
           size,
           spellCheck,
-        }, componentState, optionisedProps)}
+        }, renderState, normalisedProps)}
         {renderDownArrow({
           id: `${id}_down_arrow`,
           className: makeBEMClass(classPrefix, 'down-arrow'),
           hidden: value || !options.length,
-        }, componentState, optionisedProps)}
+        }, renderState, normalisedProps)}
         {renderClearButton({
+          ...clearButtonProps,
           id: `${id}_clear_button`,
-          role: 'button',
           'aria-label': 'Clear',
           'aria-labelledby': joinTokens(`${id}_clear_button`, ariaLabelledBy, id),
-          className: makeBEMClass(classPrefix, 'clear-button'),
-          onClick: (e) => dispatch(onClearValue(e)),
-          onKeyDown: (e) => dispatch(onClearValue(e)),
-          hidden: disabled || readOnly || !value || search === '',
-          tabIndex: -1,
-        }, componentState, optionisedProps)}
-        <ListBox
-          ref={listRef}
-          id={`${id}_listbox`}
-          tabIndex={-1}
-          hidden={!showListBox}
-          aria-activedescendant={(showListBox && focusListBox && focusedOption?.key) || null}
-          aria-labelledby={joinTokens(ariaLabelledBy)}
-          onKeyDown={(e) => dispatch(onKeyDown(e))}
-          onSelectOption={clickOption}
-          onFocusOption={focusOption}
-          focusedRef={focusedRef}
-          componentProps={optionisedProps}
-          componentState={componentState}
-        />
+        }, renderState, normalisedProps)}
+        {listBoxRenderer(renderState, normalisedProps, listBoxProps)}
         {assistiveHint && renderAriaDescription({
           id: `${id}_aria_description`,
           className: providedVisuallyHiddenClassName,
           children: assistiveHint,
-        }, componentState, optionisedProps)}
+        }, renderState, normalisedProps)}
         {notFoundMessage && renderNotFound({
           id: `${id}_not_found`,
           className: makeBEMClass(classPrefix, 'not-found'),
           hidden: !showNotFound,
           children: showNotFound ? notFoundMessage() : null,
-        }, componentState, optionisedProps)}
+        }, renderState, normalisedProps)}
         <AriaLiveMessage
           visuallyHiddenClassName={visuallyHiddenClassName}
           options={options}
@@ -333,7 +201,7 @@ export const ComboBox = forwardRef((rawProps, ref) => {
         />
       </>
     ),
-  }, componentState, optionisedProps);
+  }, renderState, normalisedProps);
 });
 
 ComboBox.propTypes = {
@@ -374,12 +242,13 @@ ComboBox.propTypes = {
   onSearch: PropTypes.func,
   onValue: PropTypes.func,
 
+  editable: PropTypes.bool,
   autoselect: PropTypes.oneOf([false, true, 'inline']),
   expandOnFocus: PropTypes.bool,
   findSuggestion: PropTypes.func,
   managedFocus: PropTypes.bool,
   selectOnBlur: PropTypes.bool,
-  selectOnly: PropTypes.bool,
+  mustHaveSelection: PropTypes.bool,
   showSelectedLabel: PropTypes.bool,
   skipOption: PropTypes.func,
   tabAutocomplete: PropTypes.bool,
@@ -390,6 +259,7 @@ ComboBox.propTypes = {
   foundOptionsMessage: PropTypes.func,
   selectedOptionMessage: PropTypes.func,
 
+  listBoxRenderer: PropTypes.func,
   renderWrapper: PropTypes.func,
   renderInput: PropTypes.func,
   renderListBox: PropTypes.func,
@@ -442,12 +312,13 @@ ComboBox.defaultProps = {
   onSearch: null,
   onValue: null,
 
+  editable: true,
   autoselect: false,
   expandOnFocus: true,
   findSuggestion: findOption,
   managedFocus: true,
   selectOnBlur: true,
-  selectOnly: false,
+  mustHaveSelection: false,
   skipOption: undefined,
   showSelectedLabel: undefined,
   tabAutocomplete: false,
@@ -462,6 +333,7 @@ ComboBox.defaultProps = {
     `${option.label} ${option.index + 1} of ${options.length} is highlighted`
   ),
 
+  listBoxRenderer: defaultListBoxRenderer,
   renderWrapper: (props) => <div {...props} />,
   renderInput: (props) => <input {...props} />,
   renderListBox: (props) => <ul {...props} />,

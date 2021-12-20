@@ -1437,7 +1437,7 @@ describe('classPrefix', () => {
     render(
       <DropDownWrapper options={options} classPrefix="foo" />,
     );
-    expect(screen.getByRole('combobox')).toHaveClass('foo__combobox');
+    expect(screen.getByRole('combobox')).toHaveClass('foo__button');
   });
 });
 
@@ -1678,10 +1678,9 @@ describe('ref', () => {
 describe('renderWrapper', () => {
   it('allows the wrapper to be replaced', () => {
     const { container } = render(
-      <DropDownWrapper options={['foo']} renderWrapper={(props) => <dl data-foo="bar" {...props} />} />,
+      <DropDownWrapper options={['foo']} renderWrapper={(props) => <div data-foo="bar" {...props} />} />,
     );
     const wrapper = container.firstChild;
-    expect(wrapper.tagName).toEqual('DL');
     expect(wrapper).toHaveAttribute('data-foo', 'bar');
   });
 
@@ -1694,50 +1693,37 @@ describe('renderWrapper', () => {
     expect(spy).toHaveBeenCalledWith(
       expect.any(Object),
       {
-        'aria-autocomplete': 'none',
-        'aria-busy': false,
         expanded: false,
-        search: null,
         currentOption: expect.objectContaining({
           label: 'foo',
         }),
-        notFound: false,
-        suggestedOption: null,
-        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
   });
 });
 
-describe('renderComboBox', () => {
-  it('allows the combo box to be replaced', () => {
+describe('renderButton', () => {
+  it('allows the button to be replaced', () => {
     render(
-      <DropDownWrapper options={['foo']} renderComboBox={(props) => <dl data-foo="bar" {...props} />} />,
+      <DropDownWrapper options={['foo']} renderButton={(props) => <div data-foo="bar" {...props} />} />,
     );
-    expect(screen.getByRole('combobox').tagName).toEqual('DL');
     expect(screen.getByRole('combobox')).toHaveAttribute('data-foo', 'bar');
   });
 
   it('is called with context and props', () => {
     const spy = jest.fn(() => null);
     render((
-      <DropDownWrapper options={['foo']} renderComboBox={spy} test="foo" />
+      <DropDownWrapper options={['foo']} renderButton={spy} test="foo" />
     ));
 
     expect(spy).toHaveBeenCalledWith(
       expect.any(Object),
       {
-        'aria-autocomplete': 'none',
-        'aria-busy': false,
         expanded: false,
-        search: null,
         currentOption: expect.objectContaining({
           label: 'foo',
         }),
-        notFound: false,
-        suggestedOption: null,
-        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -1747,9 +1733,8 @@ describe('renderComboBox', () => {
 describe('renderListBoxWrapper', () => {
   it('allows the list box wrapper to be replaced', () => {
     render(
-      <DropDownWrapper options={['foo']} renderListBoxWrapper={(props) => <dl data-foo="bar" {...props} />} />,
+      <DropDownWrapper options={['foo']} renderListBoxWrapper={(props) => <div data-foo="bar" {...props} />} />,
     );
-    expect(screen.getByRole('listbox', { hidden: true }).parentNode.tagName).toEqual('DL');
     expect(screen.getByRole('listbox', { hidden: true }).parentNode).toHaveAttribute('data-foo', 'bar');
   });
 
@@ -1762,16 +1747,10 @@ describe('renderListBoxWrapper', () => {
     expect(spy).toHaveBeenCalledWith(
       expect.any(Object),
       {
-        'aria-autocomplete': 'none',
-        'aria-busy': false,
         expanded: false,
-        search: null,
         currentOption: expect.objectContaining({
           label: 'foo',
         }),
-        notFound: false,
-        suggestedOption: null,
-        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );

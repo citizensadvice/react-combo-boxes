@@ -5,7 +5,6 @@ import { render, fireEvent, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ComboBoxTable } from './combo_box_table';
 import { visuallyHiddenClassName } from '../constants/visually_hidden_class_name';
-import { DISPATCH } from '../constants/dispatch';
 
 const ComboBoxWrapper = forwardRef(({ value: initialValue, ...props }, ref) => {
   const [value, onValue] = useState(initialValue);
@@ -257,10 +256,9 @@ describe('customisation', () => {
   describe('renderTableWrapper', () => {
     it('allows the list box to be replaced', () => {
       render(
-        <ComboBoxWrapper options={options} columns={columns} mapOption={map} renderTableWrapper={(props) => <dl data-foo="bar" {...props} />} />,
+        <ComboBoxWrapper options={options} columns={columns} mapOption={map} renderTableWrapper={(props) => <div data-foo="bar" {...props} />} />,
       );
       screen.getByRole('combobox').focus();
-      expect(screen.getByRole('listbox').parentNode.tagName).toEqual('DL');
       expect(screen.getByRole('listbox').parentNode).toHaveAttribute('data-foo', 'bar');
     });
 
@@ -279,7 +277,6 @@ describe('customisation', () => {
           currentOption: null,
           notFound: false,
           suggestedOption: null,
-          [DISPATCH]: expect.any(Function),
         },
         expect.objectContaining({ options: expect.any(Array), test: 'foo', columns: expect.any(Array) }),
       );
@@ -310,7 +307,6 @@ describe('customisation', () => {
           currentOption: null,
           notFound: false,
           suggestedOption: null,
-          [DISPATCH]: expect.any(Function),
         },
         expect.objectContaining({ options: expect.any(Array), test: 'foo', columns: expect.any(Array) }),
       );
@@ -342,7 +338,6 @@ describe('customisation', () => {
           notFound: false,
           suggestedOption: null,
           column: { label: 'Type', name: 'type' },
-          [DISPATCH]: expect.any(Function),
         },
         expect.objectContaining({ options: expect.any(Array), test: 'foo', columns: expect.any(Array) }),
       );
@@ -374,7 +369,6 @@ describe('customisation', () => {
           notFound: false,
           suggestedOption: null,
           group: expect.objectContaining({ label: 'Vegetable' }),
-          [DISPATCH]: expect.any(Function),
         },
         expect.objectContaining({ options: expect.any(Array), test: 'foo', columns: expect.any(Array) }),
       );
@@ -406,7 +400,6 @@ describe('customisation', () => {
           notFound: false,
           suggestedOption: null,
           group: expect.objectContaining({ label: 'Vegetable' }),
-          [DISPATCH]: expect.any(Function),
         },
         expect.objectContaining({ options: expect.any(Array), test: 'foo', columns: expect.any(Array) }),
       );
@@ -440,7 +433,6 @@ describe('customisation', () => {
           group: expect.objectContaining({ label: 'Vegetable' }),
           option: expect.objectContaining({ label: 'Potato' }),
           selected: false,
-          [DISPATCH]: expect.any(Function),
         },
         expect.objectContaining({ options: expect.any(Array), test: 'foo', columns: expect.any(Array) }),
       );
@@ -475,7 +467,6 @@ describe('customisation', () => {
           option: expect.objectContaining({ label: 'Potato' }),
           selected: false,
           column: { label: 'Type', name: 'type' },
-          [DISPATCH]: expect.any(Function),
         },
         expect.objectContaining({ options: expect.any(Array), test: 'foo', columns: expect.any(Array) }),
       );
@@ -485,10 +476,10 @@ describe('customisation', () => {
   describe('renderGroupAccessibleLabel', () => {
     it('allows a table cell accessible label to be replaced', () => {
       render(
-        <ComboBoxWrapper options={options} columns={columns} mapOption={map} renderGroupAccessibleLabel={(props) => <kbd data-foo="bar" {...props} />} />,
+        <ComboBoxWrapper options={options} columns={columns} mapOption={map} renderGroupAccessibleLabel={(props) => <span data-foo="bar" {...props} />} />,
       );
       userEvent.click(screen.getByRole('combobox'));
-      expect(screen.getAllByRole('option')[0].querySelector('td > kbd')).toHaveAttribute('data-foo', 'bar');
+      expect(screen.getAllByRole('option')[0].querySelector('td > span')).toHaveAttribute('data-foo', 'bar');
     });
 
     it('is called with context and props', () => {
@@ -509,7 +500,7 @@ describe('customisation', () => {
           group: expect.objectContaining({ label: 'Vegetable' }),
           option: expect.objectContaining({ label: 'Potato' }),
           selected: false,
-          [DISPATCH]: expect.any(Function),
+          column: { label: 'Name', name: 'name' },
         },
         expect.objectContaining({ options: expect.any(Array), test: 'foo', columns: expect.any(Array) }),
       );
@@ -519,10 +510,10 @@ describe('customisation', () => {
   describe('renderTableCellColumnAccessibleLabel', () => {
     it('allows a table cell accessible label to be replaced', () => {
       render(
-        <ComboBoxWrapper options={options} columns={columns} mapOption={map} renderTableCellColumnAccessibleLabel={(props) => <kbd data-foo="bar" {...props} />} />,
+        <ComboBoxWrapper options={options} columns={columns} mapOption={map} renderTableCellColumnAccessibleLabel={(props) => <span data-foo="bar" {...props} />} />,
       );
       userEvent.click(screen.getByRole('combobox'));
-      expect(screen.getAllByRole('option')[0].querySelector('td > kbd')).toHaveAttribute('data-foo', 'bar');
+      expect(screen.getAllByRole('option')[0].querySelector('td > :nth-child(2)')).toHaveAttribute('data-foo', 'bar');
     });
 
     it('is called with context and props', () => {
@@ -544,7 +535,6 @@ describe('customisation', () => {
           option: expect.objectContaining({ label: 'Potato' }),
           selected: false,
           column: { label: 'Type', name: 'type' },
-          [DISPATCH]: expect.any(Function),
         },
         expect.objectContaining({ options: expect.any(Array), test: 'foo', columns: expect.any(Array) }),
       );
@@ -564,7 +554,6 @@ describe('customisation', () => {
           group: expect.objectContaining({ label: 'Fruit' }),
           option: expect.objectContaining({ label: 'Apple' }),
           column: { label: 'Colour', name: 'colour' },
-          [DISPATCH]: expect.any(Function),
         }),
         expect.anything(),
       );
@@ -574,10 +563,10 @@ describe('customisation', () => {
   describe('renderColumnValue', () => {
     it('allows a table cell value to be replaced', () => {
       render(
-        <ComboBoxWrapper options={options} columns={columns} mapOption={map} renderColumnValue={(props) => <kbd data-foo="bar" {...props} />} />,
+        <ComboBoxWrapper options={options} columns={columns} mapOption={map} renderColumnValue={(props) => <span data-foo="bar" {...props} />} />,
       );
       screen.getByRole('combobox').focus();
-      expect(screen.getAllByRole('option')[0].querySelector('td > kbd')).toHaveAttribute('data-foo', 'bar');
+      expect(screen.getAllByRole('option')[0].querySelector('td > :nth-of-type(3)')).toHaveAttribute('data-foo', 'bar');
     });
 
     it('is called with context and props', () => {
@@ -599,7 +588,6 @@ describe('customisation', () => {
           option: expect.objectContaining({ label: 'Potato' }),
           selected: false,
           column: { label: 'Type', name: 'type' },
-          [DISPATCH]: expect.any(Function),
         },
         expect.objectContaining({ options: expect.any(Array), test: 'foo', columns: expect.any(Array) }),
       );

@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { MenuButton } from '../../../src';
+import { MenuBar } from '../../../src';
 
 export function Example() {
   const [value, setValue] = useState(null);
@@ -12,12 +12,10 @@ export function Example() {
 
   return (
     <>
-      <MenuButton
+      <MenuBar
         id="menu-button"
         options={options}
-      >
-        Select a colour
-      </MenuButton>
+      />
 
       <label htmlFor="output">
         Current value

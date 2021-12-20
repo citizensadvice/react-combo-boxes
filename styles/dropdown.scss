@@ -14,7 +14,11 @@
 .react-combo-boxes-dropdown__listbox-wrapper {
   height: 0;
   position: relative;
-  margin-top: -$react-combo-boxes-focus-border-width;
+  margin-top: -1px;
+
+  :focus-within & {
+    margin-top: -$react-combo-boxes-focus-border-width;
+  }
 }
 
 .react-combo-boxes-dropdown__listbox {
@@ -28,7 +32,7 @@
   }
 }
 
-.react-combo-boxes-dropdown__combobox {
+.react-combo-boxes-dropdown__button {
   box-sizing: border-box;
   width: 100%;
   outline: none;

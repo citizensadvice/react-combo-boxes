@@ -6,14 +6,12 @@ import { useComboBox } from '../hooks/use_combo_box';
 import { classPrefix as defaultClassPrefix } from '../constants/class_prefix';
 import { makeBEMClass } from '../helpers/make_bem_class';
 
-export const MenuButton = forwardRef((rawProps, ref) => {
+export const MenuBar = forwardRef((rawProps, ref) => {
   const onValue = useCallback((value) => {
     value.onClick();
   }, []);
 
   const {
-    wrapperProps,
-    inputProps: buttonProps,
     listBoxProps,
     state,
     props: normalisedProps,
@@ -21,10 +19,6 @@ export const MenuButton = forwardRef((rawProps, ref) => {
 
   const {
     id,
-    role,
-    children,
-    renderWrapper,
-    renderButton,
     disabled,
     classPrefix,
   } = normalisedProps;
@@ -39,9 +33,11 @@ export const MenuButton = forwardRef((rawProps, ref) => {
   const renderListBox = (props, ...args) => (
     normalisedProps.renderListBox({
       ...props,
-      id: `${id}_menu`,
+      id: `${id}_menu_bar`,
       'aria-labelledby': id,
-      role: 'menu',
+      'aria-disabled': disabled ? 'true' : 'false',
+      role: 'menubar',
+      hidden: false,
     }, ...args)
   );
 
@@ -62,47 +58,24 @@ export const MenuButton = forwardRef((rawProps, ref) => {
     }, optionState, componentProps)
   );
 
-  return (
-    renderWrapper({
-      ...wrapperProps,
-      role,
-      children: (
-        <>
-          {renderButton({
-            ...buttonProps,
-            type: 'button',
-            'aria-haspopup': 'button',
-            'aria-controls': `${id}_menu`,
-            'aria-owns': null,
-            disabled,
-            children,
-            className: makeBEMClass(classPrefix, 'button'),
-          }, state, normalisedProps)}
-          {listBoxRenderer(state, Object.freeze({
-            ...normalisedProps,
-            renderListBoxWrapper,
-            renderListBox,
-            renderGroup,
-            renderOption,
-          }), listBoxProps)}
-        </>
-      ),
-    }, state, normalisedProps)
-  );
+  return listBoxRenderer(state, Object.freeze({
+    ...normalisedProps,
+    renderListBoxWrapper,
+    renderListBox,
+    renderGroup,
+    renderOption,
+  }), listBoxProps);
 });
 
-MenuButton.propTypes = {
+MenuBar.propTypes = {
   id: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
-  role: PropTypes.oneOf(['menu', 'menubar', 'menuitem']),
   renderListBoxWrapper: PropTypes.func,
-  renderButton: PropTypes.func,
   renderListBox: PropTypes.func,
   renderGroup: PropTypes.func,
   renderGroupLabel: PropTypes.func,
   renderOption: PropTypes.func,
   options: PropTypes.arrayOf(PropTypes.shape({
-    role: PropTypes.oneOf(['menuitem', 'menuitemradio', 'menuitemcheckbox', 'separator']),
+    role: PropTypes.oneOf(['menuitem', 'menuitemradio', 'menuitemcheckbox']),
     onClick: PropTypes.func,
     disabled: PropTypes.bool,
   })).isRequired,
@@ -110,13 +83,10 @@ MenuButton.propTypes = {
   selectOnBlur: PropTypes.bool,
   expandOnHover: PropTypes.bool,
   classPrefix: PropTypes.string,
-  skipOption: PropTypes.func,
 };
 
-MenuButton.defaultProps = {
-  classPrefix: `${defaultClassPrefix}dropdown`,
-  role: 'menu',
-  renderButton: (props) => <button {...props} />, // eslint-disable-line react/button-has-type
+MenuBar.defaultProps = {
+  classPrefix: `${defaultClassPrefix}menubar`,
   renderListBoxWrapper: (props) => <div {...props} />,
   renderListBox: (props) => <div {...props} />,
   renderGroup: (props) => <div {...props} />,
@@ -125,7 +95,6 @@ MenuButton.defaultProps = {
   expandOnFocus: false,
   selectOnBlur: false,
   expandOnHover: true,
-  skipOption: (option) => option.value.role === 'separator' || option.disabled,
 };
 
-MenuButton.displayName = 'MenuButton';
+MenuBar.displayName = 'MenuBar';

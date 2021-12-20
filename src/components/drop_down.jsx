@@ -1,81 +1,74 @@
-import React, { forwardRef, useCallback } from 'react';
+import React, { Fragment, forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import { ComboBox } from './combo_box';
-import { Searchable } from './searchable';
 import { classPrefix as defaultClassPrefix } from '../constants/class_prefix';
 import { makeBEMClass } from '../helpers/make_bem_class';
-import { findOption as defaultFindOption } from '../helpers/find_option';
 import { joinTokens } from '../helpers/join_tokens';
+import { listBoxRenderer as defaultListBoxRenderer } from '../helpers/list_box_renderer';
+import { useComboBox } from '../hooks/use_combo_box';
 
-function renderNull() {
-  return null;
-}
-
-function renderInput(props, state, componentProps) {
+export const DropDown = forwardRef((rawProps, ref) => {
   const {
+    wrapperProps,
+    inputProps: buttonProps,
+    listBoxProps,
+    state,
+    props: normalisedProps,
+  } = useComboBox({ ...rawProps, ref });
+
+  const {
+    'aria-labelledby': ariaLabelledBy,
+    'aria-invalid': ariaInvalid,
     id,
-    classPrefix,
+    role,
     children,
+    renderWrapper,
+    renderButton,
     disabled,
-    options,
+    classPrefix,
     required,
     value,
+    options,
     selectedOption,
-    renderComboBox,
-  } = componentProps;
-  return renderComboBox(
-    {
-      ...props,
-      'aria-autocomplete': null,
-      'aria-disabled': disabled ? 'true' : null,
-      'aria-labelledby': joinTokens(props['aria-labelledby'], id),
-      'aria-required': required ? 'true' : null,
-      autoComplete: null,
-      children: (children ?? value?.label ?? selectedOption?.label) || '\u00A0',
-      className: makeBEMClass(classPrefix, 'combobox'),
-      tabIndex: (disabled || !options?.length) ? null : 0,
-      type: null,
-      value: null,
-    },
-    state,
-    componentProps,
-  );
-}
+    listBoxRenderer,
+  } = normalisedProps;
 
-export const DropDown = forwardRef((props, ref) => {
-  const { renderWrapper, renderListBox } = props;
+  const {
+    focusedOption,
+    showListBox,
+  } = state;
 
-  const newRenderWrapper = useCallback((wrapperProps, componentState, componentProps) => (
-    <Searchable
-      {...wrapperProps}
-      componentState={componentState}
-      componentProps={{ ...componentProps, renderWrapper }}
-    />
-  ), [renderWrapper]);
-
-  const newRenderListBox = useCallback((wrapperProps, componentState, componentProps) => (
-    componentProps.renderListBoxWrapper(
-      {
-        className: makeBEMClass(componentProps.classPrefix, 'listbox-wrapper'),
-        children: renderListBox(wrapperProps, componentState, componentProps),
-      },
-      componentState,
-      componentProps,
-    )
-  ), [renderListBox]);
+  const renderState = Object.freeze({
+    expanded: showListBox,
+    currentOption: focusedOption,
+  });
 
   return (
-    <ComboBox
-      ref={ref}
-      renderInput={renderInput}
-      {...props}
-      renderWrapper={newRenderWrapper}
-      renderListBox={newRenderListBox}
-    />
+    renderWrapper({
+      ...wrapperProps,
+      role,
+      children: (
+        <>
+          {renderButton({
+            ...buttonProps,
+            'aria-autocomplete': null,
+            'aria-disabled': disabled ? 'true' : null,
+            'aria-labelledby': joinTokens(ariaLabelledBy, id),
+            'aria-required': required ? 'true' : null,
+            'aria-invalid': ariaInvalid,
+            children: (children ?? value?.label ?? selectedOption?.label) || '\u00A0',
+            className: makeBEMClass(classPrefix, 'button'),
+            tabIndex: (disabled || !options?.length) ? null : 0,
+            value: null,
+          }, renderState, normalisedProps)}
+          {listBoxRenderer(renderState, normalisedProps, listBoxProps)}
+        </>
+      ),
+    }, renderState, normalisedProps)
   );
 });
 
 DropDown.propTypes = {
+  'aria-invalid': PropTypes.oneOf(['true', 'false']),
   children: PropTypes.node,
   classPrefix: PropTypes.string,
   disabled: PropTypes.bool,
@@ -84,17 +77,22 @@ DropDown.propTypes = {
   foundOptionsMessage: PropTypes.func,
   notFoundMessage: PropTypes.node,
   renderWrapper: PropTypes.func,
-  renderClearButton: PropTypes.func,
-  renderComboBox: PropTypes.func,
-  renderDownArrow: PropTypes.func,
-  renderDropDown: PropTypes.func,
+  renderButton: PropTypes.func,
   renderListBox: PropTypes.func,
   renderListBoxWrapper: PropTypes.func,
-  selectOnly: PropTypes.bool,
+  renderOption: PropTypes.func,
+  renderGroupLabel: PropTypes.func,
+  renderGroup: PropTypes.func,
+  mustHaveSelection: PropTypes.bool,
+  editable: PropTypes.bool,
   findOption: PropTypes.func,
+  managedFocus: PropTypes.bool,
+  selectOnBlur: PropTypes.bool,
+  listBoxRenderer: PropTypes.func,
 };
 
 DropDown.defaultProps = {
+  'aria-invalid': undefined,
   children: null,
   classPrefix: `${defaultClassPrefix}dropdown`,
   disabled: false,
@@ -102,15 +100,19 @@ DropDown.defaultProps = {
   required: false,
   foundOptionsMessage: null,
   notFoundMessage: null,
+  managedFocus: true,
   renderWrapper: (props) => <div {...props} />,
-  renderClearButton: renderNull,
-  renderDownArrow: renderNull,
-  renderComboBox: (props) => <div {...props} />,
-  renderDropDown: renderNull,
-  renderListBox: (props) => <ul {...props} />,
+  renderButton: (props) => <div {...props} />,
   renderListBoxWrapper: (props) => <div {...props} />,
-  selectOnly: true,
-  findOption: defaultFindOption,
+  renderListBox: (props) => <ul {...props} />,
+  renderOption: (props) => <li {...props} />,
+  renderGroupLabel: (props) => <li {...props} />,
+  renderGroup: (props) => <Fragment {...props} />,
+  mustHaveSelection: true,
+  editable: false,
+  findOption: undefined,
+  selectOnBlur: true,
+  listBoxRenderer: defaultListBoxRenderer,
 };
 
 DropDown.displayName = 'DropDown';
