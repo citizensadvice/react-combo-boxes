@@ -6,7 +6,10 @@
  */
 export function layoutMaxHeight(el, { contain = 'body', minMaxHeight = 0 } = {}) {
   const elBounding = el.getBoundingClientRect();
-  const containerBounding = el.closest(contain).getBoundingClientRect();
+  const container = el.closest(contain);
+  const containerBounding = container.getBoundingClientRect();
+  const clientBottom = containerBounding.height - container.clientHeight - container.clientTop;
+  const containerBottom = containerBounding.bottom - clientBottom;
   const windowEnd = document.documentElement.clientHeight;
   const styles = getComputedStyle(el);
 
@@ -20,7 +23,7 @@ export function layoutMaxHeight(el, { contain = 'body', minMaxHeight = 0 } = {})
 
   const maxHeight = Math.max(
     minMaxHeight,
-    Math.min(windowEnd, containerBounding.bottom) - extras - elBounding.top,
+    Math.min(windowEnd, containerBottom) - extras - elBounding.top,
   );
 
   el.style.setProperty('max-height', maxHeight ? `${maxHeight}px` : '');

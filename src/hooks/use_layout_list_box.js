@@ -31,7 +31,6 @@ export function useLayoutListBox(...helpers) {
     }
 
     handlerWithAnimationFrame();
-
     window.addEventListener('resize', handlerWithAnimationFrame, { passive: true });
     window.addEventListener('scroll', handlerWithAnimationFrame, { passive: true });
 

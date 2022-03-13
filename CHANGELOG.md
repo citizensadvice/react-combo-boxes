@@ -1,5 +1,9 @@
 # Change log
 
+## 1.3.1
+
+- Fix scrollbars not being accounted for when using `layoutMaxWidth` and `layoutMaxHeight`
+
 ## 1.3.0
 
 - Added the `<Radios>` component
