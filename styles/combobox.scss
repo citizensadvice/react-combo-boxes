@@ -1,5 +1,5 @@
-@import './variables.scss';
-@import './listbox.scss';
+@import "./variables";
+@import "./listbox";
 
 .react-combo-boxes-combobox {
   @include react-combo-boxes-listbox;
@@ -44,9 +44,7 @@
       calc(#{$react-combo-boxes-padding-y * 2} + #{$react-combo-boxes-focus-border-width})
       calc(#{$react-combo-boxes-padding-x * 2} + 0.7em)
       calc(#{$react-combo-boxes-padding-y * 2} - 0.1em + #{$react-combo-boxes-focus-border-width});
-  }
-
-  @else {
+  } @else {
     padding:
       calc(#{$react-combo-boxes-padding-y * 2} + #{$react-combo-boxes-focus-border-width})
       calc(#{$react-combo-boxes-padding-x} + #{$react-combo-boxes-focus-border-width})
