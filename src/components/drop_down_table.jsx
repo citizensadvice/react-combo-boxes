@@ -63,6 +63,7 @@ DropDownTable.defaultProps = {
   renderTableRow: (props) => <tr {...props} />,
   renderTableCellColumnAccessibleLabel: (props) => <span {...props} />,
   renderTableCell: (props) => <td {...props} />,
+  // eslint-disable-next-line react/jsx-no-useless-fragment
   renderColumnValue: (props) => <Fragment {...props} />,
 };
 

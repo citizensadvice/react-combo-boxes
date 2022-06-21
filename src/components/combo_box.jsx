@@ -465,10 +465,12 @@ ComboBox.defaultProps = {
   renderWrapper: (props) => <div {...props} />,
   renderInput: (props) => <input {...props} />,
   renderListBox: (props) => <ul {...props} />,
+  // eslint-disable-next-line react/jsx-no-useless-fragment
   renderGroup: (props) => <Fragment {...props} />,
   renderGroupLabel: (props) => <li {...props} />,
   renderGroupAccessibleLabel: (props) => <span {...props} />,
   renderOption: (props) => <li {...props} />,
+  // eslint-disable-next-line react/jsx-no-useless-fragment
   renderValue: (props) => <Fragment {...props} />,
   renderDownArrow: (props) => <span {...props} />,
   renderClearButton: (props) => <span {...props} />,
