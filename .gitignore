@@ -5,3 +5,4 @@ es
 cjs
 dist
 coverage
+.parcel-cache
