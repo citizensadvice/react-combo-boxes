@@ -37,17 +37,17 @@ describe('options', () => {
       expect(screen.getByRole('radio', { checked: true })).toEqual(screen.getByRole('radio', { name: 'Orange' }));
     });
 
-    it('triggers the onValue callback with the selected value', () => {
+    it('triggers the onValue callback with the selected value', async () => {
       const spy = jest.fn();
       render(<Test options={options} onValue={spy} />);
-      userEvent.click(screen.getByRole('radio', { name: 'Banana' }));
+      await userEvent.click(screen.getByRole('radio', { name: 'Banana' }));
       expect(spy).toHaveBeenCalledWith('Banana');
     });
 
-    it('updates when the value changes', () => {
+    it('updates when the value changes', async () => {
       render(<Test options={options} />);
       const option = screen.getByRole('radio', { name: 'Banana' });
-      userEvent.click(option);
+      await userEvent.click(option);
       expect(screen.getByRole('radio', { checked: true })).toEqual(option);
     });
   });
@@ -69,17 +69,17 @@ describe('options', () => {
       expect(screen.getByRole('radio', { checked: true })).toEqual(screen.getByRole('radio', { name: '2' }));
     });
 
-    it('triggers the onValue callback with the selected value', () => {
+    it('triggers the onValue callback with the selected value', async () => {
       const spy = jest.fn();
       render(<Test options={options} onValue={spy} />);
-      userEvent.click(screen.getByRole('radio', { name: '2' }));
+      await userEvent.click(screen.getByRole('radio', { name: '2' }));
       expect(spy).toHaveBeenCalledWith(2);
     });
 
-    it('updates when the value changes', () => {
+    it('updates when the value changes', async () => {
       render(<Test options={options} />);
       const option = screen.getByRole('radio', { name: '2' });
-      userEvent.click(option);
+      await userEvent.click(option);
       expect(screen.getByRole('radio', { checked: true })).toEqual(option);
     });
   });
@@ -102,39 +102,39 @@ describe('options', () => {
         expect(screen.getByRole('radio', { checked: true })).toEqual(screen.getByRole('radio', { name: 'Banana' }));
       });
 
-      it('triggers the onValue callback with the selected value', () => {
+      it('triggers the onValue callback with the selected value', async () => {
         const spy = jest.fn();
         render(<Test options={options} onValue={spy} />);
-        userEvent.click(screen.getByRole('radio', { name: 'Banana' }));
+        await userEvent.click(screen.getByRole('radio', { name: 'Banana' }));
         expect(spy).toHaveBeenCalledWith({ label: 'Banana' });
       });
 
-      it('updates when the value changes', () => {
+      it('updates when the value changes', async () => {
         render(<Test options={options} />);
         const option = screen.getByRole('radio', { name: 'Banana' });
-        userEvent.click(option);
+        await userEvent.click(option);
         expect(screen.getByRole('radio', { checked: true })).toEqual(option);
       });
     });
 
     describe('value', () => {
-      it('is used as a options identity', () => {
+      it('is used as a options identity', async () => {
         const options = [{ label: 'foo', value: 1 }, { label: 'foo', value: 2 }, { label: 'foo', value: 3 }];
         render(<Test options={options} value={2} />);
         expect(screen.getByRole('radio', { checked: true }).value).toEqual('2');
         const radios = screen.getAllByRole('radio');
-        userEvent.click(radios[0]);
+        await userEvent.click(radios[0]);
         expect(screen.getByRole('radio', { checked: true })).toEqual(radios[0]);
       });
     });
 
     describe('id', () => {
-      it('is used as a options identity', () => {
+      it('is used as a options identity', async () => {
         const options = [{ label: 'foo', id: 1 }, { label: 'foo', id: 2 }, { label: 'foo', id: 3 }];
         render(<Test options={options} value={2} />);
         expect(screen.getByRole('radio', { checked: true }).value).toEqual('2');
         const radios = screen.getAllByRole('radio');
-        userEvent.click(radios[0]);
+        await userEvent.click(radios[0]);
         expect(screen.getByRole('radio', { checked: true })).toEqual(radios[0]);
       });
     });
@@ -184,10 +184,10 @@ describe('options', () => {
         expect(container).toMatchSnapshot();
       });
 
-      it('selects an option', () => {
+      it('selects an option', async () => {
         render(<Test options={options} />);
         const option = screen.getByRole('radio', { name: 'Citrus Lemon' });
-        userEvent.click(option);
+        await userEvent.click(option);
         expect(screen.getByRole('radio', { checked: true })).toEqual(option);
       });
     });
@@ -205,13 +205,13 @@ describe('options', () => {
     describe('mapOption returns an object', () => {
       const options = [{ name: 'Apple' }, { name: 'Banana' }, { name: 'Orange' }];
 
-      it('maps options', () => {
+      it('maps options', async () => {
         render(<Test
           options={options}
           mapOption={({ name }) => ({ label: name })}
         />);
         const option = screen.getByRole('radio', { name: 'Banana' });
-        userEvent.click(option);
+        await userEvent.click(option);
         expect(screen.getByRole('radio', { checked: true })).toEqual(option);
       });
 
@@ -228,13 +228,13 @@ describe('options', () => {
     describe('mapOption returns a string', () => {
       const options = [{ name: 'Apple' }, { name: 'Banana' }, { name: 'Orange' }];
 
-      it('maps options', () => {
+      it('maps options', async () => {
         render(<Test
           options={options}
           mapOption={({ name }) => name}
         />);
         const option = screen.getByRole('radio', { name: 'Banana' });
-        userEvent.click(option);
+        await userEvent.click(option);
         expect(screen.getByRole('radio', { checked: true })).toEqual(option);
       });
 

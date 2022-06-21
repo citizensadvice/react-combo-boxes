@@ -40,24 +40,24 @@ describe('options', () => {
       ]);
     });
 
-    it('triggers the onValues callback', () => {
+    it('triggers the onValues callback', async () => {
       const spy = jest.fn();
       render(<Test options={options} onValues={spy} values={['Apple']} />);
-      userEvent.click(screen.getByRole('checkbox', { name: 'Banana' }));
+      await userEvent.click(screen.getByRole('checkbox', { name: 'Banana' }));
       expect(spy).toHaveBeenCalledWith(['Apple', 'Banana']);
     });
 
-    it('triggers the onValues callback when values are removed', () => {
+    it('triggers the onValues callback when values are removed', async () => {
       const spy = jest.fn();
       render(<Test options={options} onValues={spy} values={['Banana']} />);
-      userEvent.click(screen.getByRole('checkbox', { name: 'Banana' }));
+      await userEvent.click(screen.getByRole('checkbox', { name: 'Banana' }));
       expect(spy).toHaveBeenCalledWith([]);
     });
 
-    it('updates when the value changes', () => {
+    it('updates when the value changes', async () => {
       render(<Test options={options} />);
-      userEvent.click(screen.getByRole('checkbox', { name: 'Banana' }));
-      userEvent.click(screen.getByRole('checkbox', { name: 'Apple' }));
+      await userEvent.click(screen.getByRole('checkbox', { name: 'Banana' }));
+      await userEvent.click(screen.getByRole('checkbox', { name: 'Apple' }));
       expect(screen.getAllByRole('checkbox', { checked: true })).toEqual([
         screen.getByRole('checkbox', { name: 'Apple' }),
         screen.getByRole('checkbox', { name: 'Banana' }),
@@ -68,10 +68,10 @@ describe('options', () => {
   describe('options as array of numbers', () => {
     const options = [0, 1, 2, 3];
 
-    it('updates when the value changes', () => {
+    it('updates when the value changes', async () => {
       render(<Test options={options} />);
-      userEvent.click(screen.getByRole('checkbox', { name: '1' }));
-      userEvent.click(screen.getByRole('checkbox', { name: '2' }));
+      await userEvent.click(screen.getByRole('checkbox', { name: '1' }));
+      await userEvent.click(screen.getByRole('checkbox', { name: '2' }));
       expect(screen.getAllByRole('checkbox', { checked: true })).toEqual([
         screen.getByRole('checkbox', { name: '1' }),
         screen.getByRole('checkbox', { name: '2' }),
@@ -83,10 +83,10 @@ describe('options', () => {
     describe('label', () => {
       const options = [{ label: 'Apple' }, { label: 'Banana' }, { label: 'Orange' }];
 
-      it('updates when the value changes', () => {
+      it('updates when the value changes', async () => {
         render(<Test options={options} />);
-        userEvent.click(screen.getByRole('checkbox', { name: 'Banana' }));
-        userEvent.click(screen.getByRole('checkbox', { name: 'Orange' }));
+        await userEvent.click(screen.getByRole('checkbox', { name: 'Banana' }));
+        await userEvent.click(screen.getByRole('checkbox', { name: 'Orange' }));
         expect(screen.getAllByRole('checkbox', { checked: true })).toEqual([
           screen.getByRole('checkbox', { name: 'Banana' }),
           screen.getByRole('checkbox', { name: 'Orange' }),
@@ -95,23 +95,23 @@ describe('options', () => {
     });
 
     describe('value', () => {
-      it('is used as a options identity', () => {
+      it('is used as a options identity', async () => {
         const options = [{ label: 'foo', value: 1 }, { label: 'foo', value: 2 }, { label: 'foo', value: 3 }];
         render(<Test options={options} values={[2]} />);
         expect(screen.getByRole('checkbox', { checked: true }).value).toEqual('2');
         const checkboxes = screen.getAllByRole('checkbox');
-        userEvent.click(checkboxes[0]);
+        await userEvent.click(checkboxes[0]);
         expect(screen.getAllByRole('checkbox', { checked: true })).toEqual([checkboxes[0], checkboxes[1]]);
       });
     });
 
     describe('id', () => {
-      it('is used as a options identity', () => {
+      it('is used as a options identity', async () => {
         const options = [{ label: 'foo', id: 1 }, { label: 'foo', id: 2 }, { label: 'foo', id: 3 }];
         render(<Test options={options} values={[2]} />);
         expect(screen.getByRole('checkbox', { checked: true }).value).toEqual('2');
         const checkboxes = screen.getAllByRole('checkbox');
-        userEvent.click(checkboxes[0]);
+        await userEvent.click(checkboxes[0]);
         expect(screen.getAllByRole('checkbox', { checked: true })).toEqual([checkboxes[0], checkboxes[1]]);
       });
     });
@@ -177,10 +177,10 @@ describe('options', () => {
         expect(container).toMatchSnapshot();
       });
 
-      it('selects an option', () => {
+      it('selects an option', async () => {
         render(<Test options={options} />);
         const option = screen.getByRole('checkbox', { name: 'Citrus Lemon' });
-        userEvent.click(option);
+        await userEvent.click(option);
         expect(screen.getByRole('checkbox', { checked: true })).toEqual(option);
       });
     });
@@ -198,13 +198,13 @@ describe('options', () => {
     describe('mapOption returns an object', () => {
       const options = [{ name: 'Apple' }, { name: 'Banana' }, { name: 'Orange' }];
 
-      it('maps options', () => {
+      it('maps options', async () => {
         render(<Test
           options={options}
           mapOption={({ name }) => ({ label: name })}
         />);
         const option = screen.getByRole('checkbox', { name: 'Banana' });
-        userEvent.click(option);
+        await userEvent.click(option);
         expect(screen.getByRole('checkbox', { checked: true })).toEqual(option);
       });
 
@@ -221,13 +221,13 @@ describe('options', () => {
     describe('mapOption returns a string', () => {
       const options = [{ name: 'Apple' }, { name: 'Banana' }, { name: 'Orange' }];
 
-      it('maps options', () => {
+      it('maps options', async () => {
         render(<Test
           options={options}
           mapOption={({ name }) => name}
         />);
         const option = screen.getByRole('checkbox', { name: 'Banana' });
-        userEvent.click(option);
+        await userEvent.click(option);
         expect(screen.getByRole('checkbox', { checked: true })).toEqual(option);
       });
 

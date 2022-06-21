@@ -26,8 +26,8 @@ it('runs helpers on layout callback', async () => {
 
   await waitFor(() => {
     expect(spy1).toHaveBeenCalledWith(listbox);
-    expect(spy2).toHaveBeenCalledWith(listbox);
   });
+  expect(spy2).toHaveBeenCalledWith(listbox);
 });
 
 it('runs helpers on resize', async () => {

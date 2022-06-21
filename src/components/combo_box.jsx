@@ -133,7 +133,7 @@ export const ComboBox = forwardRef((rawProps, ref) => {
 
   useLayoutEffect(() => {
     if (search && autoselect === 'inline' && inlineAutoselect && focusedOption && document.activeElement === inputRef.current) {
-      inputRef.current.setSelectionRange(search.length, focusedOption.label.length, 'backwards');
+      inputRef.current.setSelectionRange(search.length, focusedOption.label.length, 'backward');
     }
   }, [inlineAutoselect, focusedOption, search, autoselect]);
 

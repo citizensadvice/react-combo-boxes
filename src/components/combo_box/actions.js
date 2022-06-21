@@ -335,7 +335,7 @@ export function onBlur() {
       && expanded
       && !tabBetweenOptions
       && focusedOption
-      && value?.identify !== focusedOption?.identity
+      && value?.identity !== focusedOption?.identity
     ) {
       dispatch(onSelectValue(focusedOption));
       return;

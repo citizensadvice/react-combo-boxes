@@ -49,12 +49,12 @@ export async function selectComboBoxOption({ from, searchFor, select, container 
     textBox = queryByRole(comboBox, 'textbox') || queryAllByRole(container, 'textbox').find((id) => ids.include(id)) || comboBox;
   }
 
-  userEvent.click(textBox);
+  await userEvent.click(textBox);
 
   if (typeof searchFor === 'string') {
-    userEvent.clear(textBox);
+    await userEvent.clear(textBox);
     if (searchFor) {
-      await userEvent.type(textBox, searchFor);
+      await await userEvent.type(textBox, searchFor);
     }
   }
 
@@ -104,7 +104,7 @@ export async function selectComboBoxOption({ from, searchFor, select, container 
   }
 
   // Select the option
-  userEvent.click(option);
+  await userEvent.click(option);
 
   await waitFor(() => {
     expect(listBox).not.toBeVisible();

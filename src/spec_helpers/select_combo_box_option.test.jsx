@@ -129,11 +129,11 @@ describe('selecting a value from a combo box', () => {
 });
 
 describe('clearing a combo box', () => {
-  it('userEvent can clear a combo-box', async () => {
+  it('await userEvent can clear a combo-box', async () => {
     render(<ComboBoxWrapper />);
     await selectComboBoxOption({ from: 'Label', select: 'foe' });
     expect(screen.getByLabelText('Output')).toHaveValue('foe');
-    userEvent.clear(screen.getByRole('combobox', { name: 'Label' }));
+    await userEvent.clear(screen.getByRole('combobox', { name: 'Label' }));
 
     await waitFor(() => {
       expect(screen.getByLabelText('Output')).toHaveValue('');

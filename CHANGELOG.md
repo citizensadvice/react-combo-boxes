@@ -1,5 +1,9 @@
 # Change log
 
+## 1.3.2
+
+- Fix support for @testing-library/user-event version 14
+
 ## 1.3.1
 
 - Fix scrollbars not being accounted for when using `layoutMaxWidth` and `layoutMaxHeight`

@@ -1,7 +1,7 @@
 /* eslint-disable testing-library/no-node-access */
 
 import React, { useState, forwardRef } from 'react';
-import { render, fireEvent, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ComboBoxTable } from './combo_box_table';
 import { visuallyHiddenClassName } from '../constants/visually_hidden_class_name';
@@ -41,7 +41,7 @@ describe('columns as names only', () => {
     expect(container).toMatchSnapshot();
   });
 
-  it('allows selection by click', () => {
+  it('allows selection by click', async () => {
     const spy = jest.fn();
     render((
       <ComboBoxWrapper
@@ -51,11 +51,11 @@ describe('columns as names only', () => {
       />
     ));
     screen.getByRole('combobox').focus();
-    userEvent.click(screen.getByRole('option', { name: /Banana/ }));
+    await userEvent.click(screen.getByRole('option', { name: /Banana/ }));
     expect(spy).toHaveBeenCalledWith({ label: 'Banana', type: 'Fruit', colour: 'Yellow' });
   });
 
-  it('allows selection by keyboard', () => {
+  it('allows selection by keyboard', async () => {
     const spy = jest.fn();
     render((
       <ComboBoxWrapper
@@ -65,9 +65,7 @@ describe('columns as names only', () => {
       />
     ));
     screen.getByRole('combobox').focus();
-    fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
-    fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
-    fireEvent.keyDown(document.activeElement, { key: 'Enter' });
+    await userEvent.keyboard('{ArrowDown}{ArrowDown}{Enter}');
 
     expect(spy).toHaveBeenCalledWith({ label: 'Banana', type: 'Fruit', colour: 'Yellow' });
   });
@@ -95,7 +93,7 @@ describe('columns with headers', () => {
     expect(container).toMatchSnapshot();
   });
 
-  it('allows selection by click', () => {
+  it('allows selection by click', async () => {
     const spy = jest.fn();
     render((
       <ComboBoxWrapper
@@ -105,11 +103,11 @@ describe('columns with headers', () => {
       />
     ));
     screen.getByRole('combobox').focus();
-    userEvent.click(screen.getByRole('option', { name: /Banana/ }));
+    await userEvent.click(screen.getByRole('option', { name: /Banana/ }));
     expect(spy).toHaveBeenCalledWith({ label: 'Banana', type: 'Fruit', colour: 'Yellow' });
   });
 
-  it('allows selection by keyboard', () => {
+  it('allows selection by keyboard', async () => {
     const spy = jest.fn();
     render((
       <ComboBoxWrapper
@@ -119,9 +117,7 @@ describe('columns with headers', () => {
       />
     ));
     screen.getByRole('combobox').focus();
-    fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
-    fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
-    fireEvent.keyDown(document.activeElement, { key: 'Enter' });
+    await userEvent.keyboard('{ArrowDown}{ArrowDown}{Enter}');
 
     expect(spy).toHaveBeenCalledWith({ label: 'Banana', type: 'Fruit', colour: 'Yellow' });
   });
@@ -200,7 +196,7 @@ describe('grouped', () => {
     expect(container).toMatchSnapshot();
   });
 
-  it('allows selection by click', () => {
+  it('allows selection by click', async () => {
     const spy = jest.fn();
     render((
       <ComboBoxWrapper
@@ -211,11 +207,11 @@ describe('grouped', () => {
       />
     ));
     screen.getByRole('combobox').focus();
-    userEvent.click(screen.getByRole('option', { name: /Banana/ }));
+    await userEvent.click(screen.getByRole('option', { name: /Banana/ }));
     expect(spy).toHaveBeenCalledWith({ name: 'Banana', type: 'Fruit', colour: 'Yellow' });
   });
 
-  it('allows selection by keyboard', () => {
+  it('allows selection by keyboard', async () => {
     const spy = jest.fn();
     render((
       <ComboBoxWrapper
@@ -226,9 +222,7 @@ describe('grouped', () => {
       />
     ));
     screen.getByRole('combobox').focus();
-    fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
-    fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
-    fireEvent.keyDown(document.activeElement, { key: 'Enter' });
+    await userEvent.keyboard('{ArrowDown}{ArrowDown}{Enter}');
 
     expect(spy).toHaveBeenCalledWith({ name: 'Banana', type: 'Fruit', colour: 'Yellow' });
   });
@@ -483,11 +477,11 @@ describe('customisation', () => {
   });
 
   describe('renderGroupAccessibleLabel', () => {
-    it('allows a table cell accessible label to be replaced', () => {
+    it('allows a table cell accessible label to be replaced', async () => {
       render(
         <ComboBoxWrapper options={options} columns={columns} mapOption={map} renderGroupAccessibleLabel={(props) => <kbd data-foo="bar" {...props} />} />,
       );
-      userEvent.click(screen.getByRole('combobox'));
+      await userEvent.click(screen.getByRole('combobox'));
       expect(screen.getAllByRole('option')[0].querySelector('td > kbd')).toHaveAttribute('data-foo', 'bar');
     });
 
@@ -517,11 +511,11 @@ describe('customisation', () => {
   });
 
   describe('renderTableCellColumnAccessibleLabel', () => {
-    it('allows a table cell accessible label to be replaced', () => {
+    it('allows a table cell accessible label to be replaced', async () => {
       render(
         <ComboBoxWrapper options={options} columns={columns} mapOption={map} renderTableCellColumnAccessibleLabel={(props) => <kbd data-foo="bar" {...props} />} />,
       );
-      userEvent.click(screen.getByRole('combobox'));
+      await userEvent.click(screen.getByRole('combobox'));
       expect(screen.getAllByRole('option')[0].querySelector('td > kbd')).toHaveAttribute('data-foo', 'bar');
     });
 
