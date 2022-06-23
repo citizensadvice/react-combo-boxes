@@ -1,0 +1,12 @@
+{
+  "jsc": {
+    "parser": {
+      "syntax": "ecmascript",
+      "jsx": true
+    },
+    "target": "es2022"
+  },
+  "env": {
+    "targets": "defaults, maintained node versions, not op_mini all"
+  }
+}
