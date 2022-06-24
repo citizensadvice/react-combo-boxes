@@ -5,11 +5,11 @@ html(lang='en-GB')
     meta(charset='utf-8')
     title= title
     meta(name='viewport' content='width=device-width, initial-scale=1')
-    link(rel='stylesheet' href='~/styles.scss')
+    link(rel='stylesheet' href='/examples/styles.scss')
     script(src='https://polyfill.io/v3/polyfill.min.js?features=default%2Ces2018%2Ces2015%2Ces2016%2Ces2017%2Ces2019%2CNodeList.prototype.forEach' crossorigin='anonymous')
   body
     include side_bar
     main
       block main
 
-    script(src='~/render.jsx')
+    script(src='/examples/render.jsx' type="module")

@@ -1,5 +1,4 @@
 {
-  "parser": "@babel/eslint-parser",
   "extends": [
     "airbnb",
     "plugin:jest/recommended"
@@ -10,6 +9,9 @@
   ],
   "env": {
     "browser": true
+  },
+  "parserOptions": {
+    "ecmaVersion": "latest"
   },
   "rules": {
     "babel/no-unused-expressions": "error",
