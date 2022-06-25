@@ -298,11 +298,16 @@ export function onFocusInput() {
   };
 }
 
-export function onFocusOption(focusedOption) {
-  return setFocusedOption({
-    focusedOption,
-    focusListBox: true,
-  });
+export function onFocusOption(option) {
+  return (dispatch, getState) => {
+    const { focusedOption, expanded } = getState();
+
+    if (!expanded || focusedOption.identity === option.identity) {
+      return;
+    }
+
+    dispatch(setFocusedOption({ focusedOption: option, focusListBox: true }));
+  };
 }
 
 export function onInputMouseUp(e) {

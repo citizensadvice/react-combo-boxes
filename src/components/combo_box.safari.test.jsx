@@ -27,9 +27,7 @@ function ComboBoxWrapper(props) {
 
 it('uses managedFocus = true on a mac in safari', async () => {
   render(<ComboBoxWrapper options={['foo', 'bar']} />);
-  const comboBox = screen.getByRole('combobox');
-
-  comboBox.focus();
+  await userEvent.tab();
   await userEvent.keyboard('{ArrowDown}{ArrowDown}');
   expect(screen.getByRole('option', { name: 'bar' })).toHaveFocus();
 });

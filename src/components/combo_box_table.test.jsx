@@ -50,7 +50,7 @@ describe('columns as names only', () => {
         onValue={spy}
       />
     ));
-    screen.getByRole('combobox').focus();
+    await userEvent.tab();
     await userEvent.click(screen.getByRole('option', { name: /Banana/ }));
     expect(spy).toHaveBeenCalledWith({ label: 'Banana', type: 'Fruit', colour: 'Yellow' });
   });
@@ -64,7 +64,7 @@ describe('columns as names only', () => {
         onValue={spy}
       />
     ));
-    screen.getByRole('combobox').focus();
+    await userEvent.tab();
     await userEvent.keyboard('{ArrowDown}{ArrowDown}{Enter}');
 
     expect(spy).toHaveBeenCalledWith({ label: 'Banana', type: 'Fruit', colour: 'Yellow' });
@@ -102,7 +102,7 @@ describe('columns with headers', () => {
         onValue={spy}
       />
     ));
-    screen.getByRole('combobox').focus();
+    await userEvent.tab();
     await userEvent.click(screen.getByRole('option', { name: /Banana/ }));
     expect(spy).toHaveBeenCalledWith({ label: 'Banana', type: 'Fruit', colour: 'Yellow' });
   });
@@ -116,7 +116,7 @@ describe('columns with headers', () => {
         onValue={spy}
       />
     ));
-    screen.getByRole('combobox').focus();
+    await userEvent.tab();
     await userEvent.keyboard('{ArrowDown}{ArrowDown}{Enter}');
 
     expect(spy).toHaveBeenCalledWith({ label: 'Banana', type: 'Fruit', colour: 'Yellow' });
@@ -206,7 +206,7 @@ describe('grouped', () => {
         mapOption={map}
       />
     ));
-    screen.getByRole('combobox').focus();
+    await userEvent.tab();
     await userEvent.click(screen.getByRole('option', { name: /Banana/ }));
     expect(spy).toHaveBeenCalledWith({ name: 'Banana', type: 'Fruit', colour: 'Yellow' });
   });
@@ -221,7 +221,7 @@ describe('grouped', () => {
         mapOption={map}
       />
     ));
-    screen.getByRole('combobox').focus();
+    await userEvent.tab();
     await userEvent.keyboard('{ArrowDown}{ArrowDown}{Enter}');
 
     expect(spy).toHaveBeenCalledWith({ name: 'Banana', type: 'Fruit', colour: 'Yellow' });
@@ -249,11 +249,11 @@ describe('customisation', () => {
   }
 
   describe('renderTableWrapper', () => {
-    it('allows the list box to be replaced', () => {
+    it('allows the list box to be replaced', async () => {
       render(
         <ComboBoxWrapper options={options} columns={columns} mapOption={map} renderTableWrapper={(props) => <dl data-foo="bar" {...props} />} />,
       );
-      screen.getByRole('combobox').focus();
+      await userEvent.tab();
       expect(screen.getByRole('listbox').parentNode.tagName).toEqual('DL');
       expect(screen.getByRole('listbox').parentNode).toHaveAttribute('data-foo', 'bar');
     });
@@ -281,11 +281,11 @@ describe('customisation', () => {
   });
 
   describe('renderTable', () => {
-    it('allows the table to be replaced', () => {
+    it('allows the table to be replaced', async () => {
       render(
         <ComboBoxWrapper options={options} columns={columns} mapOption={map} renderTable={(props) => <table data-foo="bar" {...props} />} />,
       );
-      screen.getByRole('combobox').focus();
+      await userEvent.tab();
       expect(screen.getByRole('listbox')).toHaveAttribute('data-foo', 'bar');
     });
 
@@ -408,11 +408,11 @@ describe('customisation', () => {
   });
 
   describe('renderTableRow', () => {
-    it('allows a table row to be replaced', () => {
+    it('allows a table row to be replaced', async () => {
       render(
         <ComboBoxWrapper options={options} columns={columns} mapOption={map} renderTableRow={(props) => <tr data-foo="bar" {...props} />} />,
       );
-      screen.getByRole('combobox').focus();
+      await userEvent.tab();
       expect(screen.getAllByRole('option')[0]).toHaveAttribute('data-foo', 'bar');
     });
 
@@ -442,11 +442,11 @@ describe('customisation', () => {
   });
 
   describe('renderTableCell', () => {
-    it('allows a table cell to be replaced', () => {
+    it('allows a table cell to be replaced', async () => {
       render(
         <ComboBoxWrapper options={options} columns={columns} mapOption={map} renderTableCell={(props) => <td data-foo="bar" {...props} />} />,
       );
-      screen.getByRole('combobox').focus();
+      await userEvent.tab();
       expect(screen.getAllByRole('option')[0].querySelector('td')).toHaveAttribute('data-foo', 'bar');
     });
 
@@ -566,11 +566,11 @@ describe('customisation', () => {
   });
 
   describe('renderColumnValue', () => {
-    it('allows a table cell value to be replaced', () => {
+    it('allows a table cell value to be replaced', async () => {
       render(
         <ComboBoxWrapper options={options} columns={columns} mapOption={map} renderColumnValue={(props) => <kbd data-foo="bar" {...props} />} />,
       );
-      screen.getByRole('combobox').focus();
+      await userEvent.tab();
       expect(screen.getAllByRole('option')[0].querySelector('td > kbd')).toHaveAttribute('data-foo', 'bar');
     });
 

@@ -63,7 +63,7 @@ describe('columns as names only', () => {
       />
     ));
 
-    screen.getByRole('combobox').focus();
+    await userEvent.tab();
     await userEvent.keyboard('{ArrowDown}{ArrowDown}{Enter}');
 
     expect(spy).toHaveBeenCalledWith({ label: 'Banana', type: 'Fruit', colour: 'Yellow' });
@@ -115,7 +115,7 @@ describe('columns with headers', () => {
         onValue={spy}
       />
     ));
-    screen.getByRole('combobox').focus();
+    await userEvent.tab();
     await userEvent.keyboard('{ArrowDown}{ArrowDown}{Enter}');
 
     expect(spy).toHaveBeenCalledWith({ label: 'Banana', type: 'Fruit', colour: 'Yellow' });
@@ -220,7 +220,7 @@ describe('grouped', () => {
         mapOption={map}
       />
     ));
-    screen.getByRole('combobox').focus();
+    await userEvent.tab();
     await userEvent.keyboard('{ArrowDown}{ArrowDown}{Enter}');
 
     expect(spy).toHaveBeenCalledWith({ name: 'Banana', type: 'Fruit', colour: 'Yellow' });

@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
 import { usePrefixSearch } from './use_prefix_search';
 
 it('filters string options', () => {

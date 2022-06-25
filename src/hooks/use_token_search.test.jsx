@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
 import { useTokenSearch } from './use_token_search';
 
 it('filters string options', () => {

@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook, act, waitFor } from '@testing-library/react';
 import { useLayoutListBox } from './use_layout_list_box';
 
 it('runs helpers on layout callback', async () => {
@@ -6,7 +6,7 @@ it('runs helpers on layout callback', async () => {
   const spy2 = jest.fn();
   const listbox = Symbol('lisbox');
 
-  const { result, waitFor } = renderHook(() => useLayoutListBox(spy1, spy2));
+  const { result } = renderHook(() => useLayoutListBox(spy1, spy2));
 
   expect(spy1).not.toHaveBeenCalled();
   expect(spy2).not.toHaveBeenCalled();
@@ -34,7 +34,7 @@ it('runs helpers on resize', async () => {
   const spy = jest.fn();
   const listbox = Symbol('lisbox');
 
-  const { result, waitFor } = renderHook(() => useLayoutListBox(spy));
+  const { result } = renderHook(() => useLayoutListBox(spy));
 
   expect(spy).not.toHaveBeenCalled();
 
@@ -59,7 +59,7 @@ it('runs helpers on scroll', async () => {
   const spy = jest.fn();
   const listbox = Symbol('lisbox');
 
-  const { result, waitFor } = renderHook(() => useLayoutListBox(spy));
+  const { result } = renderHook(() => useLayoutListBox(spy));
 
   expect(spy).not.toHaveBeenCalled();
 

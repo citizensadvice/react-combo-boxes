@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook, act, waitFor } from '@testing-library/react';
 import { useAsyncSearch } from './use_async_search';
 
 describe('options', () => {
@@ -8,21 +8,23 @@ describe('options', () => {
       .mockImplementationOnce(async () => ['foo'])
       .mockImplementationOnce(async () => ['bar']);
 
-    const { result, waitForNextUpdate, rerender } = renderHook(
+    const { result, rerender } = renderHook(
       ({ query }) => useAsyncSearch(query, { searcher }),
       { initialProps: { query: null } },
     );
 
     expect(searcher).toHaveBeenCalledWith(null, { signal: expect.any(AbortSignal) });
     expect(result.current).toEqual([undefined, true, null]);
-    await waitForNextUpdate();
-    expect(result.current).toEqual([['foo'], false, null]);
+    await waitFor(() => {
+      expect(result.current).toEqual([['foo'], false, null]);
+    });
 
     rerender({ query: 'foo' });
     expect(searcher).toHaveBeenCalledWith('foo', { signal: expect.any(AbortSignal) });
     expect(result.current).toEqual([['foo'], true, null]);
-    await waitForNextUpdate();
-    expect(result.current).toEqual([['bar'], false, null]);
+    await waitFor(() => {
+      expect(result.current).toEqual([['bar'], false, null]);
+    });
   });
 
   it('does not change the search results if null is returned', async () => {
@@ -33,32 +35,36 @@ describe('options', () => {
       .mockImplementationOnce(async () => [])
       .mockImplementationOnce(async () => null);
 
-    const { result, waitForNextUpdate, rerender } = renderHook(
+    const { result, rerender } = renderHook(
       ({ query }) => useAsyncSearch(query, { searcher }),
       { initialProps: { query: 'foo' } },
     );
 
     // ['foo'] returned
-    await waitForNextUpdate();
-    expect(result.current).toEqual([['foo'], false, null]);
+    await waitFor(() => {
+      expect(result.current).toEqual([['foo'], false, null]);
+    });
 
     // null returned
     rerender({ query: '1' });
     expect(result.current).toEqual([['foo'], true, null]);
-    await waitForNextUpdate();
-    expect(result.current).toEqual([['foo'], false, null]);
+    await waitFor(() => {
+      expect(result.current).toEqual([['foo'], false, null]);
+    });
 
     // [] returned
     rerender({ query: '2' });
     expect(result.current).toEqual([['foo'], true, null]);
-    await waitForNextUpdate();
-    expect(result.current).toEqual([[], false, null]);
+    await waitFor(() => {
+      expect(result.current).toEqual([[], false, null]);
+    });
 
     // null returned
     rerender({ query: '3' });
     expect(result.current).toEqual([[], true, null]);
-    await waitForNextUpdate();
-    expect(result.current).toEqual([[], false, null]);
+    await waitFor(() => {
+      expect(result.current).toEqual([[], false, null]);
+    });
   });
 
   it('cancels and removes out of sync returns', async () => {
@@ -76,7 +82,7 @@ describe('options', () => {
       .mockImplementationOnce(() => promise1)
       .mockImplementationOnce(() => promise2);
 
-    const { result, waitForNextUpdate, rerender } = renderHook(
+    const { result, rerender } = renderHook(
       ({ query }) => useAsyncSearch(query, { searcher }),
       { initialProps: { query: 'foo' } },
     );
@@ -94,8 +100,9 @@ describe('options', () => {
 
     // Resolve second search
     resolve2(['foo']);
-    await waitForNextUpdate();
-    expect(result.current).toEqual([['foo'], false, null]);
+    await waitFor(() => {
+      expect(result.current).toEqual([['foo'], false, null]);
+    });
 
     // Resolve first search - nothing should happen
     resolve1(['bar']);
