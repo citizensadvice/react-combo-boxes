@@ -1,6 +1,6 @@
 /* eslint-disable testing-library/no-node-access */
 
-import React, { useEffect, useState, forwardRef } from 'react';
+import { useEffect, useState, forwardRef } from 'react';
 import { render, fireEvent, waitFor, act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ComboBox } from './combo_box';

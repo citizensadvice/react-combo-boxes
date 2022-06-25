@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { DropDown } from '../../../src';
 import countries from '../../data/countries.json';
 

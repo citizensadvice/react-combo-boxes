@@ -1,7 +1,8 @@
 {
   "extends": [
     "airbnb",
-    "plugin:jest/recommended"
+    "plugin:jest/recommended",
+    "plugin:react/jsx-runtime"
   ],
   "plugins": [
     "react-hooks",
@@ -58,7 +59,8 @@
         "react/jsx-no-bind": "off",
         "react/prop-types": "off",
         "jest/expect-expect": "off",
-        "jest/no-standalone-expect": "off"
+        "jest/no-standalone-expect": "off",
+        "testing-library/no-node-access": "off"
       }
     },
     {

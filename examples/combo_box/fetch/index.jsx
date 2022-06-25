@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ComboBox, useAsyncSearch } from '../../../src';
 
 async function searcher(query, { signal }) {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ComboBox, usePrefixSearch, tokenHighlight } from '../../../src';
 
 const options = [

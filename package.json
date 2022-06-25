@@ -16,7 +16,7 @@
     "styles/**/*"
   ],
   "scripts": {
-    "build:js": "rm -rf dist && swc ./src -d dist -C env.targets='maintained node versions'",
+    "build:js": "rm -rf dist && swc ./src -d dist",
     "prebuild": "rm -rf docs",
     "build": "parcel build ./examples/index.pug --dist-dir docs",
     "start": "parcel ./examples/index.pug",
@@ -84,10 +84,5 @@
   "sideEffects": false,
   "np": {
     "yarn": false
-  },
-  "browserslist": [
-    "defaults",
-    "maintained node versions",
-    "not op_mini all"
-  ]
+  }
 }

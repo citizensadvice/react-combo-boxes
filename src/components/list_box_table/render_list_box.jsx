@@ -1,4 +1,3 @@
-import React from 'react';
 import { makeBEMClass } from '../../helpers/make_bem_class';
 
 export function renderListBox({ children, hidden, ref, ...props }, componentState, componentProps) {

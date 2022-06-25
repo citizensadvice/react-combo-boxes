@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { ComboBox, useTokenSearch, tokenHighlight } from '../../../src';
 import emoji from '../../data/emoji.json';
 

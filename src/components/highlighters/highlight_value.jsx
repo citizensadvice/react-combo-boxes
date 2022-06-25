@@ -1,4 +1,3 @@
-import React from 'react';
 import { Highlight } from '../highlight';
 import { isIE } from '../../sniffers/is_ie';
 
