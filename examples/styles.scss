@@ -1,5 +1,5 @@
-@use "normalize.css";
-@use "prismjs/themes/prism.css";
+@import "npm:normalize.css/normalize.css";
+@import "npm:prismjs/themes/prism.css";
 
 $text-colour: #161616;
 

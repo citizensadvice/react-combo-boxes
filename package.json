@@ -17,15 +17,15 @@
   ],
   "scripts": {
     "build:js": "rm -rf dist && swc ./src -d dist",
-    "prebuild": "rm -rf docs",
-    "build": "parcel build ./examples/index.pug --dist-dir docs",
+    "prebuild": "rm -rf .gh-pages",
+    "build": "parcel build ./examples/index.pug",
     "start": "parcel ./examples/index.pug",
     "lint:js": "eslint . --ext .js --ext .jsx",
     "lint:scss": "stylelint \"**/*.scss\"",
     "lint": "npm run lint:js && npm run lint:scss",
     "test": "jest",
     "predeploy": "npm run lint",
-    "deploy": "npm run build -- --public-url \"/react-combo-boxes/\" && gh-pages -d docs",
+    "deploy": "npm run build -- --public-url \"/react-combo-boxes/\" --no-cache && gh-pages -d .gh-pages",
     "preversion": "npm run lint",
     "prepublishOnly": "npm run build:js",
     "postpublish": "npm run deploy",
@@ -57,7 +57,6 @@
     "jest-environment-jsdom": "^28.1.1",
     "marked": "^4.0.17",
     "node-emoji": "^1.11.0",
-    "normalize.css": "^8.0.1",
     "np": "^7.6.2",
     "parcel": "^2.6.2",
     "postcss": "^8.4.14",
@@ -82,6 +81,12 @@
     "@testing-library/user-event": ">= 4.0.0"
   },
   "sideEffects": false,
+  "targets": {
+    "main": false,
+    "default": {
+      "distDir": ".gh-pages"
+    }
+  },
   "np": {
     "yarn": false
   }
