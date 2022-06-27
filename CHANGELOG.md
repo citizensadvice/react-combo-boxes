@@ -1,5 +1,11 @@
 # Change log
 
+## 2.0.0-alpha1
+
+- Project is now built as es6 only
+- Fixed some unnecessary state updates when selecting options
+- Updated development dependencies to React 18 (will still work for older React versions)
+
 ## 1.3.2
 
 - Fix support for @testing-library/user-event version 14

@@ -1,10 +1,10 @@
-@import "normalize.css";
-@import "prismjs/themes/prism.css";
+@use "normalize.css";
+@use "prismjs/themes/prism.css";
 
 $text-colour: #161616;
 
-@import "../styles/dropdown.scss";
-@import "../styles/combobox.scss";
+@import "../styles/dropdown";
+@import "../styles/combobox";
 
 body {
   font: 1em/1.5 sans-serif;
@@ -79,8 +79,8 @@ nav {
 
 code,
 output {
-  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
-  background: rgba(27, 31, 35, 0.05);
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  background: rgba(27 31 35 / 5%);
   font-size: 85%;
   padding: 0.2em 0.4em;
 }
@@ -91,7 +91,7 @@ pre > code {
 
 pre {
   padding: 1em;
-  margin: 0.5em 0 1.5em 0;
+  margin: 0.5em 0 1.5em;
   overflow: auto;
   background: #f5f2f0;
   font-size: 90%;
@@ -115,7 +115,7 @@ table {
 
 blockquote {
   border-left: 0.25em solid #ddd;
-  margin: 0 0 1.5em 0;
+  margin: 0 0 1.5em;
   padding-left: 1em;
 }
 
@@ -137,7 +137,7 @@ label,
   font-weight: bold;
 }
 
-input[type=text] {
+input[type="text"] {
   width: 30em;
   max-width: 100%;
 }

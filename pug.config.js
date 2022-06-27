@@ -1,12 +1,13 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const emoji = require('node-emoji');
-const marked = require('marked');
+const { marked } = require('marked');
 const Prism = require('prismjs');
 const path = require('path');
 const { name } = require('./package.json');
 
 const renderer = new marked.Renderer();
 const originalLink = renderer.link;
+
 renderer.link = function link(href, title, text) {
   if (/^(?!\/\/|\w+:)/.test(href)) {
     const parts = path.parse(href);

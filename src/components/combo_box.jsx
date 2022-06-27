@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useLayoutEffect, Fragment, useMemo, forwardRef, useState, useCallback } from 'react';
+import { useRef, useEffect, useLayoutEffect, Fragment, useMemo, forwardRef, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useThunkReducer as useReducer } from '../hooks/use_thunk_reducer';
 import { reducer } from './combo_box/reducer';
@@ -465,10 +465,12 @@ ComboBox.defaultProps = {
   renderWrapper: (props) => <div {...props} />,
   renderInput: (props) => <input {...props} />,
   renderListBox: (props) => <ul {...props} />,
+  // eslint-disable-next-line react/jsx-no-useless-fragment
   renderGroup: (props) => <Fragment {...props} />,
   renderGroupLabel: (props) => <li {...props} />,
   renderGroupAccessibleLabel: (props) => <span {...props} />,
   renderOption: (props) => <li {...props} />,
+  // eslint-disable-next-line react/jsx-no-useless-fragment
   renderValue: (props) => <Fragment {...props} />,
   renderDownArrow: (props) => <span {...props} />,
   renderClearButton: (props) => <span {...props} />,

@@ -1,6 +1,6 @@
-@import './variables.scss';
-@import './listbox.scss';
-@import './sr_only.scss';
+@import "./variables";
+@import "./listbox";
+@import "./sr_only";
 
 .react-combo-boxes-dropdown {
   @include react-combo-boxes-listbox;
@@ -58,7 +58,7 @@
       0 0 0 $react-combo-boxes-focus-border-width $react-combo-boxes-focus-border-color;
   }
 
-  &[aria-disabled=true] {
+  &[aria-disabled="true"] {
     opacity: 0.5;
     cursor: not-allowed;
   }

@@ -1,6 +1,4 @@
-/* eslint-disable testing-library/no-node-access */
-
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
@@ -51,15 +49,14 @@ const options = ['Apple', 'Banana', 'Orange'];
 describe('with an open list box', () => {
   it('moves to the first option with the home key', async () => {
     render(<ComboBoxWrapper options={options} />);
-    const combobox = screen.getByRole('combobox');
-    combobox.focus();
+    await userEvent.tab();
     await userEvent.keyboard('{ArrowUp}{Home}');
     expectToHaveFocusedOption(screen.getByRole('option', { name: 'Apple' }));
   });
 
   it('moves to the last option with the end key', async () => {
     render(<ComboBoxWrapper options={options} />);
-    screen.getByRole('combobox').focus();
+    await userEvent.tab();
     await userEvent.keyboard('{End}');
     expectToHaveFocusedOption(screen.getByRole('option', { name: 'Orange' }));
   });
@@ -68,7 +65,7 @@ describe('with an open list box', () => {
     describe('pressing Ctrl+d', () => {
       it('moves focus back to the list box removing the selected option', async () => {
         render(<ComboBoxWrapper options={options} />);
-        screen.getByRole('combobox').focus();
+        await userEvent.tab();
         await userEvent.keyboard('{ArrowDown}{Control>}d{/Control}');
         expectToBeOpen();
       });
@@ -77,7 +74,7 @@ describe('with an open list box', () => {
     describe('pressing Ctrl+k', () => {
       it('moves focus back to the list box removing the selected option', async () => {
         render(<ComboBoxWrapper options={options} />);
-        screen.getByRole('combobox').focus();
+        await userEvent.tab();
         await userEvent.keyboard('{ArrowDown}{Control>}k{/Control}');
         expectToBeOpen();
       });
@@ -90,7 +87,7 @@ describe('with an open list box', () => {
         return option.label === 'Apple';
       }
       render(<ComboBoxWrapper options={options} skipOption={skipOption} />);
-      screen.getByRole('combobox').focus();
+      await userEvent.tab();
       await userEvent.keyboard('{Home}');
       expectToHaveFocusedOption(screen.getByRole('option', { name: 'Banana' }));
     });
@@ -100,7 +97,7 @@ describe('with an open list box', () => {
         return option.label === 'Orange';
       }
       render(<ComboBoxWrapper options={options} skipOption={skipOption} />);
-      screen.getByRole('combobox').focus();
+      await userEvent.tab();
       await userEvent.keyboard('{End}');
       expectToHaveFocusedOption(screen.getByRole('option', { name: 'Banana' }));
     });
@@ -111,7 +108,7 @@ describe('with a closed list box', () => {
   describe('pressing the Home key', () => {
     it('does not change the option', async () => {
       render(<ComboBoxWrapper options={options} />);
-      screen.getByRole('combobox').focus();
+      await userEvent.tab();
       await userEvent.keyboard('{ArrowDown}{ArrowDown}{Enter}{Home}{ArrowDown}');
       expectToHaveFocusedOption(screen.getByRole('option', { name: 'Banana' }));
     });
@@ -120,7 +117,7 @@ describe('with a closed list box', () => {
   describe('pressing the End key', () => {
     it('does not change the option', async () => {
       render(<ComboBoxWrapper options={options} />);
-      screen.getByRole('combobox').focus();
+      await userEvent.tab();
       await userEvent.keyboard('{ArrowDown}{ArrowDown}{Enter}{End}{ArrowDown}');
       expectToHaveFocusedOption(screen.getByRole('option', { name: 'Banana' }));
     });
@@ -132,8 +129,7 @@ describe('autoselect is true', () => {
     describe('ctrl+d', () => {
       it('does not auto-select an option', async () => {
         render(<ComboBoxWrapper options={['foo', 'bar']} autoselect />);
-        screen.getByRole('combobox').focus();
-        await userEvent.type(document.activeElement, 'fo{Control>}d{/Control}');
+        await userEvent.type(screen.getByRole('combobox'), 'fo{Control>}d{/Control}');
         expectToBeOpen();
       });
     });
@@ -142,8 +138,7 @@ describe('autoselect is true', () => {
       describe('ctrl+h', () => {
         it('does not auto-select an option', async () => {
           render(<ComboBoxWrapper options={['foo', 'bar']} autoselect />);
-          screen.getByRole('combobox').focus();
-          await userEvent.type(document.activeElement, 'foo{Control>}h{/Control}');
+          await userEvent.type(screen.getByRole('combobox'), 'foo{Control>}h{/Control}');
           expectToBeOpen();
         });
       });
@@ -151,8 +146,7 @@ describe('autoselect is true', () => {
       describe('ctrl+k', () => {
         it('does not auto-select an option', async () => {
           render(<ComboBoxWrapper options={['foo', 'bar']} autoselect />);
-          screen.getByRole('combobox').focus();
-          await userEvent.type(document.activeElement, 'fo{Control>}k{/Control}');
+          await userEvent.type(screen.getByRole('combobox'), 'fo{Control>}k{/Control}');
           expectToBeOpen();
         });
       });

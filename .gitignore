@@ -1,7 +1,6 @@
 node_modules
 *.log
-.cache
-es
-cjs
+docs
 dist
 coverage
+.parcel-cache

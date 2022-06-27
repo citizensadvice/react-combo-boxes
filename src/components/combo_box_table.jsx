@@ -1,4 +1,4 @@
-import React, { Fragment, forwardRef, useMemo } from 'react';
+import { Fragment, forwardRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { ComboBox } from './combo_box';
 import { renderListBox } from './list_box_table/render_list_box';
@@ -63,6 +63,7 @@ ComboBoxTable.defaultProps = {
   renderTableRow: (props) => <tr {...props} />,
   renderTableCellColumnAccessibleLabel: (props) => <span {...props} />,
   renderTableCell: (props) => <td {...props} />,
+  // eslint-disable-next-line react/jsx-no-useless-fragment
   renderColumnValue: (props) => <Fragment {...props} />,
 };
 

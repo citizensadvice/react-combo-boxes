@@ -540,9 +540,7 @@ exports[`options options as null renders a closed drop down with the option as a
           id="id_option_"
           role="option"
           tabindex="-1"
-        >
-          
-        </li>
+        />
       </ul>
     </div>
     <div
@@ -603,9 +601,7 @@ exports[`options options as undefined renders a closed drop down with the option
           id="id_option_"
           role="option"
           tabindex="-1"
-        >
-          
-        </li>
+        />
       </ul>
     </div>
     <div

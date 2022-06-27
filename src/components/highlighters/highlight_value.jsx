@@ -1,4 +1,3 @@
-import React from 'react';
 import { Highlight } from '../highlight';
 import { isIE } from '../../sniffers/is_ie';
 
@@ -10,7 +9,7 @@ export function highlightValue(
   highlighter,
   { inverse, search: _search, property, ...options } = {},
 ) {
-  // eslint-disable-next-line react/prop-types
+  // eslint-disable-next-line react/prop-types, react/function-component-definition
   return ({ children }, state, componentProps) => {
     const { value, visuallyHiddenClassName } = componentProps;
     const { search, option } = state;

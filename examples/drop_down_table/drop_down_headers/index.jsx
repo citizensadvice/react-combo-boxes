@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { DropDownTable, useLayoutListBox, layoutMaxWidth, layoutMaxHeight } from '../../../src';
 import cats from '../../data/cats.json';
 

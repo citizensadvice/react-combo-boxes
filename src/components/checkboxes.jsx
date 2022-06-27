@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useNormalisedOptions } from '../hooks/use_normalised_options';
 import { renderGroupedOptions } from '../helpers/render_grouped_options';

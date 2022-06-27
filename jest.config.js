@@ -8,4 +8,9 @@ module.exports = {
     '/es/',
     '/cjs/',
   ],
+  transform: {
+    '^.+\\.(t|j)sx?$': [
+      '@swc/jest',
+    ],
+  },
 };

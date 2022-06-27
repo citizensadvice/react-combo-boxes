@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import { renderGroupedOptions } from '../helpers/render_grouped_options';
 import { makeBEMClass } from '../helpers/make_bem_class';

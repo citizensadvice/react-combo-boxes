@@ -1,4 +1,4 @@
-import React, { forwardRef, useCallback, useEffect, useState } from 'react';
+import { forwardRef, useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { ComboBox } from './combo_box';
 import { classPrefix as defaultClassPrefix } from '../constants/class_prefix';

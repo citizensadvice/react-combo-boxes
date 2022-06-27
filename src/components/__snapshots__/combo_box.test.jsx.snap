@@ -726,9 +726,7 @@ exports[`options options as null renders an option with an empty string 1`] = `
         id="id_option_"
         role="option"
         tabindex="-1"
-      >
-        
-      </li>
+      />
       <li
         class="react-combo-boxes-combobox__option"
         id="id_option_foo"
@@ -813,9 +811,7 @@ exports[`options options as undefined renders an option with an empty string 1`]
         id="id_option_"
         role="option"
         tabindex="-1"
-      >
-        
-      </li>
+      />
       <li
         class="react-combo-boxes-combobox__option"
         id="id_option_foo"

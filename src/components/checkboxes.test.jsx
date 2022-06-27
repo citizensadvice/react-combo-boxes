@@ -1,6 +1,4 @@
-/* eslint-disable testing-library/no-node-access */
-
-import React, { useState, createRef } from 'react';
+import { useState, createRef } from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Checkboxes } from './checkboxes';
