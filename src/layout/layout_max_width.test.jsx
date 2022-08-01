@@ -136,3 +136,35 @@ describe('when box-sizing content-box', () => {
     expect(el).toHaveStyle({ 'max-width': '28px' });
   });
 });
+
+describe('when contain is null', () => {
+  it('uses the window width only', () => {
+    const el = document.createElement('div');
+    document.body.appendChild(el);
+    el.style.setProperty('padding', '10px');
+    el.style.setProperty('border', '1px solid black');
+
+    jest.spyOn(document.documentElement, 'clientWidth', 'get').mockImplementation(() => 120);
+    jest.spyOn(el, 'getBoundingClientRect').mockImplementation(() => ({ left: 50 }));
+
+    layoutMaxWidth(el, { contain: null });
+
+    expect(el).toHaveStyle({ 'max-width': '48px' });
+  });
+});
+
+describe('when contain does not find an element', () => {
+  it('uses the window width only', () => {
+    const el = document.createElement('div');
+    document.body.appendChild(el);
+    el.style.setProperty('padding', '10px');
+    el.style.setProperty('border', '1px solid black');
+
+    jest.spyOn(document.documentElement, 'clientWidth', 'get').mockImplementation(() => 120);
+    jest.spyOn(el, 'getBoundingClientRect').mockImplementation(() => ({ left: 50 }));
+
+    layoutMaxWidth(el, { contain: '.foo' });
+
+    expect(el).toHaveStyle({ 'max-width': '48px' });
+  });
+});

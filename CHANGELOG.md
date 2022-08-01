@@ -1,5 +1,9 @@
 # Change log
 
+## 1.3.3
+
+- Fix layoutMaxHeight and layoutMaxWidth should use the window height if contain does not resolve to an element
+
 ## 1.3.2
 
 - Fix support for @testing-library/user-event version 14
