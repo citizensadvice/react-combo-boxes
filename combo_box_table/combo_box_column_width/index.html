@@ -19,15 +19,17 @@ instead of being evenly spread across all columns.</p>
 <span class="token keyword">const</span> columns <span class="token operator">=</span> <span class="token punctuation">[</span>
   <span class="token punctuation">{</span>
     name<span class="token operator">:</span> <span class="token string">'breed'</span><span class="token punctuation">,</span>
-    label<span class="token operator">:</span> <span class="token string">'Breed'</span><span class="token punctuation">,</span>
   <span class="token punctuation">}</span><span class="token punctuation">,</span>
   <span class="token punctuation">{</span>
     name<span class="token operator">:</span> <span class="token string">'country'</span><span class="token punctuation">,</span>
-    label<span class="token operator">:</span> <span class="token string">'Country'</span><span class="token punctuation">,</span>
   <span class="token punctuation">}</span><span class="token punctuation">,</span>
 <span class="token punctuation">]</span><span class="token punctuation">;</span>
 
-<span class="token keyword">function</span> <span class="token function">mapOption</span><span class="token punctuation">(</span><span class="token parameter"><span class="token punctuation">{</span> breed <span class="token punctuation">}</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<span class="token keyword">function</span> <span class="token function">mapOption</span><span class="token punctuation">(</span><span class="token parameter"><span class="token punctuation">{</span> breed<span class="token punctuation">,</span> bodyType <span class="token punctuation">}</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token punctuation">{</span> label<span class="token operator">:</span> breed<span class="token punctuation">,</span> group<span class="token operator">:</span> bodyType <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">index</span><span class="token punctuation">(</span><span class="token parameter"><span class="token punctuation">{</span> breed <span class="token punctuation">}</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
   <span class="token keyword">return</span> breed<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 
@@ -42,7 +44,7 @@ instead of being evenly spread across all columns.</p>
 <span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">Example</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
   <span class="token keyword">const</span> <span class="token punctuation">[</span>value<span class="token punctuation">,</span> setValue<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">useState</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token keyword">const</span> <span class="token punctuation">[</span>search<span class="token punctuation">,</span> setSearch<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">useState</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token keyword">const</span> filteredOptions <span class="token operator">=</span> <span class="token function">useTokenSearch</span><span class="token punctuation">(</span>search<span class="token punctuation">,</span> <span class="token punctuation">{</span> options<span class="token operator">:</span> cats<span class="token punctuation">,</span> index<span class="token operator">:</span> mapOption <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> filteredOptions <span class="token operator">=</span> <span class="token function">useTokenSearch</span><span class="token punctuation">(</span>search<span class="token punctuation">,</span> <span class="token punctuation">{</span> options<span class="token operator">:</span> cats<span class="token punctuation">,</span> index <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
   <span class="token keyword">const</span> onLayoutListBox <span class="token operator">=</span> <span class="token function">useLayoutListBox</span><span class="token punctuation">(</span>
     layoutMaxWidth<span class="token punctuation">,</span>
@@ -81,4 +83,4 @@ instead of being evenly spread across all columns.</p>
     <span class="token operator">&lt;</span><span class="token operator">/</span><span class="token operator">></span>
   <span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
-</code></pre></main><script src="/react-combo-boxes/render.37b17829.js"></script></body></html>
+</code></pre></main><script src="/react-combo-boxes/render.b8162553.js"></script></body></html>
