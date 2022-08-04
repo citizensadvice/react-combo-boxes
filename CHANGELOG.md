@@ -1,5 +1,9 @@
 # Change log
 
+## 1.3.4
+
+- Fix layoutColumnsAlignLeft not aligning columns where there are groups and no table header
+
 ## 1.3.3
 
 - Fix layoutMaxHeight and layoutMaxWidth should use the window height if contain does not resolve to an element
