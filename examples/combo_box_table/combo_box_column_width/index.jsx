@@ -15,15 +15,17 @@ import cats from '../../data/cats.json';
 const columns = [
   {
     name: 'breed',
-    label: 'Breed',
   },
   {
     name: 'country',
-    label: 'Country',
   },
 ];
 
-function mapOption({ breed }) {
+function mapOption({ breed, bodyType }) {
+  return { label: breed, group: bodyType };
+}
+
+function index({ breed }) {
   return breed;
 }
 
@@ -38,7 +40,7 @@ function highlighter(term, query, options, state) {
 export function Example() {
   const [value, setValue] = useState(null);
   const [search, setSearch] = useState(null);
-  const filteredOptions = useTokenSearch(search, { options: cats, index: mapOption });
+  const filteredOptions = useTokenSearch(search, { options: cats, index });
 
   const onLayoutListBox = useLayoutListBox(
     layoutMaxWidth,

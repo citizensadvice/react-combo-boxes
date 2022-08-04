@@ -25,16 +25,20 @@ export function layoutColumnsAlignLeft(listbox) {
 
   if (autoWidth < width) {
     // Edge does not let you measure a col, although all other browsers do
-    const columnWidths = [...table.rows[0].cells].map((col) => col.getBoundingClientRect().width);
-    cols.forEach((col, i) => {
-      if (i === cols.length - 1) {
-        // The last cell gets all the space
-        col.style.setProperty('width', '');
-      } else {
-        // Make sure the other cells retain their natural width
-        col.style.setProperty('width', `${columnWidths[i]}px`);
-      }
-    });
+    // Find first row with no colspan cells
+    const row = [...table.rows].find((r) => [...r.cells].every((c) => c.colSpan === 1));
+    if (row) {
+      const columnWidths = [...row.cells].map((col) => col.getBoundingClientRect().width);
+      cols.forEach((col, i) => {
+        if (i === cols.length - 1) {
+          // The last cell gets all the space
+          col.style.setProperty('width', '');
+        } else {
+          // Make sure the other cells retain their natural width
+          col.style.setProperty('width', `${columnWidths[i]}px`);
+        }
+      });
+    }
   }
   table.style.removeProperty('width');
   table.style.removeProperty('min-width');
