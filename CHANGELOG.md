@@ -1,5 +1,9 @@
 # Change log
 
+## 1.3.5
+
+- Fix the highlighter helpers not being exported
+
 ## 1.3.4
 
 - Fix layoutColumnsAlignLeft not aligning columns where there are groups and no table header
