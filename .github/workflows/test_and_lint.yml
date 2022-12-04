@@ -1,13 +1,14 @@
-# https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-ruby
-# https://github.com/ruby/setup-ruby
-
 name: Test and lint
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      - 1.x
   pull_request:
-    branches: [main]
+    branches:
+      - main
+      - 1.x
 
 jobs:
   test:

@@ -4,7 +4,19 @@
 
 - Project is now built as es6 only
 - Fixed some unnecessary state updates when selecting options
-- Updated development dependencies to React 18 (will still work for older React versions)
+- React 18 fixes
+
+## 1.3.5
+
+- Fix the highlighter helpers not being exported
+
+## 1.3.4
+
+- Fix layoutColumnsAlignLeft not aligning columns where there are groups and no table header
+
+## 1.3.3
+
+- Fix layoutMaxHeight and layoutMaxWidth should use the window height if contain does not resolve to an element
 
 ## 1.3.2
 
