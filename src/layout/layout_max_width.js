@@ -1,9 +1,12 @@
 export function layoutMaxWidth(el, { contain = 'body', minMaxWidth = 0 } = {}) {
   const elBounding = el.getBoundingClientRect();
-  const container = el.closest(contain);
-  const containerBounding = container.getBoundingClientRect();
-  const clientRight = containerBounding.width - container.clientWidth - container.clientLeft;
-  const containerRight = containerBounding.right - clientRight;
+  const container = contain ? el.closest(contain) : null;
+  const containerBounding = container?.getBoundingClientRect();
+  let containerRight = Infinity;
+  if (containerBounding) {
+    const clientRight = containerBounding.width - container.clientWidth - container.clientLeft;
+    containerRight = containerBounding.right - clientRight;
+  }
   const windowRight = document.documentElement.clientWidth;
   const styles = getComputedStyle(el);
 

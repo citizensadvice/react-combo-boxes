@@ -35,8 +35,8 @@ describe('when natural table width is the auto table width', () => {
   });
 });
 
-describe('when natural table width is less then the auto table width', () => {
-  it('does not set column widths', () => {
+describe('when natural table width not less then the auto table width', () => {
+  it('sets column widths', () => {
     const html = `
       <table>
         <col>
@@ -75,5 +75,104 @@ describe('when natural table width is less then the auto table width', () => {
     });
 
     expect(table).toHaveStyle({ 'min-width': '', width: '' });
+  });
+
+  it('ignores rows with colspan cells', () => {
+    const html = `
+      <table>
+        <col>
+        <col>
+        <tbody>
+          <tr>
+            <td colspan="2">group</td>
+          </tr>
+          <tr>
+            <td>one</td>
+            <td>two</td>
+          </tr>
+        </tbody>
+      </table>
+    `;
+
+    const container = document.createElement('div');
+    container.innerHTML = html;
+    document.body.appendChild(container);
+
+    const table = container.querySelector('table');
+
+    jest.spyOn(table, 'clientWidth', 'get')
+      .mockImplementationOnce(() => 100)
+      .mockImplementationOnce(() => 90);
+
+    table.querySelectorAll('tr:nth-child(2) td').forEach((td) => {
+      jest.spyOn(td, 'getBoundingClientRect').mockImplementation(() => ({ width: 20 }));
+    });
+
+    layoutColumnsAlignLeft(container);
+
+    expect(table.querySelector('col:first-child')).toHaveStyle({
+      width: '20px',
+    });
+
+    expect(table.querySelector('col:last-child')).toHaveStyle({
+      width: '',
+    });
+
+    expect(table).toHaveStyle({ 'min-width': '', width: '' });
+  });
+
+  it('does not set column widths if there are no applicable rows', () => {
+    const html = `
+      <table>
+        <col>
+        <col>
+        <tbody>
+          <tr>
+            <td colspan="2">group</td>
+          </tr>
+        </tbody>
+      </table>
+    `;
+
+    const container = document.createElement('div');
+    container.innerHTML = html;
+    document.body.appendChild(container);
+
+    const table = container.querySelector('table');
+
+    layoutColumnsAlignLeft(container);
+
+    table.querySelectorAll('col').forEach((col) => {
+      expect(col).toHaveStyle({ width: '' });
+    });
+
+    expect(table).toHaveStyle({ width: '' });
+  });
+
+  it('does not set column widths if there are no applicable cells', () => {
+    const html = `
+      <table>
+        <col>
+        <col>
+        <tbody>
+          <tr>
+          </tr>
+        </tbody>
+      </table>
+    `;
+
+    const container = document.createElement('div');
+    container.innerHTML = html;
+    document.body.appendChild(container);
+
+    const table = container.querySelector('table');
+
+    layoutColumnsAlignLeft(container);
+
+    table.querySelectorAll('col').forEach((col) => {
+      expect(col).toHaveStyle({ width: '' });
+    });
+
+    expect(table).toHaveStyle({ width: '' });
   });
 });
