@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import { ComboBox, useTokenSearch, tokenHighlight } from '../../../src';
-import countries from '../../data/countries.json';
+import { countries } from '../../data/countries';
 
-function map({ name, code }) {
+function mapOption({ name, code }) {
   return `${name} (${code})`;
 }
 
 export function Example() {
   const [value, setValue] = useState(null);
   const [search, setSearch] = useState(null);
-  const filteredOptions = useTokenSearch(search, { options: countries, index: map });
+  const filteredOptions = useTokenSearch(search, { options: countries, index: mapOption });
   const [autoselect, setAutoselect] = useState('inline');
   const [tabAutocomplete, setTabAutocomplete] = useState(false);
   const [showSelectedLabel, setShowSelectedLabel] = useState(false);
@@ -32,7 +32,7 @@ export function Example() {
         onValue={setValue}
         onSearch={setSearch}
         options={filteredOptions}
-        mapOption={map}
+        mapOption={mapOption}
         autoselect={autoselect}
         tabAutocomplete={tabAutocomplete}
         showSelectedLabel={showSelectedLabel}

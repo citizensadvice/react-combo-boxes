@@ -32,10 +32,11 @@ export function setFocusedOption({
   };
 }
 
-export function onSelectValue(newValue, expanded = false) {
+export function onSelectValue(newValue, expanded) {
   return (dispatch, getState, getProps) => {
-    const { onValue, inputRef } = getProps();
-    dispatch({ type: SET_CLOSED, expanded });
+    const { onValue, inputRef, closeOnSelect } = getProps();
+    const expand = expanded === undefined ? !closeOnSelect : expanded;
+    dispatch({ type: SET_CLOSED, expanded: expand });
     if (newValue?.unselectable) {
       return;
     }

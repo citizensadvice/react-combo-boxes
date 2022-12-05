@@ -1,5 +1,5 @@
 /**
- * Ensure the element is visible in the list box
+ * Ensure the option is visible in the list box
  *
  * This scrolls the list box, and then the entire page as required.
  *
@@ -9,8 +9,11 @@
  * - in Safari it does not support scroll-padding-top so cannot handle sticky table headers.
  * - in Safari it does not support all arguments, and can scroll the element to the centre.
  */
-export function scrollIntoView(element) {
+export function scrollIntoView(element, listbox) {
   if (!element) {
+    if (listbox) {
+      listbox.scrollTop = 0; // eslint-disable-line no-param-reassign
+    }
     return;
   }
 

@@ -7,16 +7,16 @@ import {
   layoutMaxWidth,
   layoutMaxHeight,
 } from '../../../src';
-import countries from '../../data/countries.json';
+import { countries } from '../../data/countries';
 
-function map({ name, code }) {
+function mapOption({ name, code }) {
   return `${name} (${code})`;
 }
 
 export function Example() {
   const [value, setValue] = useState(null);
   const [search, setSearch] = useState(null);
-  const filteredOptions = useTokenSearch(search, { options: countries, index: map });
+  const filteredOptions = useTokenSearch(search, { options: countries, index: mapOption });
 
   const onLayoutListBox = useLayoutListBox(
     (el) => layoutMaxHeight(el, { contain: '.contain-listbox' }),
@@ -38,7 +38,7 @@ export function Example() {
         onValue={setValue}
         onSearch={setSearch}
         options={filteredOptions}
-        mapOption={map}
+        mapOption={mapOption}
         renderValue={tokenHighlight()}
         renderListBox={(props) => <ul {...props} style={{ marginBottom: 0, marginRight: 0 }} />}
         onLayoutListBox={onLayoutListBox}

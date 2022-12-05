@@ -1,6 +1,10 @@
 import { useRef, useState } from 'react';
 import { DropDown } from '../../../src';
-import countries from '../../data/countries.json';
+import { countries } from '../../data/countries';
+
+function mapOption({ name, code }) {
+  return `${name} (${code})`;
+}
 
 export function Example() {
   const [value, setValue] = useState(null);
@@ -23,7 +27,7 @@ export function Example() {
         value={value}
         onValue={setValue}
         options={countries}
-        mapOption={({ name, code }) => `${name} (${code})`}
+        mapOption={mapOption}
         managedFocus={managedFocus}
       />
 

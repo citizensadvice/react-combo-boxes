@@ -46,7 +46,7 @@ export function useAsyncSearch(
       }
 
       if (results === null) {
-        dispatch({ busy: false, error: null });
+        dispatch({ options: null, busy: false, error: null });
         return;
       }
       dispatch({ options: results, busy: false, error: null });

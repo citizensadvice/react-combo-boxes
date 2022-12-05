@@ -188,7 +188,7 @@ export const ComboBox = forwardRef((rawProps, ref) => {
   }, [showListBox, options]);
 
   useLayoutEffect(() => {
-    if (showListBox && focusedRef.current && onLayoutFocusedOption) {
+    if (showListBox && onLayoutFocusedOption) {
       onLayoutFocusedOption({ option: focusedRef.current, listbox: listRef.current });
     }
     if (focusedOption && focusListBox && showListBox) {
@@ -199,7 +199,7 @@ export const ComboBox = forwardRef((rawProps, ref) => {
       inputRef.current.focus();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [expanded, managedFocus, focusedOption, focusListBox, showListBox]);
+  }, [expanded, managedFocus, focusedOption, focusListBox, showListBox, options]);
 
   useEffect(() => {
     if (busy && !busyDebounce) {
@@ -223,7 +223,7 @@ export const ComboBox = forwardRef((rawProps, ref) => {
     && !!search?.trim()
     && search !== value?.label;
 
-  const ariaBusy = showBusy && search?.trim() && search !== (value?.label);
+  const ariaBusy = showBusy && ((search?.trim() && search !== (value?.label)) || expanded);
   const combinedRef = useCombineRefs(inputRef, ref);
   const componentState = Object.freeze({
     expanded: showListBox,
@@ -375,6 +375,7 @@ ComboBox.propTypes = {
   onValue: PropTypes.func,
 
   autoselect: PropTypes.oneOf([false, true, 'inline']),
+  closeOnSelect: PropTypes.bool,
   expandOnFocus: PropTypes.bool,
   findSuggestion: PropTypes.func,
   managedFocus: PropTypes.bool,
@@ -437,12 +438,13 @@ ComboBox.defaultProps = {
   onBlur: null,
   onChange: null,
   onFocus: null,
-  onLayoutFocusedOption: ({ option }) => scrollIntoView(option),
+  onLayoutFocusedOption: ({ option, listbox }) => scrollIntoView(option, listbox),
   onLayoutListBox: null,
   onSearch: null,
   onValue: null,
 
   autoselect: false,
+  closeOnSelect: true,
   expandOnFocus: true,
   findSuggestion: findOption,
   managedFocus: true,
