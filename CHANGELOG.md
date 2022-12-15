@@ -1,5 +1,12 @@
 # Change log
 
+## 2.0.0-alpha4
+
+- Add missing fixes from 1.x
+  - Fix the highlighter helpers not being exported
+  - Fix layoutColumnsAlignLeft not aligning columns where there are groups and no table header
+  - Fix layoutMaxHeight and layoutMaxWidth should use the window height if contain does not resolve to an element
+
 ## 2.0.0-alpha1
 
 - Project is now built as es6 only
