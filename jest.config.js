@@ -5,8 +5,7 @@ module.exports = {
   testEnvironment: 'jsdom',
   testPathIgnorePatterns: [
     '/node_modules/',
-    '/es/',
-    '/cjs/',
+    '/dist/',
   ],
   transform: {
     '^.+\\.(t|j)sx?$': [
