@@ -45,10 +45,6 @@ export function useAsyncSearch(
         return;
       }
 
-      if (results === null) {
-        dispatch({ options: null, busy: false, error: null });
-        return;
-      }
       dispatch({ options: results, busy: false, error: null });
     };
 

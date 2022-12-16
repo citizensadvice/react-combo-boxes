@@ -27,46 +27,6 @@ describe('options', () => {
     });
   });
 
-  it('does not change the search results if null is returned', async () => {
-    const searcher = jest
-      .fn()
-      .mockImplementationOnce(async () => ['foo'])
-      .mockImplementationOnce(async () => null)
-      .mockImplementationOnce(async () => [])
-      .mockImplementationOnce(async () => null);
-
-    const { result, rerender } = renderHook(
-      ({ query }) => useAsyncSearch(query, { searcher }),
-      { initialProps: { query: 'foo' } },
-    );
-
-    // ['foo'] returned
-    await waitFor(() => {
-      expect(result.current).toEqual([['foo'], false, null]);
-    });
-
-    // null returned
-    rerender({ query: '1' });
-    expect(result.current).toEqual([['foo'], true, null]);
-    await waitFor(() => {
-      expect(result.current).toEqual([['foo'], false, null]);
-    });
-
-    // [] returned
-    rerender({ query: '2' });
-    expect(result.current).toEqual([['foo'], true, null]);
-    await waitFor(() => {
-      expect(result.current).toEqual([[], false, null]);
-    });
-
-    // null returned
-    rerender({ query: '3' });
-    expect(result.current).toEqual([[], true, null]);
-    await waitFor(() => {
-      expect(result.current).toEqual([[], false, null]);
-    });
-  });
-
   it('cancels and removes out of sync returns', async () => {
     let resolve1;
     const promise1 = new Promise((resolve) => {
