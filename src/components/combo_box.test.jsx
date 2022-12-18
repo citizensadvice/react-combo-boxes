@@ -1197,12 +1197,34 @@ describe('busy', () => {
         });
       });
 
-      describe('with a search matching the current value', () => {
-        it('does not set aria-busy', async () => {
+      describe('with a search and closed', () => {
+        it('sets aria-busy=false on the wrapper', async () => {
+          const { container } = render((
+            <ComboBoxWrapper options={['foo']} busy busyDebounce={null} />
+          ));
+          await userEvent.type(screen.getByRole('combobox'), 'foo');
+          await userEvent.type(screen.getByRole('combobox'), '{Alt>}{ArrowUp}{/Alt}');
+          expect(container.firstChild).toHaveAttribute('aria-busy', 'false');
+        });
+      });
+
+      describe('with a search matching the selected option and expanded', () => {
+        it('sets aria-busy=true on the wrapper', async () => {
           const { container } = render((
             <ComboBoxWrapper options={['foo']} value="foo" busy busyDebounce={null} />
           ));
-          await userEvent.type(screen.getByRole('combobox'), '{Backspace}o');
+          await userEvent.type(screen.getByRole('combobox'), 'o{backspace}');
+          expect(container.firstChild).toHaveAttribute('aria-busy', 'true');
+        });
+      });
+
+      describe('with a search matching the selected option and not expanded', () => {
+        it('sets aria-busy=false on the wrapper', async () => {
+          const { container } = render((
+            <ComboBoxWrapper options={['foo']} value="foo" busy busyDebounce={null} />
+          ));
+          await userEvent.type(screen.getByRole('combobox'), 'o{backspace}');
+          await userEvent.type(screen.getByRole('combobox'), '{Alt>}{ArrowUp}{/Alt}');
           expect(container.firstChild).toHaveAttribute('aria-busy', 'false');
         });
       });
@@ -2208,6 +2230,44 @@ describe('selectOnBlur', () => {
         await userEvent.tab();
         expect(spy).not.toHaveBeenCalled();
       });
+    });
+  });
+});
+
+describe('closeOnSelect', () => {
+  const options = ['Apple', 'Pear', 'Orange'];
+
+  describe('with default value', () => {
+    it('closes the list box after selecting an item', async () => {
+      render(<ComboBoxWrapper options={options} />);
+      await userEvent.tab();
+      await userEvent.keyboard('{ArrowDown}{Enter}');
+      expectToBeClosed();
+    });
+  });
+
+  describe('when true', () => {
+    it('closes the list box after selecting an item', async () => {
+      render(<ComboBoxWrapper options={options} closeOnSelect />);
+      await userEvent.tab();
+      await userEvent.keyboard('{ArrowDown}{Enter}');
+      expectToBeClosed();
+    });
+  });
+
+  describe('when false', () => {
+    it('leaves the list box after selecting an item', async () => {
+      render(<ComboBoxWrapper options={options} closeOnSelect={false} />);
+      await userEvent.tab();
+      await userEvent.keyboard('{ArrowDown}{Enter}');
+      expectToBeOpen();
+    });
+
+    it('closes the list box if the only value', async () => {
+      render(<ComboBoxWrapper options={['Orange']} closeOnSelect={false} />);
+      await userEvent.tab();
+      await userEvent.keyboard('{ArrowDown}{Enter}');
+      expectToBeClosed();
     });
   });
 });

@@ -133,6 +133,12 @@ If `"inline"` then `aria-autocomplete="inline"` is set and the text typed into t
 
 See [ARIA practices][aria-practices-combo-box] for an explanation of these modes.
 
+#### `closeOnSelect: boolean = true`
+
+Close the listbox when an item is selected.
+
+If set to false the list box will remain open and continue to show existing on new options to select.
+
 #### `expandOnFocus: boolean = true`
 
 Expand the list box when then component is focused.  If `false` the use must type before the list box is expanded.

@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { ComboBox, useAsyncSearch, tokenSearcher } from '../../../src';
-import { countries } from '../../data/countries';
+import countries from '../../data/countries.json';
 
 function mapOption({ name }) {
   return name;

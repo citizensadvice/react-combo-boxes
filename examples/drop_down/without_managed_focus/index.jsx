@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { DropDown } from '../../../src';
-import { countries } from '../../data/countries';
+import countries from '../../data/countries.json';
 
 function mapOption({ name, code }) {
   return `${name} (${code})`;

@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { ComboBox, tokenSearcher } from '../../../src';
-import { countries } from '../../data/countries';
+import countries from '../../data/countries.json';
 
 const regions = countries
-  .map(({ region }) => ({ name: region, region: true }))
+  .map(({ region }) => ({ name: region, isRegion: true }))
   .filter((item, i, ar) => item.name && ar.findIndex((sub) => sub.name === item.name) === i);
 
 const countriesAndRegions = [...countries, ...regions].sort((a, b) => a.name.localeCompare(b.name));
@@ -15,14 +15,14 @@ function mapOption({ name }) {
 const tokenSearch = tokenSearcher(countriesAndRegions, { index: mapOption });
 
 function searcher(query, value) {
-  if (value?.region && value?.name === query) {
+  if (value?.isRegion && value?.name === query) {
     return countries.filter((c) => c.region === value?.name);
   }
   return tokenSearch(query);
 }
 
 function useDelaySearch(search, value) {
-  const [results, setResults] = useState();
+  const [results, setResults] = useState(null);
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
@@ -50,6 +50,7 @@ function useDelaySearch(search, value) {
 export function Example() {
   const [value, setValue] = useState(null);
   const [search, setSearch] = useState(null);
+  const [closeOnSelect, setCloseOnSelect] = useState(false);
   const [filteredOptions, busy] = useDelaySearch(search, value);
 
   return (
@@ -68,9 +69,21 @@ export function Example() {
         onSearch={setSearch}
         options={filteredOptions}
         mapOption={mapOption}
-        closeOnSelect={false}
+        closeOnSelect={closeOnSelect}
         busy={busy}
       />
+
+      <label>
+        <input
+          type="checkbox"
+          checked={closeOnSelect}
+          onChange={({ target: { checked } }) => {
+            setCloseOnSelect(checked);
+          }}
+        />
+        {' '}
+        <code>closeOnSelect</code>
+      </label>
 
       <label htmlFor="output">
         Current value
