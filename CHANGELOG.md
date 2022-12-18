@@ -1,7 +1,10 @@
 # Change log
 
-## 2.0.0-alpha4
+## Unreleased
 
+- Added `closeOnEnter` option
+- The listbox will now scroll to the top if options change and no option is focused
+- Fix useAsyncSearch not setting options to `null`
 - Add missing fixes from 1.x
   - Fix the highlighter helpers not being exported
   - Fix layoutColumnsAlignLeft not aligning columns where there are groups and no table header

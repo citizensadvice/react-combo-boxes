@@ -43,6 +43,7 @@ export function Example() {
         expandOnFocus={false}
         renderDownArrow={() => null}
         renderClearButton={() => null}
+        renderNotFound={() => null}
         renderValue={tokenHighlight({ inverse: true })}
       />
 

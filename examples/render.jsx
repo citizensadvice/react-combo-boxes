@@ -5,7 +5,7 @@ import * as components from './**/*.jsx'; // eslint-disable-line import/no-unres
 document.querySelectorAll('[data-react-example]').forEach((node) => {
   const parts = node.dataset.reactExample.split('/');
   let target = components;
-  console.log(components);
+
   parts.forEach((part) => {
     target = target[part];
   });
