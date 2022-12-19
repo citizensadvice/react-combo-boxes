@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Added a `userEvent` option to `selectComboBoxOption`.  This is required for the user-event v14 and fixes some unstable behaviour.
+- fix label is set to `undefined` if option is supplied with no label
 - `onLayoutListBox` now takes a list of handlers and `useLayoutListBox` is removed
 - Added `closeOnEnter` option
 - The listbox will now scroll to the top if options change and no option is focused

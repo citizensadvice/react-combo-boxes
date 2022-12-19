@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { waitFor, findByRole, getByRole, getAllByRole, queryByRole, queryAllByRole, isInaccessible, prettyDOM } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { waitFor, screen, isInaccessible, prettyDOM, within } from '@testing-library/react';
+import importedUserEvent from '@testing-library/user-event';
 
 function options(name) {
   if (typeof name === 'string' || name instanceof RegExp) {
@@ -33,20 +33,34 @@ function options(name) {
  *
  * The container to search within.  Defaults to document.body
  *
+ * `userEvent` (UserEvent)
+ *
+ * An existing userEvent object. This is required for user-event v14.
+ *
  * Note this helper has a few expectations:
  *
  * - It is used on an ARIA 1.2 combo-box
  * - The listbox remains part of the DOM when hidden
  */
-export async function selectComboBoxOption({ from, searchFor, select, container = document.body }) {
-  const comboBox = await findByRole(container, 'combobox', options(from));
+export async function selectComboBoxOption({
+  from,
+  searchFor,
+  select,
+  container = document.body,
+  userEvent,
+}) {
+  if (!userEvent && importedUserEvent.setup) {
+    console.warn('pass in an instance of userEvent if using user-event v14'); // eslint-disable-line no-console
+    userEvent = importedUserEvent; // eslint-disable-line no-param-reassign
+  }
+  const comboBox = await within(container).findByRole('combobox', options(from));
   // Suport ARIA 1.1
   let textBox = comboBox;
   if (!textBox.matches('input')) {
     const ids = (comboBox.getAttribute('aria-owns') || '').split(/\s+/).filter(Boolean);
     // Technically the textbox can be child, or owned by the combobox
     // If it is a readonly combobox there will be no textbox
-    textBox = queryByRole(comboBox, 'textbox') || queryAllByRole(container, 'textbox').find((id) => ids.include(id)) || comboBox;
+    textBox = within(comboBox).queryByRole('textbox') || within(container).queryAllByRole('textbox').find((id) => ids.include(id)) || comboBox;
   }
 
   await userEvent.click(textBox);
@@ -54,7 +68,7 @@ export async function selectComboBoxOption({ from, searchFor, select, container 
   if (typeof searchFor === 'string') {
     await userEvent.clear(textBox);
     if (searchFor) {
-      await await userEvent.type(textBox, searchFor);
+      await userEvent.type(textBox, searchFor);
     }
   }
 
@@ -69,9 +83,9 @@ export async function selectComboBoxOption({ from, searchFor, select, container 
         comboBox.getAttribute('aria-owns'), // ARIA 1.0 / 1.1
         textBox.getAttribute('aria-controls'), // ARIA 1.1
       ].join(' ').split(/\s+/).filter(Boolean);
-      listBox = getAllByRole(container, 'listbox').find((listbox) => ids.includes(listbox.id));
+      listBox = within(container).getAllByRole('listbox').find((listbox) => ids.includes(listbox.id));
       expect(listBox).toBeInTheDocument();
-      option = getByRole(listBox, 'option', options(select));
+      option = within(listBox).getByRole('option', options(select));
     });
   } catch (e) {
     // Display pretty errors that will help the developer
@@ -83,7 +97,7 @@ export async function selectComboBoxOption({ from, searchFor, select, container 
       message += `\n\n${prettyDOM(comboBox)}`;
       message += '\n\n--------------------------------------------------';
 
-      const listBoxes = queryAllByRole(document.body, 'listbox', { hidden: true });
+      const listBoxes = screen.queryAllByRole('listbox', { hidden: true });
       if (!listBoxes) {
         message += `\n\nNo elements with the role "listbox" found in document:\n\n${prettyDOM(document.body)}`;
       } else {
@@ -95,7 +109,7 @@ export async function selectComboBoxOption({ from, searchFor, select, container 
       throw new Error(message);
     }
     try {
-      option = getByRole(listBox, 'option', options(select));
+      option = within(listBox).getByRole('option', options(select));
     } catch (error) {
       error.message += '\n\n--------------------------------------------------';
       error.message += `\n\nFor combobox:\n\n${prettyDOM(comboBox)}`;

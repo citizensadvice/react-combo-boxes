@@ -7,6 +7,7 @@ import {
   onKeyDown, onChange, onFocus, onInputMouseUp, onClearValue, onBlur,
   onClickOption, onOptionsChanged, onValueChanged, onFocusInput, onFocusOption,
 } from './combo_box/actions';
+import { useEvent } from '../hooks/use_event';
 import { useNormalisedOptions } from '../hooks/use_normalised_options';
 import { useOnBlur } from '../hooks/use_on_blur';
 import { useMounted } from '../hooks/use_mounted';
@@ -53,7 +54,7 @@ export const ComboBox = forwardRef((rawProps, ref) => {
     nullOptions,
     onBlur: passedOnBlur,
     onFocus: passedOnFocus,
-    onLayoutFocusedOption,
+    onLayoutFocusedOption: _onLayoutFocusedOption,
     onLayoutListBox,
     onSearch,
     options,
@@ -177,22 +178,30 @@ export const ComboBox = forwardRef((rawProps, ref) => {
       )
   ), [expanded, options, selectedOption, search, value]);
 
-  // TODO: wrap layout in an event hook
-  useLayoutEffect(() => {
-    if (showListBox && onLayoutFocusedOption) {
-      [].concat(onLayoutFocusedOption).filter(Boolean).forEach((fn) => {
-        fn({ option: focusedRef.current, listbox: listRef.current });
-      });
-    }
-    if (focusedOption && focusListBox && showListBox) {
-      if (managedFocus) {
-        focusedRef.current?.focus();
+  const onLayoutFocusedOption = useEvent(() => {
+    [].concat(_onLayoutFocusedOption).filter(Boolean).forEach((fn) => {
+      fn({ option: focusedRef.current, listbox: listRef.current });
+    });
+  });
+
+  useLayoutEffect(
+    () => {
+      if (showListBox && onLayoutFocusedOption) {
+        onLayoutFocusedOption();
       }
-    } else if (expanded && document.activeElement !== inputRef.current) {
-      inputRef.current.focus();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [expanded, managedFocus, focusedOption, focusListBox, showListBox, options]);
+      if (focusedOption && focusListBox && showListBox) {
+        if (managedFocus) {
+          focusedRef.current?.focus();
+        }
+      } else if (expanded && document.activeElement !== inputRef.current) {
+        inputRef.current.focus();
+      }
+    },
+    [
+      expanded, managedFocus, focusedOption, focusListBox,
+      showListBox, options, onLayoutFocusedOption,
+    ],
+  );
 
   useEffect(() => {
     if (busy && !busyDebounce) {
