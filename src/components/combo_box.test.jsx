@@ -872,7 +872,7 @@ describe('options', () => {
       expectToBeClosed();
     });
 
-    it('can select an empty string', async () => {
+    it.only('can select an empty string', async () => {
       const spy = jest.fn();
       render(<ComboBoxWrapper options={['']} onValue={spy} />);
       await userEvent.tab();
@@ -3143,15 +3143,16 @@ describe('visuallyHiddenClassName', () => {
 describe('onLayoutListBox', () => {
   const options = ['Apple', 'Banana', 'Orange'];
 
-  it('is called when the component is rendered', () => {
+  beforeEach(() => {
+    jest.spyOn(window, 'requestAnimationFrame').mockImplementation((cb) => cb());
+  });
+
+  it('is not called when the component is rendered', async () => {
     const onLayoutListBox = jest.fn();
     render(
       <ComboBoxWrapper options={options} onLayoutListBox={onLayoutListBox} />,
     );
-    expect(onLayoutListBox).toHaveBeenCalledWith({
-      expanded: false,
-      listbox: screen.getByRole('listbox', { hidden: true }),
-    });
+    expect(onLayoutListBox).not.toHaveBeenCalled();
   });
 
   it('is called when the listbox is displayed', async () => {
@@ -3160,10 +3161,7 @@ describe('onLayoutListBox', () => {
       <ComboBoxWrapper options={options} onLayoutListBox={onLayoutListBox} />,
     );
     await userEvent.tab();
-    expect(onLayoutListBox).toHaveBeenCalledWith({
-      expanded: true,
-      listbox: screen.getByRole('listbox'),
-    });
+    expect(onLayoutListBox).toHaveBeenCalledWith(screen.getByRole('listbox'));
   });
 
   it('is called when the listbox options change', async () => {
@@ -3172,14 +3170,12 @@ describe('onLayoutListBox', () => {
       <ComboBoxWrapper options={options} onLayoutListBox={onLayoutListBox} />
     ));
     await userEvent.tab();
+    onLayoutListBox.mockClear();
     rerender(<ComboBoxWrapper options={['strawberry']} onLayoutListBox={onLayoutListBox} />);
-    expect(onLayoutListBox).toHaveBeenLastCalledWith({
-      expanded: true,
-      listbox: screen.getByRole('listbox'),
-    });
+    expect(onLayoutListBox).toHaveBeenCalledWith(screen.getByRole('listbox'));
   });
 
-  it('when the listbox is closed', async () => {
+  it('is not called when the listbox is closed', async () => {
     const onLayoutListBox = jest.fn();
     render((
       <ComboBoxWrapper
@@ -3188,26 +3184,20 @@ describe('onLayoutListBox', () => {
       />
     ));
     await userEvent.tab();
+    onLayoutListBox.mockClear();
     await userEvent.keyboard('{Escape}');
-    expect(onLayoutListBox).toHaveBeenLastCalledWith({
-      expanded: false,
-      listbox: screen.getByRole('listbox', { hidden: true }),
-    });
+    expect(onLayoutListBox).not.toHaveBeenCalled();
   });
 
-  it('is called while the listbox is closed', () => {
-    const onLayoutListBox = jest.fn();
-    const { rerender } = render((
-      <ComboBoxWrapper
-        options={options}
-        onLayoutListBox={onLayoutListBox}
-      />
-    ));
-    rerender(<ComboBoxWrapper options={['strawberry']} onLayoutListBox={onLayoutListBox} />);
-    expect(onLayoutListBox).toHaveBeenCalledWith({
-      expanded: false,
-      listbox: screen.getByRole('listbox', { hidden: true }),
-    });
+  it('accepts an array of handlers', async () => {
+    const onLayoutListBox1 = jest.fn();
+    const onLayoutListBox2 = jest.fn();
+    render(
+      <ComboBoxWrapper options={options} onLayoutListBox={[onLayoutListBox1, onLayoutListBox2]} />,
+    );
+    await userEvent.tab();
+    expect(onLayoutListBox1).toHaveBeenCalledWith(screen.getByRole('listbox'));
+    expect(onLayoutListBox2).toHaveBeenCalledWith(screen.getByRole('listbox'));
   });
 });
 

@@ -5,7 +5,6 @@ import {
   tokenHighlighter,
   passThroughHighlighter,
   highlightValue,
-  useLayoutListBox,
   layoutMaxWidth,
   layoutMaxHeight,
   layoutColumnsAlignLeft,
@@ -26,12 +25,12 @@ function highlighter(term, query, options, state) {
   return passThroughHighlighter(term);
 }
 
+const onLayoutListBox = [layoutMaxWidth, layoutMaxHeight, layoutColumnsAlignLeft];
+
 export function Example() {
   const [value, setValue] = useState(null);
   const [search, setSearch] = useState(null);
   const filteredOptions = useTokenSearch(search, { options: cats, index: mapOption });
-
-  const onLayoutListBox = useLayoutListBox(layoutMaxWidth, layoutMaxHeight, layoutColumnsAlignLeft);
 
   return (
     <>

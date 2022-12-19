@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { DropDownTable, useLayoutListBox, layoutMaxWidth, layoutMaxHeight } from '../../../src';
+import { DropDownTable, layoutMaxWidth, layoutMaxHeight } from '../../../src';
 import cats from '../../data/cats.json';
 
 const columns = [
@@ -15,10 +15,11 @@ function mapOption({ breed }) {
   return { label: breed };
 }
 
+const onLayoutListBox = [layoutMaxWidth, layoutMaxHeight];
+
 export function Example() {
   const [value, setValue] = useState(null);
   const ref = useRef();
-  const onLayoutListBox = useLayoutListBox(layoutMaxWidth, layoutMaxHeight);
 
   return (
     <>

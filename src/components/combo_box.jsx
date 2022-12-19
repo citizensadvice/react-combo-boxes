@@ -21,6 +21,7 @@ import { classPrefix as defaultClassPrefix } from '../constants/class_prefix';
 import { visuallyHiddenClassName } from '../constants/visually_hidden_class_name';
 import { scrollIntoView } from '../layout/scroll_into_view';
 import { DISPATCH } from '../constants/dispatch';
+import { LayoutListBox } from './layout_list_box';
 
 export const ComboBox = forwardRef((rawProps, ref) => {
   const optionisedProps = Object.freeze({
@@ -176,20 +177,12 @@ export const ComboBox = forwardRef((rawProps, ref) => {
       )
   ), [expanded, options, selectedOption, search, value]);
 
-  useLayoutEffect(() => {
-    if (!onLayoutListBox) {
-      return;
-    }
-    onLayoutListBox({
-      expanded: showListBox,
-      listbox: listRef.current,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showListBox, options]);
-
+  // TODO: wrap layout in an event hook
   useLayoutEffect(() => {
     if (showListBox && onLayoutFocusedOption) {
-      onLayoutFocusedOption({ option: focusedRef.current, listbox: listRef.current });
+      [].concat(onLayoutFocusedOption).filter(Boolean).forEach((fn) => {
+        fn({ option: focusedRef.current, listbox: listRef.current });
+      });
     }
     if (focusedOption && focusListBox && showListBox) {
       if (managedFocus) {
@@ -331,6 +324,13 @@ export const ComboBox = forwardRef((rawProps, ref) => {
           foundOptionsMessage={foundOptionsMessage}
           selectedOptionMessage={selectedOptionMessage}
         />
+        {showListBox && onLayoutListBox && (
+          <LayoutListBox
+            onLayoutListBox={onLayoutListBox}
+            options={options}
+            listBoxRef={listRef}
+          />
+        )}
       </>
     ),
   }, componentState, optionisedProps);
@@ -369,8 +369,14 @@ ComboBox.propTypes = {
   onBlur: PropTypes.func,
   onChange: PropTypes.func,
   onFocus: PropTypes.func,
-  onLayoutFocusedOption: PropTypes.func,
-  onLayoutListBox: PropTypes.func,
+  onLayoutFocusedOption: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.arrayOf(PropTypes.func),
+  ]),
+  onLayoutListBox: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.arrayOf(PropTypes.func),
+  ]),
   onSearch: PropTypes.func,
   onValue: PropTypes.func,
 

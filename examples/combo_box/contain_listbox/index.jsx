@@ -3,7 +3,6 @@ import {
   ComboBox,
   useTokenSearch,
   tokenHighlight,
-  useLayoutListBox,
   layoutMaxWidth,
   layoutMaxHeight,
 } from '../../../src';
@@ -13,15 +12,15 @@ function mapOption({ name, code }) {
   return `${name} (${code})`;
 }
 
+const onLayoutListBox = [
+  (el) => layoutMaxHeight(el, { contain: '.contain-listbox' }),
+  (el) => layoutMaxWidth(el, { contain: '.contain-listbox' }),
+];
+
 export function Example() {
   const [value, setValue] = useState(null);
   const [search, setSearch] = useState(null);
   const filteredOptions = useTokenSearch(search, { options: countries, index: mapOption });
-
-  const onLayoutListBox = useLayoutListBox(
-    (el) => layoutMaxHeight(el, { contain: '.contain-listbox' }),
-    (el) => layoutMaxWidth(el, { contain: '.contain-listbox' }),
-  );
 
   return (
     <div className="contain-listbox" style={{ height: '500px', width: '300px', overflow: 'auto', padding: '10px', margin: '10px', border: '10px dashed #ddd' }}>

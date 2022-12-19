@@ -5,34 +5,28 @@ useful to be able to position the list box.
 
 The `onLayoutListBox` event can be used for this purpose.
 
+This takes a single method or an array of methods that will be called
+when options are displayed, or the page is scrolled or resized.
+
 ```js
 // Example that will prevent the listbox extending off the edge or bottom of the window
 
-import { useLayoutListBox, layoutMaxWidth, layoutMaxHeight } from '@citizensadvice/react-combo-boxes';
+import { layoutMaxWidth, layoutMaxHeight } from '@citizensadvice/react-combo-boxes';
 
-const onLayoutListBox = useLayoutListBox(
+const onLayoutListBox = [
   layoutMaxHeight,
   (listbox) => layoutMaxWidth(listbox, { contain: '.parent-container' }),
-);
+];
 
-<ComboBox
-  {...rest}
-  onLayoutListBox={onLayoutListBox}
-/>
-
+function MyComponent() {
+  return (
+    <ComboBox
+      {...rest}
+      onLayoutListBox={onLayoutListBox}
+    />
+  );
+}
 ```
-
-## `useLayoutListBox`
-
-```js
-function useLayoutListBox(
-  ...fns: Array<(listbox: Element) => void>)`
-): Function
-```
-
-This takes one or more methods with the signature `(listbox: Element) => void`.
-
-The methods will be called when options are displayed, and when the page is scrolled or resized.
 
 ### `layoutMaxHeight`
 

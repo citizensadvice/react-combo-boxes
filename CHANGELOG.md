@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- `onLayoutListBox` now takes a list of handlers and `useLayoutListBox` is removed
 - Added `closeOnEnter` option
 - The listbox will now scroll to the top if options change and no option is focused
 - Fix useAsyncSearch not setting options to `null`

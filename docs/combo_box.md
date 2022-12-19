@@ -244,7 +244,7 @@ The render functions available are:
 | `renderNotFound`             | `(props) => <div {...props} />`      | Renders the not found message                                                       |
 | `renderAriaDescription`      | `(props) => <div {...props} />`      | Renders the assistive hint of the combo box                                         |
 
-#### `onLayoutListBox: ({ expanded: boolean, listbox: Element }) => void`
+#### `onLayoutListBox: (listbox: Element) => void | []<(listbox: Element) => void>`
 
 This is called whenever the listbox is displayed or the options change.                   
 
