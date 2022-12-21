@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event';
 import { ComboBox } from '../components/combo_box';
 import { DropDown } from '../components/drop_down';
 import { useTokenSearch } from '../hooks/use_token_search';
-import { selectComboBoxOption, setup } from './select_combo_box_option';
+import { selectComboBoxOption } from './select_combo_box_option';
 
 const values = ['foo', 'bar', 'foe', 'fee'];
 

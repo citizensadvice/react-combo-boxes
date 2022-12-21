@@ -1,6 +1,6 @@
-import { act, render, waitFor } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 
-import { collectLiveMessages } from '../__collect_aria_live_messages';
+import { liveMessages } from '../__collect_aria_live_messages';
 import { AriaLiveMessage } from './aria_live_message';
 
 function Test(props) {
@@ -25,7 +25,7 @@ Test.defaultProps = {
 it('generates a live not found message', async () => {
   jest.useFakeTimers();
 
-  const { getMessages } = collectLiveMessages();
+  const { getMessages } = liveMessages();
   const { rerender } = render(<Test />);
 
   rerender(<Test showNotFound />);
@@ -40,7 +40,7 @@ it('generates a live not found message', async () => {
 it('generates a live found message for a single option', async () => {
   jest.useFakeTimers();
 
-  const { getMessages } = collectLiveMessages();
+  const { getMessages } = liveMessages();
   const { rerender } = render(<Test />);
 
   rerender(<Test options={['Apple']} showListBox />);
@@ -55,7 +55,7 @@ it('generates a live found message for a single option', async () => {
 it('generates a live found message for multiple options', async () => {
   jest.useFakeTimers();
 
-  const { getMessages } = collectLiveMessages();
+  const { getMessages } = liveMessages();
   const { rerender } = render(<Test />);
 
   rerender(<Test options={['Apple', 'Banana']} showListBox />);
@@ -70,7 +70,7 @@ it('generates a live found message for multiple options', async () => {
 it('generates a live found message for focused options', async () => {
   jest.useFakeTimers();
 
-  const { getMessages } = collectLiveMessages();
+  const { getMessages } = liveMessages();
   const { rerender } = render(<Test />);
 
   rerender(<Test options={['Apple', 'Banana']} showListBox focusedOption={{ index: 0, label: 'Apple' }} />);
@@ -85,7 +85,7 @@ it('generates a live found message for focused options', async () => {
 it('debounces updating the message', async () => {
   jest.useFakeTimers();
 
-  const { getMessages } = collectLiveMessages();
+  const { getMessages } = liveMessages();
   const { rerender } = render(<Test />);
 
   rerender(<Test options={['Apple']} showListBox />);

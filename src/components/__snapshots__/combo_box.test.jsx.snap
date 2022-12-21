@@ -403,7 +403,7 @@ exports[`options as array of objects label renders a closed combo box 1`] = `
 </div>
 `;
 
-exports[`options as array of objects missing label treats as a blank string 1`] = `
+exports[`options as array of objects missing label treats as undefined 1`] = `
 <div>
   <div
     aria-busy="false"
@@ -444,7 +444,6 @@ exports[`options as array of objects missing label treats as a blank string 1`] 
       tabindex="-1"
     >
       <li
-        aria-selected="true"
         class="react-combo-boxes-combobox__option"
         id="id_option_"
         role="option"
@@ -700,7 +699,6 @@ exports[`options options as null renders an option with an empty string 1`] = `
       tabindex="-1"
     >
       <li
-        aria-selected="true"
         class="react-combo-boxes-combobox__option"
         id="id_option_"
         role="option"

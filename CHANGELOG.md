@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- All top level components are now wrapped in memo
 - Added a `userEvent` option to `selectComboBoxOption`.  This is required for the user-event v14 and fixes some unstable behaviour.
 - fix label is set to `undefined` if option is supplied with no label
 - `onLayoutListBox` now takes a list of handlers and `useLayoutListBox` is removed

@@ -119,9 +119,7 @@ exports[`options options as null renders an select 1`] = `
     >
       foo
     </option>
-    <option
-      value=""
-    />
+    <option />
   </select>
 </div>
 `;
@@ -134,9 +132,7 @@ exports[`options options as undefined renders an select 1`] = `
     >
       foo
     </option>
-    <option
-      value=""
-    />
+    <option />
   </select>
 </div>
 `;

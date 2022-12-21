@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, memo } from 'react';
 import PropTypes from 'prop-types';
 import { useNormalisedOptions } from '../hooks/use_normalised_options';
 import { renderGroupedOptions } from '../helpers/render_grouped_options';
@@ -6,7 +6,7 @@ import { classPrefix as defaultClassPrefix } from '../constants/class_prefix';
 import { makeBEMClass } from '../helpers/make_bem_class';
 import { visuallyHiddenClassName } from '../constants/visually_hidden_class_name';
 
-export function Radios(rawProps) {
+export const Radios = memo((rawProps) => {
   const optionisedProps = Object.freeze({
     ...rawProps,
     ...useNormalisedOptions(rawProps),
@@ -97,7 +97,7 @@ export function Radios(rawProps) {
       }, { option, group, checked }, optionisedProps);
     },
   });
-}
+});
 
 Radios.propTypes = {
   classPrefix: PropTypes.string,
@@ -132,3 +132,5 @@ Radios.defaultProps = {
   renderGroupAccessibleLabel: (props) => <span {...props} />,
   required: false,
 };
+
+Radios.displayName = 'Radios';

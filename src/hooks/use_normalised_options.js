@@ -65,7 +65,7 @@ export function useNormalisedOptions({
   ), [rawValue, mapOption]);
 
   const selectedOption = useMemo(() => {
-    const option = options.find((o) => o.identity === (value?.identity || ''));
+    const option = options.find((o) => o.identity === (value?.identity ?? value));
     if (option || !mustHaveSelection) {
       return option || null;
     }
@@ -79,7 +79,7 @@ export function useNormalisedOptions({
   const selectedOptions = useMemo(() => {
     const selected = [];
     values.forEach((v) => {
-      const found = options.find((o) => o.identity === (v?.identity || ''));
+      const found = options.find((o) => o.identity === (v?.identity ?? v));
       if (found) {
         selected.push(found);
       }

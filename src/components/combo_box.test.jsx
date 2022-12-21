@@ -5,7 +5,7 @@ import { render, fireEvent, waitFor, act, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event';
 import { ComboBox } from './combo_box';
 import { DISPATCH } from '../constants/dispatch';
-import { collectLiveMessages, getLiveMessage } from '../__collect_aria_live_messages';
+import { collectLiveMessages } from '../__collect_aria_live_messages';
 
 const ComboBoxWrapper = forwardRef(({ value: _value, ...props }, ref) => {
   const [value, setValue] = useState(_value);
@@ -841,7 +841,7 @@ describe('options', () => {
     });
 
     describe('missing label', () => {
-      it('treats as a blank string', () => {
+      it('treats as undefined', () => {
         const options = [{}];
         const { container } = render(<ComboBoxWrapper options={options} />);
         expect(container).toMatchSnapshot();
@@ -936,7 +936,7 @@ describe('options', () => {
 
     it('triggers the onValue callback with the selected value', async () => {
       const spy = jest.fn();
-      render(<ComboBoxWrapper options={[undefined, 'foo']} onValue={spy} />);
+      render(<ComboBoxWrapper value="foo" options={['foo', undefined]} onValue={spy} />);
       await userEvent.tab();
       await userEvent.keyboard('{ArrowDown}{Enter}');
       expect(spy).toHaveBeenCalledWith(undefined);
@@ -1051,10 +1051,30 @@ describe('value', () => {
   });
 
   describe('value is an empty string', () => {
-    const options = [null, 'foo'];
+    const options = ['', 'foo'];
 
     it('selects the value', async () => {
       render(<ComboBoxWrapper options={options} value="" />);
+      await userEvent.tab();
+      expectToHaveSelectedOption(screen.getAllByRole('option')[0]);
+    });
+  });
+
+  describe('value is null', () => {
+    const options = [null, 'foo'];
+
+    it('selects the value', async () => {
+      render(<ComboBoxWrapper options={options} value={null} />);
+      await userEvent.tab();
+      expectToHaveSelectedOption(screen.getAllByRole('option')[0]);
+    });
+  });
+
+  describe('value is undefined', () => {
+    const options = [undefined, 'foo'];
+
+    it('selects the value', async () => {
+      render(<ComboBoxWrapper options={options} />);
       await userEvent.tab();
       expectToHaveSelectedOption(screen.getAllByRole('option')[0]);
     });
@@ -2281,28 +2301,23 @@ describe('findSuggestion', () => {
     ));
     await userEvent.type(screen.getByRole('combobox'), 'o');
     expectToHaveSelectedOption(screen.getByRole('option', { name: 'Orange' }));
-    expect(findSuggestion.mock.calls).toEqual([
-      [expect.objectContaining({ value: 'Apple' }), 'o'],
-      [expect.objectContaining({ value: 'Pear' }), 'o'],
-      [expect.objectContaining({ value: 'Orange' }), 'o'],
-    ]);
   });
 
   it('ends the search by returning false', async () => {
     const findSuggestion = jest.fn((option) => {
-      if (option.label !== 'Orange') {
+      if (option.label === 'Pear') {
         return false;
       }
-      return true;
+      if (option.label === 'Orange') {
+        return true;
+      }
+      return null;
     });
     render((
       <ComboBoxWrapper options={options} autoselect findSuggestion={findSuggestion} />
     ));
     await userEvent.type(screen.getByRole('combobox'), 'o');
     expectToBeOpen();
-    expect(findSuggestion.mock.calls).toEqual([
-      [expect.objectContaining({ value: 'Apple' }), 'o'],
-    ]);
   });
 });
 
@@ -2424,40 +2439,40 @@ describe('aria live message', () => {
     const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
     const { rerender } = render(<ComboBoxWrapper options={options} />);
 
-    await expect(async () => {
+    expect(await collectLiveMessages(async () => {
       await user.tab();
       act(() => jest.advanceTimersByTime(1400));
-    }).toGenerateLiveMessages(['1 result is available']);
+    })).toEqual(['1 result is available']);
 
-    await expect(async () => {
+    expect(await collectLiveMessages(async () => {
       rerender(<ComboBoxWrapper options={['foo', 'bar']} />);
       act(() => jest.advanceTimersByTime(1400));
-    }).toGenerateLiveMessages(['2 results are available']);
+    })).toEqual(['2 results are available']);
 
-    await expect(async () => {
+    expect(await collectLiveMessages(async () => {
       await user.keyboard('{ArrowDown}');
       act(() => jest.advanceTimersByTime(1400));
-    }).toGenerateLiveMessages(['2 results are available, foo 1 of 2 is highlighted']);
+    })).toEqual(['2 results are available, foo 1 of 2 is highlighted']);
 
-    await expect(async () => {
+    expect(await collectLiveMessages(async () => {
       await user.keyboard('{ArrowDown}');
       act(() => jest.advanceTimersByTime(1400));
-    }).toGenerateLiveMessages(['2 results are available, bar 2 of 2 is highlighted']);
+    })).toEqual(['2 results are available, bar 2 of 2 is highlighted']);
 
-    await expect(async () => {
+    expect(await collectLiveMessages(async () => {
       rerender(<ComboBoxWrapper options={[]} />);
       await user.type(document.activeElement, 'a');
       act(() => jest.advanceTimersByTime(1400));
-    }).toGenerateLiveMessages(['No results found']);
+    })).toEqual(['No results found']);
   });
 
   it('does not update the message if not focused', async () => {
     jest.useFakeTimers();
 
-    await expect(async () => {
+    expect(await collectLiveMessages(async () => {
       render(<ComboBoxWrapper options={options} />);
       act(() => jest.advanceTimersByTime(1400));
-    }).not.toGenerateLiveMessages();
+    })).toEqual([]);
   });
 
   describe('foundOptionsMessage', () => {
@@ -2465,13 +2480,13 @@ describe('aria live message', () => {
       jest.useFakeTimers();
       const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
       const spy = jest.fn((ops) => `found ${ops.length} options`);
-      await expect(async () => {
+      expect(await collectLiveMessages(async () => {
         render((
           <ComboBoxWrapper options={['foo', 'bar']} foundOptionsMessage={spy} />
         ));
         await user.tab();
         act(() => jest.advanceTimersByTime(1400));
-      }).toGenerateLiveMessages(['found 2 options']);
+      })).toEqual(['found 2 options']);
     });
   });
 
@@ -2479,11 +2494,11 @@ describe('aria live message', () => {
     it('customises the not found message', async () => {
       jest.useFakeTimers();
       const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
-      await expect(async () => {
+      expect(await collectLiveMessages(async () => {
         render(<ComboBoxWrapper options={[]} notFoundMessage={() => 'not found'} />);
         await user.type(screen.getByRole('combobox'), 'a');
         act(() => jest.advanceTimersByTime(1400));
-      }).toGenerateLiveMessages(['not found']);
+      })).toEqual(['not found']);
     });
   });
 
@@ -2491,12 +2506,12 @@ describe('aria live message', () => {
     it('customises the not found message', async () => {
       jest.useFakeTimers();
       const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
-      await expect(async () => {
+      expect(await collectLiveMessages(async () => {
         render(<ComboBoxWrapper options={['foo']} selectedOptionMessage={(opt, opts) => `${opt.label} is one of ${opts.length}`} />);
         await user.tab();
         await user.keyboard('{ArrowDown}');
         act(() => jest.advanceTimersByTime(1400));
-      }).toGenerateLiveMessages(['1 result is available, foo is one of 1']);
+      })).toEqual(['1 result is available, foo is one of 1']);
     });
   });
 });

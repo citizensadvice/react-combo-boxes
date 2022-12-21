@@ -36,7 +36,7 @@ export function AriaLiveMessage({
     const newMessage = makeMessage();
     const timeout = setTimeout(() => setMessage(newMessage), debouceMilliseconds);
     return () => clearTimeout(timeout);
-  });
+  }, [showListBox, showNotFound, options, focusedOption, makeMessage]);
 
   // Some user-agents will not read out changes to text nodes, so use
   // key to ensure the div is recreated

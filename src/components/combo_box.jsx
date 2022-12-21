@@ -1,4 +1,4 @@
-import { useRef, useEffect, useLayoutEffect, Fragment, useMemo, forwardRef, useState, useCallback } from 'react';
+import { useRef, useEffect, useLayoutEffect, Fragment, useMemo, forwardRef, useState, useCallback, memo } from 'react';
 import PropTypes from 'prop-types';
 import { useThunkReducer as useReducer } from '../hooks/use_thunk_reducer';
 import { reducer } from './combo_box/reducer';
@@ -24,7 +24,16 @@ import { scrollIntoView } from '../layout/scroll_into_view';
 import { DISPATCH } from '../constants/dispatch';
 import { LayoutListBox } from './layout_list_box';
 
-export const ComboBox = forwardRef((rawProps, ref) => {
+function useModified(value, fn) {
+  const [currentValue, setCurrentValue] = useState(value);
+
+  if (currentValue !== value) {
+    fn();
+    setCurrentValue(value);
+  }
+}
+
+export const ComboBox = memo(forwardRef((rawProps, ref) => {
   const optionisedProps = Object.freeze({
     ...rawProps,
     ...useNormalisedOptions(rawProps, { mustHaveSelection: rawProps.selectOnly }),
@@ -121,23 +130,29 @@ export const ComboBox = forwardRef((rawProps, ref) => {
     // Prevent infinite loop - onSearch can update with each render
   }, [searchValue, mounted]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const inputLabel = useMemo(() => {
-    if (inlineAutoselect
-      || (((showSelectedLabel && !focusedOption?.unselectable) ?? autoselect === 'inline') && focusListBox)
-    ) {
-      return focusedOption?.label;
-    }
-    return search ?? value?.label;
-  }, [
-    inlineAutoselect, showSelectedLabel, autoselect,
-    focusListBox, focusedOption, search, value,
-  ]);
+  const inputLabel = useMemo(
+    () => {
+      if (inlineAutoselect
+        || (((showSelectedLabel && !focusedOption?.unselectable) ?? autoselect === 'inline') && focusListBox)
+      ) {
+        return focusedOption?.label;
+      }
+      return search ?? value?.label;
+    },
+    [
+      inlineAutoselect, showSelectedLabel, autoselect,
+      focusListBox, focusedOption, search, value,
+    ],
+  );
 
-  useLayoutEffect(() => {
-    if (search && autoselect === 'inline' && inlineAutoselect && focusedOption && document.activeElement === inputRef.current) {
-      inputRef.current.setSelectionRange(search.length, focusedOption.label.length, 'backward');
-    }
-  }, [inlineAutoselect, focusedOption, search, autoselect]);
+  useLayoutEffect(
+    () => {
+      if (search && autoselect === 'inline' && inlineAutoselect && focusedOption && document.activeElement === inputRef.current) {
+        inputRef.current.setSelectionRange(search.length, focusedOption.label.length, 'backward');
+      }
+    },
+    [inlineAutoselect, focusedOption, search, autoselect],
+  );
 
   const ariaAutocomplete = useMemo(() => {
     if (autoselect === 'inline') {
@@ -152,21 +167,19 @@ export const ComboBox = forwardRef((rawProps, ref) => {
     return 'list';
   }, [onSearch, autoselect]);
 
-  const optionsCheck = options.length ? options : null;
-  useLayoutEffect(() => {
-    if (!mounted) {
-      return;
-    }
-    dispatch(onOptionsChanged());
-  }, [optionsCheck, mounted]);
+  useModified(
+    options.length ? options : null,
+    () => {
+      dispatch(onOptionsChanged());
+    },
+  );
 
-  const valueIdentity = value?.identity;
-  useLayoutEffect(() => {
-    if (!mounted) {
-      return;
-    }
-    dispatch(onValueChanged());
-  }, [valueIdentity, mounted]);
+  useModified(
+    value?.identity,
+    () => {
+      dispatch(onValueChanged());
+    },
+  );
 
   // Do not show the list box is the only option is the currently selected option
   const showListBox = useMemo(() => (
@@ -203,20 +216,23 @@ export const ComboBox = forwardRef((rawProps, ref) => {
     ],
   );
 
-  useEffect(() => {
-    if (busy && !busyDebounce) {
-      setShowBusy(true);
-    } else if (busy) {
-      busyTimeoutRef.current = setTimeout(() => {
+  useEffect(
+    () => {
+      if (busy && !busyDebounce) {
         setShowBusy(true);
-      }, busyDebounce);
-    } else {
-      setShowBusy(false);
-    }
-    return () => {
-      clearTimeout(busyTimeoutRef.current);
-    };
-  }, [busy, busyDebounce, busyTimeoutRef]);
+      } else if (busy) {
+        busyTimeoutRef.current = setTimeout(() => {
+          setShowBusy(true);
+        }, busyDebounce);
+      } else {
+        setShowBusy(false);
+      }
+      return () => {
+        clearTimeout(busyTimeoutRef.current);
+      };
+    },
+    [busy, busyDebounce, busyTimeoutRef],
+  );
 
   const showNotFound = !busy
     && expanded
@@ -343,7 +359,7 @@ export const ComboBox = forwardRef((rawProps, ref) => {
       </>
     ),
   }, componentState, optionisedProps);
-});
+}));
 
 ComboBox.propTypes = {
   mapOption: PropTypes.func,
@@ -425,7 +441,7 @@ ComboBox.propTypes = {
 ComboBox.defaultProps = {
   options: null,
   mapOption: null,
-  value: null,
+  value: undefined,
 
   busy: false,
   busyDebounce: 400,

@@ -11,8 +11,27 @@ export const SET_CLOSED = 'SET_CLOSED';
 export const SET_FOCUSED_OPTION = 'SET_FOCUSED_OPTION';
 export const SET_FOCUS_LIST_BOX = 'SET_FOCUS_LIST_BOX';
 
+function findSuggestedOption({ options, findSuggestion, search }) {
+  if (!options || !findSuggestion || !search) {
+    return null;
+  }
+  for (const option of options) {
+    const result = findSuggestion(option, search);
+    if (result) {
+      return option;
+    }
+    if (result === false) {
+      return null;
+    }
+  }
+  return null;
+}
+
 export function setExpanded() {
-  return { type: SET_EXPANDED };
+  return (dispatch, _, getProps) => {
+    const { selectedOption } = getProps();
+    dispatch({ type: SET_EXPANDED, selectedOption });
+  };
 }
 
 export function setFocusedOption({
@@ -21,6 +40,7 @@ export function setFocusedOption({
   autoselect,
   expanded,
   selectionStart,
+  suggestedOption,
 }) {
   return {
     type: SET_FOCUSED_OPTION,
@@ -29,6 +49,7 @@ export function setFocusedOption({
     autoselect,
     expanded,
     selectionStart,
+    suggestedOption,
   };
 }
 
@@ -137,7 +158,7 @@ export function onKeyDown(event) {
             focusListBox: true,
           }));
         } else {
-          dispatch({ type: SET_EXPANDED });
+          dispatch(setExpanded());
         }
         break;
       case 'ArrowDown':
@@ -149,7 +170,7 @@ export function onKeyDown(event) {
             focusListBox: true,
           }));
         } else {
-          dispatch({ type: SET_EXPANDED });
+          dispatch(setExpanded());
         }
         break;
       case 'Home':
@@ -196,7 +217,7 @@ export function onKeyDown(event) {
         // Select current item if one is selected
         if (!expanded) {
           if (selectOnly) {
-            dispatch({ type: SET_EXPANDED });
+            dispatch(setExpanded());
           }
           break;
         }
@@ -259,10 +280,49 @@ export function onKeyDown(event) {
 
 export function onChange(event) {
   return (dispatch, getState, getProps) => {
-    const { focusedOption } = getState();
-    const { onChange: passedOnChange, value } = getProps();
-    const { target: { value: search, selectionStart } } = event;
-    dispatch({ type: SET_SEARCH, search, autoselect: true, selectionStart });
+    const { inlineAutoselect, focusListBox, focusedOption } = getState();
+    const {
+      autoselect,
+      onChange: passedOnChange,
+      value,
+      lastKeyRef: { current: key },
+      selectedOption,
+      options,
+      findSuggestion,
+    } = getProps();
+    const { target: { selectionStart } } = event;
+    let { target: { value: search } } = event;
+
+    // let setInlineAutoselect = false;
+    // // If the selection length equals the search length trigger the display of an autocomplete
+    // if (autoselect === 'inline' && focusListBox && search && selectionStart === search.length) {
+    //   setInlineAutoselect = true;
+    // }
+
+    // if (inlineAutoselect) {
+    //   // If backspace was pressed we also want to remove an extra character
+    //   if (key === 'Backspace') {
+    //     search = search.slice(0, -1);
+    //     setInlineAutoselect = false;
+    //   }
+    //   // If delete was pressed, remove the autoselected option
+    //   if (key === 'Delete') {
+    //     setInlineAutoselect = false;
+    //   }
+    // }
+
+    // Send onSearch
+
+    const suggestedOption = findSuggestedOption({ options, findSuggestion, search });
+
+    dispatch({
+      type: SET_SEARCH,
+      search,
+      autoselect: true,
+      selectionStart,
+      selectedOption,
+      suggestedOption,
+    });
     if (!search && (focusedOption || value)) {
       dispatch(onSelectValue(null, true));
       return;
@@ -381,20 +441,25 @@ export function onClearValue(event) {
 
 export function onOptionsChanged() {
   return (dispatch, getState, getProps) => {
-    const { focusedOption, expanded } = getState();
+    const { focusedOption, expanded, search } = getState();
     if (!expanded) {
       return;
     }
-    const { options, inputRef, selectOnly, selectedOption } = getProps();
+    const { options, inputRef, selectOnly, selectedOption, findSuggestion } = getProps();
     let newOption = options.find((o) => o.identity === focusedOption?.identity);
     if (selectOnly && !newOption) {
       newOption = selectedOption;
     }
 
+    // TODO: If the selection length equals the search length trigger the display of an autocomplete
+
+    const suggestedOption = findSuggestedOption({ options, findSuggestion, search });
+
     dispatch(setFocusedOption({
       focusedOption: newOption,
       autoselect: true,
       selectionStart: inputRef.current.selectionStart,
+      suggestedOption,
     }));
   };
 }

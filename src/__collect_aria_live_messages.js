@@ -1,5 +1,3 @@
-import { diff } from 'jest-diff';
-
 const liveMessageObservers = [];
 
 afterEach(() => {
@@ -12,7 +10,7 @@ function liveRegionMessage(node) {
   return node.textContent.replace(/\s+/g, ' ').trim();
 }
 
-export function collectLiveMessages(root = document.body) {
+export function liveMessages(root = document.body) {
   const messages = [];
   const liveRegions = new Map();
 
@@ -64,80 +62,16 @@ export function collectLiveMessages(root = document.body) {
     },
     stop: () => {
       observer.disconnect();
+      liveMessageObservers.splice(liveMessageObservers.indexOf(observer), 1);
     },
     clear: () => messages.splice(0, messages.length),
   };
 }
 
-expect.extend({
-  async toGenerateLiveMessages(fn, expected) {
-    const { getMessages } = collectLiveMessages();
-    await fn();
-    const received = await getMessages();
-    let message;
-    let pass;
-
-    if (expected === undefined) {
-      const options = {
-        comment: 'deep equality',
-        isNot: !this.isNot,
-        promise: this.promise,
-      };
-
-      pass = !this.equals(received, []);
-
-      if (pass) {
-        message = () => (
-          // eslint-disable-next-line prefer-template
-          this.utils.matcherHint('toEqual', undefined, undefined, options)
-          + '\n\n'
-          + `Expected: ${this.utils.printExpected([])}\n`
-          + `Received: ${this.utils.printReceived(received)}`
-        );
-      } else {
-        message = () => (
-          // eslint-disable-next-line prefer-template
-          this.utils.matcherHint('toEqual', undefined, undefined, options)
-          + '\n\n'
-          + `Expected: not ${this.utils.printExpected([])}\n`
-          + `Received: ${this.utils.printReceived(received)}`
-        );
-      }
-    } else {
-      pass = this.equals(received, expected);
-
-      const options = {
-        comment: 'deep equality',
-        isNot: this.isNot,
-        promise: this.promise,
-      };
-
-      if (pass) {
-        message = () => (
-          // eslint-disable-next-line prefer-template
-          this.utils.matcherHint('toEqual', undefined, undefined, options)
-          + '\n\n'
-          + `Expected: not ${this.utils.printExpected(expected)}\n`
-          + `Received: ${this.utils.printReceived(received)}`
-        );
-      } else {
-        message = () => {
-          const diffString = diff(expected, received, {
-            expand: this.expand,
-          });
-          return (
-            // eslint-disable-next-line prefer-template
-            this.utils.matcherHint('toEqual', undefined, undefined, options)
-            + '\n\n'
-            + (diffString && diffString.includes('- Expect')
-              ? `Difference:\n\n${diffString}`
-              : `Expected: ${this.utils.printExpected(expected)}\n`
-                + `Received: ${this.utils.printReceived(received)}`)
-          );
-        };
-      }
-    }
-
-    return { message, pass };
-  },
-});
+export async function collectLiveMessages(fn) {
+  const { getMessages, stop } = liveMessages();
+  await fn();
+  const messages = await getMessages();
+  stop();
+  return messages;
+}
