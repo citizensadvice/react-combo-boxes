@@ -24,6 +24,15 @@
     0 2px 4px #aaa;
   overscroll-behavior: none;
   -ms-scroll-chaining: none;
+
+  &[data-orientation="top"] {
+    margin: 1em 1em 0 0;
+    box-shadow:
+      0 (-$react-combo-boxes-focus-border-width) 0 0 $react-combo-boxes-focus-border-color,
+      $react-combo-boxes-focus-border-width  0 0 0 $react-combo-boxes-focus-border-color,
+      -$react-combo-boxes-focus-border-width 0 0 0 $react-combo-boxes-focus-border-color,
+      0 -2px 4px #aaa;
+  }
 }
 
 @mixin react-combo-boxes-listbox {

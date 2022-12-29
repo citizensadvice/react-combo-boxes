@@ -12,8 +12,8 @@ function mapOption({ name, code }) {
 }
 
 const onLayoutListBox = [
-  (el) => layoutMaxHeight(el, { contain: '.contain-listbox' }),
-  (el) => layoutMaxWidth(el, { contain: '.contain-listbox' }),
+  layoutMaxHeight,
+  layoutMaxWidth,
 ];
 
 export function Example() {
@@ -22,18 +22,7 @@ export function Example() {
   const filteredOptions = useTokenSearch(search, { options: countries, index: mapOption });
 
   return (
-    <div
-      className="contain-listbox"
-      style={{
-        height: '500px',
-        width: '300px',
-        overflow: 'auto',
-        padding: '10px',
-        margin: '10px',
-        paddingTop: '200px',
-        border: '10px dashed #ddd',
-      }}
-    >
+    <>
       <label
         id="select-label"
         htmlFor="select"
@@ -58,6 +47,6 @@ export function Example() {
         {JSON.stringify(value, undefined, ' ')}
       </output>
       <div style={{ height: '1000px', width: '500px' }} />
-    </div>
+    </>
   );
 }

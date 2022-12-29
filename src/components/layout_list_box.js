@@ -3,13 +3,16 @@ import PropTypes from 'prop-types';
 
 import { useEvent } from '../hooks/use_event';
 
-export function LayoutListBox({ onLayoutListBox, options, listBoxRef }) {
+export function LayoutListBox({ onLayoutListBox, options, listboxRef, inputRef }) {
   const animationFrameRef = useRef();
 
   const layout = useEvent(() => {
     cancelAnimationFrame(animationFrameRef.current);
     animationFrameRef.current = requestAnimationFrame(() => {
-      [].concat(onLayoutListBox).filter(Boolean).forEach((fn) => fn(listBoxRef.current));
+      [].concat(onLayoutListBox).filter(Boolean).forEach((fn) => fn({
+        listbox: listboxRef.current,
+        input: inputRef.current,
+      }));
     });
   });
 
@@ -18,15 +21,23 @@ export function LayoutListBox({ onLayoutListBox, options, listBoxRef }) {
   }, [layout, options]);
 
   useEffect(() => {
+    const { current: listbox } = listboxRef;
+
+    function handleScroll(e) {
+      if (e.target.contains(listbox)) {
+        layout();
+      }
+    }
+
     window.addEventListener('resize', layout, { passive: true });
-    window.addEventListener('scroll', layout, { passive: true });
+    document.addEventListener('scroll', handleScroll, { passive: true, capture: true });
 
     return () => {
       cancelAnimationFrame(animationFrameRef.current);
       window.removeEventListener('resize', layout, { passive: true });
-      window.removeEventListener('scroll', layout, { passive: true });
+      document.removeEventListener('scroll', handleScroll, { passive: true, capture: true });
     };
-  }, [layout]);
+  }, [layout, listboxRef]);
 
   return null;
 }
@@ -37,7 +48,10 @@ LayoutListBox.propTypes = {
     PropTypes.arrayOf(PropTypes.func),
   ]).isRequired,
   options: PropTypes.arrayOf(PropTypes.any).isRequired,
-  listBoxRef: PropTypes.shape({
+  listboxRef: PropTypes.shape({
+    current: PropTypes.instanceOf(Element),
+  }).isRequired,
+  inputRef: PropTypes.shape({
     current: PropTypes.instanceOf(Element),
   }).isRequired,
 };

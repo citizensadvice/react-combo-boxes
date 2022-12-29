@@ -32,11 +32,15 @@ function MyComponent() {
 
 Prevent the listbox from extending off the viewport or document, vertically.
 
+It will reposition the listbox above the combo-box input if the listbox is near the end of the page.
+
 ```js
 function layoutMaxHeight(
   listbox: Element,
   {
     contain: string = 'body', // Selector to find a parent to contain list box in
+    allowReposition: Boolean = true, // Allow repositioning of the list box
+    minMaxHeight: Number = 0 // The minimum max height to set
   }
 ): void
 ```
@@ -50,6 +54,7 @@ function layoutMaxWidth(
   listbox: Element,
   {
     contain: string = 'body', // Selector to find a parent to contain list box in
+    minMaxWidth: Number = 0 // The minimum max width to set
   }
 ): void
 ```

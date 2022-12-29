@@ -350,7 +350,8 @@ export const ComboBox = memo(forwardRef((rawProps, ref) => {
               <LayoutListBox
                 onLayoutListBox={onLayoutListBox}
                 options={options}
-                listBoxRef={listRef}
+                listboxRef={listRef}
+                inputRef={inputRef}
               />
             )}
           </>

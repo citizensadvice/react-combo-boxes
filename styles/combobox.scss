@@ -35,7 +35,13 @@
 }
 
 .react-combo-boxes-combobox__listbox {
-  margin-top: -$react-combo-boxes-focus-border-width;
+  &:not([data-orientation="top"]) {
+    margin-top: -$react-combo-boxes-focus-border-width;
+  }
+
+  &[data-orientation="top"] {
+    margin-bottom: -$react-combo-boxes-focus-border-width;
+  }
 }
 
 .react-combo-boxes-combobox__input {
@@ -82,14 +88,28 @@
   @include react-combo-boxes-listbox-container;
 
   padding: $react-combo-boxes-padding-y $react-combo-boxes-padding-x;
-  margin-top: -2px;
+
+  &:not([data-orientation="top"]) {
+    margin-top: -$react-combo-boxes-focus-border-width;
+  }
+
+  &[data-orientation="top"] {
+    margin-bottom: -$react-combo-boxes-focus-border-width;
+  }
 }
 
 .react-combo-boxes-combobox__error-message {
   @include react-combo-boxes-listbox-container;
 
   padding: $react-combo-boxes-padding-y $react-combo-boxes-padding-x;
-  margin-top: -2px;
+
+  &:not([data-orientation="top"]) {
+    margin-top: -$react-combo-boxes-focus-border-width;
+  }
+
+  &[data-orientation="top"] {
+    margin-bottom: -$react-combo-boxes-focus-border-width;
+  }
 }
 
 @if $react-combo-boxes-enable-icons {

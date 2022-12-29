@@ -1766,7 +1766,10 @@ describe('onLayoutListBox', () => {
       <DropDownWrapper options={options} onLayoutListBox={onLayoutListBox} />,
     );
     await userEvent.click(screen.getByRole('combobox'));
-    expect(onLayoutListBox).toHaveBeenCalledWith(screen.getByRole('listbox'));
+    expect(onLayoutListBox).toHaveBeenCalledWith({
+      listbox: screen.getByRole('listbox'),
+      input: screen.getByRole('combobox'),
+    });
   });
 
   it('is called when the listbox options change', async () => {
@@ -1777,7 +1780,10 @@ describe('onLayoutListBox', () => {
     await userEvent.click(screen.getByRole('combobox'));
     onLayoutListBox.mockClear();
     rerender(<DropDownWrapper options={['strawberry']} onLayoutListBox={onLayoutListBox} />);
-    expect(onLayoutListBox).toHaveBeenCalledWith(screen.getByRole('listbox'));
+    expect(onLayoutListBox).toHaveBeenCalledWith({
+      listbox: screen.getByRole('listbox'),
+      input: screen.getByRole('combobox'),
+    });
   });
 
   it('is not called when a listbox is closed', async () => {
