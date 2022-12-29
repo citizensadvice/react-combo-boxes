@@ -77,10 +77,11 @@ export function setFocusedOption(focusedOption) {
 
 export function onSelectValue(newValue, expanded) {
   return (dispatch, getState, getProps) => {
-    const { onValue, inputRef, closeOnSelect } = getProps();
+    const { onSearch, onValue, inputRef, closeOnSelect, value } = getProps();
     const expand = expanded === undefined ? !closeOnSelect : expanded;
     dispatch({ type: SET_CLOSED, expanded: expand });
     if (newValue?.unselectable) {
+      onSearch?.(value?.label || '');
       return;
     }
     const { current: input } = inputRef;
@@ -88,6 +89,7 @@ export function onSelectValue(newValue, expanded) {
     if (document.activeElement === input && input.setSelectionRange) {
       input.setSelectionRange(input.value.length, input.value.length, 'forward');
     }
+    onSearch?.(newValue?.label || '');
     onValue?.(newValue ? newValue.value : null);
   };
 }
@@ -314,6 +316,7 @@ export function onChange(event) {
     const {
       lastKeyRef: { current: key },
       onChange: passedOnChange,
+      onSearch,
       selectedOption,
       value,
       inputRef: { current: { selectionStart } },
@@ -329,6 +332,8 @@ export function onChange(event) {
     } else if (!expanded) {
       focusedOption = selectedOption;
     }
+
+    onSearch?.(search);
 
     dispatch(applyAutoselect({
       type: SET_SEARCH,
@@ -348,11 +353,13 @@ export function onChange(event) {
 
 export function onFocus() {
   return (dispatch, getState, getProps) => {
-    const { selectedOption, expandOnFocus, disabled, readOnly } = getProps();
+    const { onSearch, selectedOption, expandOnFocus, disabled, readOnly, value } = getProps();
 
     if (disabled || readOnly) {
       return;
     }
+
+    onSearch?.(value?.label || '');
 
     dispatch({
       type: SET_FOCUSED_OPTION,

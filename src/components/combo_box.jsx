@@ -10,7 +10,6 @@ import {
 import { useEvent } from '../hooks/use_event';
 import { useNormalisedOptions } from '../hooks/use_normalised_options';
 import { useOnBlur } from '../hooks/use_on_blur';
-import { useMounted } from '../hooks/use_mounted';
 import { makeBEMClass } from '../helpers/make_bem_class';
 import { joinTokens } from '../helpers/join_tokens';
 import { stringOrArray } from '../validators/string_or_array';
@@ -93,7 +92,6 @@ export const ComboBox = memo(forwardRef((rawProps, ref) => {
   const focusedRef = useRef();
   const lastKeyRef = useRef();
   const busyTimeoutRef = useRef();
-  const mounted = useMounted();
 
   const [state, dispatch] = useReducer(
     reducer,
@@ -118,17 +116,6 @@ export const ComboBox = memo(forwardRef((rawProps, ref) => {
       passedOnFocus?.();
     }, [passedOnFocus]),
   );
-
-  const searchValue = (search ?? value?.label) || '';
-  useEffect(() => {
-    if (!mounted) {
-      return;
-    }
-    if (onSearch) {
-      onSearch(searchValue);
-    }
-    // Prevent infinite loop - onSearch can update with each render
-  }, [searchValue, mounted]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const inputLabel = useMemo(
     () => {
