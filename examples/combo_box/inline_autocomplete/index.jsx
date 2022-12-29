@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ComboBox, useTokenSearch, tokenHighlight } from '../../../src';
+import { ComboBox, useTokenSearch } from '../../../src';
 import countries from '../../data/countries.json';
 
 function mapOption({ name, code }) {
@@ -38,7 +38,6 @@ export function Example() {
         showSelectedLabel={showSelectedLabel}
         managedFocus={managedFocus}
         expandOnFocus={expandOnFocus}
-        renderValue={tokenHighlight()}
         selectOnBlur={selectOnBlur}
       />
 

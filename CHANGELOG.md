@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Changed how highlights are generated.  This should now be be composed from React components.  The old `highlight…` methods have been removed.
+- Some optimisations to reduce renders
 - All top level components are now wrapped in memo
 - Added a `userEvent` option to `selectComboBoxOption`.  This is required for the user-event v14 and fixes some unstable behaviour.
 - fix label is set to `undefined` if option is supplied with no label

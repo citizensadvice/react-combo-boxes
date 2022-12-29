@@ -1,50 +1,69 @@
+/* eslint-disable quotes */
+
 import { render } from '@testing-library/react';
-import { substringHighlight } from './substring_highlight';
+import { SubstringHighlight } from './substring_highlight';
 
-it('does not highlight with no children', () => {
-  const { container } = render((
-    substringHighlight()({ children: null }, { search: null }, {})
-  ));
-
-  expect(container).toContainHTML('<div></div>');
+it('highlights empty string', () => {
+  const { container } = render(<SubstringHighlight label="" search="" />);
+  expect(container).toMatchInlineSnapshot(`<div />`);
 });
 
-it('does not highlight with no search children', () => {
-  const { container } = render((
-    substringHighlight()({ children: 'foo' }, { search: null }, {})
-  ));
-
-  expect(container).toContainHTML('<div>foo</div>');
+it('highlights with an empty search', () => {
+  const { container } = render(<SubstringHighlight label="foo" search="" />);
+  expect(container).toMatchInlineSnapshot(`
+<div>
+  foo
+</div>
+`);
 });
 
-it('does not highlight no match', () => {
-  const { container } = render((
-    substringHighlight()({ children: 'foo' }, { search: 'bar' }, {})
-  ));
-
-  expect(container).toContainHTML('<div>foo</div>');
+it('highlights with no match', () => {
+  const { container } = render(<SubstringHighlight label="foo barfoo" search="fizz" />);
+  expect(container).toMatchInlineSnapshot(`
+<div>
+  foo barfoo
+</div>
+`);
 });
 
-it('highlights a substring', () => {
-  const { container } = render((
-    substringHighlight()({ children: 'foo bar foo bar' }, { search: 'bar' }, { visuallyHiddenClassName: 'sr-only' })
-  ));
-
-  expect(container).toMatchSnapshot();
+it('highlights with a match', () => {
+  const { container } = render(<SubstringHighlight label="foo barfoo" search="foo" />);
+  expect(container).toMatchInlineSnapshot(`
+<div>
+  <span
+    class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+  >
+    foo barfoo
+  </span>
+  <span
+    aria-hidden="true"
+  >
+    <mark>
+      foo
+    </mark>
+     barfoo
+  </span>
+</div>
+`);
 });
 
-it('highlights an existing value substring', () => {
-  const { container } = render((
-    substringHighlight()({ children: 'foo bar foo bar' }, { search: null }, { value: { label: 'bar' }, visuallyHiddenClassName: 'sr-only' })
-  ));
-
-  expect(container).toMatchSnapshot();
-});
-
-it('inverses the highlight', () => {
-  const { container } = render((
-    substringHighlight({ inverse: true })({ children: 'foo bar foo bar' }, { search: 'bar' }, { visuallyHiddenClassName: 'sr-only' })
-  ));
-
-  expect(container).toMatchSnapshot();
+it('inverses the a highlight', () => {
+  const { container } = render(<SubstringHighlight label="foo barfoo" search="foo" inverse />);
+  expect(container).toMatchInlineSnapshot(`
+<div>
+  <span
+    class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+  >
+    foo barfoo
+  </span>
+  <span
+    aria-hidden="true"
+  >
+    foo 
+    <mark>
+      barfoo
+    </mark>
+  </span>
+</div>
+`);
 });

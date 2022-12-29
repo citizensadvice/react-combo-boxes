@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ComboBox, useTokenSearch, tokenHighlight } from '../../../src';
+import { ComboBox, useTokenSearch } from '../../../src';
 
 const options = [
   'Apple',
@@ -31,7 +31,6 @@ export function Example() {
         onValue={setValue}
         onSearch={setSearch}
         options={filteredOptions}
-        renderValue={tokenHighlight()}
         tabBetweenOptions
         managedFocus={managedFocus}
       />

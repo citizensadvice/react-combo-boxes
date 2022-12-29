@@ -2,9 +2,7 @@ import { useState } from 'react';
 import {
   ComboBoxTable,
   useTokenSearch,
-  tokenHighlighter,
-  passThroughHighlighter,
-  highlightValue,
+  TokenHighlight,
   layoutMaxWidth,
   layoutMaxHeight,
   layoutColumnsAlignLeft,
@@ -28,12 +26,13 @@ function index({ breed }) {
   return breed;
 }
 
-function highlighter(term, query, options, state) {
-  const { column: { name } } = state;
+function renderValue({ children }, { search, column: { name } }) {
   if (name === 'breed') {
-    return tokenHighlighter(term, query);
+    return (
+      <TokenHighlight search={search} label={children} />
+    );
   }
-  return passThroughHighlighter(term);
+  return children;
 }
 
 const onLayoutListBox = [
@@ -64,7 +63,7 @@ export function Example() {
         onLayoutListBox={onLayoutListBox}
         options={filteredOptions}
         columns={columns}
-        renderColumnValue={highlightValue(highlighter)}
+        renderColumnValue={renderValue}
         mapOption={mapOption}
         size={100}
       />

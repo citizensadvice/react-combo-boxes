@@ -2,7 +2,6 @@ import { useState } from 'react';
 import {
   ComboBox,
   useTokenSearch,
-  tokenHighlight,
   layoutMaxWidth,
   layoutMaxHeight,
 } from '../../../src';
@@ -38,7 +37,6 @@ export function Example() {
         onSearch={setSearch}
         options={filteredOptions}
         mapOption={mapOption}
-        renderValue={tokenHighlight()}
         renderListBox={(props) => <ul {...props} style={{ marginBottom: 0, marginRight: 0 }} />}
         onLayoutListBox={onLayoutListBox}
       />

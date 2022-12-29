@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import { highlightValue } from './highlight_value';
+import { Highlight } from './highlight';
 
 Object.defineProperties(global.navigator, {
   userAgent: {
@@ -10,11 +10,15 @@ Object.defineProperties(global.navigator, {
 });
 
 it('renders the highlight without hidden text', () => {
-  const spy = jest.fn(() => ['f', ['o'], 'o']);
+  const { container } = render(<Highlight>{['f', ['o'], 'o']}</Highlight>);
 
-  const { container } = render((
-    highlightValue(spy)({ children: 'foo' }, { search: 'bar' }, {})
-  ));
-
-  expect(container).toContainHTML('<div>f<mark>o</mark>o</div>');
+  expect(container).toMatchInlineSnapshot(`
+<div>
+  f
+  <mark>
+    o
+  </mark>
+  o
+</div>
+`);
 });

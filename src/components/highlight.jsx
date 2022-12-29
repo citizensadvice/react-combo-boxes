@@ -1,17 +1,46 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { inverseHighlight } from '../helpers/inverse_highlight';
+import { Context } from './combo_box/context';
+import { isIE } from '../sniffers/is_ie';
+
+function emptyHighlight(highlight) {
+  return !highlight.length || (highlight.length === 1 && typeof highlight[0] === 'string');
+}
 
 export function Highlight({ children, inverse }) {
+  const { visuallyHiddenClassName } = useContext(Context);
   let highlighted = children;
   if (inverse) {
     highlighted = inverseHighlight(highlighted);
   }
+
+  if (emptyHighlight(highlighted)) {
+    return highlighted.join('');
+  }
+
   const parts = highlighted.map((part) => (Array.isArray(part)
     ? <mark>{part}</mark>
     : part
   ));
-  return React.createElement(Fragment, null, ...parts);
+  const highlight = React.createElement(Fragment, null, ...parts);
+
+  if (isIE() || parts.length === 1) {
+    // IE ignores aria-hidden, however it also doesn't suffer from the inline element issue
+    return highlight;
+  }
+
+  // Accessible naming treats inline elements as block and adds additional white space
+  return (
+    <>
+      <span className={visuallyHiddenClassName}>
+        {highlighted.join('')}
+      </span>
+      <span aria-hidden="true">
+        {highlight}
+      </span>
+    </>
+  );
 }
 
 Highlight.propTypes = {

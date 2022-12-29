@@ -104,6 +104,7 @@ Radios.propTypes = {
   groupClassPrefix: PropTypes.string,
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  onChange: PropTypes.func,
   onValue: PropTypes.func,
   options: PropTypes.arrayOf(PropTypes.any).isRequired,
   value: PropTypes.any,

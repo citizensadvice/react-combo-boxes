@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { ComboBox, useTokenSearch, tokenHighlight } from '../../../src';
+import { ComboBox, useTokenSearch } from '../../../src';
 import emoji from '../../data/emoji.json';
 
 // The emoji set includes identical variations on code sequences
@@ -39,7 +39,6 @@ export function Example() {
         onSearch={setSearch}
         options={filteredOptions}
         mapOption={map}
-        renderValue={tokenHighlight()}
       />
 
       <label htmlFor="output">
