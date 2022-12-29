@@ -1,7 +1,7 @@
 /* eslint-disable testing-library/no-node-access */
 
 import { useEffect, useState, forwardRef } from 'react';
-import { render, fireEvent, waitFor, act, screen } from '@testing-library/react';
+import { render, waitFor, act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ComboBox } from './combo_box';
 import { DISPATCH } from '../constants/dispatch';
@@ -1149,33 +1149,36 @@ describe('clear button', () => {
     expect(spy).not.toHaveBeenCalled();
   });
 
-  it('pressing ENTER on the button clears the value', () => {
+  it('pressing ENTER on the button clears the value', async () => {
     const spy = jest.fn();
     render(<ComboBoxWrapper options={options} value="Apple" onValue={spy} />);
+    await userEvent.tab();
     const remove = screen.getByRole('button', { name: 'Clear Apple' });
     expect(remove).toBeVisible();
-    // Technically not focusable so use fireEvent
-    fireEvent.keyDown(remove, { key: 'Enter' });
+    act(() => remove.focus());
+    await userEvent.type(remove, '{Enter}', { skipClick: true });
     expect(spy).toHaveBeenCalledWith(null);
   });
 
-  it('pressing SPACE on the button clears the value', () => {
+  it('pressing SPACE on the button clears the value', async () => {
     const spy = jest.fn();
     render(<ComboBoxWrapper options={options} value="Apple" onValue={spy} />);
+    await userEvent.tab();
     const remove = screen.getByRole('button', { name: 'Clear Apple' });
     expect(remove).toBeVisible();
-    // Technically not focusable so use fireEvent
-    fireEvent.keyDown(remove, { key: 'Enter' });
+    act(() => remove.focus());
+    await userEvent.type(remove, ' ', { skipClick: true });
     expect(spy).toHaveBeenCalledWith(null);
   });
 
-  it('pressing a different key does not clear the value', () => {
+  it('pressing a different key does not clear the value', async () => {
     const spy = jest.fn();
     render(<ComboBoxWrapper options={options} value="Apple" onValue={spy} />);
+    await userEvent.tab();
     const remove = screen.getByRole('button', { name: 'Clear Apple' });
     expect(remove).toBeVisible();
-    // Technically not focusable so use fireEvent
-    fireEvent.keyDown(remove, { key: 'x' });
+    act(() => remove.focus());
+    await userEvent.type(remove, 'x', { skipClick: true });
     expect(spy).not.toHaveBeenCalled();
   });
 });

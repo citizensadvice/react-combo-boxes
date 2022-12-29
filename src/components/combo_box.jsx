@@ -298,6 +298,7 @@ export const ComboBox = memo(forwardRef((rawProps, ref) => {
           className: makeBEMClass(classPrefix, 'clear-button'),
           onClick: (e) => dispatch(onClearValue(e)),
           onKeyDown: (e) => dispatch(onClearValue(e)),
+          onKeyUp: (e) => dispatch(onClearValue(e)),
           hidden: disabled || readOnly || !value || search === '',
           tabIndex: -1,
         }, componentState, optionisedProps)}

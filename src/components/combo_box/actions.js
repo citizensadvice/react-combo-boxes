@@ -459,7 +459,10 @@ export function onClearValue(event) {
     if (event.type === 'click' && event.button > 0) {
       return;
     }
-    if (event.type === 'keydown' && ![' ', 'Enter'].includes(event.key)) {
+    if (event.type === 'keydown' && event.key !== 'Enter') {
+      return;
+    }
+    if (event.type === 'keyup' && event.key !== ' ') {
       return;
     }
     const { expandOnFocus, disabled, readOnly } = getProps();
