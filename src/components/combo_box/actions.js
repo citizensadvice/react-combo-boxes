@@ -27,6 +27,40 @@ function findSuggestedOption({ options, findSuggestion, search }) {
   return null;
 }
 
+function applyAutoselect(action) {
+  return (dispatch, getState, getProps) => {
+    const search = action.search ?? getState().search;
+    const { focusedOption } = action;
+    const {
+      autoselect,
+      findSuggestion,
+      lastKeyRef: { current: key },
+      options,
+      tabAutocomplete,
+      inputRef: { current: { selectionStart } },
+    } = getProps();
+
+    let suggestedOption = null;
+    if ((autoselect || tabAutocomplete) && search) {
+      suggestedOption = findSuggestedOption({ options, findSuggestion, search });
+    }
+
+    const removeAutoselect = autoselect && key === 'Backspace';
+    const setInlineAutoselect = autoselect === 'inline' && search && selectionStart === search.length && suggestedOption && !removeAutoselect;
+    const setAutoselect = autoselect === true && search && suggestedOption;
+
+    dispatch({
+      ...action,
+      autoselect: true,
+      selectionStart,
+      setAutoselect,
+      setInlineAutoselect,
+      suggestedOption,
+      focusedOption: removeAutoselect ? null : focusedOption,
+    });
+  };
+}
+
 export function setExpanded() {
   return (dispatch, _, getProps) => {
     const { selectedOption } = getProps();
@@ -34,22 +68,10 @@ export function setExpanded() {
   };
 }
 
-export function setFocusedOption({
-  focusedOption,
-  focusListBox,
-  autoselect,
-  expanded,
-  selectionStart,
-  suggestedOption,
-}) {
+export function setFocusedOption(focusedOption) {
   return {
     type: SET_FOCUSED_OPTION,
     focusedOption,
-    focusListBox,
-    autoselect,
-    expanded,
-    selectionStart,
-    suggestedOption,
   };
 }
 
@@ -153,10 +175,11 @@ export function onKeyDown(event) {
           }
           inputRef.current.focus();
         } else if (expanded) {
-          dispatch(setFocusedOption({
+          dispatch({
+            type: SET_FOCUSED_OPTION,
             focusedOption: previousInList(options, index, { skip, allowEmpty: !selectOnly }),
             focusListBox: true,
-          }));
+          });
         } else {
           dispatch(setExpanded());
         }
@@ -165,10 +188,11 @@ export function onKeyDown(event) {
         // Show, and next item unless altKey
         event.preventDefault();
         if (expanded && !altKey) {
-          dispatch(setFocusedOption({
+          dispatch({
+            type: SET_FOCUSED_OPTION,
             focusedOption: nextInList(options, index, { skip, allowEmpty: !selectOnly }),
             focusListBox: true,
-          }));
+          });
         } else {
           dispatch(setExpanded());
         }
@@ -177,40 +201,44 @@ export function onKeyDown(event) {
         // First item - on Windows on an editable combo box Home moves the cursor to the start
         if (expanded && (isMac() || selectOnly)) {
           event.preventDefault();
-          dispatch(setFocusedOption({
+          dispatch({
+            type: SET_FOCUSED_OPTION,
             focusedOption: nextInList(options, -1, { skip }),
             focusListBox: true,
-          }));
+          });
         }
         break;
       case 'End':
         // Last item - on Windows on an editable combo box End moves the cursor to the end
         if (expanded && (isMac() || selectOnly)) {
           event.preventDefault();
-          dispatch(setFocusedOption({
+          dispatch({
+            type: SET_FOCUSED_OPTION,
             focusedOption: previousInList(options, -1, { skip }),
             focusListBox: true,
-          }));
+          });
         }
         break;
       case 'PageDown':
         // Next page of items
         if (expanded) {
           event.preventDefault();
-          dispatch(setFocusedOption({
+          dispatch({
+            type: SET_FOCUSED_OPTION,
             focusedOption: movePage('down', options, focusedOption, { skip }),
             focusListBox: true,
-          }));
+          });
         }
         break;
       case 'PageUp':
         // Next page of items
         if (expanded) {
           event.preventDefault();
-          dispatch(setFocusedOption({
+          dispatch({
+            type: SET_FOCUSED_OPTION,
             focusedOption: movePage('up', options, focusedOption, { skip }),
             focusListBox: true,
-          }));
+          });
         }
         break;
       case 'Enter':
@@ -252,10 +280,11 @@ export function onKeyDown(event) {
             option = nextInList(options, index, { skip, allowEmpty: !selectOnly });
           }
           if (option || shiftKey) {
-            dispatch(setFocusedOption({
+            dispatch({
+              type: SET_FOCUSED_OPTION,
               focusedOption: option,
               focusListBox: true,
-            }));
+            });
             event.preventDefault();
           }
           break;
@@ -280,53 +309,39 @@ export function onKeyDown(event) {
 
 export function onChange(event) {
   return (dispatch, getState, getProps) => {
-    const { inlineAutoselect, focusListBox, focusedOption } = getState();
+    const { expanded, inlineAutoselect } = getState();
+    let { focusedOption } = getState();
     const {
-      autoselect,
-      onChange: passedOnChange,
-      value,
       lastKeyRef: { current: key },
+      onChange: passedOnChange,
       selectedOption,
-      options,
-      findSuggestion,
+      value,
+      inputRef: { current: { selectionStart } },
     } = getProps();
-    const { target: { selectionStart } } = event;
     let { target: { value: search } } = event;
 
-    // let setInlineAutoselect = false;
-    // // If the selection length equals the search length trigger the display of an autocomplete
-    // if (autoselect === 'inline' && focusListBox && search && selectionStart === search.length) {
-    //   setInlineAutoselect = true;
-    // }
+    if (inlineAutoselect && key === 'Backspace' && selectionStart === search.length) {
+      search = search.slice(0, -1);
+    }
 
-    // if (inlineAutoselect) {
-    //   // If backspace was pressed we also want to remove an extra character
-    //   if (key === 'Backspace') {
-    //     search = search.slice(0, -1);
-    //     setInlineAutoselect = false;
-    //   }
-    //   // If delete was pressed, remove the autoselected option
-    //   if (key === 'Delete') {
-    //     setInlineAutoselect = false;
-    //   }
-    // }
+    if (!search) {
+      focusedOption = null;
+    } else if (!expanded) {
+      focusedOption = selectedOption;
+    }
 
-    // Send onSearch
-
-    const suggestedOption = findSuggestedOption({ options, findSuggestion, search });
-
-    dispatch({
+    dispatch(applyAutoselect({
       type: SET_SEARCH,
+      focusedOption,
       search,
-      autoselect: true,
-      selectionStart,
       selectedOption,
-      suggestedOption,
-    });
+    }));
+
     if (!search && (focusedOption || value)) {
       dispatch(onSelectValue(null, true));
       return;
     }
+
     passedOnChange?.(event);
   };
 }
@@ -339,11 +354,12 @@ export function onFocus() {
       return;
     }
 
-    dispatch(setFocusedOption({
+    dispatch({
+      type: SET_FOCUSED_OPTION,
       focusedOption: selectedOption,
       expanded: expandOnFocus,
       focusListBox: false,
-    }));
+    });
   };
 }
 
@@ -367,7 +383,11 @@ export function onFocusOption(option) {
       return;
     }
 
-    dispatch(setFocusedOption({ focusedOption: option, focusListBox: true }));
+    dispatch({
+      type: SET_FOCUSED_OPTION,
+      focusedOption: option,
+      focusListBox: true,
+    });
   };
 }
 
@@ -384,7 +404,11 @@ export function onInputMouseUp(e) {
       return;
     }
 
-    dispatch(setFocusedOption({ focusedOption: selectedOption, expanded: expandOnFocus }));
+    dispatch({
+      type: SET_FOCUSED_OPTION,
+      focusedOption: selectedOption,
+      expanded: expandOnFocus,
+    });
   };
 }
 
@@ -441,25 +465,24 @@ export function onClearValue(event) {
 
 export function onOptionsChanged() {
   return (dispatch, getState, getProps) => {
-    const { focusedOption, expanded, search } = getState();
+    const { focusedOption, expanded } = getState();
     if (!expanded) {
       return;
     }
-    const { options, inputRef, selectOnly, selectedOption, findSuggestion } = getProps();
+    const {
+      options,
+      selectOnly,
+      selectedOption,
+    } = getProps();
+
     let newOption = options.find((o) => o.identity === focusedOption?.identity);
     if (selectOnly && !newOption) {
       newOption = selectedOption;
     }
 
-    // TODO: If the selection length equals the search length trigger the display of an autocomplete
-
-    const suggestedOption = findSuggestedOption({ options, findSuggestion, search });
-
-    dispatch(setFocusedOption({
+    dispatch(applyAutoselect({
+      type: SET_FOCUSED_OPTION,
       focusedOption: newOption,
-      autoselect: true,
-      selectionStart: inputRef.current.selectionStart,
-      suggestedOption,
     }));
   };
 }
@@ -477,8 +500,9 @@ export function onValueChanged() {
       newOption = focusedOption;
     }
 
-    dispatch(setFocusedOption({
+    dispatch({
+      type: SET_FOCUSED_OPTION,
       focusedOption: newOption,
-    }));
+    });
   };
 }

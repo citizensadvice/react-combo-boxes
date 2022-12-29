@@ -22,6 +22,7 @@ function useFindOptions(query, { debounce }) {
 }
 
 export function Example() {
+  const [autoselect, setAutoselect] = useState('inline');
   const [value, setValue] = useState(null);
   const [search, setSearch] = useState(null);
   const [searchDebounce, setSearchDebounce] = useState(200);
@@ -46,6 +47,7 @@ export function Example() {
         mapOption={mapOption}
         busy={busy}
         busyDebounce={busyDebounce}
+        autoselect={autoselect}
       />
 
       <label htmlFor="busy-debounce">
@@ -75,6 +77,52 @@ export function Example() {
         max={1000}
         step={100}
       />
+
+      <fieldset>
+        <legend>Autoselect</legend>
+        <label>
+          <input
+            type="radio"
+            name="autoselect"
+            checked={autoselect === false}
+            onChange={({ target: { checked } }) => {
+              if (checked) {
+                setAutoselect(false);
+              }
+            }}
+          />
+          {' '}
+          <code>false</code>
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="autoselect"
+            checked={autoselect === true}
+            onChange={({ target: { checked } }) => {
+              if (checked) {
+                setAutoselect(true);
+              }
+            }}
+          />
+          {' '}
+          <code>true</code>
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="autoselect"
+            checked={autoselect === 'inline'}
+            onChange={({ target: { checked } }) => {
+              if (checked) {
+                setAutoselect('inline');
+              }
+            }}
+          />
+          {' '}
+          <code>&quot;inline&quot;</code>
+        </label>
+      </fieldset>
 
       <label htmlFor="output">
         Current value

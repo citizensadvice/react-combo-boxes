@@ -601,7 +601,7 @@ describe('options', () => {
         });
 
         describe('single option with matching value', () => {
-          it('does not show the listbox if the search matches the value', async () => {
+          it.only('does not show the listbox if the search matches the value', async () => {
             render(<ComboBoxWrapper options={['foo']} />);
             await userEvent.type(screen.getByRole('combobox'), 'foo');
             await userEvent.keyboard('{ArrowDown}{Enter}');

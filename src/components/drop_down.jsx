@@ -63,7 +63,7 @@ const ComboBoxWrapper = forwardRef((props, ref) => {
       const found = options.find((o) => findOption(o, search));
       if (found) {
         if (expanded) {
-          dispatch(setFocusedOption({ focusedOption: found }));
+          dispatch(setFocusedOption(found));
         } else {
           dispatch(onSelectValue(found));
         }
