@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Substring highlight now highlights all matching parts
 - Changed how highlights are generated.  This should now be be composed from React components.  The old `highlight…` methods have been removed.
 - Some optimisations to reduce renders
 - All top level components are now wrapped in memo

@@ -41,7 +41,10 @@ it('highlights with a match', () => {
     <mark>
       foo
     </mark>
-     barfoo
+     bar
+    <mark>
+      foo
+    </mark>
   </span>
 </div>
 `);
@@ -61,8 +64,9 @@ it('inverses the a highlight', () => {
   >
     foo 
     <mark>
-      barfoo
+      bar
     </mark>
+    foo
   </span>
 </div>
 `);
