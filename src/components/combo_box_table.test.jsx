@@ -3,7 +3,6 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ComboBoxTable } from './combo_box_table';
 import { visuallyHiddenClassName } from '../constants/visually_hidden_class_name';
-import { DISPATCH } from '../constants/dispatch';
 
 const ComboBoxWrapper = forwardRef(({ value: initialValue, ...props }, ref) => {
   const [value, onValue] = useState(initialValue);
@@ -271,7 +270,6 @@ describe('customisation', () => {
           currentOption: null,
           notFound: false,
           suggestedOption: null,
-          [DISPATCH]: expect.any(Function),
         },
         expect.objectContaining({ options: expect.any(Array), test: 'foo', columns: expect.any(Array) }),
       );
@@ -302,7 +300,6 @@ describe('customisation', () => {
           currentOption: null,
           notFound: false,
           suggestedOption: null,
-          [DISPATCH]: expect.any(Function),
         },
         expect.objectContaining({ options: expect.any(Array), test: 'foo', columns: expect.any(Array) }),
       );
@@ -334,7 +331,6 @@ describe('customisation', () => {
           notFound: false,
           suggestedOption: null,
           column: { label: 'Type', name: 'type' },
-          [DISPATCH]: expect.any(Function),
         },
         expect.objectContaining({ options: expect.any(Array), test: 'foo', columns: expect.any(Array) }),
       );
@@ -366,7 +362,6 @@ describe('customisation', () => {
           notFound: false,
           suggestedOption: null,
           group: expect.objectContaining({ label: 'Vegetable' }),
-          [DISPATCH]: expect.any(Function),
         },
         expect.objectContaining({ options: expect.any(Array), test: 'foo', columns: expect.any(Array) }),
       );
@@ -398,7 +393,6 @@ describe('customisation', () => {
           notFound: false,
           suggestedOption: null,
           group: expect.objectContaining({ label: 'Vegetable' }),
-          [DISPATCH]: expect.any(Function),
         },
         expect.objectContaining({ options: expect.any(Array), test: 'foo', columns: expect.any(Array) }),
       );
@@ -432,7 +426,6 @@ describe('customisation', () => {
           group: expect.objectContaining({ label: 'Vegetable' }),
           option: expect.objectContaining({ label: 'Potato' }),
           selected: false,
-          [DISPATCH]: expect.any(Function),
         },
         expect.objectContaining({ options: expect.any(Array), test: 'foo', columns: expect.any(Array) }),
       );
@@ -467,7 +460,6 @@ describe('customisation', () => {
           option: expect.objectContaining({ label: 'Potato' }),
           selected: false,
           column: { label: 'Type', name: 'type' },
-          [DISPATCH]: expect.any(Function),
         },
         expect.objectContaining({ options: expect.any(Array), test: 'foo', columns: expect.any(Array) }),
       );
@@ -501,7 +493,6 @@ describe('customisation', () => {
           group: expect.objectContaining({ label: 'Vegetable' }),
           option: expect.objectContaining({ label: 'Potato' }),
           selected: false,
-          [DISPATCH]: expect.any(Function),
         },
         expect.objectContaining({ options: expect.any(Array), test: 'foo', columns: expect.any(Array) }),
       );
@@ -536,7 +527,6 @@ describe('customisation', () => {
           option: expect.objectContaining({ label: 'Potato' }),
           selected: false,
           column: { label: 'Type', name: 'type' },
-          [DISPATCH]: expect.any(Function),
         },
         expect.objectContaining({ options: expect.any(Array), test: 'foo', columns: expect.any(Array) }),
       );
@@ -556,7 +546,6 @@ describe('customisation', () => {
           group: expect.objectContaining({ label: 'Fruit' }),
           option: expect.objectContaining({ label: 'Apple' }),
           column: { label: 'Colour', name: 'colour' },
-          [DISPATCH]: expect.any(Function),
         }),
         expect.anything(),
       );
@@ -591,7 +580,6 @@ describe('customisation', () => {
           option: expect.objectContaining({ label: 'Potato' }),
           selected: false,
           column: { label: 'Type', name: 'type' },
-          [DISPATCH]: expect.any(Function),
         },
         expect.objectContaining({ options: expect.any(Array), test: 'foo', columns: expect.any(Array) }),
       );

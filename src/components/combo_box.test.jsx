@@ -4,7 +4,6 @@ import { useEffect, useState, forwardRef } from 'react';
 import { render, waitFor, act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ComboBox } from './combo_box';
-import { DISPATCH } from '../constants/dispatch';
 import { collectLiveMessages } from '../__collect_aria_live_messages';
 
 const ComboBoxWrapper = forwardRef(({ value: _value, ...props }, ref) => {
@@ -2741,7 +2740,6 @@ describe('renderWrapper', () => {
         currentOption: null,
         notFound: false,
         suggestedOption: null,
-        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -2773,7 +2771,6 @@ describe('renderInput', () => {
         currentOption: null,
         notFound: false,
         suggestedOption: null,
-        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -2806,7 +2803,6 @@ describe('renderListBox', () => {
         currentOption: null,
         notFound: false,
         suggestedOption: null,
-        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -2843,7 +2839,6 @@ describe('renderGroup', () => {
         suggestedOption: null,
         group: expect.objectContaining({ label: 'bar' }),
         groupChildren: expect.any(Array),
-        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -2880,7 +2875,6 @@ describe('renderGroupLabel', () => {
         currentOption: null,
         suggestedOption: null,
         group: expect.objectContaining({ label: 'bar' }),
-        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -2916,7 +2910,6 @@ describe('renderOption', () => {
         option: expect.objectContaining({ label: 'foo' }),
         selected: false,
         group: undefined,
-        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -2952,7 +2945,6 @@ describe('renderGroupAccessibleLabel', () => {
         currentOption: null,
         suggestedOption: null,
         group: expect.objectContaining({ label: 'bar' }),
-        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -2988,7 +2980,6 @@ describe('renderValue', () => {
         option: expect.objectContaining({ label: 'foo' }),
         selected: false,
         group: undefined,
-        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -3021,7 +3012,6 @@ describe('renderDownArrow', () => {
         currentOption: null,
         notFound: false,
         suggestedOption: null,
-        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -3054,7 +3044,6 @@ describe('renderClearButton', () => {
         currentOption: null,
         notFound: false,
         suggestedOption: null,
-        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -3087,7 +3076,6 @@ describe('renderAriaDescription', () => {
         currentOption: null,
         notFound: false,
         suggestedOption: null,
-        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -3118,7 +3106,6 @@ describe('renderNotFound', () => {
         currentOption: null,
         notFound: false,
         suggestedOption: null,
-        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );

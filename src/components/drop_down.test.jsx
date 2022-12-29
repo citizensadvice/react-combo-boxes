@@ -2,7 +2,6 @@ import { useEffect, useState, forwardRef } from 'react';
 import { render, waitFor, act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { DropDown } from './drop_down';
-import { DISPATCH } from '../constants/dispatch';
 
 const DropDownWrapper = forwardRef(({ value: _value, ...props }, ref) => {
   const [value, setValue] = useState(_value);
@@ -1665,7 +1664,6 @@ describe('renderWrapper', () => {
         }),
         notFound: false,
         suggestedOption: null,
-        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -1699,7 +1697,6 @@ describe('renderComboBox', () => {
         }),
         notFound: false,
         suggestedOption: null,
-        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -1733,7 +1730,6 @@ describe('renderListBoxWrapper', () => {
         }),
         notFound: false,
         suggestedOption: null,
-        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );

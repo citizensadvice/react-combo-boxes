@@ -1,4 +1,4 @@
-import { forwardRef, useCallback, useEffect, useState } from 'react';
+import { forwardRef, useCallback, useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { ComboBox } from './combo_box';
 import { classPrefix as defaultClassPrefix } from '../constants/class_prefix';
@@ -7,8 +7,8 @@ import { rNonPrintableKey } from '../constants/r_non_printable_key';
 import { setExpanded, setFocusedOption, onSelectValue } from './combo_box/actions';
 import { findOption as defaultFindOption } from '../helpers/find_option';
 import { joinTokens } from '../helpers/join_tokens';
-import { DISPATCH } from '../constants/dispatch';
 import { useEvent } from '../hooks/use_event';
+import { Context } from './combo_box/context';
 
 function renderNull() {
   return null;
@@ -47,9 +47,10 @@ function renderInput(props, state, componentProps) {
 
 const ComboBoxWrapper = forwardRef((props, ref) => {
   const [search, setSearch] = useState('');
+  const { dispatch } = useContext(Context);
 
   const { componentProps, componentState, ...wrapperProps } = props;
-  const { expanded, [DISPATCH]: dispatch } = componentState;
+  const { expanded } = componentState;
   const { options, findOption, renderWrapper, disabled } = componentProps;
 
   const setFirstFoundOption = useEvent((s) => {
@@ -119,7 +120,6 @@ ComboBoxWrapper.propTypes = {
   }).isRequired,
   componentState: PropTypes.shape({
     expanded: PropTypes.bool.isRequired,
-    [DISPATCH]: PropTypes.func.isRequired,
   }).isRequired,
 };
 

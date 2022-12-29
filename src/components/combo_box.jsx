@@ -18,10 +18,10 @@ import { useCombineRefs } from '../hooks/use_combine_refs';
 import { ListBox } from './list_box';
 import { AriaLiveMessage } from './aria_live_message';
 import { classPrefix as defaultClassPrefix } from '../constants/class_prefix';
-import { visuallyHiddenClassName } from '../constants/visually_hidden_class_name';
+import { visuallyHiddenClassName as defaultVisuallyHiddenClassName } from '../constants/visually_hidden_class_name';
 import { scrollIntoView } from '../layout/scroll_into_view';
-import { DISPATCH } from '../constants/dispatch';
 import { LayoutListBox } from './layout_list_box';
+import { Context } from './combo_box/context';
 
 function useModified(value, fn) {
   const [currentValue, setCurrentValue] = useState(value);
@@ -83,7 +83,7 @@ export const ComboBox = memo(forwardRef((rawProps, ref) => {
     spellCheck,
     tabBetweenOptions,
     value,
-    visuallyHiddenClassName: providedVisuallyHiddenClassName,
+    visuallyHiddenClassName,
   } = optionisedProps;
 
   const comboRef = useRef();
@@ -238,115 +238,126 @@ export const ComboBox = memo(forwardRef((rawProps, ref) => {
     suggestedOption,
     'aria-busy': ariaBusy,
     'aria-autocomplete': ariaAutocomplete,
-    [DISPATCH]: dispatch,
   });
   const clickOption = useCallback((e, option) => dispatch(onClickOption(e, option)), []);
   const focusOption = useCallback((e, option) => dispatch(onFocusOption(option)), []);
 
-  return renderWrapper({
-    'aria-busy': ariaBusy ? 'true' : 'false',
-    className: className || makeBEMClass(classPrefix),
-    onBlur: handleBlur,
-    onFocus: handleFocus,
-    ref: comboRef,
-    children: (
-      <>
-        {renderInput({
-          id,
-          className: makeBEMClass(classPrefix, 'input'),
-          type: 'text',
-          role: 'combobox',
-          'aria-autocomplete': ariaAutocomplete,
-          'aria-owns': `${id}_listbox`,
-          'aria-expanded': showListBox ? 'true' : 'false',
-          'aria-activedescendant': (showListBox && focusListBox && focusedOption?.key) || null,
-          'aria-describedby': joinTokens(ariaDescribedBy, assistiveHint && `${id}_aria_description`),
-          'aria-labelledby': joinTokens(ariaLabelledBy),
-          value: inputLabel || '',
-          onKeyDown: (e) => dispatch(onKeyDown(e)),
-          onChange: (e) => dispatch(onChange(e)),
-          onMouseUp: (e) => dispatch(onInputMouseUp(e)),
-          onFocus: (e) => dispatch(onFocusInput(e)),
-          ref: combinedRef,
-          tabIndex: managedFocus && showListBox && focusListBox && !tabBetweenOptions ? -1 : null,
-          'aria-invalid': ariaInvalid,
-          autoCapitalize,
-          autoComplete,
-          autoCorrect,
-          autoFocus,
-          disabled,
-          inputMode,
-          maxLength,
-          minLength,
-          pattern,
-          placeholder,
-          readOnly,
-          required,
-          size,
-          spellCheck,
-        }, componentState, optionisedProps)}
-        {renderDownArrow({
-          id: `${id}_down_arrow`,
-          className: makeBEMClass(classPrefix, 'down-arrow'),
-          hidden: value || !options.length,
-        }, componentState, optionisedProps)}
-        {renderClearButton({
-          id: `${id}_clear_button`,
-          role: 'button',
-          'aria-label': 'Clear',
-          'aria-labelledby': joinTokens(`${id}_clear_button`, ariaLabelledBy, id),
-          className: makeBEMClass(classPrefix, 'clear-button'),
-          onClick: (e) => dispatch(onClearValue(e)),
-          onKeyDown: (e) => dispatch(onClearValue(e)),
-          onKeyUp: (e) => dispatch(onClearValue(e)),
-          hidden: disabled || readOnly || !value || search === '',
-          tabIndex: -1,
-        }, componentState, optionisedProps)}
-        <ListBox
-          ref={listRef}
-          id={`${id}_listbox`}
-          tabIndex={-1}
-          hidden={!showListBox}
-          aria-activedescendant={(showListBox && focusListBox && focusedOption?.key) || null}
-          aria-labelledby={joinTokens(ariaLabelledBy)}
-          onKeyDown={(e) => dispatch(onKeyDown(e))}
-          onSelectOption={clickOption}
-          onFocusOption={focusOption}
-          focusedRef={focusedRef}
-          componentProps={optionisedProps}
-          componentState={componentState}
-        />
-        {assistiveHint && renderAriaDescription({
-          id: `${id}_aria_description`,
-          className: providedVisuallyHiddenClassName,
-          children: assistiveHint,
-        }, componentState, optionisedProps)}
-        {notFoundMessage && renderNotFound({
-          id: `${id}_not_found`,
-          className: makeBEMClass(classPrefix, 'not-found'),
-          hidden: !showNotFound,
-          children: showNotFound ? notFoundMessage() : null,
-        }, componentState, optionisedProps)}
-        <AriaLiveMessage
-          visuallyHiddenClassName={visuallyHiddenClassName}
-          options={options}
-          showNotFound={showNotFound}
-          showListBox={showListBox}
-          focusedOption={focusedOption}
-          notFoundMessage={notFoundMessage}
-          foundOptionsMessage={foundOptionsMessage}
-          selectedOptionMessage={selectedOptionMessage}
-        />
-        {showListBox && onLayoutListBox && (
-          <LayoutListBox
-            onLayoutListBox={onLayoutListBox}
-            options={options}
-            listBoxRef={listRef}
-          />
-        )}
-      </>
-    ),
-  }, componentState, optionisedProps);
+  const context = useMemo(() => ({
+    visuallyHiddenClassName,
+    dispatch,
+  }), [dispatch, visuallyHiddenClassName]);
+
+  return (
+    <Context.Provider value={context}>
+      {renderWrapper({
+        'aria-busy': ariaBusy ? 'true' : 'false',
+        className: className || makeBEMClass(classPrefix),
+        onBlur: handleBlur,
+        onFocus: handleFocus,
+        ref: comboRef,
+        children: (
+          <>
+            {renderInput({
+              id,
+              className: makeBEMClass(classPrefix, 'input'),
+              type: 'text',
+              role: 'combobox',
+              'aria-autocomplete': ariaAutocomplete,
+              'aria-owns': `${id}_listbox`,
+              'aria-expanded': showListBox ? 'true' : 'false',
+              'aria-activedescendant': (showListBox && focusListBox && focusedOption?.key) || null,
+              'aria-describedby': joinTokens(ariaDescribedBy, assistiveHint && `${id}_aria_description`),
+              'aria-labelledby': joinTokens(ariaLabelledBy),
+              value: inputLabel || '',
+              onKeyDown: (e) => dispatch(onKeyDown(e)),
+              onChange: (e) => dispatch(onChange(e)),
+              onMouseUp: (e) => dispatch(onInputMouseUp(e)),
+              onFocus: (e) => dispatch(onFocusInput(e)),
+              ref: combinedRef,
+              tabIndex: managedFocus
+                && showListBox
+                && focusListBox
+                && !tabBetweenOptions ? -1 : null,
+              'aria-invalid': ariaInvalid,
+              autoCapitalize,
+              autoComplete,
+              autoCorrect,
+              autoFocus,
+              disabled,
+              inputMode,
+              maxLength,
+              minLength,
+              pattern,
+              placeholder,
+              readOnly,
+              required,
+              size,
+              spellCheck,
+            }, componentState, optionisedProps)}
+            {renderDownArrow({
+              id: `${id}_down_arrow`,
+              className: makeBEMClass(classPrefix, 'down-arrow'),
+              hidden: value || !options.length,
+            }, componentState, optionisedProps)}
+            {renderClearButton({
+              id: `${id}_clear_button`,
+              role: 'button',
+              'aria-label': 'Clear',
+              'aria-labelledby': joinTokens(`${id}_clear_button`, ariaLabelledBy, id),
+              className: makeBEMClass(classPrefix, 'clear-button'),
+              onClick: (e) => dispatch(onClearValue(e)),
+              onKeyDown: (e) => dispatch(onClearValue(e)),
+              onKeyUp: (e) => dispatch(onClearValue(e)),
+              hidden: disabled || readOnly || !value || search === '',
+              tabIndex: -1,
+            }, componentState, optionisedProps)}
+            <ListBox
+              ref={listRef}
+              id={`${id}_listbox`}
+              tabIndex={-1}
+              hidden={!showListBox}
+              aria-activedescendant={(showListBox && focusListBox && focusedOption?.key) || null}
+              aria-labelledby={joinTokens(ariaLabelledBy)}
+              onKeyDown={(e) => dispatch(onKeyDown(e))}
+              onSelectOption={clickOption}
+              onFocusOption={focusOption}
+              focusedRef={focusedRef}
+              componentProps={optionisedProps}
+              componentState={componentState}
+            />
+            {assistiveHint && renderAriaDescription({
+              id: `${id}_aria_description`,
+              className: visuallyHiddenClassName,
+              children: assistiveHint,
+            }, componentState, optionisedProps)}
+            {notFoundMessage && renderNotFound({
+              id: `${id}_not_found`,
+              className: makeBEMClass(classPrefix, 'not-found'),
+              hidden: !showNotFound,
+              children: showNotFound ? notFoundMessage() : null,
+            }, componentState, optionisedProps)}
+            <AriaLiveMessage
+              visuallyHiddenClassName={visuallyHiddenClassName}
+              options={options}
+              showNotFound={showNotFound}
+              showListBox={showListBox}
+              focusedOption={focusedOption}
+              notFoundMessage={notFoundMessage}
+              foundOptionsMessage={foundOptionsMessage}
+              selectedOptionMessage={selectedOptionMessage}
+            />
+            {showListBox && onLayoutListBox && (
+              <LayoutListBox
+                onLayoutListBox={onLayoutListBox}
+                options={options}
+                listBoxRef={listRef}
+              />
+            )}
+          </>
+        ),
+      }, componentState, optionisedProps)}
+    </Context.Provider>
+  );
 }));
 
 ComboBox.propTypes = {
@@ -498,7 +509,7 @@ ComboBox.defaultProps = {
   renderNotFound: (props) => <div {...props} />,
   renderAriaDescription: (props) => <div {...props} />,
 
-  visuallyHiddenClassName,
+  visuallyHiddenClassName: defaultVisuallyHiddenClassName,
 };
 
 ComboBox.displayName = 'ComboBox';
