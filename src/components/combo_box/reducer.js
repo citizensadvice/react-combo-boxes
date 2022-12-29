@@ -57,7 +57,7 @@ function reduce(state, { type, ...params }) {
         focusListBox: paramFocusListBox,
         focusedOption,
         expanded,
-        suggestedOption,
+        suggestedOption = null,
       } = params;
 
       const focusListBox = (paramFocusListBox ?? state.focusListBox) && !!focusedOption;

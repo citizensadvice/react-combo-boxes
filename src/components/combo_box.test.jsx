@@ -601,7 +601,7 @@ describe('options', () => {
         });
 
         describe('single option with matching value', () => {
-          it.only('does not show the listbox if the search matches the value', async () => {
+          it('does not show the listbox if the search matches the value', async () => {
             render(<ComboBoxWrapper options={['foo']} />);
             await userEvent.type(screen.getByRole('combobox'), 'foo');
             await userEvent.keyboard('{ArrowDown}{Enter}');
@@ -644,8 +644,8 @@ describe('options', () => {
             await userEvent.type(screen.getByRole('combobox'), 'foo');
             await userEvent.keyboard('{ArrowDown}{ArrowDown}');
             await userEvent.clear(screen.getByRole('combobox'));
-            expect(spy).toHaveBeenCalledWith(null);
-            expectToBeOpen(document.activeElement);
+            expect(spy).not.toHaveBeenCalled();
+            expectToBeOpen();
           });
         });
 
@@ -1693,7 +1693,7 @@ describe('autoselect', () => {
         render(<ComboBoxWrapper options={['foo']} autoselect="inline" />);
         const input = screen.getByRole('combobox');
         await userEvent.tab();
-        fireEvent.change(input, { target: { value: 'f' } });
+        await userEvent.type(input, 'f');
         expectToHaveSelectedOption(screen.getByRole('option'));
         expect(input).toHaveValue('foo');
         expect(input).toMatchObject({
@@ -1708,7 +1708,7 @@ describe('autoselect', () => {
         render(<ComboBoxWrapper options={[{ label: 'foo', disabled: true }]} autoselect="inline" />);
         const input = screen.getByRole('combobox');
         await userEvent.tab();
-        fireEvent.change(input, { target: { value: 'f' } });
+        await userEvent.type(input, 'f');
         expectToBeOpen();
         expect(document.activeElement).toMatchObject({
           value: 'f',
@@ -1720,51 +1720,41 @@ describe('autoselect', () => {
       it('does not select the text if the cursor position is inappropriate', async () => {
         render(<ComboBoxWrapper options={['abcd']} autoselect="inline" />);
         await userEvent.tab();
-        document.activeElement.value = 'ac';
-        document.activeElement.setSelectionRange(1, 1);
-        // The selection is incorrectly always set to the end
-        jest.spyOn(document.activeElement, 'selectionStart', 'get').mockImplementation(() => 2);
-        fireEvent.change(document.activeElement, { target: { value: 'abc' } });
-        expectToHaveSelectedOption(screen.getByRole('option'));
+        await userEvent.type(document.activeElement, 'ac');
+        await userEvent.type(document.activeElement, '{ArrowLeft}b');
+        expectToBeOpen();
         expect(document.activeElement).toMatchObject({
           value: 'abc',
+          selectionStart: 2,
+          selectionEnd: 2,
         });
       });
 
       it('removes the autoselected text and last character on backspace', async () => {
         render(<ComboBoxWrapper options={['foo']} autoselect="inline" />);
         await userEvent.tab();
-        fireEvent.change(document.activeElement, { target: { value: 'fo' } });
+        await userEvent.type(document.activeElement, 'fo');
         expect(document.activeElement).toHaveValue('foo');
-        const spy = jest.spyOn(document.activeElement, 'setSelectionRange');
-        fireEvent.keyDown(document.activeElement, { key: 'Backspace' });
-        fireEvent.change(document.activeElement, { target: { value: 'fo' } });
+        await userEvent.type(document.activeElement, '{Backspace}');
         expect(document.activeElement).toHaveValue('f');
-        expect(spy).not.toHaveBeenCalled();
       });
 
       it('removes the autoselected text on delete', async () => {
         render(<ComboBoxWrapper options={['foo']} autoselect="inline" />);
         await userEvent.tab();
-        fireEvent.change(document.activeElement, { target: { value: 'fo' } });
+        await userEvent.type(document.activeElement, 'fo');
         expect(document.activeElement).toHaveValue('foo');
-        const spy = jest.spyOn(document.activeElement, 'setSelectionRange');
-        fireEvent.keyDown(document.activeElement, { key: 'Delete' });
-        fireEvent.change(document.activeElement, { target: { value: 'fo' } });
+        await userEvent.type(document.activeElement, '{Delete}');
         expect(document.activeElement).toHaveValue('fo');
-        expect(spy).not.toHaveBeenCalled();
       });
 
       it('removes the autoselected text on escape', async () => {
         render(<ComboBoxWrapper options={['foo']} autoselect="inline" />);
         await userEvent.tab();
-        // can't use await userEvent.type, as it does something jazzy with selection range
-        fireEvent.change(document.activeElement, { target: { value: 'fo' } });
+        await userEvent.type(document.activeElement, 'fo');
         expect(document.activeElement).toHaveValue('foo');
-        const spy = jest.spyOn(document.activeElement, 'setSelectionRange');
-        fireEvent.keyDown(document.activeElement, { key: 'Escape' });
+        await userEvent.type(document.activeElement, '{Escape}');
         expect(document.activeElement).toHaveValue('');
-        expect(spy).not.toHaveBeenCalled();
       });
     });
 
@@ -1773,29 +1763,22 @@ describe('autoselect', () => {
         it('updates the value to the selected label', async () => {
           render(<ComboBoxWrapper options={['foo', 'foe']} autoselect="inline" showSelectedLabel />);
           await userEvent.tab();
-          fireEvent.change(document.activeElement, { target: { value: 'fo' } });
+          await userEvent.type(document.activeElement, 'fo');
           expectToHaveSelectedOption(screen.getByRole('option', { name: 'foo' }));
-
-          const spy = jest.spyOn(document.activeElement, 'setSelectionRange');
-          fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
+          await userEvent.type(document.activeElement, '{ArrowDown}');
           expectToHaveFocusedOption(screen.getByRole('option', { name: 'foe' }));
           expect(screen.getByRole('combobox')).toHaveValue('foe');
-          expect(spy).not.toHaveBeenCalled();
         });
 
         describe('when returning to the original option', () => {
           it('sets the search string without selecting the text', async () => {
             render(<ComboBoxWrapper options={['foo', 'foe']} autoselect="inline" showSelectedLabel />);
             await userEvent.tab();
-            fireEvent.change(document.activeElement, { target: { value: 'fo' } });
+            await userEvent.type(document.activeElement, 'fo');
             expectToHaveSelectedOption(screen.getByRole('option', { name: 'foo' }));
-
-            const spy = jest.spyOn(document.activeElement, 'setSelectionRange');
-            fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
-            fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
+            await userEvent.type(document.activeElement, '{ArrowDown}{ArrowDown}');
             expectToBeOpen();
             expect(screen.getByRole('combobox')).toHaveValue('fo');
-            expect(spy).not.toHaveBeenCalled();
           });
         });
       });
@@ -1806,14 +1789,11 @@ describe('autoselect', () => {
             <ComboBoxWrapper options={['foo', 'foe']} autoselect="inline" showSelectedLabel={false} />,
           );
           await userEvent.tab();
-          fireEvent.change(document.activeElement, { target: { value: 'fo' } });
+          await userEvent.type(document.activeElement, 'fo');
           expectToHaveSelectedOption(screen.getByRole('option', { name: 'foo' }));
-
-          const spy = jest.spyOn(document.activeElement, 'setSelectionRange');
-          fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
+          await userEvent.type(document.activeElement, '{ArrowDown}');
           expectToHaveFocusedOption(screen.getByRole('option', { name: 'foe' }));
           expect(screen.getByRole('combobox')).toHaveValue('fo');
-          expect(spy).not.toHaveBeenCalled();
         });
       });
     });
@@ -1824,29 +1804,28 @@ describe('autoselect', () => {
           <ComboBoxWrapper options={['foo', 'foe']} autoselect="inline" />,
         );
         await userEvent.tab();
-        fireEvent.change(document.activeElement, { target: { value: 'fo' } });
+        await userEvent.type(document.activeElement, 'fo');
         expectToHaveSelectedOption(screen.getByRole('option', { name: 'foo' }));
-
-        const spy = jest.spyOn(document.activeElement, 'setSelectionRange');
-        fireEvent.keyDown(document.activeElement, { key: 'Enter' });
+        await userEvent.type(document.activeElement, '{Enter}');
         expectToBeClosed();
-        expect(screen.getByRole('combobox')).toHaveValue('foo');
-        expect(spy).toHaveBeenCalledWith(3, 3, 'forward');
+        expect(document.activeElement).toMatchObject({
+          value: 'foo',
+          selectionStart: 3,
+          selectionEnd: 3,
+          selectionDirection: 'forward',
+        });
       });
 
       it('does not change the selection without focus', async () => {
         render(<ComboBoxWrapper options={['foo', 'foe']} autoselect="inline" />);
         await userEvent.tab();
-        fireEvent.change(document.activeElement, { target: { value: 'fo' } });
+        await userEvent.type(document.activeElement, 'fo');
         expectToHaveSelectedOption(screen.getByRole('option', { name: 'foo' }));
-
-        const spy = jest.spyOn(document.activeElement, 'setSelectionRange');
         await userEvent.tab();
         await waitFor(() => {
           expect(screen.getByRole('listbox', { hidden: true })).not.toBeVisible();
         });
         expect(screen.getByRole('combobox')).toHaveValue('foo');
-        expect(spy).not.toHaveBeenCalledWith(3, 3, 'forward');
       });
     });
   });

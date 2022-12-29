@@ -337,7 +337,7 @@ export function onChange(event) {
       selectedOption,
     }));
 
-    if (!search && (focusedOption || value)) {
+    if (!search && value) {
       dispatch(onSelectValue(null, true));
       return;
     }
