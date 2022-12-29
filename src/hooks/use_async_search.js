@@ -1,5 +1,6 @@
 import { useReducer, useEffect } from 'react';
 import { shallowEqualObjects } from 'shallow-equal';
+import { useEvent } from './use_event';
 
 export function useAsyncSearch(
   query,
@@ -16,51 +17,48 @@ export function useAsyncSearch(
     { options: undefined, busy: false, error: null },
   );
 
+  const runSearch = useEvent(async (cancel) => {
+    let results;
+    dispatch({ busy: true, error: null });
+    try {
+      results = await searcher(query, { signal: cancel.signal });
+    } catch (e) {
+      if (e instanceof DOMException && e.name === 'AbortError') {
+        return;
+      }
+
+      if (!catchErrors) {
+        throw e;
+      }
+
+      if (cancel.signal.aborted) {
+        return;
+      }
+      dispatch({ busy: false, error: e, options: undefined });
+      return;
+    }
+    if (cancel.signal.aborted) {
+      return;
+    }
+
+    dispatch({ options: results, busy: false, error: null });
+  });
+
   useEffect(() => {
-    let stop = false;
     let timeout = null;
     const cancel = new AbortController();
 
-    const search = async () => {
-      let results;
-      dispatch({ busy: true, error: null });
-      try {
-        results = await searcher(query, { signal: cancel.signal });
-      } catch (e) {
-        if (e instanceof DOMException && e.name === 'AbortError') {
-          return;
-        }
-
-        if (!catchErrors) {
-          throw e;
-        }
-
-        if (stop) {
-          return;
-        }
-        dispatch({ busy: false, error: e, options: undefined });
-        return;
-      }
-      if (stop) {
-        return;
-      }
-
-      dispatch({ options: results, busy: false, error: null });
-    };
-
     if (debounce) {
-      timeout = setTimeout(search, debounce);
+      timeout = setTimeout(() => runSearch(cancel), debounce);
     } else {
-      search();
+      runSearch(cancel);
     }
 
     return () => {
-      stop = true;
       clearTimeout(timeout);
       cancel.abort();
     };
-    // Don't include emptyOptions / searcher as it leads to infinite loops
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query, debounce, catchErrors]);
+  }, [query, debounce, catchErrors, runSearch]);
+
   return [options, busy, error];
 }

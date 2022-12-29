@@ -8,6 +8,7 @@ import { setExpanded, setFocusedOption, onSelectValue } from './combo_box/action
 import { findOption as defaultFindOption } from '../helpers/find_option';
 import { joinTokens } from '../helpers/join_tokens';
 import { DISPATCH } from '../constants/dispatch';
+import { useEvent } from '../hooks/use_event';
 
 function renderNull() {
   return null;
@@ -51,16 +52,12 @@ const ComboBoxWrapper = forwardRef((props, ref) => {
   const { expanded, [DISPATCH]: dispatch } = componentState;
   const { options, findOption, renderWrapper, disabled } = componentProps;
 
-  // If the search changes update the option
-  useEffect(() => {
-    if (!search.trim() || !options?.length || !findOption) {
-      return undefined;
+  const setFirstFoundOption = useEvent((s) => {
+    if (!s.trim() || !options?.length || !findOption) {
+      return;
     }
-
-    const timeout = setTimeout(() => setSearch(''), 1000);
-
     if (options?.length && findOption && !disabled) {
-      const found = options.find((o) => findOption(o, search));
+      const found = options.find((o) => findOption(o, s));
       if (found) {
         if (expanded) {
           dispatch(setFocusedOption(found));
@@ -69,10 +66,14 @@ const ComboBoxWrapper = forwardRef((props, ref) => {
         }
       }
     }
+  });
 
+  // If the search changes update the option
+  useEffect(() => {
+    const timeout = setTimeout(() => setSearch(''), 1000);
+    setFirstFoundOption(search);
     return () => clearTimeout(timeout);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [search]);
+  }, [search, setFirstFoundOption]);
 
   function onKeyDown(event) {
     const { key, altKey, ctrlKey, metaKey } = event;
