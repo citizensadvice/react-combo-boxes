@@ -24,6 +24,8 @@ export function useNormalisedOptions({
     const idGenerator = new UniqueIdGenerator();
     const groups = new Map();
     const normalisedOptions = [];
+    const emptyGroup = [];
+
     if (placeholderOption) {
       normalisedOptions.push({
         label: placeholderOption,
@@ -32,6 +34,8 @@ export function useNormalisedOptions({
         key: idGenerator.uniqueId(`${id || ''}_option_placeholder`),
       });
     }
+
+    normalisedOptions.push(emptyGroup);
 
     rawOptions?.forEach((o) => {
       const option = optionise(o, mapOption);
@@ -54,7 +58,7 @@ export function useNormalisedOptions({
         option.group = group;
         return;
       }
-      normalisedOptions.push(option);
+      emptyGroup.push(option);
     });
 
     return [].concat(...normalisedOptions).map((option, index) => ({ ...option, index }));

@@ -2,11 +2,11 @@ import { useState } from 'react';
 import { ComboBox, useTokenSearch } from '../../../src';
 
 const options = [
-  { label: 'Apple' },
   { label: 'Orange', group: 'Citrus' },
-  { label: 'Lemon', group: 'Citrus' },
   { label: 'Raspberry', group: 'Berry' },
   { label: 'Strawberry', group: 'Berry' },
+  { label: 'Lemon', group: 'Citrus' },
+  { label: 'Apple' },
 ];
 
 export function Example() {
