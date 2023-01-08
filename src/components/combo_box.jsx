@@ -180,7 +180,7 @@ export const ComboBox = memo(forwardRef((rawProps, ref) => {
 
   const onLayoutFocusedOption = useEvent(() => {
     [].concat(_onLayoutFocusedOption).filter(Boolean).forEach((fn) => {
-      fn({ option: focusedRef.current, listbox: listRef.current });
+      fn({ option: focusedRef.current, listbox: listRef.current, input: inputRef.current });
     });
   });
 
@@ -469,7 +469,7 @@ ComboBox.defaultProps = {
   onBlur: null,
   onChange: null,
   onFocus: null,
-  onLayoutFocusedOption: ({ option, listbox }) => scrollIntoView(option, listbox),
+  onLayoutFocusedOption: scrollIntoView,
   onLayoutListBox: null,
   onSearch: null,
   onValue: null,

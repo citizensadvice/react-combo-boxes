@@ -9,15 +9,15 @@
  * - in Safari it does not support scroll-padding-top so cannot handle sticky table headers.
  * - in Safari it does not support all arguments, and can scroll the element to the centre.
  */
-export function scrollIntoView(element, listbox) {
-  if (!element) {
+export function scrollIntoView({ option, listbox, input }) {
+  if (!option) {
     if (listbox) {
       listbox.scrollTop = 0; // eslint-disable-line no-param-reassign
     }
     return;
   }
 
-  let parent = element.offsetParent;
+  let parent = option.offsetParent;
 
   if (!parent) {
     return;
@@ -33,8 +33,8 @@ export function scrollIntoView(element, listbox) {
 
   // Ensure the list box is correctly scrolled
 
-  const elementTop = element.offsetTop;
-  const elementBottom = elementTop + element.clientHeight;
+  const elementTop = option.offsetTop;
+  const elementBottom = elementTop + option.clientHeight;
 
   const parentTop = parent.scrollTop;
   const parentBottom = parentTop + parent.clientHeight;
@@ -49,11 +49,13 @@ export function scrollIntoView(element, listbox) {
 
   // Ensure the element is on-screen
 
-  const elementRect = element.getBoundingClientRect();
-  const height = document.body.clientHeight;
+  const elementRect = option.getBoundingClientRect();
+  const height = document.documentElement.clientHeight;
 
   if (elementRect.top < 0) {
-    window.scrollTo(window.scrollX, window.scrollY + elementRect.top);
+    parent.scrollTop = elementTop - scrollPaddingTop;
+    const inputRect = input.getBoundingClientRect();
+    window.scrollTo(window.scrollX, window.scrollY + inputRect.top);
   } else if (elementRect.bottom > height) {
     window.scrollTo(window.scrollX, window.scrollY + elementRect.bottom - height);
   }

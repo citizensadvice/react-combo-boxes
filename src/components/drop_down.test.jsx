@@ -116,7 +116,11 @@ describe('options', () => {
               ));
               await userEvent.tab();
               await userEvent.keyboard('{ArrowDown}');
-              expect(spy).toHaveBeenCalledWith({ option: screen.getByRole('option', { name: 'Apple' }), listbox: screen.getByRole('listbox') });
+              expect(spy).toHaveBeenCalledWith({
+                option: screen.getByRole('option', { name: 'Apple' }),
+                listbox: screen.getByRole('listbox'),
+                input: screen.getByRole('combobox'),
+              });
             });
           });
 
@@ -142,7 +146,11 @@ describe('options', () => {
               ));
               await userEvent.tab();
               await userEvent.keyboard('{ArrowUp}');
-              expect(spy).toHaveBeenCalledWith({ option: screen.getByRole('option', { name: 'Apple' }), listbox: screen.getByRole('listbox') });
+              expect(spy).toHaveBeenCalledWith({
+                option: screen.getByRole('option', { name: 'Apple' }),
+                listbox: screen.getByRole('listbox'),
+                input: screen.getByRole('combobox'),
+              });
             });
           });
         });
@@ -244,7 +252,11 @@ describe('options', () => {
             ));
             await userEvent.click(screen.getByRole('combobox'));
             await userEvent.keyboard('{ArrowDown}');
-            expect(spy).toHaveBeenCalledWith({ option: screen.getByRole('option', { name: 'Banana' }), listbox: screen.getByRole('listbox') });
+            expect(spy).toHaveBeenCalledWith({
+              option: screen.getByRole('option', { name: 'Banana' }),
+              listbox: screen.getByRole('listbox'),
+              input: screen.getByRole('combobox'),
+            });
           });
         });
 
@@ -278,7 +290,11 @@ describe('options', () => {
             ));
             await userEvent.click(screen.getByRole('combobox'));
             await userEvent.keyboard('{ArrowUp}');
-            expect(spy).toHaveBeenCalledWith({ option: screen.getByRole('option', { name: 'Orange' }), listbox: screen.getByRole('listbox') });
+            expect(spy).toHaveBeenCalledWith({
+              option: screen.getByRole('option', { name: 'Orange' }),
+              listbox: screen.getByRole('listbox'),
+              input: screen.getByRole('combobox'),
+            });
           });
         });
 
@@ -1258,7 +1274,11 @@ describe('value', () => {
       <DropDownWrapper options={options} value="Banana" onLayoutFocusedOption={spy} />
     ));
     await userEvent.click(screen.getByRole('combobox'));
-    expect(spy).toHaveBeenCalledWith({ option: screen.getByRole('option', { name: 'Banana' }), listbox: screen.getByRole('listbox') });
+    expect(spy).toHaveBeenCalledWith({
+      option: screen.getByRole('option', { name: 'Banana' }),
+      listbox: screen.getByRole('listbox'),
+      input: screen.getByRole('combobox'),
+    });
   });
 
   describe('value is not in options', () => {
@@ -1379,7 +1399,11 @@ describe('managedFocus', () => {
       await userEvent.click(screen.getByRole('combobox'));
       expect(comboBox).toHaveFocus();
       await userEvent.keyboard('{ArrowDown}');
-      expect(spy).toHaveBeenCalledWith({ option: screen.getByRole('option', { name: 'Banana' }), listbox: screen.getByRole('listbox') });
+      expect(spy).toHaveBeenCalledWith({
+        option: screen.getByRole('option', { name: 'Banana' }),
+        listbox: screen.getByRole('listbox'),
+        input: screen.getByRole('combobox'),
+      });
     });
 
     it('allows an option to be selected', async () => {

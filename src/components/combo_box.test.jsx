@@ -173,7 +173,11 @@ describe('options', () => {
             render(<ComboBoxWrapper options={options} onLayoutFocusedOption={spy} />);
             await userEvent.tab();
             await userEvent.keyboard('{ArrowDown}');
-            expect(spy).toHaveBeenCalledWith({ option: screen.getByRole('option', { name: 'Apple' }), listbox: screen.getByRole('listbox') });
+            expect(spy).toHaveBeenCalledWith({
+              option: screen.getByRole('option', { name: 'Apple' }),
+              listbox: screen.getByRole('listbox'),
+              input: screen.getByRole('combobox'),
+            });
           });
         });
 
@@ -204,7 +208,11 @@ describe('options', () => {
             render(<ComboBoxWrapper options={options} onLayoutFocusedOption={spy} />);
             await userEvent.tab();
             await userEvent.keyboard('{ArrowUp}');
-            expect(spy).toHaveBeenCalledWith({ option: screen.getByRole('option', { name: 'Orange' }), listbox: screen.getByRole('listbox') });
+            expect(spy).toHaveBeenCalledWith({
+              option: screen.getByRole('option', { name: 'Orange' }),
+              listbox: screen.getByRole('listbox'),
+              input: screen.getByRole('combobox'),
+            });
           });
         });
 
@@ -1006,7 +1014,11 @@ describe('value', () => {
     const spy = jest.fn();
     render(<ComboBoxWrapper options={options} value="Banana" onLayoutFocusedOption={spy} />);
     await userEvent.tab();
-    expect(spy).toHaveBeenCalledWith({ option: screen.getByRole('option', { name: 'Banana' }), listbox: screen.getByRole('listbox') });
+    expect(spy).toHaveBeenCalledWith({
+      option: screen.getByRole('option', { name: 'Banana' }),
+      listbox: screen.getByRole('listbox'),
+      input: screen.getByRole('combobox'),
+    });
   });
 
   it('sets the combo box value', async () => {
@@ -1451,7 +1463,11 @@ describe('onLayoutFocusedOption', () => {
     render(<ComboBoxWrapper options={options} onLayoutFocusedOption={spy} />);
     await userEvent.tab();
     await userEvent.keyboard('{ArrowDown}');
-    expect(spy).toHaveBeenCalledWith({ option: screen.getByRole('option', { name: 'Apple' }), listbox: screen.getByRole('listbox') });
+    expect(spy).toHaveBeenCalledWith({
+      option: screen.getByRole('option', { name: 'Apple' }),
+      listbox: screen.getByRole('listbox'),
+      input: screen.getByRole('combobox'),
+    });
   });
 });
 
