@@ -3,11 +3,7 @@
  *
  * This scrolls the list box, and then the entire page as required.
  *
- * There is a native scrollIntoView method.  This works great in Chrome and Firefox however:
- *
- * - in IE11 it always jumps the element to the top of the page
- * - in Safari it does not support scroll-padding-top so cannot handle sticky table headers.
- * - in Safari it does not support all arguments, and can scroll the element to the centre.
+ * The native scrollIntoView is not sufficiently supported in Safari
  */
 export function scrollIntoView({ option, listbox, input }) {
   if (!option) {

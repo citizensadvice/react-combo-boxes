@@ -2,7 +2,6 @@ import React, { Fragment, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { inverseHighlight } from '../helpers/inverse_highlight';
 import { Context } from './combo_box/context';
-import { isIE } from '../sniffers/is_ie';
 
 function emptyHighlight(highlight) {
   return !highlight.length || (highlight.length === 1 && typeof highlight[0] === 'string');
@@ -25,8 +24,7 @@ export function Highlight({ children, inverse }) {
   ));
   const highlight = React.createElement(Fragment, null, ...parts);
 
-  if (isIE() || parts.length === 1) {
-    // IE ignores aria-hidden, however it also doesn't suffer from the inline element issue
+  if (parts.length === 1) {
     return highlight;
   }
 

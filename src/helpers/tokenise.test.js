@@ -35,12 +35,3 @@ it('skips over consecutive white space', () => {
 it('normalises the string', () => {
   expect(tokenise('foé çar')).toEqual(['foe', 'car']);
 });
-
-describe('without normalize support', () => {
-  it('does not normalise the string', () => {
-    const { normalize } = String.prototype;
-    String.prototype.normalize = undefined; // eslint-disable-line no-extend-native
-    expect(tokenise('foé çar')).toEqual(['foé', 'çar']);
-    String.prototype.normalize = normalize; // eslint-disable-line no-extend-native
-  });
-});
