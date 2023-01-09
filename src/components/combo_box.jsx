@@ -8,6 +8,7 @@ import {
   onClickOption, onOptionsChanged, onValueChanged, onFocusInput, onFocusOption,
 } from './combo_box/actions';
 import { useEvent } from '../hooks/use_event';
+import { useModified } from '../hooks/use_modified';
 import { useNormalisedOptions } from '../hooks/use_normalised_options';
 import { useOnBlur } from '../hooks/use_on_blur';
 import { makeBEMClass } from '../helpers/make_bem_class';
@@ -20,22 +21,13 @@ import { AriaLiveMessage } from './aria_live_message';
 import { classPrefix as defaultClassPrefix } from '../constants/class_prefix';
 import { visuallyHiddenClassName as defaultVisuallyHiddenClassName } from '../constants/visually_hidden_class_name';
 import { scrollIntoView } from '../layout/scroll_into_view';
-import { LayoutListBox } from './layout_list_box';
+import { useLayoutListBox } from '../hooks/use_layout_list_box';
 import { Context } from './combo_box/context';
-
-function useModified(value, fn) {
-  const [currentValue, setCurrentValue] = useState(value);
-
-  if (currentValue !== value) {
-    fn();
-    setCurrentValue(value);
-  }
-}
 
 export const ComboBox = memo(forwardRef((rawProps, ref) => {
   const optionisedProps = Object.freeze({
     ...rawProps,
-    ...useNormalisedOptions(rawProps, { mustHaveSelection: rawProps.selectOnly }),
+    ...useNormalisedOptions(rawProps),
   });
   const {
     'aria-describedby': ariaDescribedBy,
@@ -203,6 +195,14 @@ export const ComboBox = memo(forwardRef((rawProps, ref) => {
     ],
   );
 
+  useLayoutListBox({
+    showListBox,
+    onLayoutListBox,
+    options,
+    listboxRef: listRef,
+    inputRef,
+  });
+
   useEffect(
     () => {
       if (busy && !busyDebounce) {
@@ -346,14 +346,6 @@ export const ComboBox = memo(forwardRef((rawProps, ref) => {
               foundOptionsMessage={foundOptionsMessage}
               selectedOptionMessage={selectedOptionMessage}
             />
-            {showListBox && onLayoutListBox && (
-              <LayoutListBox
-                onLayoutListBox={onLayoutListBox}
-                options={options}
-                listboxRef={listRef}
-                inputRef={inputRef}
-              />
-            )}
           </>
         ),
       }, componentState, optionisedProps)}
@@ -405,13 +397,14 @@ ComboBox.propTypes = {
   onSearch: PropTypes.func,
   onValue: PropTypes.func,
 
+  editable: PropTypes.bool,
   autoselect: PropTypes.oneOf([false, true, 'inline']),
   closeOnSelect: PropTypes.bool,
   expandOnFocus: PropTypes.bool,
   findSuggestion: PropTypes.func,
   managedFocus: PropTypes.bool,
   selectOnBlur: PropTypes.bool,
-  selectOnly: PropTypes.bool,
+  mustHaveSelection: PropTypes.bool,
   showSelectedLabel: PropTypes.bool,
   skipOption: PropTypes.func,
   tabAutocomplete: PropTypes.bool,
@@ -474,13 +467,14 @@ ComboBox.defaultProps = {
   onSearch: null,
   onValue: null,
 
+  editable: true,
   autoselect: false,
   closeOnSelect: true,
   expandOnFocus: true,
   findSuggestion: findOption,
   managedFocus: true,
   selectOnBlur: true,
-  selectOnly: false,
+  mustHaveSelection: false,
   skipOption: undefined,
   showSelectedLabel: undefined,
   tabAutocomplete: false,

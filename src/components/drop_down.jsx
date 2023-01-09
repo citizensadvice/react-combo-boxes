@@ -160,6 +160,7 @@ DropDown.propTypes = {
   children: PropTypes.node,
   classPrefix: PropTypes.string,
   disabled: PropTypes.bool,
+  editable: PropTypes.bool,
   expandOnFocus: PropTypes.bool,
   required: PropTypes.bool,
   foundOptionsMessage: PropTypes.func,
@@ -171,7 +172,7 @@ DropDown.propTypes = {
   renderDropDown: PropTypes.func,
   renderListBox: PropTypes.func,
   renderListBoxWrapper: PropTypes.func,
-  selectOnly: PropTypes.bool,
+  mustHaveSelection: PropTypes.bool,
   findOption: PropTypes.func,
 };
 
@@ -179,6 +180,7 @@ DropDown.defaultProps = {
   children: null,
   classPrefix: `${defaultClassPrefix}dropdown`,
   disabled: false,
+  editable: false,
   expandOnFocus: false,
   required: false,
   foundOptionsMessage: null,
@@ -190,7 +192,7 @@ DropDown.defaultProps = {
   renderDropDown: renderNull,
   renderListBox: (props) => <ul {...props} />,
   renderListBoxWrapper: (props) => <div {...props} />,
-  selectOnly: true,
+  mustHaveSelection: true,
   findOption: defaultFindOption,
 };
 

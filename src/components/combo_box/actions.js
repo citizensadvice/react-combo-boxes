@@ -61,6 +61,10 @@ function applyAutoselect(action) {
   };
 }
 
+export function setClosed() {
+  return { type: SET_CLOSED };
+}
+
 export function setExpanded() {
   return (dispatch, _, getProps) => {
     const { selectedOption } = getProps();
@@ -77,19 +81,21 @@ export function setFocusedOption(focusedOption) {
 
 export function onSelectValue(newValue, expanded) {
   return (dispatch, getState, getProps) => {
-    const { onSearch, onValue, inputRef, closeOnSelect, value } = getProps();
+    const { onSearch, onValue, inputRef, closeOnSelect, value, editable } = getProps();
     const expand = expanded === undefined ? !closeOnSelect : expanded;
     dispatch({ type: SET_CLOSED, expanded: expand });
     if (newValue?.unselectable) {
       onSearch?.(value?.label || '');
       return;
     }
-    const { current: input } = inputRef;
-    input.value = newValue?.label ?? '';
-    if (document.activeElement === input && input.setSelectionRange) {
-      input.setSelectionRange(input.value.length, input.value.length, 'forward');
+    if (editable) {
+      const { current: input } = inputRef;
+      input.value = newValue?.label ?? '';
+      if (document.activeElement === input && input.setSelectionRange) {
+        input.setSelectionRange(input.value.length, input.value.length, 'forward');
+      }
+      onSearch?.(newValue?.label || '');
     }
-    onSearch?.(newValue?.label || '');
     onValue?.(newValue ? newValue.value : null);
   };
 }
@@ -99,7 +105,7 @@ export function onKeyDown(event) {
     const { expanded, focusListBox, focusedOption, suggestedOption } = getState();
     const {
       options, inputRef, lastKeyRef, skipOption: skip,
-      selectOnly, disabled, readOnly,
+      mustHaveSelection, editable, disabled, readOnly, selectOnBlur,
     } = getProps();
 
     if (disabled || readOnly) {
@@ -141,7 +147,7 @@ export function onKeyDown(event) {
     }
 
     if (event.target !== inputRef.current
-      && !selectOnly
+      && editable
       && focusListBox
       && (
         ['Delete', 'Backspace', 'ArrowLeft', 'ArrowRight'].includes(key)
@@ -170,7 +176,7 @@ export function onKeyDown(event) {
         // Close if altKey, otherwise next item and show
         event.preventDefault();
         if (altKey) {
-          if (selectOnly) {
+          if (mustHaveSelection) {
             dispatch(onSelectValue(focusedOption));
           } else {
             dispatch({ type: SET_CLOSED });
@@ -179,7 +185,7 @@ export function onKeyDown(event) {
         } else if (expanded) {
           dispatch({
             type: SET_FOCUSED_OPTION,
-            focusedOption: previousInList(options, index, { skip, allowEmpty: !selectOnly }),
+            focusedOption: previousInList(options, index, { skip, allowEmpty: editable }),
             focusListBox: true,
           });
         } else {
@@ -192,7 +198,7 @@ export function onKeyDown(event) {
         if (expanded && !altKey) {
           dispatch({
             type: SET_FOCUSED_OPTION,
-            focusedOption: nextInList(options, index, { skip, allowEmpty: !selectOnly }),
+            focusedOption: nextInList(options, index, { skip, allowEmpty: editable }),
             focusListBox: true,
           });
         } else {
@@ -201,7 +207,7 @@ export function onKeyDown(event) {
         break;
       case 'Home':
         // First item - on Windows on an editable combo box Home moves the cursor to the start
-        if (expanded && (isMac() || selectOnly)) {
+        if (expanded && (isMac() || !editable)) {
           event.preventDefault();
           dispatch({
             type: SET_FOCUSED_OPTION,
@@ -212,7 +218,7 @@ export function onKeyDown(event) {
         break;
       case 'End':
         // Last item - on Windows on an editable combo box End moves the cursor to the end
-        if (expanded && (isMac() || selectOnly)) {
+        if (expanded && (isMac() || !editable)) {
           event.preventDefault();
           dispatch({
             type: SET_FOCUSED_OPTION,
@@ -246,7 +252,7 @@ export function onKeyDown(event) {
       case 'Enter':
         // Select current item if one is selected
         if (!expanded) {
-          if (selectOnly) {
+          if (editable) {
             dispatch(setExpanded());
           }
           break;
@@ -277,9 +283,9 @@ export function onKeyDown(event) {
             if (index === -1) {
               break;
             }
-            option = previousInList(options, index, { skip, allowEmpty: !selectOnly });
+            option = previousInList(options, index, { skip, allowEmpty: editable });
           } else {
-            option = nextInList(options, index, { skip, allowEmpty: !selectOnly });
+            option = nextInList(options, index, { skip, allowEmpty: editable });
           }
           if (option || shiftKey) {
             dispatch({
@@ -293,7 +299,7 @@ export function onKeyDown(event) {
         }
 
         // Native select uses tab to select an option
-        if (expanded && selectOnly) {
+        if (expanded && !editable && selectOnBlur) {
           event.preventDefault();
           if (focusedOption && !focusedOption?.unselectable) {
             dispatch(onSelectValue(focusedOption));
@@ -450,7 +456,7 @@ export function onClickOption(event, option) {
 
     const { inputRef } = getProps();
     dispatch(onSelectValue(option));
-    inputRef.current.focus();
+    inputRef.current?.focus();
   };
 }
 
@@ -481,12 +487,12 @@ export function onOptionsChanged() {
     }
     const {
       options,
-      selectOnly,
+      mustHaveSelection,
       selectedOption,
     } = getProps();
 
     let newOption = options.find((o) => o.identity === focusedOption?.identity);
-    if (selectOnly && !newOption) {
+    if (mustHaveSelection && !newOption) {
       newOption = selectedOption;
     }
 
@@ -503,10 +509,10 @@ export function onValueChanged() {
     if (!expanded) {
       return;
     }
-    const { options, selectOnly, value } = getProps();
+    const { options, mustHaveSelection, value } = getProps();
 
     let newOption = options.find((o) => o.identity === value?.identity) || null;
-    if (selectOnly && !newOption) {
+    if (mustHaveSelection && !newOption) {
       newOption = focusedOption;
     }
 
