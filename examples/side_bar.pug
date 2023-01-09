@@ -1,5 +1,5 @@
 mixin link(href)
-  if href.endsWith(`${example}/index.pug`) || href === path
+  if href.endsWith(`${example}/index.pug`) || (path && href === path.replace(/^~/, '/examples'))
     a
       block
   else
