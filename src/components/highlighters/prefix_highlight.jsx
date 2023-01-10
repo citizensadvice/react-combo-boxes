@@ -1,23 +1,23 @@
 import PropTypes from 'prop-types';
-import { Highlight } from '../highlight';
+import { Highlight } from './highlight';
 import { prefixHighlighter } from '../../highlighters/prefix_highlighter';
 
-export function PrefixHighlight({ label, search, inverse }) {
+export function PrefixHighlight({ value, search, inverse }) {
   return (
     <Highlight inverse={inverse}>
-      {prefixHighlighter(label || '', search || '')}
+      {prefixHighlighter(value || '', search || '')}
     </Highlight>
   );
 }
 
 PrefixHighlight.propTypes = {
-  label: PropTypes.string,
+  value: PropTypes.string,
   search: PropTypes.string,
   inverse: PropTypes.bool,
 };
 
 PrefixHighlight.defaultProps = {
-  label: '',
+  value: '',
   search: '',
   inverse: false,
 };

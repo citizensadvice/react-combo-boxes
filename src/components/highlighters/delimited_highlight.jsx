@@ -1,23 +1,23 @@
 import PropTypes from 'prop-types';
-import { Highlight } from '../highlight';
+import { Highlight } from './highlight';
 import { delimitedHighlighter } from '../../highlighters/delimited_highlighter';
 
-export function DelimitedHighlight({ label, inverse, start, end }) {
+export function DelimitedHighlight({ value, inverse, start, end }) {
   return (
     <Highlight inverse={inverse}>
-      {delimitedHighlighter(label || '', { start, end })}
+      {delimitedHighlighter(value || '', { start, end })}
     </Highlight>
   );
 }
 
 DelimitedHighlight.propTypes = {
-  label: PropTypes.string,
+  value: PropTypes.string,
   start: PropTypes.string.isRequired,
   end: PropTypes.string.isRequired,
   inverse: PropTypes.bool,
 };
 
 DelimitedHighlight.defaultProps = {
-  label: '',
+  value: '',
   inverse: false,
 };

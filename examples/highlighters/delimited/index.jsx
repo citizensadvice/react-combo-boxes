@@ -10,7 +10,7 @@ const options = [
 
 function renderValue({ children }, { option: { value: { highlighted } } }) {
   return (
-    <DelimitedHighlight label={highlighted || children} start="<em>" end="</em>" />
+    <DelimitedHighlight value={highlighted || children} start="<em>" end="</em>" />
   );
 }
 

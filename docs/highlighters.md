@@ -8,7 +8,7 @@ Highlighters can be used to highlight which parts of the search results match th
 const [options, onSearch] = useTokenSearch(initialOptions);
 
 function renderValue(_, { option: { label }, search) {
-  return <TokenHighlight label={label} search={search} />;
+  return <TokenHighlight value={label} search={search} />;
 }
 
 <ComboBox
@@ -32,7 +32,7 @@ For example elastic search will return highlighted strings that look like:
 `foo <em>bar</em>`.
 
 ```js
-  <DelimitedHighlight label="foo<em>bar</em>" start="<em>" end="</em>" />
+  <DelimitedHighlight value="foo<em>bar</em>" start="<em>" end="</em>" />
   // <div>foo<mark>bar</mark></div>
 ```
 
@@ -43,7 +43,7 @@ Highlights where the search term appears at the start of the string.
 Left trims and matches case insensitively.
 
 ```js
-  <PrefixHighlight label="foo bar foo" search="foo" />
+  <PrefixHighlight value="foo bar foo" search="foo" />
   // <div><mark>foo</mark> bar foo</div>
 ```
 
@@ -56,7 +56,7 @@ Left trims and matches case insensitively.
 Useful for highlighting a database ilike query.
 
 ```js
-  <SubstringHighlight label="foo barfoo" search="foo" />
+  <SubstringHighlight value="foo barfoo" search="foo" />
   // <div><mark>foo</mark> bar<mark>foo</mark></div>
 ```
 
@@ -65,7 +65,7 @@ Useful for highlighting a database ilike query.
 Highlights matching tokens from a token search.
 
 ```js
-  <TokenHighlight label="foo foobar barfoo" search="foo" />
+  <TokenHighlight value="foo foobar barfoo" search="foo" />
   // <div><mark>foo</mark> <mark>foo</mark>bar barfoo</div>
 ```
 

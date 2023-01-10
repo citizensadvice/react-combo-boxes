@@ -25,7 +25,7 @@ function mapOption({ breed }) {
 function renderValue({ children }, { search, column: { name } }) {
   if (name === 'breed') {
     return (
-      <TokenHighlight search={search} label={children} />
+      <TokenHighlight search={search} value={children} />
     );
   }
   return children;

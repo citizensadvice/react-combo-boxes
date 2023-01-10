@@ -12,7 +12,7 @@ const options = [
 
 function renderValue({ children }, { search }) {
   return (
-    <PrefixHighlight label={children} search={search} />
+    <PrefixHighlight value={children} search={search} />
   );
 }
 

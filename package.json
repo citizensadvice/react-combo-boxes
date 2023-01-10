@@ -72,14 +72,17 @@
     "stylelint-scss": "^4.3.0"
   },
   "peerDependencies": {
+    "@testing-library/user-event": ">= 4.0.0",
     "prop-types": ">= 15",
     "react": ">= 16.8"
   },
+  "peerDependenciesMeta": {
+    "@testing-library/user-event": {
+      "optional": true
+    }
+  },
   "dependencies": {
     "shallow-equal": "^1.2.1"
-  },
-  "optionalDependencies": {
-    "@testing-library/user-event": ">= 4.0.0"
   },
   "sideEffects": false,
   "targets": {

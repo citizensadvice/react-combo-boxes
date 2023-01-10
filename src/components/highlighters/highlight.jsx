@@ -1,7 +1,7 @@
 import React, { Fragment, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { inverseHighlight } from '../helpers/inverse_highlight';
-import { Context } from './combo_box/context';
+import { inverseHighlight } from '../../helpers/inverse_highlight';
+import { Context } from '../combo_box/context';
 
 function emptyHighlight(highlight) {
   return !highlight.length || (highlight.length === 1 && typeof highlight[0] === 'string');

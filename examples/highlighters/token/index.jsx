@@ -12,7 +12,7 @@ const options = [
 
 function renderValue({ children }, { search }) {
   return (
-    <TokenHighlight label={children} search={search} />
+    <TokenHighlight value={children} search={search} />
   );
 }
 

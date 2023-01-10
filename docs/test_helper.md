@@ -10,7 +10,7 @@ import { selectComboBoxOption } from '@citizensadvice/react-combo-boxes/es/spec_
 
 describe('a test', () => {
   it('helps select a combo box option', async () => {
-    await selectComboBoxOption({ from: 'My label', searchFor: 'Foo', select: 'Bar', userEvent });
+    await selectComboBoxOption({ from: 'My label', searchFor: 'Foo', select: 'Bar' });
   });
 });
 ```
@@ -21,7 +21,7 @@ describe('a test', () => {
 - `searchFor: string` - optional - text to be typed into the combo box
 - `select: string | RegExp | Object` - The name of the option, or an object if you want to specify more [findByRole options][findByRole]
 - `container: React.ReactNode` - optional - The container to search in.  Defaults to `document.body`
-- `userEvent: UserEvent` - A user event instance.  Required if using user-event v14
+- `userEvent: UserEvent` - A user event instance.
 
 ## Clearing an option
 

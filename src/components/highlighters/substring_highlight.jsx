@@ -1,23 +1,23 @@
 import PropTypes from 'prop-types';
-import { Highlight } from '../highlight';
+import { Highlight } from './highlight';
 import { substringHighlighter } from '../../highlighters/substring_highlighter';
 
-export function SubstringHighlight({ label, search, inverse }) {
+export function SubstringHighlight({ value, search, inverse }) {
   return (
     <Highlight inverse={inverse}>
-      {substringHighlighter(label || '', search || '')}
+      {substringHighlighter(value || '', search || '')}
     </Highlight>
   );
 }
 
 SubstringHighlight.propTypes = {
-  label: PropTypes.string,
+  value: PropTypes.string,
   search: PropTypes.string,
   inverse: PropTypes.bool,
 };
 
 SubstringHighlight.defaultProps = {
-  label: '',
+  value: '',
   search: '',
   inverse: false,
 };
