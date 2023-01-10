@@ -1,58 +1,73 @@
+/* eslint-disable quotes */
+
 import { render } from '@testing-library/react';
-import { tokenHighlight } from './token_highlight';
+import { TokenHighlight } from './token_highlight';
 
-it('does not highlight with no children', () => {
-  const { container } = render((
-    tokenHighlight()({ children: null }, { search: null }, {})
-  ));
-
-  expect(container).toContainHTML('<div></div>');
+it('highlights empty string', () => {
+  const { container } = render(<TokenHighlight label="" search="" />);
+  expect(container).toMatchInlineSnapshot(`<div />`);
 });
 
-it('does not highlight with no search children', () => {
-  const { container } = render((
-    tokenHighlight()({ children: 'foo' }, { search: null }, {})
-  ));
-
-  expect(container).toContainHTML('<div>foo</div>');
+it('highlights with an empty search', () => {
+  const { container } = render(<TokenHighlight label="foo" search="" />);
+  expect(container).toMatchInlineSnapshot(`
+<div>
+  foo
+</div>
+`);
 });
 
-it('does not highlight no match', () => {
-  const { container } = render((
-    tokenHighlight()({ children: 'foo foobar' }, { search: 'bar' }, {})
-  ));
-
-  expect(container).toContainHTML('<div>foo foobar</div>');
+it('highlights with no match', () => {
+  const { container } = render(<TokenHighlight label="foo foobar" search="bar" />);
+  expect(container).toMatchInlineSnapshot(`
+<div>
+  foo foobar
+</div>
+`);
 });
 
-it('highlights all tokens', () => {
-  const { container } = render((
-    tokenHighlight()({ children: 'foo bar foo bar' }, { search: 'bar' }, { visuallyHiddenClassName: 'sr-only' })
-  ));
-
-  expect(container).toMatchSnapshot();
+it('highlights with a match', () => {
+  const { container } = render(<TokenHighlight label="foo foobar" search="foo" />);
+  expect(container).toMatchInlineSnapshot(`
+<div>
+  <span
+    class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+  >
+    foo foobar
+  </span>
+  <span
+    aria-hidden="true"
+  >
+    <mark>
+      foo
+    </mark>
+     
+    <mark>
+      foo
+    </mark>
+    bar
+  </span>
+</div>
+`);
 });
 
-it('highlights the start of tokens', () => {
-  const { container } = render((
-    tokenHighlight()({ children: '"barfoo"' }, { search: 'bar' }, { visuallyHiddenClassName: 'sr-only' })
-  ));
-
-  expect(container).toMatchSnapshot();
-});
-
-it('highlights existing value', () => {
-  const { container } = render((
-    tokenHighlight()({ children: 'foo bar foo bar' }, { search: null }, { value: { label: 'bar' }, visuallyHiddenClassName: 'sr-only' })
-  ));
-
-  expect(container).toMatchSnapshot();
-});
-
-it('inverses the highlight', () => {
-  const { container } = render((
-    tokenHighlight({ inverse: true })({ children: 'foo bar foo bar' }, { search: 'bar' }, { visuallyHiddenClassName: 'sr-only' })
-  ));
-
-  expect(container).toMatchSnapshot();
+it('inverses the a highlight', () => {
+  const { container } = render(<TokenHighlight label="foo foobar" search="foo" inverse />);
+  expect(container).toMatchInlineSnapshot(`
+<div>
+  <span
+    class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+  >
+    foo foobar
+  </span>
+  <span
+    aria-hidden="true"
+  >
+    foo foo
+    <mark>
+      bar
+    </mark>
+  </span>
+</div>
+`);
 });

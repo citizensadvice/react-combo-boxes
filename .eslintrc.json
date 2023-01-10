@@ -1,7 +1,6 @@
 {
   "extends": [
     "airbnb",
-    "plugin:jest/recommended",
     "plugin:react/jsx-runtime"
   ],
   "plugins": [
@@ -41,7 +40,7 @@
   },
   "overrides": [
     {
-      "files": ["**/*.test.{js,jsx}", "src/__jest_setup.js"],
+      "files": ["**/*.test.{js,jsx}", "src/__*.js", "src/spec_helpers/*.js"],
       "env": {
         "jest": true
       },
@@ -51,6 +50,7 @@
         "testing-library"
       ],
       "extends": [
+        "plugin:jest/recommended",
         "plugin:testing-library/react",
         "plugin:jest-dom/recommended"
       ],

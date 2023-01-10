@@ -18,12 +18,20 @@ import { UniqueIdGenerator } from '../helpers/unique_id_generator';
  *   - html
  */
 export function useNormalisedOptions({
-  id, options: rawOptions, placeholderOption, value: rawValue, values: rawValues, mapOption,
-}, { mustHaveSelection = false } = {}) {
+  id,
+  options: rawOptions,
+  placeholderOption,
+  value: rawValue,
+  values: rawValues,
+  mapOption,
+  mustHaveSelection,
+}) {
   const options = useMemo(() => {
     const idGenerator = new UniqueIdGenerator();
     const groups = new Map();
     const normalisedOptions = [];
+    const emptyGroup = [];
+
     if (placeholderOption) {
       normalisedOptions.push({
         label: placeholderOption,
@@ -32,6 +40,8 @@ export function useNormalisedOptions({
         key: idGenerator.uniqueId(`${id || ''}_option_placeholder`),
       });
     }
+
+    normalisedOptions.push(emptyGroup);
 
     rawOptions?.forEach((o) => {
       const option = optionise(o, mapOption);
@@ -54,7 +64,7 @@ export function useNormalisedOptions({
         option.group = group;
         return;
       }
-      normalisedOptions.push(option);
+      emptyGroup.push(option);
     });
 
     return [].concat(...normalisedOptions).map((option, index) => ({ ...option, index }));
@@ -65,7 +75,7 @@ export function useNormalisedOptions({
   ), [rawValue, mapOption]);
 
   const selectedOption = useMemo(() => {
-    const option = options.find((o) => o.identity === (value?.identity || ''));
+    const option = options.find((o) => o.identity === (value?.identity ?? value));
     if (option || !mustHaveSelection) {
       return option || null;
     }
@@ -79,7 +89,7 @@ export function useNormalisedOptions({
   const selectedOptions = useMemo(() => {
     const selected = [];
     values.forEach((v) => {
-      const found = options.find((o) => o.identity === (v?.identity || ''));
+      const found = options.find((o) => o.identity === (v?.identity ?? v));
       if (found) {
         selected.push(found);
       }

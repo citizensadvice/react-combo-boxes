@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ComboBox, useTokenSearch, prefixHighlight } from '../../../src';
+import { ComboBox, useTokenSearch, PrefixHighlight } from '../../../src';
 
 const options = [
   'Toffee yum yum',
@@ -10,10 +10,15 @@ const options = [
   'Tiramisu (contains raw egg)',
 ];
 
+function renderValue({ children }, { search }) {
+  return (
+    <PrefixHighlight label={children} search={search} />
+  );
+}
+
 export function Example() {
   const [value, setValue] = useState(null);
   const [search, setSearch] = useState(null);
-  const [inverse, setInverse] = useState(false);
   const filteredOptions = useTokenSearch(search, { options });
 
   return (
@@ -31,18 +36,8 @@ export function Example() {
         onValue={setValue}
         onSearch={setSearch}
         options={filteredOptions}
-        renderValue={prefixHighlight({ inverse })}
+        renderValue={renderValue}
       />
-
-      <label>
-        <input
-          type="checkbox"
-          onChange={({ target: { checked } }) => setInverse(checked)}
-          checked={inverse}
-        />
-        {' '}
-        Toggle inverse
-      </label>
 
       <label htmlFor="output">
         Current value

@@ -1,50 +1,69 @@
+/* eslint-disable quotes */
+
 import { render } from '@testing-library/react';
-import { prefixHighlight } from './prefix_highlight';
+import { PrefixHighlight } from './prefix_highlight';
 
-it('does not highlight with no children', () => {
-  const { container } = render((
-    prefixHighlight()({ children: null }, { search: null }, {})
-  ));
-
-  expect(container).toContainHTML('<div></div>');
+it('highlights empty string', () => {
+  const { container } = render(<PrefixHighlight label="" search="" />);
+  expect(container).toMatchInlineSnapshot(`<div />`);
 });
 
-it('does not highlight with no search children', () => {
-  const { container } = render((
-    prefixHighlight()({ children: 'foo' }, { search: null }, {})
-  ));
-
-  expect(container).toContainHTML('<div>foo</div>');
+it('highlights with an empty search', () => {
+  const { container } = render(<PrefixHighlight label="foo" search="" />);
+  expect(container).toMatchInlineSnapshot(`
+<div>
+  foo
+</div>
+`);
 });
 
-it('does not highlight no match', () => {
-  const { container } = render((
-    prefixHighlight()({ children: 'foo bar' }, { search: 'bar' }, {})
-  ));
-
-  expect(container).toContainHTML('<div>foo bar</div>');
+it('highlights with no match', () => {
+  const { container } = render(<PrefixHighlight label="foobar foo" search="bar" />);
+  expect(container).toMatchInlineSnapshot(`
+<div>
+  foobar foo
+</div>
+`);
 });
 
-it('highlights the first prefix', () => {
-  const { container } = render((
-    prefixHighlight()({ children: 'bar foo bar' }, { search: 'bar' }, { visuallyHiddenClassName: 'sr-only' })
-  ));
-
-  expect(container).toMatchSnapshot();
+it('highlights with a match', () => {
+  const { container } = render(<PrefixHighlight label="foobar foo" search="foo" />);
+  expect(container).toMatchInlineSnapshot(`
+<div>
+  <span
+    class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+  >
+    foobar foo
+  </span>
+  <span
+    aria-hidden="true"
+  >
+    <mark>
+      foo
+    </mark>
+    bar foo
+  </span>
+</div>
+`);
 });
 
-it('highlights existing value', () => {
-  const { container } = render((
-    prefixHighlight()({ children: 'bar foo bar' }, { search: null }, { value: { label: 'bar' }, visuallyHiddenClassName: 'sr-only' })
-  ));
-
-  expect(container).toMatchSnapshot();
-});
-
-it('inverses the highlight', () => {
-  const { container } = render((
-    prefixHighlight({ inverse: true })({ children: 'bar foo bar' }, { search: 'bar' }, { visuallyHiddenClassName: 'sr-only' })
-  ));
-
-  expect(container).toMatchSnapshot();
+it('inverses the a highlight', () => {
+  const { container } = render(<PrefixHighlight label="foobar foo" search="foo" inverse />);
+  expect(container).toMatchInlineSnapshot(`
+<div>
+  <span
+    class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+  >
+    foobar foo
+  </span>
+  <span
+    aria-hidden="true"
+  >
+    foo
+    <mark>
+      bar foo
+    </mark>
+  </span>
+</div>
+`);
 });

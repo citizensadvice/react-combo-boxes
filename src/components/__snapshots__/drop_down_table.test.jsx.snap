@@ -113,12 +113,9 @@ exports[`cells with html renders a table with colgroups 1`] = `
         aria-atomic="true"
         aria-live="polite"
         role="status"
-      />
-      <div
-        aria-atomic="true"
-        aria-live="polite"
-        role="status"
-      />
+      >
+        <div />
+      </div>
     </div>
   </div>
 </div>
@@ -257,12 +254,9 @@ exports[`columns as names only renders a table as the list box 1`] = `
         aria-atomic="true"
         aria-live="polite"
         role="status"
-      />
-      <div
-        aria-atomic="true"
-        aria-live="polite"
-        role="status"
-      />
+      >
+        <div />
+      </div>
     </div>
   </div>
 </div>
@@ -431,12 +425,9 @@ exports[`columns with headers renders a table with headers 1`] = `
         aria-atomic="true"
         aria-live="polite"
         role="status"
-      />
-      <div
-        aria-atomic="true"
-        aria-live="polite"
-        role="status"
-      />
+      >
+        <div />
+      </div>
     </div>
   </div>
 </div>
@@ -559,12 +550,9 @@ exports[`columns with html renders a table with colgroups 1`] = `
         aria-atomic="true"
         aria-live="polite"
         role="status"
-      />
-      <div
-        aria-atomic="true"
-        aria-live="polite"
-        role="status"
-      />
+      >
+        <div />
+      </div>
     </div>
   </div>
 </div>
@@ -720,12 +708,9 @@ exports[`grouped renders a table with groups 1`] = `
         aria-atomic="true"
         aria-live="polite"
         role="status"
-      />
-      <div
-        aria-atomic="true"
-        aria-live="polite"
-        role="status"
-      />
+      >
+        <div />
+      </div>
     </div>
   </div>
 </div>

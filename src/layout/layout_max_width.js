@@ -1,6 +1,6 @@
-export function layoutMaxWidth(el, { contain = 'body', minMaxWidth = 0 } = {}) {
-  const elBounding = el.getBoundingClientRect();
-  const container = contain ? el.closest(contain) : null;
+export function layoutMaxWidth({ listbox }, { contain = 'body', minMaxWidth = 0 } = {}) {
+  const elBounding = listbox.getBoundingClientRect();
+  const container = contain ? listbox.closest(contain) : null;
   const containerBounding = container?.getBoundingClientRect();
   let containerRight = Infinity;
   if (containerBounding) {
@@ -8,7 +8,7 @@ export function layoutMaxWidth(el, { contain = 'body', minMaxWidth = 0 } = {}) {
     containerRight = containerBounding.right - clientRight;
   }
   const windowRight = document.documentElement.clientWidth;
-  const styles = getComputedStyle(el);
+  const styles = getComputedStyle(listbox);
 
   let extras = parseFloat(styles.marginRight) || 0;
   if (styles.boxSizing !== 'border-box') {
@@ -23,5 +23,5 @@ export function layoutMaxWidth(el, { contain = 'body', minMaxWidth = 0 } = {}) {
     Math.min(windowRight, containerRight) - extras - elBounding.left,
   );
 
-  el.style.setProperty('max-width', maxWidth ? `${maxWidth}px` : '');
+  listbox.style.setProperty('max-width', maxWidth ? `${maxWidth}px` : '');
 }

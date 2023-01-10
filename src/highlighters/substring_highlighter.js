@@ -1,5 +1,5 @@
 /**
- * Highlights the first term within a query
+ * Highlights matching terms within a query
  *
  * Intended for matching an ilink database query
  *
@@ -11,14 +11,25 @@ export function substringHighlighter(term, query) {
     return [term || ''];
   }
 
-  const index = term.toLowerCase().indexOf(query.toLowerCase());
-  if (index > -1) {
-    return [
-      term.slice(0, index),
-      [term.slice(index, index + query.length)],
-      term.slice(index + query.length),
-    ].filter(Boolean);
+  const result = [];
+  let left = term;
+  let index;
+  const lowerQuery = query.toLowerCase();
+
+  do {
+    index = left.toLowerCase().indexOf(lowerQuery);
+    if (index > -1) {
+      if (index > 0) {
+        result.push(left.slice(0, index));
+      }
+      result.push([left.slice(index, index + query.length)]);
+      left = left.slice(index + query.length);
+    }
+  } while (index > -1);
+
+  if (left) {
+    result.push(left);
   }
 
-  return [term];
+  return result;
 }

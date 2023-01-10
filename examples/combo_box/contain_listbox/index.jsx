@@ -2,29 +2,38 @@ import { useState } from 'react';
 import {
   ComboBox,
   useTokenSearch,
-  tokenHighlight,
-  useLayoutListBox,
   layoutMaxWidth,
   layoutMaxHeight,
 } from '../../../src';
 import countries from '../../data/countries.json';
 
-function map({ name, code }) {
+function mapOption({ name, code }) {
   return `${name} (${code})`;
 }
+
+const onLayoutListBox = [
+  (el) => layoutMaxHeight(el, { contain: '.contain-listbox' }),
+  (el) => layoutMaxWidth(el, { contain: '.contain-listbox' }),
+];
 
 export function Example() {
   const [value, setValue] = useState(null);
   const [search, setSearch] = useState(null);
-  const filteredOptions = useTokenSearch(search, { options: countries, index: map });
-
-  const onLayoutListBox = useLayoutListBox(
-    (el) => layoutMaxHeight(el, { contain: '.contain-listbox' }),
-    (el) => layoutMaxWidth(el, { contain: '.contain-listbox' }),
-  );
+  const filteredOptions = useTokenSearch(search, { options: countries, index: mapOption });
 
   return (
-    <div className="contain-listbox" style={{ height: '500px', width: '300px', overflow: 'auto', padding: '10px', margin: '10px', border: '10px dashed #ddd' }}>
+    <div
+      className="contain-listbox"
+      style={{
+        height: '500px',
+        width: '300px',
+        overflow: 'auto',
+        padding: '10px',
+        margin: '10px',
+        paddingTop: '200px',
+        border: '10px dashed #ddd',
+      }}
+    >
       <label
         id="select-label"
         htmlFor="select"
@@ -38,9 +47,7 @@ export function Example() {
         onValue={setValue}
         onSearch={setSearch}
         options={filteredOptions}
-        mapOption={map}
-        renderValue={tokenHighlight()}
-        renderListBox={(props) => <ul {...props} style={{ marginBottom: 0, marginRight: 0 }} />}
+        mapOption={mapOption}
         onLayoutListBox={onLayoutListBox}
       />
 

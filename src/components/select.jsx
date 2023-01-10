@@ -1,9 +1,9 @@
-import { useCallback, useMemo, forwardRef } from 'react';
+import { useCallback, useMemo, forwardRef, memo } from 'react';
 import PropTypes from 'prop-types';
 import { useNormalisedOptions } from '../hooks/use_normalised_options';
 import { renderGroupedOptions } from '../helpers/render_grouped_options';
 
-export const Select = forwardRef((rawProps, ref) => {
+export const Select = memo(forwardRef((rawProps, ref) => {
   const optionisedProps = Object.freeze({
     ...rawProps,
     ...useNormalisedOptions(rawProps, { mustHaveSelection: true }),
@@ -29,15 +29,15 @@ export const Select = forwardRef((rawProps, ref) => {
 
   const handleChange = useCallback((e) => {
     onValues?.([...e.target.selectedOptions].map((el) => (
-      options.find((o) => o.identity === el.value)?.value
+      options.find((o) => (o.identity ?? '') === el.value)?.value
     )));
-    onValue?.(options.find((o) => o.identity === e.target.value)?.value);
+    onValue?.(options.find((o) => (o.identity ?? '') === e.target.value)?.value);
     onChange?.(e);
   }, [onValue, onValues, onChange, options]);
 
   const reactValue = useMemo(() => {
     if (multiple) {
-      return selectedOptions.map((o) => o?.identity);
+      return selectedOptions.map((o) => (o?.identity ?? ''));
     }
     return selectedOption?.identity ?? '';
   }, [selectedOption, selectedOptions, multiple]);
@@ -75,7 +75,7 @@ export const Select = forwardRef((rawProps, ref) => {
       })}
     </select>
   );
-});
+}));
 
 Select.propTypes = {
   placeholderOption: PropTypes.string,
@@ -93,7 +93,7 @@ Select.propTypes = {
 Select.defaultProps = {
   placeholderOption: null,
   multiple: false,
-  value: null,
+  value: undefined,
   values: null,
   onChange: null,
   onValue: null,

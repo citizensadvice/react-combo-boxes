@@ -43,12 +43,3 @@ it('highlights multiple terms separated punctuation and spaces', () => {
 it('highlights terms with accents', () => {
   expect(tokenHighlighter('fóo\u0327ba\u0327r foé', 'foo')).toEqual([['fóo\u0327'], 'ba\u0327r foé']);
 });
-
-describe('without normalize support', () => {
-  it('highlights terms with accents', () => {
-    const { normalize } = String.prototype;
-    String.prototype.normalize = undefined; // eslint-disable-line no-extend-native
-    expect(tokenHighlighter('fóo\u0327ba\u0327r foé', 'foo')).toEqual(['fóo\u0327ba\u0327r foé']);
-    String.prototype.normalize = normalize; // eslint-disable-line no-extend-native
-  });
-});

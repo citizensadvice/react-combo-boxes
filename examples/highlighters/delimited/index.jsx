@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ComboBox, useTokenSearch, delimitedHighlight } from '../../../src';
+import { ComboBox, useTokenSearch, DelimitedHighlight } from '../../../src';
 
 const options = [
   { label: 'Toffee yum yum', highlighted: 'Toffee <em>yum</em> yum' },
@@ -8,10 +8,15 @@ const options = [
   { label: 'Raspberry fool', highlighted: '<em>Raspberry</em> fool' },
 ];
 
+function renderValue({ children }, { option: { value: { highlighted } } }) {
+  return (
+    <DelimitedHighlight label={highlighted || children} start="<em>" end="</em>" />
+  );
+}
+
 export function Example() {
   const [value, setValue] = useState(null);
   const [search, setSearch] = useState(null);
-  const [inverse, setInverse] = useState(false);
   const filteredOptions = useTokenSearch(search, { options });
 
   return (
@@ -29,18 +34,8 @@ export function Example() {
         onValue={setValue}
         onSearch={setSearch}
         options={filteredOptions}
-        renderValue={delimitedHighlight({ inverse, start: '<em>', end: '</em>', property: 'highlighted' })}
+        renderValue={renderValue}
       />
-
-      <label>
-        <input
-          type="checkbox"
-          onChange={({ target: { checked } }) => setInverse(checked)}
-          checked={inverse}
-        />
-        {' '}
-        Toggle inverse
-      </label>
 
       <label htmlFor="output">
         Current value

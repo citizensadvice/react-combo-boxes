@@ -1,11 +1,9 @@
-import { useEffect, useReducer } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-const debouceMilliseconds = 1400; // https://github.com/alphagov/accessible-autocomplete/blob/935f0d43aea1c606e6b38985e3fe7049ddbe98be/src/status.js#L18
+import { useEvent } from '../hooks/use_event';
 
-function reducer({ swap }, message) {
-  return { swap: !swap, message };
-}
+const debouceMilliseconds = 1400; // https://github.com/alphagov/accessible-autocomplete/blob/935f0d43aea1c606e6b38985e3fe7049ddbe98be/src/status.js#L18
 
 export function AriaLiveMessage({
   showListBox,
@@ -17,9 +15,9 @@ export function AriaLiveMessage({
   foundOptionsMessage,
   selectedOptionMessage,
 }) {
-  const [{ message, swap }, dispatch] = useReducer(reducer, '');
+  const [message, setMessage] = useState('');
 
-  useEffect(() => {
+  const makeMessage = useEvent(() => {
     let newMessage = '';
 
     if (showNotFound) {
@@ -27,33 +25,31 @@ export function AriaLiveMessage({
     } else if (showListBox) {
       newMessage = foundOptionsMessage?.(options);
       if (focusedOption) {
-        newMessage += ` ${selectedOptionMessage?.(focusedOption, options)}`;
+        newMessage += `, ${selectedOptionMessage?.(focusedOption, options)}`;
       }
     }
 
-    const timeout = setTimeout(() => dispatch(newMessage), debouceMilliseconds);
+    return newMessage;
+  });
 
+  useEffect(() => {
+    const newMessage = makeMessage();
+    const timeout = setTimeout(() => setMessage(newMessage), debouceMilliseconds);
     return () => clearTimeout(timeout);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [options, focusedOption, options, showNotFound, showListBox]);
+  }, [showListBox, showNotFound, options, focusedOption, makeMessage]);
 
+  // Some user-agents will not read out changes to text nodes, so use
+  // key to ensure the div is recreated
   return (
-    // Alternate the message between two status
-    // Apparently this is better https://github.com/alphagov/accessible-autocomplete/commit/309836e12d8cfc0eea36d57e11ebf20fb885b447
     <div className={visuallyHiddenClassName}>
       <div
         role="status"
         aria-atomic="true"
         aria-live="polite"
       >
-        {!swap ? message : '' }
-      </div>
-      <div
-        role="status"
-        aria-atomic="true"
-        aria-live="polite"
-      >
-        {swap ? message : '' }
+        <div key={message}>
+          {message}
+        </div>
       </div>
     </div>
   );
@@ -64,7 +60,8 @@ AriaLiveMessage.propTypes = {
   showNotFound: PropTypes.bool.isRequired,
   options: PropTypes.array,
   focusedOption: PropTypes.shape({
-    label: PropTypes.string,
+    index: PropTypes.number.isRequired,
+    label: PropTypes.string.isRequired,
   }),
   visuallyHiddenClassName: PropTypes.string.isRequired,
   notFoundMessage: PropTypes.func,

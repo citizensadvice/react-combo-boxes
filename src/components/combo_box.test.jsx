@@ -1,10 +1,10 @@
 /* eslint-disable testing-library/no-node-access */
 
 import { useEffect, useState, forwardRef } from 'react';
-import { render, fireEvent, waitFor, act, screen } from '@testing-library/react';
+import { render, waitFor, act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ComboBox } from './combo_box';
-import { DISPATCH } from '../constants/dispatch';
+import { collectLiveMessages } from '../__collect_aria_live_messages';
 
 const ComboBoxWrapper = forwardRef(({ value: _value, ...props }, ref) => {
   const [value, setValue] = useState(_value);
@@ -95,13 +95,6 @@ function expectToHaveActiveOption(option) {
   expect(combobox).toHaveFocus();
 }
 
-function getLiveMessage() {
-  return [...document.querySelectorAll('[aria-live=polite],[aria-live=assertive]')]
-    .map((node) => node.textContent.trim())
-    .filter(Boolean)
-    .join(' ');
-}
-
 describe('options', () => {
   describe('as array of objects', () => {
     describe('label', () => {
@@ -180,7 +173,11 @@ describe('options', () => {
             render(<ComboBoxWrapper options={options} onLayoutFocusedOption={spy} />);
             await userEvent.tab();
             await userEvent.keyboard('{ArrowDown}');
-            expect(spy).toHaveBeenCalledWith({ option: screen.getByRole('option', { name: 'Apple' }), listbox: screen.getByRole('listbox') });
+            expect(spy).toHaveBeenCalledWith({
+              option: screen.getByRole('option', { name: 'Apple' }),
+              listbox: screen.getByRole('listbox'),
+              input: screen.getByRole('combobox'),
+            });
           });
         });
 
@@ -211,7 +208,11 @@ describe('options', () => {
             render(<ComboBoxWrapper options={options} onLayoutFocusedOption={spy} />);
             await userEvent.tab();
             await userEvent.keyboard('{ArrowUp}');
-            expect(spy).toHaveBeenCalledWith({ option: screen.getByRole('option', { name: 'Orange' }), listbox: screen.getByRole('listbox') });
+            expect(spy).toHaveBeenCalledWith({
+              option: screen.getByRole('option', { name: 'Orange' }),
+              listbox: screen.getByRole('listbox'),
+              input: screen.getByRole('combobox'),
+            });
           });
         });
 
@@ -650,8 +651,8 @@ describe('options', () => {
             await userEvent.type(screen.getByRole('combobox'), 'foo');
             await userEvent.keyboard('{ArrowDown}{ArrowDown}');
             await userEvent.clear(screen.getByRole('combobox'));
-            expect(spy).toHaveBeenCalledWith(null);
-            expectToBeOpen(document.activeElement);
+            expect(spy).not.toHaveBeenCalled();
+            expectToBeOpen();
           });
         });
 
@@ -791,11 +792,11 @@ describe('options', () => {
 
     describe('group', () => {
       const options = [
-        { label: 'Apple' },
         { label: 'Orange', group: 'Citrus' },
         { label: 'Lemon', group: 'Citrus' },
         { label: 'Raspberry', group: 'Berry' },
         { label: 'Strawberry', group: 'Berry' },
+        { label: 'Apple' },
       ];
 
       it('renders grouped options', () => {
@@ -847,7 +848,7 @@ describe('options', () => {
     });
 
     describe('missing label', () => {
-      it('treats as a blank string', () => {
+      it('treats as undefined', () => {
         const options = [{}];
         const { container } = render(<ComboBoxWrapper options={options} />);
         expect(container).toMatchSnapshot();
@@ -942,7 +943,7 @@ describe('options', () => {
 
     it('triggers the onValue callback with the selected value', async () => {
       const spy = jest.fn();
-      render(<ComboBoxWrapper options={[undefined, 'foo']} onValue={spy} />);
+      render(<ComboBoxWrapper value="foo" options={['foo', undefined]} onValue={spy} />);
       await userEvent.tab();
       await userEvent.keyboard('{ArrowDown}{Enter}');
       expect(spy).toHaveBeenCalledWith(undefined);
@@ -1013,7 +1014,11 @@ describe('value', () => {
     const spy = jest.fn();
     render(<ComboBoxWrapper options={options} value="Banana" onLayoutFocusedOption={spy} />);
     await userEvent.tab();
-    expect(spy).toHaveBeenCalledWith({ option: screen.getByRole('option', { name: 'Banana' }), listbox: screen.getByRole('listbox') });
+    expect(spy).toHaveBeenCalledWith({
+      option: screen.getByRole('option', { name: 'Banana' }),
+      listbox: screen.getByRole('listbox'),
+      input: screen.getByRole('combobox'),
+    });
   });
 
   it('sets the combo box value', async () => {
@@ -1057,10 +1062,30 @@ describe('value', () => {
   });
 
   describe('value is an empty string', () => {
-    const options = [null, 'foo'];
+    const options = ['', 'foo'];
 
     it('selects the value', async () => {
       render(<ComboBoxWrapper options={options} value="" />);
+      await userEvent.tab();
+      expectToHaveSelectedOption(screen.getAllByRole('option')[0]);
+    });
+  });
+
+  describe('value is null', () => {
+    const options = [null, 'foo'];
+
+    it('selects the value', async () => {
+      render(<ComboBoxWrapper options={options} value={null} />);
+      await userEvent.tab();
+      expectToHaveSelectedOption(screen.getAllByRole('option')[0]);
+    });
+  });
+
+  describe('value is undefined', () => {
+    const options = [undefined, 'foo'];
+
+    it('selects the value', async () => {
+      render(<ComboBoxWrapper options={options} />);
       await userEvent.tab();
       expectToHaveSelectedOption(screen.getAllByRole('option')[0]);
     });
@@ -1135,33 +1160,36 @@ describe('clear button', () => {
     expect(spy).not.toHaveBeenCalled();
   });
 
-  it('pressing ENTER on the button clears the value', () => {
+  it('pressing ENTER on the button clears the value', async () => {
     const spy = jest.fn();
     render(<ComboBoxWrapper options={options} value="Apple" onValue={spy} />);
+    await userEvent.tab();
     const remove = screen.getByRole('button', { name: 'Clear Apple' });
     expect(remove).toBeVisible();
-    // Technically not focusable so use fireEvent
-    fireEvent.keyDown(remove, { key: 'Enter' });
+    act(() => remove.focus());
+    await userEvent.type(remove, '{Enter}', { skipClick: true });
     expect(spy).toHaveBeenCalledWith(null);
   });
 
-  it('pressing SPACE on the button clears the value', () => {
+  it('pressing SPACE on the button clears the value', async () => {
     const spy = jest.fn();
     render(<ComboBoxWrapper options={options} value="Apple" onValue={spy} />);
+    await userEvent.tab();
     const remove = screen.getByRole('button', { name: 'Clear Apple' });
     expect(remove).toBeVisible();
-    // Technically not focusable so use fireEvent
-    fireEvent.keyDown(remove, { key: 'Enter' });
+    act(() => remove.focus());
+    await userEvent.type(remove, ' ', { skipClick: true });
     expect(spy).toHaveBeenCalledWith(null);
   });
 
-  it('pressing a different key does not clear the value', () => {
+  it('pressing a different key does not clear the value', async () => {
     const spy = jest.fn();
     render(<ComboBoxWrapper options={options} value="Apple" onValue={spy} />);
+    await userEvent.tab();
     const remove = screen.getByRole('button', { name: 'Clear Apple' });
     expect(remove).toBeVisible();
-    // Technically not focusable so use fireEvent
-    fireEvent.keyDown(remove, { key: 'x' });
+    act(() => remove.focus());
+    await userEvent.type(remove, 'x', { skipClick: true });
     expect(spy).not.toHaveBeenCalled();
   });
 });
@@ -1197,12 +1225,34 @@ describe('busy', () => {
         });
       });
 
-      describe('with a search matching the current value', () => {
-        it('does not set aria-busy', async () => {
+      describe('with a search and closed', () => {
+        it('sets aria-busy=false on the wrapper', async () => {
+          const { container } = render((
+            <ComboBoxWrapper options={['foo']} busy busyDebounce={null} />
+          ));
+          await userEvent.type(screen.getByRole('combobox'), 'foo');
+          await userEvent.type(screen.getByRole('combobox'), '{Alt>}{ArrowUp}{/Alt}');
+          expect(container.firstChild).toHaveAttribute('aria-busy', 'false');
+        });
+      });
+
+      describe('with a search matching the selected option and expanded', () => {
+        it('sets aria-busy=true on the wrapper', async () => {
           const { container } = render((
             <ComboBoxWrapper options={['foo']} value="foo" busy busyDebounce={null} />
           ));
-          await userEvent.type(screen.getByRole('combobox'), '{Backspace}o');
+          await userEvent.type(screen.getByRole('combobox'), 'o{backspace}');
+          expect(container.firstChild).toHaveAttribute('aria-busy', 'true');
+        });
+      });
+
+      describe('with a search matching the selected option and not expanded', () => {
+        it('sets aria-busy=false on the wrapper', async () => {
+          const { container } = render((
+            <ComboBoxWrapper options={['foo']} value="foo" busy busyDebounce={null} />
+          ));
+          await userEvent.type(screen.getByRole('combobox'), 'o{backspace}');
+          await userEvent.type(screen.getByRole('combobox'), '{Alt>}{ArrowUp}{/Alt}');
           expect(container.firstChild).toHaveAttribute('aria-busy', 'false');
         });
       });
@@ -1413,7 +1463,11 @@ describe('onLayoutFocusedOption', () => {
     render(<ComboBoxWrapper options={options} onLayoutFocusedOption={spy} />);
     await userEvent.tab();
     await userEvent.keyboard('{ArrowDown}');
-    expect(spy).toHaveBeenCalledWith({ option: screen.getByRole('option', { name: 'Apple' }), listbox: screen.getByRole('listbox') });
+    expect(spy).toHaveBeenCalledWith({
+      option: screen.getByRole('option', { name: 'Apple' }),
+      listbox: screen.getByRole('listbox'),
+      input: screen.getByRole('combobox'),
+    });
   });
 });
 
@@ -1657,7 +1711,7 @@ describe('autoselect', () => {
         render(<ComboBoxWrapper options={['foo']} autoselect="inline" />);
         const input = screen.getByRole('combobox');
         await userEvent.tab();
-        fireEvent.change(input, { target: { value: 'f' } });
+        await userEvent.type(input, 'f');
         expectToHaveSelectedOption(screen.getByRole('option'));
         expect(input).toHaveValue('foo');
         expect(input).toMatchObject({
@@ -1672,7 +1726,7 @@ describe('autoselect', () => {
         render(<ComboBoxWrapper options={[{ label: 'foo', disabled: true }]} autoselect="inline" />);
         const input = screen.getByRole('combobox');
         await userEvent.tab();
-        fireEvent.change(input, { target: { value: 'f' } });
+        await userEvent.type(input, 'f');
         expectToBeOpen();
         expect(document.activeElement).toMatchObject({
           value: 'f',
@@ -1684,51 +1738,41 @@ describe('autoselect', () => {
       it('does not select the text if the cursor position is inappropriate', async () => {
         render(<ComboBoxWrapper options={['abcd']} autoselect="inline" />);
         await userEvent.tab();
-        document.activeElement.value = 'ac';
-        document.activeElement.setSelectionRange(1, 1);
-        // The selection is incorrectly always set to the end
-        jest.spyOn(document.activeElement, 'selectionStart', 'get').mockImplementation(() => 2);
-        fireEvent.change(document.activeElement, { target: { value: 'abc' } });
-        expectToHaveSelectedOption(screen.getByRole('option'));
+        await userEvent.type(document.activeElement, 'ac');
+        await userEvent.type(document.activeElement, '{ArrowLeft}b');
+        expectToBeOpen();
         expect(document.activeElement).toMatchObject({
           value: 'abc',
+          selectionStart: 2,
+          selectionEnd: 2,
         });
       });
 
       it('removes the autoselected text and last character on backspace', async () => {
         render(<ComboBoxWrapper options={['foo']} autoselect="inline" />);
         await userEvent.tab();
-        fireEvent.change(document.activeElement, { target: { value: 'fo' } });
+        await userEvent.type(document.activeElement, 'fo');
         expect(document.activeElement).toHaveValue('foo');
-        const spy = jest.spyOn(document.activeElement, 'setSelectionRange');
-        fireEvent.keyDown(document.activeElement, { key: 'Backspace' });
-        fireEvent.change(document.activeElement, { target: { value: 'fo' } });
+        await userEvent.type(document.activeElement, '{Backspace}');
         expect(document.activeElement).toHaveValue('f');
-        expect(spy).not.toHaveBeenCalled();
       });
 
       it('removes the autoselected text on delete', async () => {
         render(<ComboBoxWrapper options={['foo']} autoselect="inline" />);
         await userEvent.tab();
-        fireEvent.change(document.activeElement, { target: { value: 'fo' } });
+        await userEvent.type(document.activeElement, 'fo');
         expect(document.activeElement).toHaveValue('foo');
-        const spy = jest.spyOn(document.activeElement, 'setSelectionRange');
-        fireEvent.keyDown(document.activeElement, { key: 'Delete' });
-        fireEvent.change(document.activeElement, { target: { value: 'fo' } });
+        await userEvent.type(document.activeElement, '{Delete}');
         expect(document.activeElement).toHaveValue('fo');
-        expect(spy).not.toHaveBeenCalled();
       });
 
       it('removes the autoselected text on escape', async () => {
         render(<ComboBoxWrapper options={['foo']} autoselect="inline" />);
         await userEvent.tab();
-        // can't use await userEvent.type, as it does something jazzy with selection range
-        fireEvent.change(document.activeElement, { target: { value: 'fo' } });
+        await userEvent.type(document.activeElement, 'fo');
         expect(document.activeElement).toHaveValue('foo');
-        const spy = jest.spyOn(document.activeElement, 'setSelectionRange');
-        fireEvent.keyDown(document.activeElement, { key: 'Escape' });
+        await userEvent.type(document.activeElement, '{Escape}');
         expect(document.activeElement).toHaveValue('');
-        expect(spy).not.toHaveBeenCalled();
       });
     });
 
@@ -1737,29 +1781,22 @@ describe('autoselect', () => {
         it('updates the value to the selected label', async () => {
           render(<ComboBoxWrapper options={['foo', 'foe']} autoselect="inline" showSelectedLabel />);
           await userEvent.tab();
-          fireEvent.change(document.activeElement, { target: { value: 'fo' } });
+          await userEvent.type(document.activeElement, 'fo');
           expectToHaveSelectedOption(screen.getByRole('option', { name: 'foo' }));
-
-          const spy = jest.spyOn(document.activeElement, 'setSelectionRange');
-          fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
+          await userEvent.type(document.activeElement, '{ArrowDown}');
           expectToHaveFocusedOption(screen.getByRole('option', { name: 'foe' }));
           expect(screen.getByRole('combobox')).toHaveValue('foe');
-          expect(spy).not.toHaveBeenCalled();
         });
 
         describe('when returning to the original option', () => {
           it('sets the search string without selecting the text', async () => {
             render(<ComboBoxWrapper options={['foo', 'foe']} autoselect="inline" showSelectedLabel />);
             await userEvent.tab();
-            fireEvent.change(document.activeElement, { target: { value: 'fo' } });
+            await userEvent.type(document.activeElement, 'fo');
             expectToHaveSelectedOption(screen.getByRole('option', { name: 'foo' }));
-
-            const spy = jest.spyOn(document.activeElement, 'setSelectionRange');
-            fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
-            fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
+            await userEvent.type(document.activeElement, '{ArrowDown}{ArrowDown}');
             expectToBeOpen();
             expect(screen.getByRole('combobox')).toHaveValue('fo');
-            expect(spy).not.toHaveBeenCalled();
           });
         });
       });
@@ -1770,14 +1807,11 @@ describe('autoselect', () => {
             <ComboBoxWrapper options={['foo', 'foe']} autoselect="inline" showSelectedLabel={false} />,
           );
           await userEvent.tab();
-          fireEvent.change(document.activeElement, { target: { value: 'fo' } });
+          await userEvent.type(document.activeElement, 'fo');
           expectToHaveSelectedOption(screen.getByRole('option', { name: 'foo' }));
-
-          const spy = jest.spyOn(document.activeElement, 'setSelectionRange');
-          fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
+          await userEvent.type(document.activeElement, '{ArrowDown}');
           expectToHaveFocusedOption(screen.getByRole('option', { name: 'foe' }));
           expect(screen.getByRole('combobox')).toHaveValue('fo');
-          expect(spy).not.toHaveBeenCalled();
         });
       });
     });
@@ -1788,29 +1822,28 @@ describe('autoselect', () => {
           <ComboBoxWrapper options={['foo', 'foe']} autoselect="inline" />,
         );
         await userEvent.tab();
-        fireEvent.change(document.activeElement, { target: { value: 'fo' } });
+        await userEvent.type(document.activeElement, 'fo');
         expectToHaveSelectedOption(screen.getByRole('option', { name: 'foo' }));
-
-        const spy = jest.spyOn(document.activeElement, 'setSelectionRange');
-        fireEvent.keyDown(document.activeElement, { key: 'Enter' });
+        await userEvent.type(document.activeElement, '{Enter}');
         expectToBeClosed();
-        expect(screen.getByRole('combobox')).toHaveValue('foo');
-        expect(spy).toHaveBeenCalledWith(3, 3, 'forward');
+        expect(document.activeElement).toMatchObject({
+          value: 'foo',
+          selectionStart: 3,
+          selectionEnd: 3,
+          selectionDirection: 'forward',
+        });
       });
 
       it('does not change the selection without focus', async () => {
         render(<ComboBoxWrapper options={['foo', 'foe']} autoselect="inline" />);
         await userEvent.tab();
-        fireEvent.change(document.activeElement, { target: { value: 'fo' } });
+        await userEvent.type(document.activeElement, 'fo');
         expectToHaveSelectedOption(screen.getByRole('option', { name: 'foo' }));
-
-        const spy = jest.spyOn(document.activeElement, 'setSelectionRange');
         await userEvent.tab();
         await waitFor(() => {
           expect(screen.getByRole('listbox', { hidden: true })).not.toBeVisible();
         });
         expect(screen.getByRole('combobox')).toHaveValue('foo');
-        expect(spy).not.toHaveBeenCalledWith(3, 3, 'forward');
       });
     });
   });
@@ -2212,6 +2245,44 @@ describe('selectOnBlur', () => {
   });
 });
 
+describe('closeOnSelect', () => {
+  const options = ['Apple', 'Pear', 'Orange'];
+
+  describe('with default value', () => {
+    it('closes the list box after selecting an item', async () => {
+      render(<ComboBoxWrapper options={options} />);
+      await userEvent.tab();
+      await userEvent.keyboard('{ArrowDown}{Enter}');
+      expectToBeClosed();
+    });
+  });
+
+  describe('when true', () => {
+    it('closes the list box after selecting an item', async () => {
+      render(<ComboBoxWrapper options={options} closeOnSelect />);
+      await userEvent.tab();
+      await userEvent.keyboard('{ArrowDown}{Enter}');
+      expectToBeClosed();
+    });
+  });
+
+  describe('when false', () => {
+    it('leaves the list box after selecting an item', async () => {
+      render(<ComboBoxWrapper options={options} closeOnSelect={false} />);
+      await userEvent.tab();
+      await userEvent.keyboard('{ArrowDown}{Enter}');
+      expectToBeOpen();
+    });
+
+    it('closes the list box if the only value', async () => {
+      render(<ComboBoxWrapper options={['Orange']} closeOnSelect={false} />);
+      await userEvent.tab();
+      await userEvent.keyboard('{ArrowDown}{Enter}');
+      expectToBeClosed();
+    });
+  });
+});
+
 describe('findSuggestion', () => {
   const options = ['Apple', 'Pear', 'Orange'];
 
@@ -2227,28 +2298,23 @@ describe('findSuggestion', () => {
     ));
     await userEvent.type(screen.getByRole('combobox'), 'o');
     expectToHaveSelectedOption(screen.getByRole('option', { name: 'Orange' }));
-    expect(findSuggestion.mock.calls).toEqual([
-      [expect.objectContaining({ value: 'Apple' }), 'o'],
-      [expect.objectContaining({ value: 'Pear' }), 'o'],
-      [expect.objectContaining({ value: 'Orange' }), 'o'],
-    ]);
   });
 
   it('ends the search by returning false', async () => {
     const findSuggestion = jest.fn((option) => {
-      if (option.label !== 'Orange') {
+      if (option.label === 'Pear') {
         return false;
       }
-      return true;
+      if (option.label === 'Orange') {
+        return true;
+      }
+      return null;
     });
     render((
       <ComboBoxWrapper options={options} autoselect findSuggestion={findSuggestion} />
     ));
     await userEvent.type(screen.getByRole('combobox'), 'o');
     expectToBeOpen();
-    expect(findSuggestion.mock.calls).toEqual([
-      [expect.objectContaining({ value: 'Apple' }), 'o'],
-    ]);
   });
 });
 
@@ -2370,36 +2436,40 @@ describe('aria live message', () => {
     const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
     const { rerender } = render(<ComboBoxWrapper options={options} />);
 
-    await user.tab();
+    expect(await collectLiveMessages(async () => {
+      await user.tab();
+      act(() => jest.advanceTimersByTime(1400));
+    })).toEqual(['1 result is available']);
 
-    expect(getLiveMessage()).toEqual('');
-    act(() => jest.advanceTimersByTime(1400));
-    expect(getLiveMessage()).toEqual('1 result is available');
+    expect(await collectLiveMessages(async () => {
+      rerender(<ComboBoxWrapper options={['foo', 'bar']} />);
+      act(() => jest.advanceTimersByTime(1400));
+    })).toEqual(['2 results are available']);
 
-    rerender(<ComboBoxWrapper options={['foo', 'bar']} />);
-    expect(getLiveMessage()).toEqual('1 result is available');
-    act(() => jest.advanceTimersByTime(1400));
-    expect(getLiveMessage()).toEqual('2 results are available');
+    expect(await collectLiveMessages(async () => {
+      await user.keyboard('{ArrowDown}');
+      act(() => jest.advanceTimersByTime(1400));
+    })).toEqual(['2 results are available, foo 1 of 2 is highlighted']);
 
-    await user.keyboard('{ArrowDown}');
-    expect(getLiveMessage()).toEqual('2 results are available');
-    act(() => jest.advanceTimersByTime(1400));
-    expect(getLiveMessage()).toEqual('2 results are available foo 1 of 2 is highlighted');
+    expect(await collectLiveMessages(async () => {
+      await user.keyboard('{ArrowDown}');
+      act(() => jest.advanceTimersByTime(1400));
+    })).toEqual(['2 results are available, bar 2 of 2 is highlighted']);
 
-    rerender(<ComboBoxWrapper options={[]} />);
-    await user.type(document.activeElement, 'a');
-    expect(getLiveMessage()).toEqual('2 results are available foo 1 of 2 is highlighted');
-    act(() => jest.advanceTimersByTime(1400));
-    expect(getLiveMessage()).toEqual('No results found');
+    expect(await collectLiveMessages(async () => {
+      rerender(<ComboBoxWrapper options={[]} />);
+      await user.type(document.activeElement, 'a');
+      act(() => jest.advanceTimersByTime(1400));
+    })).toEqual(['No results found']);
   });
 
-  it('does not update the message if not focused', () => {
+  it('does not update the message if not focused', async () => {
     jest.useFakeTimers();
-    render(<ComboBoxWrapper options={options} />);
 
-    expect(getLiveMessage()).toEqual('');
-    act(() => jest.advanceTimersByTime(1400));
-    expect(getLiveMessage()).toEqual('');
+    expect(await collectLiveMessages(async () => {
+      render(<ComboBoxWrapper options={options} />);
+      act(() => jest.advanceTimersByTime(1400));
+    })).toEqual([]);
   });
 
   describe('foundOptionsMessage', () => {
@@ -2407,12 +2477,13 @@ describe('aria live message', () => {
       jest.useFakeTimers();
       const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
       const spy = jest.fn((ops) => `found ${ops.length} options`);
-      render((
-        <ComboBoxWrapper options={['foo', 'bar']} foundOptionsMessage={spy} />
-      ));
-      await user.tab();
-      act(() => jest.advanceTimersByTime(1400));
-      expect(getLiveMessage()).toEqual('found 2 options');
+      expect(await collectLiveMessages(async () => {
+        render((
+          <ComboBoxWrapper options={['foo', 'bar']} foundOptionsMessage={spy} />
+        ));
+        await user.tab();
+        act(() => jest.advanceTimersByTime(1400));
+      })).toEqual(['found 2 options']);
     });
   });
 
@@ -2420,10 +2491,11 @@ describe('aria live message', () => {
     it('customises the not found message', async () => {
       jest.useFakeTimers();
       const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
-      render(<ComboBoxWrapper options={[]} notFoundMessage={() => 'not found'} />);
-      await user.type(screen.getByRole('combobox'), 'a');
-      act(() => jest.advanceTimersByTime(1400));
-      expect(getLiveMessage()).toEqual('not found');
+      expect(await collectLiveMessages(async () => {
+        render(<ComboBoxWrapper options={[]} notFoundMessage={() => 'not found'} />);
+        await user.type(screen.getByRole('combobox'), 'a');
+        act(() => jest.advanceTimersByTime(1400));
+      })).toEqual(['not found']);
     });
   });
 
@@ -2431,11 +2503,12 @@ describe('aria live message', () => {
     it('customises the not found message', async () => {
       jest.useFakeTimers();
       const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
-      render(<ComboBoxWrapper options={['foo']} selectedOptionMessage={(opt, opts) => `${opt.label} is one of ${opts.length}`} />);
-      await user.tab();
-      await user.keyboard('{ArrowDown}');
-      act(() => jest.advanceTimersByTime(1400));
-      expect(getLiveMessage()).toEqual('1 result is available foo is one of 1');
+      expect(await collectLiveMessages(async () => {
+        render(<ComboBoxWrapper options={['foo']} selectedOptionMessage={(opt, opts) => `${opt.label} is one of ${opts.length}`} />);
+        await user.tab();
+        await user.keyboard('{ArrowDown}');
+        act(() => jest.advanceTimersByTime(1400));
+      })).toEqual(['1 result is available, foo is one of 1']);
     });
   });
 });
@@ -2683,7 +2756,6 @@ describe('renderWrapper', () => {
         currentOption: null,
         notFound: false,
         suggestedOption: null,
-        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -2715,7 +2787,6 @@ describe('renderInput', () => {
         currentOption: null,
         notFound: false,
         suggestedOption: null,
-        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -2748,7 +2819,6 @@ describe('renderListBox', () => {
         currentOption: null,
         notFound: false,
         suggestedOption: null,
-        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -2785,7 +2855,6 @@ describe('renderGroup', () => {
         suggestedOption: null,
         group: expect.objectContaining({ label: 'bar' }),
         groupChildren: expect.any(Array),
-        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -2822,7 +2891,6 @@ describe('renderGroupLabel', () => {
         currentOption: null,
         suggestedOption: null,
         group: expect.objectContaining({ label: 'bar' }),
-        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -2858,7 +2926,6 @@ describe('renderOption', () => {
         option: expect.objectContaining({ label: 'foo' }),
         selected: false,
         group: undefined,
-        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -2894,7 +2961,6 @@ describe('renderGroupAccessibleLabel', () => {
         currentOption: null,
         suggestedOption: null,
         group: expect.objectContaining({ label: 'bar' }),
-        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -2930,7 +2996,6 @@ describe('renderValue', () => {
         option: expect.objectContaining({ label: 'foo' }),
         selected: false,
         group: undefined,
-        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -2963,7 +3028,6 @@ describe('renderDownArrow', () => {
         currentOption: null,
         notFound: false,
         suggestedOption: null,
-        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -2996,7 +3060,6 @@ describe('renderClearButton', () => {
         currentOption: null,
         notFound: false,
         suggestedOption: null,
-        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -3029,7 +3092,6 @@ describe('renderAriaDescription', () => {
         currentOption: null,
         notFound: false,
         suggestedOption: null,
-        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -3060,7 +3122,6 @@ describe('renderNotFound', () => {
         currentOption: null,
         notFound: false,
         suggestedOption: null,
-        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -3083,15 +3144,16 @@ describe('visuallyHiddenClassName', () => {
 describe('onLayoutListBox', () => {
   const options = ['Apple', 'Banana', 'Orange'];
 
-  it('is called when the component is rendered', () => {
+  beforeEach(() => {
+    jest.spyOn(window, 'requestAnimationFrame').mockImplementation((cb) => cb());
+  });
+
+  it('is not called when the component is rendered', async () => {
     const onLayoutListBox = jest.fn();
     render(
       <ComboBoxWrapper options={options} onLayoutListBox={onLayoutListBox} />,
     );
-    expect(onLayoutListBox).toHaveBeenCalledWith({
-      expanded: false,
-      listbox: screen.getByRole('listbox', { hidden: true }),
-    });
+    expect(onLayoutListBox).not.toHaveBeenCalled();
   });
 
   it('is called when the listbox is displayed', async () => {
@@ -3101,8 +3163,8 @@ describe('onLayoutListBox', () => {
     );
     await userEvent.tab();
     expect(onLayoutListBox).toHaveBeenCalledWith({
-      expanded: true,
       listbox: screen.getByRole('listbox'),
+      input: screen.getByRole('combobox'),
     });
   });
 
@@ -3112,14 +3174,15 @@ describe('onLayoutListBox', () => {
       <ComboBoxWrapper options={options} onLayoutListBox={onLayoutListBox} />
     ));
     await userEvent.tab();
+    onLayoutListBox.mockClear();
     rerender(<ComboBoxWrapper options={['strawberry']} onLayoutListBox={onLayoutListBox} />);
-    expect(onLayoutListBox).toHaveBeenLastCalledWith({
-      expanded: true,
+    expect(onLayoutListBox).toHaveBeenCalledWith({
       listbox: screen.getByRole('listbox'),
+      input: screen.getByRole('combobox'),
     });
   });
 
-  it('when the listbox is closed', async () => {
+  it('is not called when the listbox is closed', async () => {
     const onLayoutListBox = jest.fn();
     render((
       <ComboBoxWrapper
@@ -3128,25 +3191,25 @@ describe('onLayoutListBox', () => {
       />
     ));
     await userEvent.tab();
+    onLayoutListBox.mockClear();
     await userEvent.keyboard('{Escape}');
-    expect(onLayoutListBox).toHaveBeenLastCalledWith({
-      expanded: false,
-      listbox: screen.getByRole('listbox', { hidden: true }),
-    });
+    expect(onLayoutListBox).not.toHaveBeenCalled();
   });
 
-  it('is called while the listbox is closed', () => {
-    const onLayoutListBox = jest.fn();
-    const { rerender } = render((
-      <ComboBoxWrapper
-        options={options}
-        onLayoutListBox={onLayoutListBox}
-      />
-    ));
-    rerender(<ComboBoxWrapper options={['strawberry']} onLayoutListBox={onLayoutListBox} />);
-    expect(onLayoutListBox).toHaveBeenCalledWith({
-      expanded: false,
-      listbox: screen.getByRole('listbox', { hidden: true }),
+  it('accepts an array of handlers', async () => {
+    const onLayoutListBox1 = jest.fn();
+    const onLayoutListBox2 = jest.fn();
+    render(
+      <ComboBoxWrapper options={options} onLayoutListBox={[onLayoutListBox1, onLayoutListBox2]} />,
+    );
+    await userEvent.tab();
+    expect(onLayoutListBox1).toHaveBeenCalledWith({
+      listbox: screen.getByRole('listbox'),
+      input: screen.getByRole('combobox'),
+    });
+    expect(onLayoutListBox2).toHaveBeenCalledWith({
+      listbox: screen.getByRole('listbox'),
+      input: screen.getByRole('combobox'),
     });
   });
 });

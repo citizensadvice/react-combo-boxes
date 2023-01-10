@@ -15,17 +15,17 @@ describe('when natural table width is the auto table width', () => {
       </table>
     `;
 
-    const container = document.createElement('div');
-    container.innerHTML = html;
-    document.body.appendChild(container);
+    const listbox = document.createElement('div');
+    listbox.innerHTML = html;
+    document.body.appendChild(listbox);
 
-    const table = container.querySelector('table');
+    const table = listbox.querySelector('table');
 
     jest.spyOn(table, 'clientWidth', 'get')
       .mockImplementationOnce(() => 100)
       .mockImplementationOnce(() => 100);
 
-    layoutColumnsAlignLeft(container);
+    layoutColumnsAlignLeft({ listbox });
 
     table.querySelectorAll('col').forEach((col) => {
       expect(col).toHaveStyle({ width: '' });
@@ -50,11 +50,11 @@ describe('when natural table width not less then the auto table width', () => {
       </table>
     `;
 
-    const container = document.createElement('div');
-    container.innerHTML = html;
-    document.body.appendChild(container);
+    const listbox = document.createElement('div');
+    listbox.innerHTML = html;
+    document.body.appendChild(listbox);
 
-    const table = container.querySelector('table');
+    const table = listbox.querySelector('table');
 
     jest.spyOn(table, 'clientWidth', 'get')
       .mockImplementationOnce(() => 100)
@@ -64,7 +64,7 @@ describe('when natural table width not less then the auto table width', () => {
       jest.spyOn(td, 'getBoundingClientRect').mockImplementation(() => ({ width: 20 }));
     });
 
-    layoutColumnsAlignLeft(container);
+    layoutColumnsAlignLeft({ listbox });
 
     expect(table.querySelector('col:first-child')).toHaveStyle({
       width: '20px',
@@ -94,11 +94,11 @@ describe('when natural table width not less then the auto table width', () => {
       </table>
     `;
 
-    const container = document.createElement('div');
-    container.innerHTML = html;
-    document.body.appendChild(container);
+    const listbox = document.createElement('div');
+    listbox.innerHTML = html;
+    document.body.appendChild(listbox);
 
-    const table = container.querySelector('table');
+    const table = listbox.querySelector('table');
 
     jest.spyOn(table, 'clientWidth', 'get')
       .mockImplementationOnce(() => 100)
@@ -108,7 +108,7 @@ describe('when natural table width not less then the auto table width', () => {
       jest.spyOn(td, 'getBoundingClientRect').mockImplementation(() => ({ width: 20 }));
     });
 
-    layoutColumnsAlignLeft(container);
+    layoutColumnsAlignLeft({ listbox });
 
     expect(table.querySelector('col:first-child')).toHaveStyle({
       width: '20px',
@@ -134,13 +134,13 @@ describe('when natural table width not less then the auto table width', () => {
       </table>
     `;
 
-    const container = document.createElement('div');
-    container.innerHTML = html;
-    document.body.appendChild(container);
+    const listbox = document.createElement('div');
+    listbox.innerHTML = html;
+    document.body.appendChild(listbox);
 
-    const table = container.querySelector('table');
+    const table = listbox.querySelector('table');
 
-    layoutColumnsAlignLeft(container);
+    layoutColumnsAlignLeft({ listbox });
 
     table.querySelectorAll('col').forEach((col) => {
       expect(col).toHaveStyle({ width: '' });
@@ -161,13 +161,13 @@ describe('when natural table width not less then the auto table width', () => {
       </table>
     `;
 
-    const container = document.createElement('div');
-    container.innerHTML = html;
-    document.body.appendChild(container);
+    const listbox = document.createElement('div');
+    listbox.innerHTML = html;
+    document.body.appendChild(listbox);
 
-    const table = container.querySelector('table');
+    const table = listbox.querySelector('table');
 
-    layoutColumnsAlignLeft(container);
+    layoutColumnsAlignLeft({ listbox });
 
     table.querySelectorAll('col').forEach((col) => {
       expect(col).toHaveStyle({ width: '' });

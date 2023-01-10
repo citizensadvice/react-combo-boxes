@@ -82,12 +82,9 @@ exports[`onSearch updating options updates the displayed options 1`] = `
         aria-atomic="true"
         aria-live="polite"
         role="status"
-      />
-      <div
-        aria-atomic="true"
-        aria-live="polite"
-        role="status"
-      />
+      >
+        <div />
+      </div>
     </div>
   </div>
 </div>
@@ -168,12 +165,9 @@ exports[`options as array of objects disabled sets the aria-disabled attribute 1
         aria-atomic="true"
         aria-live="polite"
         role="status"
-      />
-      <div
-        aria-atomic="true"
-        aria-live="polite"
-        role="status"
-      />
+      >
+        <div />
+      </div>
     </div>
   </div>
 </div>
@@ -310,12 +304,9 @@ exports[`options as array of objects group renders grouped options 1`] = `
         aria-atomic="true"
         aria-live="polite"
         role="status"
-      />
-      <div
-        aria-atomic="true"
-        aria-live="polite"
-        role="status"
-      />
+      >
+        <div />
+      </div>
     </div>
   </div>
 </div>
@@ -404,18 +395,15 @@ exports[`options as array of objects label renders a closed combo box 1`] = `
         aria-atomic="true"
         aria-live="polite"
         role="status"
-      />
-      <div
-        aria-atomic="true"
-        aria-live="polite"
-        role="status"
-      />
+      >
+        <div />
+      </div>
     </div>
   </div>
 </div>
 `;
 
-exports[`options as array of objects missing label treats as a blank string 1`] = `
+exports[`options as array of objects missing label treats as undefined 1`] = `
 <div>
   <div
     aria-busy="false"
@@ -456,9 +444,8 @@ exports[`options as array of objects missing label treats as a blank string 1`] 
       tabindex="-1"
     >
       <li
-        aria-selected="true"
         class="react-combo-boxes-combobox__option"
-        id="id_option_undefined"
+        id="id_option_"
         role="option"
         tabindex="-1"
       />
@@ -481,12 +468,9 @@ exports[`options as array of objects missing label treats as a blank string 1`] 
         aria-atomic="true"
         aria-live="polite"
         role="status"
-      />
-      <div
-        aria-atomic="true"
-        aria-live="polite"
-        role="status"
-      />
+      >
+        <div />
+      </div>
     </div>
   </div>
 </div>
@@ -575,12 +559,9 @@ exports[`options options as array of numbers renders a closed combo box 1`] = `
         aria-atomic="true"
         aria-live="polite"
         role="status"
-      />
-      <div
-        aria-atomic="true"
-        aria-live="polite"
-        role="status"
-      />
+      >
+        <div />
+      </div>
     </div>
   </div>
 </div>
@@ -669,12 +650,9 @@ exports[`options options as array of strings renders a closed combo box 1`] = `
         aria-atomic="true"
         aria-live="polite"
         role="status"
-      />
-      <div
-        aria-atomic="true"
-        aria-live="polite"
-        role="status"
-      />
+      >
+        <div />
+      </div>
     </div>
   </div>
 </div>
@@ -721,7 +699,6 @@ exports[`options options as null renders an option with an empty string 1`] = `
       tabindex="-1"
     >
       <li
-        aria-selected="true"
         class="react-combo-boxes-combobox__option"
         id="id_option_"
         role="option"
@@ -754,12 +731,9 @@ exports[`options options as null renders an option with an empty string 1`] = `
         aria-atomic="true"
         aria-live="polite"
         role="status"
-      />
-      <div
-        aria-atomic="true"
-        aria-live="polite"
-        role="status"
-      />
+      >
+        <div />
+      </div>
     </div>
   </div>
 </div>
@@ -839,12 +813,9 @@ exports[`options options as undefined renders an option with an empty string 1`]
         aria-atomic="true"
         aria-live="polite"
         role="status"
-      />
-      <div
-        aria-atomic="true"
-        aria-live="polite"
-        role="status"
-      />
+      >
+        <div />
+      </div>
     </div>
   </div>
 </div>

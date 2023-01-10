@@ -129,14 +129,12 @@ describe('options', () => {
     });
 
     it('triggers the onChange callback with the selected value', async () => {
-      const spy = jest.fn((e) => e.persist());
+      const spy = jest.fn();
       render(<Test options={options} value="foo" onChange={spy} />);
-      await userEvent.selectOptions(screen.getByRole('combobox'), screen.getAllByRole('option')[1]);
+      const option = screen.getAllByRole('option')[1];
+      await userEvent.selectOptions(screen.getByRole('combobox'), option);
       expect(spy).toHaveBeenCalledWith(expect.objectContaining({
-        target: expect.objectContaining({
-          nodeName: 'SELECT',
-          value: '',
-        }),
+        target: screen.getByRole('combobox'),
       }));
     });
 

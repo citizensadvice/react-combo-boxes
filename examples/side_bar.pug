@@ -1,5 +1,5 @@
 mixin link(href)
-  if href.endsWith(`${example}/index.pug`) || href === path
+  if href.endsWith(`${example}/index.pug`) || (path && href === path.replace(/^~/, '/examples'))
     a
       block
   else
@@ -19,6 +19,7 @@ nav
     +link('/examples/select/mapped_options/index.pug') Mapped options
     +link('/examples/select/html_options/index.pug') HTML options
     +link('/examples/select/very_long_option/index.pug') Very long option
+    +link('/examples/select/large_number_of_options/index.pug') Large number of options
     +link('/examples/select/id_options/index.pug') Options with an number id
     +link('/examples/select/multiple/index.pug') Multiple options
     +link('/examples/select/multiple_with_disabled/index.pug') Multiple options with disabled
@@ -39,6 +40,7 @@ nav
     +link('/examples/combo_box/aria_1_2_groups/index.pug') ARIA 1.2 groups
     +link('/examples/combo_box/listbox_footer/index.pug') Listbox footer
     +link('/examples/combo_box/tab_select/index.pug') Tab select
+    +link('/examples/combo_box/layout_listbox/index.pug') Layout listbox
     +link('/examples/combo_box/contain_listbox/index.pug') Contain listbox
     details
       summary Searches
@@ -47,6 +49,7 @@ nav
       +link('/examples/combo_box/async_search/index.pug') Async search
       +link('/examples/combo_box/search_suggestions/index.pug') Search suggestions
       +link('/examples/combo_box/background_autocomplete/index.pug') With background autocomplete
+      +link('/examples/combo_box/close_on_select/index.pug') Close on select
     details
       summary Edge cases
       +link('/examples/combo_box/identical_options/index.pug') Identical options
@@ -62,6 +65,7 @@ nav
       +link('/examples/combo_box_table/combo_box/index.pug') Table
       +link('/examples/combo_box_table/combo_box_headers/index.pug') With headers
       +link('/examples/combo_box_table/combo_box_grouped/index.pug') Grouped
+      +link('/examples/combo_box_table/combo_box_grouped_headers/index.pug') Grouped with headers
       +link('/examples/combo_box_table/combo_box_column_width/index.pug') Column width adjustment
     details
       summary Highlighters

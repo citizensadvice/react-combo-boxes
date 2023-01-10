@@ -1,14 +1,14 @@
-import { useCallback, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { DropDown } from '../../../src';
 import countries from '../../data/countries.json';
+
+function mapOption({ name, code }) {
+  return { label: `${name} (${code})` };
+}
 
 export function Example() {
   const [value, setValue] = useState(null);
   const ref = useRef();
-  const mapOption = useCallback(
-    ({ name, code }) => ({ label: `${name} (${code})` }),
-    [],
-  );
 
   return (
     <>

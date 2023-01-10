@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { ComboBox, substringHighlight } from '../../../src';
+import { ComboBox, SubstringHighlight } from '../../../src';
 
 const options = [
   'Toffee yum yum',
@@ -10,10 +10,15 @@ const options = [
   'Tiramisu (contains raw egg)',
 ];
 
+function renderValue({ children }, { search }) {
+  return (
+    <SubstringHighlight label={children} search={search} />
+  );
+}
+
 export function Example() {
   const [value, setValue] = useState(null);
   const [search, setSearch] = useState(null);
-  const [inverse, setInverse] = useState(false);
   const filteredOptions = useMemo(() => options.filter((v) => v.includes(search)), [search]);
 
   return (
@@ -31,18 +36,8 @@ export function Example() {
         onValue={setValue}
         onSearch={setSearch}
         options={filteredOptions}
-        renderValue={substringHighlight({ inverse })}
+        renderValue={renderValue}
       />
-
-      <label>
-        <input
-          type="checkbox"
-          onChange={({ target: { checked } }) => setInverse(checked)}
-          checked={inverse}
-        />
-        {' '}
-        Toggle inverse
-      </label>
 
       <label htmlFor="output">
         Current value

@@ -1,45 +1,50 @@
-import { useRef, useEffect, useCallback, useState } from 'react';
+import { useRef, useEffect, useLayoutEffect } from 'react';
 
-export function useLayoutListBox(...helpers) {
-  const [enabled, setEnabled] = useState();
-  const listboxRef = useRef();
+import { useEvent } from './use_event';
+
+export function useLayoutListBox({ showListBox, onLayoutListBox, options, listboxRef, inputRef }) {
   const animationFrameRef = useRef();
-  const handlerRef = useRef();
 
-  handlerRef.current = () => {
-    helpers.forEach((helper) => helper(listboxRef.current));
-  };
-
-  const handlerWithAnimationFrame = useCallback(() => {
-    cancelAnimationFrame(animationFrameRef.current);
-    animationFrameRef.current = requestAnimationFrame(handlerRef.current);
-  }, []);
-
-  // Called when the list box is opened, closed, or the options or selected option changes
-  const onLayoutListBox = useCallback(({ expanded, listbox }) => {
-    setEnabled(expanded);
-    if (!expanded) {
+  const layout = useEvent(() => {
+    if (!onLayoutListBox) {
       return;
     }
-    listboxRef.current = listbox;
-    handlerWithAnimationFrame();
-  }, [handlerWithAnimationFrame]);
+    cancelAnimationFrame(animationFrameRef.current);
+    animationFrameRef.current = requestAnimationFrame(() => {
+      [].concat(onLayoutListBox).filter(Boolean).forEach((fn) => fn({
+        listbox: listboxRef.current,
+        input: inputRef.current,
+      }));
+    });
+  });
+
+  useLayoutEffect(() => {
+    if (!showListBox) {
+      return;
+    }
+    layout();
+  }, [layout, options, showListBox]);
 
   useEffect(() => {
-    if (!enabled) {
+    const { current: listbox } = listboxRef;
+
+    if (!showListBox) {
       return undefined;
     }
 
-    handlerWithAnimationFrame();
-    window.addEventListener('resize', handlerWithAnimationFrame, { passive: true });
-    window.addEventListener('scroll', handlerWithAnimationFrame, { passive: true });
+    function handleScroll(e) {
+      if (e.target.contains(listbox)) {
+        layout();
+      }
+    }
+
+    window.addEventListener('resize', layout, { passive: true });
+    document.addEventListener('scroll', handleScroll, { passive: true, capture: true });
 
     return () => {
       cancelAnimationFrame(animationFrameRef.current);
-      window.removeEventListener('resize', handlerWithAnimationFrame, { passive: true });
-      window.removeEventListener('scroll', handlerWithAnimationFrame, { passive: true });
+      window.removeEventListener('resize', layout, { passive: true });
+      document.removeEventListener('scroll', handleScroll, { passive: true, capture: true });
     };
-  }, [enabled, handlerWithAnimationFrame]);
-
-  return onLayoutListBox;
+  }, [showListBox, layout, listboxRef]);
 }

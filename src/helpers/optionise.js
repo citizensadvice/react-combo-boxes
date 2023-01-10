@@ -7,7 +7,7 @@ export function optionise(rawOption, mapOption) {
   if (option != null && typeof option === 'object') {
     const { label, group, value, disabled, html, id, description } = option;
     return {
-      label,
+      label: label ?? '',
       group,
       disabled: !!disabled,
       unselectable: !!disabled,
@@ -21,7 +21,7 @@ export function optionise(rawOption, mapOption) {
   // A primitive
   return {
     label: String(option ?? ''),
-    identity: String(option ?? ''),
+    identity: option != null ? String(option ?? '') : option,
     value: rawOption,
     unselectable: false,
     disabled: false,

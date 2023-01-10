@@ -1,6 +1,6 @@
 import { normaliseHighlight } from '../helpers/normalise_highlight';
 
-export function delimitedHighlighter(term, label, { start, end } = {}) {
+export function delimitedHighlighter(term, { start, end } = {}) {
   if (!term) {
     return [''];
   }

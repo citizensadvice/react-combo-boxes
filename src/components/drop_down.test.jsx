@@ -2,7 +2,6 @@ import { useEffect, useState, forwardRef } from 'react';
 import { render, waitFor, act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { DropDown } from './drop_down';
-import { DISPATCH } from '../constants/dispatch';
 
 const DropDownWrapper = forwardRef(({ value: _value, ...props }, ref) => {
   const [value, setValue] = useState(_value);
@@ -117,7 +116,11 @@ describe('options', () => {
               ));
               await userEvent.tab();
               await userEvent.keyboard('{ArrowDown}');
-              expect(spy).toHaveBeenCalledWith({ option: screen.getByRole('option', { name: 'Apple' }), listbox: screen.getByRole('listbox') });
+              expect(spy).toHaveBeenCalledWith({
+                option: screen.getByRole('option', { name: 'Apple' }),
+                listbox: screen.getByRole('listbox'),
+                input: screen.getByRole('combobox'),
+              });
             });
           });
 
@@ -143,7 +146,11 @@ describe('options', () => {
               ));
               await userEvent.tab();
               await userEvent.keyboard('{ArrowUp}');
-              expect(spy).toHaveBeenCalledWith({ option: screen.getByRole('option', { name: 'Apple' }), listbox: screen.getByRole('listbox') });
+              expect(spy).toHaveBeenCalledWith({
+                option: screen.getByRole('option', { name: 'Apple' }),
+                listbox: screen.getByRole('listbox'),
+                input: screen.getByRole('combobox'),
+              });
             });
           });
         });
@@ -245,7 +252,11 @@ describe('options', () => {
             ));
             await userEvent.click(screen.getByRole('combobox'));
             await userEvent.keyboard('{ArrowDown}');
-            expect(spy).toHaveBeenCalledWith({ option: screen.getByRole('option', { name: 'Banana' }), listbox: screen.getByRole('listbox') });
+            expect(spy).toHaveBeenCalledWith({
+              option: screen.getByRole('option', { name: 'Banana' }),
+              listbox: screen.getByRole('listbox'),
+              input: screen.getByRole('combobox'),
+            });
           });
         });
 
@@ -279,7 +290,11 @@ describe('options', () => {
             ));
             await userEvent.click(screen.getByRole('combobox'));
             await userEvent.keyboard('{ArrowUp}');
-            expect(spy).toHaveBeenCalledWith({ option: screen.getByRole('option', { name: 'Orange' }), listbox: screen.getByRole('listbox') });
+            expect(spy).toHaveBeenCalledWith({
+              option: screen.getByRole('option', { name: 'Orange' }),
+              listbox: screen.getByRole('listbox'),
+              input: screen.getByRole('combobox'),
+            });
           });
         });
 
@@ -1259,7 +1274,11 @@ describe('value', () => {
       <DropDownWrapper options={options} value="Banana" onLayoutFocusedOption={spy} />
     ));
     await userEvent.click(screen.getByRole('combobox'));
-    expect(spy).toHaveBeenCalledWith({ option: screen.getByRole('option', { name: 'Banana' }), listbox: screen.getByRole('listbox') });
+    expect(spy).toHaveBeenCalledWith({
+      option: screen.getByRole('option', { name: 'Banana' }),
+      listbox: screen.getByRole('listbox'),
+      input: screen.getByRole('combobox'),
+    });
   });
 
   describe('value is not in options', () => {
@@ -1380,7 +1399,11 @@ describe('managedFocus', () => {
       await userEvent.click(screen.getByRole('combobox'));
       expect(comboBox).toHaveFocus();
       await userEvent.keyboard('{ArrowDown}');
-      expect(spy).toHaveBeenCalledWith({ option: screen.getByRole('option', { name: 'Banana' }), listbox: screen.getByRole('listbox') });
+      expect(spy).toHaveBeenCalledWith({
+        option: screen.getByRole('option', { name: 'Banana' }),
+        listbox: screen.getByRole('listbox'),
+        input: screen.getByRole('combobox'),
+      });
     });
 
     it('allows an option to be selected', async () => {
@@ -1665,7 +1688,6 @@ describe('renderWrapper', () => {
         }),
         notFound: false,
         suggestedOption: null,
-        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -1699,7 +1721,6 @@ describe('renderComboBox', () => {
         }),
         notFound: false,
         suggestedOption: null,
-        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -1733,7 +1754,6 @@ describe('renderListBoxWrapper', () => {
         }),
         notFound: false,
         suggestedOption: null,
-        [DISPATCH]: expect.any(Function),
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
@@ -1752,15 +1772,16 @@ describe('additional props', () => {
 describe('onLayoutListBox', () => {
   const options = ['Apple', 'Banana', 'Orange'];
 
-  it('is called when the component is rendered', () => {
+  beforeEach(() => {
+    jest.spyOn(window, 'requestAnimationFrame').mockImplementation((cb) => cb());
+  });
+
+  it('is not called when the component is rendered', () => {
     const onLayoutListBox = jest.fn();
     render(
       <DropDownWrapper options={options} onLayoutListBox={onLayoutListBox} />,
     );
-    expect(onLayoutListBox).toHaveBeenCalledWith({
-      expanded: false,
-      listbox: screen.getByRole('listbox', { hidden: true }),
-    });
+    expect(onLayoutListBox).not.toHaveBeenCalled();
   });
 
   it('is called when the listbox is displayed', async () => {
@@ -1770,8 +1791,8 @@ describe('onLayoutListBox', () => {
     );
     await userEvent.click(screen.getByRole('combobox'));
     expect(onLayoutListBox).toHaveBeenCalledWith({
-      expanded: true,
       listbox: screen.getByRole('listbox'),
+      input: screen.getByRole('combobox'),
     });
   });
 
@@ -1781,14 +1802,15 @@ describe('onLayoutListBox', () => {
       <DropDownWrapper options={options} onLayoutListBox={onLayoutListBox} />
     ));
     await userEvent.click(screen.getByRole('combobox'));
+    onLayoutListBox.mockClear();
     rerender(<DropDownWrapper options={['strawberry']} onLayoutListBox={onLayoutListBox} />);
-    expect(onLayoutListBox).toHaveBeenLastCalledWith({
-      expanded: true,
+    expect(onLayoutListBox).toHaveBeenCalledWith({
       listbox: screen.getByRole('listbox'),
+      input: screen.getByRole('combobox'),
     });
   });
 
-  it('is called when a listbox closed', async () => {
+  it('is not called when a listbox is closed', async () => {
     const onLayoutListBox = jest.fn();
     render((
       <DropDownWrapper
@@ -1798,24 +1820,7 @@ describe('onLayoutListBox', () => {
     ));
     await userEvent.click(screen.getByRole('combobox'));
     await userEvent.keyboard('{Escape}');
-    expect(onLayoutListBox).toHaveBeenLastCalledWith({
-      expanded: false,
-      listbox: screen.getByRole('listbox', { hidden: true }),
-    });
-  });
-
-  it('is called while the listbox is closed', () => {
-    const onLayoutListBox = jest.fn();
-    const { rerender } = render((
-      <DropDownWrapper
-        options={options}
-        onLayoutListBox={onLayoutListBox}
-      />
-    ));
-    rerender(<DropDownWrapper options={['strawberry']} onLayoutListBox={onLayoutListBox} />);
-    expect(onLayoutListBox).toHaveBeenLastCalledWith({
-      expanded: false,
-      listbox: screen.getByRole('listbox', { hidden: true }),
-    });
+    onLayoutListBox.mockClear();
+    expect(onLayoutListBox).not.toHaveBeenCalled();
   });
 });

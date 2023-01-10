@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ComboBox, usePrefixSearch, tokenHighlight } from '../../../src';
+import { ComboBox, usePrefixSearch, TokenHighlight } from '../../../src';
 
 const options = [
   'css',
@@ -18,6 +18,12 @@ const options = [
   'css grid',
   'cssd',
 ];
+
+function renderValue(_, { search, option: { label } }) {
+  return (
+    <TokenHighlight search={search} label={label} inverse />
+  );
+}
 
 export function Example() {
   const [value, setValue] = useState(null);
@@ -43,7 +49,8 @@ export function Example() {
         expandOnFocus={false}
         renderDownArrow={() => null}
         renderClearButton={() => null}
-        renderValue={tokenHighlight({ inverse: true })}
+        renderNotFound={() => null}
+        renderValue={renderValue}
       />
 
       <label htmlFor="output">
