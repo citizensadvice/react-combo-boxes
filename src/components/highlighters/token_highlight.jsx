@@ -1,23 +1,23 @@
 import PropTypes from 'prop-types';
-import { Highlight } from '../highlight';
+import { Highlight } from './highlight';
 import { tokenHighlighter } from '../../highlighters/token_highlighter';
 
-export function TokenHighlight({ label, search, inverse }) {
+export function TokenHighlight({ value, search, inverse }) {
   return (
     <Highlight inverse={inverse}>
-      {tokenHighlighter(label || '', search || '')}
+      {tokenHighlighter(value || '', search || '')}
     </Highlight>
   );
 }
 
 TokenHighlight.propTypes = {
-  label: PropTypes.string,
+  value: PropTypes.string,
   search: PropTypes.string,
   inverse: PropTypes.bool,
 };
 
 TokenHighlight.defaultProps = {
-  label: '',
+  value: '',
   search: '',
   inverse: false,
 };

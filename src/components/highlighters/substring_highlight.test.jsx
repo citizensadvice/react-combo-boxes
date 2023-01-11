@@ -4,12 +4,12 @@ import { render } from '@testing-library/react';
 import { SubstringHighlight } from './substring_highlight';
 
 it('highlights empty string', () => {
-  const { container } = render(<SubstringHighlight label="" search="" />);
+  const { container } = render(<SubstringHighlight value="" search="" />);
   expect(container).toMatchInlineSnapshot(`<div />`);
 });
 
 it('highlights with an empty search', () => {
-  const { container } = render(<SubstringHighlight label="foo" search="" />);
+  const { container } = render(<SubstringHighlight value="foo" search="" />);
   expect(container).toMatchInlineSnapshot(`
 <div>
   foo
@@ -18,7 +18,7 @@ it('highlights with an empty search', () => {
 });
 
 it('highlights with no match', () => {
-  const { container } = render(<SubstringHighlight label="foo barfoo" search="fizz" />);
+  const { container } = render(<SubstringHighlight value="foo barfoo" search="fizz" />);
   expect(container).toMatchInlineSnapshot(`
 <div>
   foo barfoo
@@ -27,7 +27,7 @@ it('highlights with no match', () => {
 });
 
 it('highlights with a match', () => {
-  const { container } = render(<SubstringHighlight label="foo barfoo" search="foo" />);
+  const { container } = render(<SubstringHighlight value="foo barfoo" search="foo" />);
   expect(container).toMatchInlineSnapshot(`
 <div>
   <span
@@ -51,7 +51,7 @@ it('highlights with a match', () => {
 });
 
 it('inverses the a highlight', () => {
-  const { container } = render(<SubstringHighlight label="foo barfoo" search="foo" inverse />);
+  const { container } = render(<SubstringHighlight value="foo barfoo" search="foo" inverse />);
   expect(container).toMatchInlineSnapshot(`
 <div>
   <span

@@ -12,7 +12,7 @@ const options = [
 
 function renderValue({ children }, { search }) {
   return (
-    <SubstringHighlight label={children} search={search} />
+    <SubstringHighlight value={children} search={search} />
   );
 }
 

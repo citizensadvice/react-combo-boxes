@@ -15,7 +15,7 @@
 
 ### Added
 
-- Added a `userEvent` option to `selectComboBoxOption`.  This is required for the user-event v14 and fixes some unstable behaviour.
+- Added a `userEvent` option to `selectComboBoxOption`
 - Added `closeOnEnter` option
 
 ### Fixed

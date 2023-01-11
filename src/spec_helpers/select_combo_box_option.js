@@ -47,12 +47,8 @@ export async function selectComboBoxOption({
   searchFor,
   select,
   container = document.body,
-  userEvent,
+  userEvent = importedUserEvent,
 }) {
-  if (!userEvent && importedUserEvent.setup) {
-    console.warn('pass in an instance of userEvent if using user-event v14'); // eslint-disable-line no-console
-    userEvent = importedUserEvent; // eslint-disable-line no-param-reassign
-  }
   const comboBox = await within(container).findByRole('combobox', options(from));
   // Suport ARIA 1.1
   let textBox = comboBox;
