@@ -1,16 +1,16 @@
 # Change log
 
-## 2.0.0.alpha.x
+## 2.0.0
 
 ### Changed
 
-- Project is now built as es6 only
+- (Breaking) The project is now distributed as es6 modules only
 - (Breaking) `onLayoutListBox` now takes an array of handlers and `useLayoutListBox` is removed
 - (Breaking) All `highlight…` methods have been replaced with `Highlight…` react components
 - Substring highlight now highlights all matching parts
 - Some optimisations to reduce renders
 - All top level components are now wrapped in memo
-- The listbox will now scroll to the top if options change and no option is focused
+- The listbox will now scroll to the top when the options change and no option is focused
 - `layoutMaxHeight` will not move the list-box above the combo-box if there is room below.
 
 ### Added
@@ -25,10 +25,7 @@
 - Fix label is set to `undefined` if option is supplied with no label
 - Fix useAsyncSearch not setting options to `null`
 - Fix focused option not scrolling into view in some circumstances
-- Add missing fixes from 1.x
-  - Fix the highlighter helpers not being exported
-  - Fix layoutColumnsAlignLeft not aligning columns where there are groups and no table header
-  - Fix layoutMaxHeight and layoutMaxWidth should use the window height if contain does not resolve to an element
+- `userEvent` is now an optional "peer dependency" and not an "optional dependency"
 
 ## 1.3.5
 
