@@ -1,5 +1,11 @@
 # Change log
 
+## 2.0.1
+
+### Fixed
+
+- Fixed an issue with VoiceOver on Chrome on Monterey removing spaces while reading grouped or table options
+
 ## 2.0.0
 
 ### Changed

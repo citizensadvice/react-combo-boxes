@@ -392,7 +392,7 @@ export function onFocusOption(option) {
   return (dispatch, getState) => {
     const { focusedOption, expanded } = getState();
 
-    if (!expanded || focusedOption.identity === option.identity) {
+    if (!expanded || focusedOption?.identity === option.identity) {
       return;
     }
 

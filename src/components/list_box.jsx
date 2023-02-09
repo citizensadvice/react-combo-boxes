@@ -71,16 +71,20 @@ export const ListBox = forwardRef((
           onClick: disabled ? null : (e) => onSelectOption(e, option),
           onFocus: onFocusOption ? (e) => onFocusOption(e, option) : null,
           children: (
+            // Use non-breaking spaces to fix an issue with Chrome on VoiceOver including spaces
             <>
               {group ? renderGroupAccessibleLabel({
                 className: visuallyHiddenClassName,
-                children: `${group.label} `,
+                children: `${group.label}\u00A0`,
               }, { ...componentState, group }, componentProps) : null}
               {renderValue(
                 { children: label },
                 { ...componentState, selected, option, group },
                 componentProps,
               )}
+              <span className="visuallyHiddenClassName">
+                {'\u00A0'}
+              </span>
             </>
           ),
         }, { ...componentState, selected, option, group }, componentProps);

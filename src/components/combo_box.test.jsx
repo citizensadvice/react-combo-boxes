@@ -1395,9 +1395,9 @@ describe('onSearch', () => {
       rerender(<ComboBoxWrapper options={newOptions} />);
       expect(container).toMatchSnapshot();
       expect(screen.getAllByRole('option').map((o) => o.textContent)).toEqual([
-        'Strawberry',
-        'Raspberry',
-        'Banana',
+        'Strawberry\u00A0',
+        'Raspberry\u00A0',
+        'Banana\u00A0',
       ]);
     });
 
@@ -2950,7 +2950,7 @@ describe('renderGroupAccessibleLabel', () => {
     await userEvent.tab();
     expect(spy).toHaveBeenLastCalledWith(
       expect.objectContaining({
-        children: 'bar ',
+        children: 'bar\u00A0',
       }),
       {
         'aria-autocomplete': 'none',
