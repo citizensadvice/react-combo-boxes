@@ -481,7 +481,7 @@ describe('customisation', () => {
         <ComboBoxWrapper options={options} columns={columns} mapOption={map} renderGroupAccessibleLabel={spy} test="foo" />
       ));
       expect(spy).toHaveBeenLastCalledWith(
-        { children: 'Vegetable ', className: visuallyHiddenClassName },
+        { children: 'Vegetable\u00A0', className: visuallyHiddenClassName },
         {
           'aria-autocomplete': 'none',
           'aria-busy': false,
@@ -514,7 +514,7 @@ describe('customisation', () => {
         <ComboBoxWrapper options={options} columns={columns} mapOption={map} renderTableCellColumnAccessibleLabel={spy} test="foo" />
       ));
       expect(spy).toHaveBeenLastCalledWith(
-        { children: 'Type ', className: visuallyHiddenClassName },
+        { children: 'Type\u00A0', className: visuallyHiddenClassName },
         {
           'aria-autocomplete': 'none',
           'aria-busy': false,

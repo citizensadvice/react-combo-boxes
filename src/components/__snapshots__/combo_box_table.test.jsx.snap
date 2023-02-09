@@ -61,12 +61,22 @@ exports[`cells with html renders a table with colgroups 1`] = `
               role="presentation"
             >
               Apple
+              <span
+                class="visuallyHiddenClassName"
+              >
+                 
+              </span>
             </td>
             <td
               class="bar"
               role="presentation"
             >
               Fruit
+              <span
+                class="visuallyHiddenClassName"
+              >
+                 
+              </span>
             </td>
           </tr>
           <tr
@@ -80,12 +90,22 @@ exports[`cells with html renders a table with colgroups 1`] = `
               role="presentation"
             >
               Banana
+              <span
+                class="visuallyHiddenClassName"
+              >
+                 
+              </span>
             </td>
             <td
               class="bar"
               role="presentation"
             >
               Fruit
+              <span
+                class="visuallyHiddenClassName"
+              >
+                 
+              </span>
             </td>
           </tr>
           <tr
@@ -99,12 +119,22 @@ exports[`cells with html renders a table with colgroups 1`] = `
               role="presentation"
             >
               Potato
+              <span
+                class="visuallyHiddenClassName"
+              >
+                 
+              </span>
             </td>
             <td
               class="bar"
               role="presentation"
             >
               Vegetable
+              <span
+                class="visuallyHiddenClassName"
+              >
+                 
+              </span>
             </td>
           </tr>
         </tbody>
@@ -197,12 +227,22 @@ exports[`columns as names only renders a table as the list box 1`] = `
               role="presentation"
             >
               Apple
+              <span
+                class="visuallyHiddenClassName"
+              >
+                 
+              </span>
             </td>
             <td
               class="react-combo-boxes-combobox__table-cell"
               role="presentation"
             >
               Fruit
+              <span
+                class="visuallyHiddenClassName"
+              >
+                 
+              </span>
             </td>
           </tr>
           <tr
@@ -216,12 +256,22 @@ exports[`columns as names only renders a table as the list box 1`] = `
               role="presentation"
             >
               Banana
+              <span
+                class="visuallyHiddenClassName"
+              >
+                 
+              </span>
             </td>
             <td
               class="react-combo-boxes-combobox__table-cell"
               role="presentation"
             >
               Fruit
+              <span
+                class="visuallyHiddenClassName"
+              >
+                 
+              </span>
             </td>
           </tr>
           <tr
@@ -235,12 +285,22 @@ exports[`columns as names only renders a table as the list box 1`] = `
               role="presentation"
             >
               Potato
+              <span
+                class="visuallyHiddenClassName"
+              >
+                 
+              </span>
             </td>
             <td
               class="react-combo-boxes-combobox__table-cell"
               role="presentation"
             >
               Vegetable
+              <span
+                class="visuallyHiddenClassName"
+              >
+                 
+              </span>
             </td>
           </tr>
           <tr
@@ -255,12 +315,22 @@ exports[`columns as names only renders a table as the list box 1`] = `
               role="presentation"
             >
               Tomato
+              <span
+                class="visuallyHiddenClassName"
+              >
+                 
+              </span>
             </td>
             <td
               class="react-combo-boxes-combobox__table-cell"
               role="presentation"
             >
               Vegetable
+              <span
+                class="visuallyHiddenClassName"
+              >
+                 
+              </span>
             </td>
           </tr>
         </tbody>
@@ -375,9 +445,14 @@ exports[`columns with headers renders a table with headers 1`] = `
               <span
                 class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
-                Name 
+                Name 
               </span>
               Apple
+              <span
+                class="visuallyHiddenClassName"
+              >
+                 
+              </span>
             </td>
             <td
               class="react-combo-boxes-combobox__table-cell"
@@ -386,9 +461,14 @@ exports[`columns with headers renders a table with headers 1`] = `
               <span
                 class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
-                Type 
+                Type 
               </span>
               Fruit
+              <span
+                class="visuallyHiddenClassName"
+              >
+                 
+              </span>
             </td>
           </tr>
           <tr
@@ -404,9 +484,14 @@ exports[`columns with headers renders a table with headers 1`] = `
               <span
                 class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
-                Name 
+                Name 
               </span>
               Banana
+              <span
+                class="visuallyHiddenClassName"
+              >
+                 
+              </span>
             </td>
             <td
               class="react-combo-boxes-combobox__table-cell"
@@ -415,9 +500,14 @@ exports[`columns with headers renders a table with headers 1`] = `
               <span
                 class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
-                Type 
+                Type 
               </span>
               Fruit
+              <span
+                class="visuallyHiddenClassName"
+              >
+                 
+              </span>
             </td>
           </tr>
           <tr
@@ -433,9 +523,14 @@ exports[`columns with headers renders a table with headers 1`] = `
               <span
                 class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
-                Name 
+                Name 
               </span>
               Potato
+              <span
+                class="visuallyHiddenClassName"
+              >
+                 
+              </span>
             </td>
             <td
               class="react-combo-boxes-combobox__table-cell"
@@ -444,9 +539,14 @@ exports[`columns with headers renders a table with headers 1`] = `
               <span
                 class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
-                Type 
+                Type 
               </span>
               Vegetable
+              <span
+                class="visuallyHiddenClassName"
+              >
+                 
+              </span>
             </td>
           </tr>
         </tbody>
@@ -543,12 +643,22 @@ exports[`columns with html renders a table with colgroups 1`] = `
               role="presentation"
             >
               Apple
+              <span
+                class="visuallyHiddenClassName"
+              >
+                 
+              </span>
             </td>
             <td
               class="react-combo-boxes-combobox__table-cell"
               role="presentation"
             >
               Fruit
+              <span
+                class="visuallyHiddenClassName"
+              >
+                 
+              </span>
             </td>
           </tr>
           <tr
@@ -562,12 +672,22 @@ exports[`columns with html renders a table with colgroups 1`] = `
               role="presentation"
             >
               Banana
+              <span
+                class="visuallyHiddenClassName"
+              >
+                 
+              </span>
             </td>
             <td
               class="react-combo-boxes-combobox__table-cell"
               role="presentation"
             >
               Fruit
+              <span
+                class="visuallyHiddenClassName"
+              >
+                 
+              </span>
             </td>
           </tr>
           <tr
@@ -581,12 +701,22 @@ exports[`columns with html renders a table with colgroups 1`] = `
               role="presentation"
             >
               Potato
+              <span
+                class="visuallyHiddenClassName"
+              >
+                 
+              </span>
             </td>
             <td
               class="react-combo-boxes-combobox__table-cell"
               role="presentation"
             >
               Vegetable
+              <span
+                class="visuallyHiddenClassName"
+              >
+                 
+              </span>
             </td>
           </tr>
         </tbody>
@@ -692,15 +822,25 @@ exports[`grouped renders a table with groups 1`] = `
               <span
                 class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
-                Fruit 
+                Fruit 
               </span>
               Apple
+              <span
+                class="visuallyHiddenClassName"
+              >
+                 
+              </span>
             </td>
             <td
               class="react-combo-boxes-combobox__table-cell"
               role="presentation"
             >
               Green
+              <span
+                class="visuallyHiddenClassName"
+              >
+                 
+              </span>
             </td>
           </tr>
           <tr
@@ -716,15 +856,25 @@ exports[`grouped renders a table with groups 1`] = `
               <span
                 class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
-                Fruit 
+                Fruit 
               </span>
               Banana
+              <span
+                class="visuallyHiddenClassName"
+              >
+                 
+              </span>
             </td>
             <td
               class="react-combo-boxes-combobox__table-cell"
               role="presentation"
             >
               Yellow
+              <span
+                class="visuallyHiddenClassName"
+              >
+                 
+              </span>
             </td>
           </tr>
           <tr
@@ -751,15 +901,25 @@ exports[`grouped renders a table with groups 1`] = `
               <span
                 class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
-                Vegetable 
+                Vegetable 
               </span>
               Potato
+              <span
+                class="visuallyHiddenClassName"
+              >
+                 
+              </span>
             </td>
             <td
               class="react-combo-boxes-combobox__table-cell"
               role="presentation"
             >
               Brown
+              <span
+                class="visuallyHiddenClassName"
+              >
+                 
+              </span>
             </td>
           </tr>
         </tbody>
