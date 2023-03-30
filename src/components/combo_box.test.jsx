@@ -2245,6 +2245,64 @@ describe('selectOnBlur', () => {
   });
 });
 
+describe('clearOnSelect', () => {
+  const options = ['Apple', 'Pear', 'Orange'];
+
+  describe('with default value', () => {
+    it('selecting a value calls onSearch with the selected value', async () => {
+      const spy = jest.fn();
+      render(<ComboBoxWrapper options={options} onSearch={spy} />);
+      await userEvent.tab();
+      await userEvent.keyboard('{ArrowDown}{Enter}');
+      expectToBeClosed();
+      expect(spy).toHaveBeenCalledWith('Apple');
+    });
+
+    it('removing a value calls onSearch with an empty string', async () => {
+      const spy = jest.fn();
+      render(<ComboBoxWrapper options={options} onSearch={spy} value="Apple" />);
+      await userEvent.click(screen.getByRole('button', { name: /Clear/ }));
+      expect(spy).toHaveBeenCalledWith('');
+    });
+  });
+
+  describe('when false', () => {
+    it('selecting a value calls onSearch with the selected value', async () => {
+      const spy = jest.fn();
+      render(<ComboBoxWrapper options={options} onSearch={spy} />);
+      await userEvent.tab();
+      await userEvent.keyboard('{ArrowDown}{Enter}');
+      expectToBeClosed();
+      expect(spy).toHaveBeenCalledWith('Apple');
+    });
+
+    it('removing a value calls onSearch with an empty string', async () => {
+      const spy = jest.fn();
+      render(<ComboBoxWrapper options={options} onSearch={spy} value="Apple" />);
+      await userEvent.click(screen.getByRole('button', { name: /Clear/ }));
+      expect(spy).toHaveBeenCalledWith('');
+    });
+  });
+
+  describe('when true', () => {
+    it('selecting a value calls onSearch with an empty string', async () => {
+      const spy = jest.fn();
+      render(<ComboBoxWrapper options={options} onSearch={spy} clearOnSelect />);
+      await userEvent.tab();
+      await userEvent.keyboard('{ArrowDown}{Enter}');
+      expectToBeClosed();
+      expect(spy).toHaveBeenCalledWith('');
+    });
+
+    it('removing a value calls onSearch with an empty string', async () => {
+      const spy = jest.fn();
+      render(<ComboBoxWrapper options={options} onSearch={spy} value="Apple" clearOnSelect />);
+      await userEvent.click(screen.getByRole('button', { name: /Clear/ }));
+      expect(spy).toHaveBeenCalledWith('');
+    });
+  });
+});
+
 describe('closeOnSelect', () => {
   const options = ['Apple', 'Pear', 'Orange'];
 

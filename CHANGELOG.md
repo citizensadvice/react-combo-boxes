@@ -1,5 +1,11 @@
 # Change log
 
+## 2.1.0
+
+### Added
+
+- Added `clearOnSelect` option to `<ComboBox>`
+
 ## 2.0.1
 
 ### Fixed
