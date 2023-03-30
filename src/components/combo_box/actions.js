@@ -81,7 +81,10 @@ export function setFocusedOption(focusedOption) {
 
 export function onSelectValue(newValue, expanded) {
   return (dispatch, getState, getProps) => {
-    const { onSearch, onValue, inputRef, closeOnSelect, value, editable } = getProps();
+    const {
+      onSearch, onValue, inputRef, closeOnSelect,
+      value, editable, clearOnSelect,
+    } = getProps();
     const expand = expanded === undefined ? !closeOnSelect : expanded;
     dispatch({ type: SET_CLOSED, expanded: expand });
     if (newValue?.unselectable) {
@@ -94,7 +97,7 @@ export function onSelectValue(newValue, expanded) {
       if (document.activeElement === input && input.setSelectionRange) {
         input.setSelectionRange(input.value.length, input.value.length, 'forward');
       }
-      onSearch?.(newValue?.label || '');
+      onSearch?.(clearOnSelect ? '' : (newValue?.label || ''));
     }
     onValue?.(newValue ? newValue.value : null);
   };

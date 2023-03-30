@@ -399,6 +399,7 @@ ComboBox.propTypes = {
 
   editable: PropTypes.bool,
   autoselect: PropTypes.oneOf([false, true, 'inline']),
+  clearOnSelect: PropTypes.bool,
   closeOnSelect: PropTypes.bool,
   expandOnFocus: PropTypes.bool,
   findSuggestion: PropTypes.func,
@@ -469,6 +470,7 @@ ComboBox.defaultProps = {
 
   editable: true,
   autoselect: false,
+  clearOnSelect: false,
   closeOnSelect: true,
   expandOnFocus: true,
   findSuggestion: findOption,

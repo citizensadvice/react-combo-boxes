@@ -35,14 +35,14 @@
     "@parcel/resolver-glob": "^2.8.3",
     "@parcel/transformer-pug": "^2.8.3",
     "@parcel/transformer-sass": "^2.8.3",
-    "@swc/cli": "^0.1.61",
+    "@swc/cli": "^0.1.62",
     "@swc/jest": "^0.2.24",
-    "@testing-library/dom": "^8.20.0",
+    "@testing-library/dom": "^9.2.0",
     "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
+    "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
-    "autoprefixer": "^10.4.13",
-    "eslint": "^8.33.0",
+    "autoprefixer": "^10.4.14",
+    "eslint": "^8.37.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-babel": "^5.3.1",
     "eslint-plugin-import": "^2.27.5",
@@ -51,14 +51,14 @@
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-testing-library": "^5.10.1",
+    "eslint-plugin-testing-library": "^5.10.2",
     "gh-pages": "^5.0.0",
-    "jest": "^29.4.2",
-    "jest-environment-jsdom": "^29.4.2",
-    "marked": "^4.2.12",
+    "jest": "^29.5.0",
+    "jest-environment-jsdom": "^29.5.0",
+    "marked": "^4.3.0",
     "node-emoji": "^1.11.0",
     "normalize.css": "^8.0.1",
-    "np": "^7.6.3",
+    "np": "^7.6.4",
     "parcel": "^2.8.3",
     "postcss": "^8.4.21",
     "prismjs": "^1.29.0",
@@ -66,10 +66,10 @@
     "prop-types": "^15.7.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "stylelint": "^14.16.1",
-    "stylelint-config-standard": "^29.0.0",
-    "stylelint-config-standard-scss": "^6.1.0",
-    "stylelint-scss": "^4.3.0"
+    "stylelint": "^15.3.0",
+    "stylelint-config-standard": "^31.0.0",
+    "stylelint-config-standard-scss": "^7.0.1",
+    "stylelint-scss": "^4.6.0"
   },
   "peerDependencies": {
     "@testing-library/user-event": ">= 4.0.0",
@@ -82,7 +82,7 @@
     }
   },
   "dependencies": {
-    "shallow-equal": "^1.2.1"
+    "shallow-equal": "^3.1.0"
   },
   "sideEffects": false,
   "targets": {

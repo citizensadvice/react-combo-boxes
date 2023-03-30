@@ -133,6 +133,11 @@ If `"inline"` then `aria-autocomplete="inline"` is set and the text typed into t
 
 See [ARIA practices][aria-practices-combo-box] for an explanation of these modes.
 
+#### `clearOnSelect: boolean = false`
+
+If true, calls `onSearch` with an empty string when an option is selected.
+If false, `onSearch` is called with the selected label.
+
 #### `closeOnSelect: boolean = true`
 
 Close the listbox when an item is selected.
