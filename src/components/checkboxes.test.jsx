@@ -9,7 +9,6 @@ function Test({ values: _values, ...props }) {
   return (
     <Checkboxes
       id="id"
-      name="name"
       values={values}
       onValues={setValues}
       {...props}
@@ -238,6 +237,28 @@ describe('options', () => {
         expect(screen.getByRole('checkbox', { name: 'Banana', checked: true })).toBeInTheDocument();
       });
     });
+  });
+});
+
+describe('name', () => {
+  it('sets the name', () => {
+    const options = ['Apple'];
+    render(<Test options={options} name="foo" />);
+    const checkbox = screen.getByRole('checkbox');
+    expect(checkbox).toHaveProperty('name', 'foo');
+  });
+});
+
+describe('onChange', () => {
+  it('is called if a checkbox changes checked state', async () => {
+    const options = ['Apple', 'Banana'];
+    const onChange = jest.fn();
+    render(<Test options={options} onChange={onChange} onValue={null} />);
+    const checkbox = screen.getByRole('checkbox', { name: 'Banana' });
+    await userEvent.click(checkbox);
+    expect(onChange).toHaveBeenCalledWith(expect.objectContaining({
+      target: checkbox,
+    }));
   });
 });
 

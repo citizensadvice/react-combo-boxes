@@ -1,5 +1,11 @@
 # Change log
 
+## Unreleased
+
+### Added
+
+- `<Radios>` and `Checkboxes` now support an `onChange` event handler
+
 ## 2.1.0
 
 ### Added

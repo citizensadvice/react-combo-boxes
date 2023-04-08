@@ -266,6 +266,19 @@ describe('name', () => {
   });
 });
 
+describe('onChange', () => {
+  it('is called if a radio changes checked state', async () => {
+    const options = ['Apple', 'Banana'];
+    const onChange = jest.fn();
+    render(<Test options={options} onChange={onChange} onValue={null} />);
+    const radio = screen.getByRole('radio', { name: 'Banana' });
+    await userEvent.click(radio);
+    expect(onChange).toHaveBeenCalledWith(expect.objectContaining({
+      target: radio,
+    }));
+  });
+});
+
 describe('classPrefix', () => {
   it('when null removes the class', () => {
     const options = ['Apple'];
