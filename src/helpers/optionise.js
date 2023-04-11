@@ -5,15 +5,16 @@ export function optionise(rawOption, mapOption) {
   }
 
   if (option != null && typeof option === 'object') {
-    const { label, group, value, disabled, html, id, description } = option;
+    const { label, group, value, disabled, html, id, description, name, title, hint } = option;
+    const calculatedLabel = label ?? name ?? title ?? '';
     return {
-      label: label ?? '',
+      label: calculatedLabel,
       group,
       disabled: !!disabled,
       unselectable: !!disabled,
-      identity: String(value ?? id ?? label ?? ''),
+      identity: String(value ?? id ?? calculatedLabel ?? ''),
       value: rawOption,
-      description,
+      description: description ?? hint,
       html: { ...html },
     };
   }

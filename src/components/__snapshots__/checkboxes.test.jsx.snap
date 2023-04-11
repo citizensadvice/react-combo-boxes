@@ -8,7 +8,6 @@ exports[`options as array of strings renders checkbox group 1`] = `
     <input
       class="react-combo-boxes-checkbox__input"
       id="id_option_apple"
-      name="name"
       type="checkbox"
       value="Apple"
     />
@@ -25,7 +24,6 @@ exports[`options as array of strings renders checkbox group 1`] = `
     <input
       class="react-combo-boxes-checkbox__input"
       id="id_option_banana"
-      name="name"
       type="checkbox"
       value="Banana"
     />
@@ -42,7 +40,6 @@ exports[`options as array of strings renders checkbox group 1`] = `
     <input
       class="react-combo-boxes-checkbox__input"
       id="id_option_orange"
-      name="name"
       type="checkbox"
       value="Orange"
     />
@@ -64,7 +61,6 @@ exports[`options options as array of objects group renders grouped options 1`] =
     <input
       class="react-combo-boxes-checkbox__input"
       id="id_option_apple"
-      name="name"
       type="checkbox"
       value="Apple"
     />
@@ -89,7 +85,6 @@ exports[`options options as array of objects group renders grouped options 1`] =
       <input
         class="react-combo-boxes-checkbox__input"
         id="id_option_orange"
-        name="name"
         type="checkbox"
         value="Orange"
       />
@@ -111,7 +106,6 @@ exports[`options options as array of objects group renders grouped options 1`] =
       <input
         class="react-combo-boxes-checkbox__input"
         id="id_option_lemon"
-        name="name"
         type="checkbox"
         value="Lemon"
       />
@@ -142,7 +136,6 @@ exports[`options options as array of objects group renders grouped options 1`] =
       <input
         class="react-combo-boxes-checkbox__input"
         id="id_option_raspberry"
-        name="name"
         type="checkbox"
         value="Raspberry"
       />
@@ -164,7 +157,6 @@ exports[`options options as array of objects group renders grouped options 1`] =
       <input
         class="react-combo-boxes-checkbox__input"
         id="id_option_strawberry"
-        name="name"
         type="checkbox"
         value="Strawberry"
       />

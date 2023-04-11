@@ -159,6 +159,20 @@ describe('options', () => {
       });
     });
 
+    describe('hint', () => {
+      it('is used as a fallback for description', () => {
+        const options = [{ label: 'foo', hint: 'foo bar' }];
+        render(<Test options={options} />);
+        expect(screen.getByRole('radio')).toHaveAccessibleDescription('foo bar');
+      });
+
+      it('is not used if description is present', () => {
+        const options = [{ label: 'foo', description: 'fizz buzz', hint: 'foo bar' }];
+        render(<Test options={options} />);
+        expect(screen.getByRole('radio')).toHaveAccessibleDescription('fizz buzz');
+      });
+    });
+
     describe('html', () => {
       it('sets attributes on the radio', () => {
         const options = [{ label: 'foo', html: { 'data-foo': 'bar', className: 'class' } }];
@@ -263,6 +277,19 @@ describe('name', () => {
     render(<Test options={options} name="foo" />);
     const radio = screen.getByRole('radio');
     expect(radio).toHaveProperty('name', 'foo');
+  });
+});
+
+describe('onChange', () => {
+  it('is called if a radio changes checked state', async () => {
+    const options = ['Apple', 'Banana'];
+    const onChange = jest.fn();
+    render(<Test options={options} onChange={onChange} onValue={null} />);
+    const radio = screen.getByRole('radio', { name: 'Banana' });
+    await userEvent.click(radio);
+    expect(onChange).toHaveBeenCalledWith(expect.objectContaining({
+      target: radio,
+    }));
   });
 });
 

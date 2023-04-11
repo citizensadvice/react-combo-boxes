@@ -17,6 +17,7 @@ export const Radios = memo((rawProps) => {
     classPrefix,
     groupClassPrefix,
     name,
+    onChange,
     onValue,
     options,
     renderWrapper,
@@ -31,7 +32,8 @@ export const Radios = memo((rawProps) => {
 
   const handleChange = useCallback((e) => {
     onValue?.(options.find((o) => o.identity === e.target.value)?.value);
-  }, [onValue, options]);
+    onChange?.(e);
+  }, [onChange, onValue, options]);
 
   return renderGroupedOptions({
     options,

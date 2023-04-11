@@ -20,8 +20,8 @@
     "prebuild": "rm -rf .gh-pages",
     "build": "parcel build ./examples/index.pug",
     "start": "parcel ./examples/index.pug",
-    "lint:js": "eslint . --ext .js --ext .jsx",
-    "lint:scss": "stylelint \"**/*.scss\"",
+    "lint:js": "eslint . --ext .js --ext .jsx --max-warnings=0",
+    "lint:scss": "stylelint \"**/*.scss\" --max-warnings=0",
     "lint": "npm run lint:js && npm run lint:scss",
     "test": "jest",
     "predeploy": "npm run lint",
@@ -29,7 +29,7 @@
     "preversion": "npm run lint",
     "prepublishOnly": "npm run build:js",
     "postpublish": "npm run deploy",
-    "release": "np"
+    "release": "npx np --any-branch"
   },
   "devDependencies": {
     "@parcel/resolver-glob": "^2.8.3",
@@ -42,7 +42,7 @@
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
     "autoprefixer": "^10.4.14",
-    "eslint": "^8.37.0",
+    "eslint": "^8.38.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-babel": "^5.3.1",
     "eslint-plugin-import": "^2.27.5",
@@ -58,7 +58,6 @@
     "marked": "^4.3.0",
     "node-emoji": "^1.11.0",
     "normalize.css": "^8.0.1",
-    "np": "^7.6.4",
     "parcel": "^2.8.3",
     "postcss": "^8.4.21",
     "prismjs": "^1.29.0",
@@ -66,8 +65,8 @@
     "prop-types": "^15.7.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "stylelint": "^15.3.0",
-    "stylelint-config-standard": "^31.0.0",
+    "stylelint": "^15.4.0",
+    "stylelint-config-standard": "^32.0.0",
     "stylelint-config-standard-scss": "^7.0.1",
     "stylelint-scss": "^4.6.0"
   },

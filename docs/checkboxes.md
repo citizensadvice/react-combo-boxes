@@ -21,6 +21,12 @@ const [values, setValues] = useState(initialValues);
 
 ## Props
 
+### `name: String`
+
+Optional. `name` attribute for each checkbox.
+
+Use the `html` option on an option if any checkbox needs a unique name.
+
 ### `options: Array<any>`
 
 The options to display. [See options][options].  
@@ -34,6 +40,10 @@ Map an option into label, value, disabled and group. [See options][options]
 ### `values: Array<any>`
 
 The currently selected option
+
+### `onChange: (event: Event) => void`
+
+Change event added to each checkbox.
 
 ### `onValues: (option: Array<any>) => void`
 

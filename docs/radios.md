@@ -22,6 +22,10 @@ const [value, setValue] = useState(initialValue);
 
 ## Props
 
+### `name: String`
+
+`name` attribute for each radio. This is required by HTML for a radio group to function.
+
 ### `options: Array<any>`
 
 The options to display. [See options][options].  
@@ -35,6 +39,10 @@ Map an option into label, value, disabled and group. [See options][options]
 ### `value: any`
 
 The currently selected option
+
+### `onChange: (event: Event) => void`
+
+Change event added to each radio.
 
 ### `onValue: (option: any) => void`
 

@@ -28,10 +28,7 @@ export function Example() {
         id="select"
         aria-labelledby="select-label"
         onValue={setValue}
-        onSearch={(s) => {
-          console.log(s);
-          setSearch(s);
-        }}
+        onSearch={(s) => setSearch(s)}
         options={filteredOptions}
         clearOnSelect={clearOnSelect}
       />

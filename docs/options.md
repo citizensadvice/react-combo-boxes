@@ -12,16 +12,24 @@ Where `Option` has the type:
 type Option = {
   // The visible label
   label?: string;
+  // Used as a fallback for `label`
+  name?: string;
+  // Used as a fallback for `label` and `name`
+  title?: string;
   // Is the option disabled and unselectable
   disabled?: boolean;
   // Group the option by this key
   group?: string;
   // Used to calculate the options identity
   value?: any;
-  // Used to calculate the options identity
+  // Used as a fallback for `value`
   id?: string;
   // HTML attributes to add to the option
   html?: object;
+  // A description of the option - only used on `<Radio>` and `<Checkboxes>`
+  description?: string | ReactElement;
+  // Used as a fallback for `description`
+  hint?: string | ReactElement;
 };
 ```
 

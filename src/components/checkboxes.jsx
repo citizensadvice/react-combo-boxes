@@ -16,6 +16,7 @@ export const Checkboxes = memo((rawProps) => {
     classPrefix,
     groupClassPrefix,
     name,
+    onChange,
     onValues,
     options,
     renderWrapper,
@@ -45,7 +46,7 @@ export const Checkboxes = memo((rawProps) => {
     }
   }, []);
 
-  function handleChange() {
+  function handleChange(e) {
     // When getting the checked values,
     // we need to get all the current checked values directly from the DOM
     // If we only use the event target and combine with this selectedOptions
@@ -57,7 +58,8 @@ export const Checkboxes = memo((rawProps) => {
         identities.push(key);
       }
     });
-    onValues(options.filter((o) => identities.includes(o.identity)).map((o) => o.value));
+    onValues?.(options.filter((o) => identities.includes(o.identity)).map((o) => o.value));
+    onChange?.(e);
   }
 
   return renderGroupedOptions({
@@ -130,7 +132,8 @@ Checkboxes.propTypes = {
   classPrefix: PropTypes.string,
   groupClassPrefix: PropTypes.string,
   id: PropTypes.string.isRequired,
-  onValues: PropTypes.func.isRequired,
+  onChange: PropTypes.func,
+  onValues: PropTypes.func,
   options: PropTypes.arrayOf(PropTypes.any).isRequired,
   values: PropTypes.arrayOf(PropTypes.any),
   renderWrapper: PropTypes.func,
@@ -145,6 +148,8 @@ Checkboxes.propTypes = {
 Checkboxes.defaultProps = {
   classPrefix: `${defaultClassPrefix}checkbox`,
   groupClassPrefix: `${defaultClassPrefix}checkbox-group`,
+  onValues: undefined,
+  onChange: undefined,
   values: null,
   renderWrapper: (props) => <div {...props} />,
   renderInput: (props) => <input {...props} />,
