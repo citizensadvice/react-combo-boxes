@@ -1,4 +1,5 @@
 import { makeBEMClass } from '../../helpers/make_bem_class';
+import { joinTokens } from '../../helpers/join_tokens';
 
 export function renderListBox({ children, hidden, ref, ...props }, componentState, componentProps) {
   const {
@@ -32,7 +33,7 @@ export function renderListBox({ children, hidden, ref, ...props }, componentStat
                 {columns.map((column) => renderTableHeaderCell({
                   'aria-hidden': 'true',
                   key: column.name,
-                  className: makeBEMClass(classPrefix, 'table-header'),
+                  className: joinTokens(makeBEMClass(classPrefix, 'table-header'), column.cellClass),
                   children: column.label,
                 }, { ...componentState, column }, componentProps))}
               </tr>

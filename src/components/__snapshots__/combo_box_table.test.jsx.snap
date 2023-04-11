@@ -1,5 +1,221 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`cells with class names renders a table with colgroups 1`] = `
+<div>
+  <div
+    aria-busy="false"
+    class="react-combo-boxes-combobox"
+  >
+    <input
+      aria-autocomplete="none"
+      aria-describedby="id_aria_description"
+      aria-expanded="false"
+      aria-labelledby="id-label"
+      aria-owns="id_listbox"
+      autocomplete="off"
+      class="react-combo-boxes-combobox__input"
+      id="id"
+      role="combobox"
+      type="text"
+      value=""
+    />
+    <span
+      class="react-combo-boxes-combobox__down-arrow"
+      id="id_down_arrow"
+    />
+    <span
+      aria-label="Clear"
+      aria-labelledby="id_clear_button id-label id"
+      class="react-combo-boxes-combobox__clear-button"
+      hidden=""
+      id="id_clear_button"
+      role="button"
+      tabindex="-1"
+    />
+    <div
+      class="react-combo-boxes-combobox__listbox react-combo-boxes-combobox__listbox--header"
+      hidden=""
+    >
+      <table
+        aria-labelledby="id-label"
+        class="react-combo-boxes-combobox__table"
+        id="id_listbox"
+        role="listbox"
+        tabindex="-1"
+      >
+        <colgroup>
+          <col />
+          <col />
+        </colgroup>
+        <thead
+          role="presentation"
+        >
+          <tr
+            role="presentation"
+          >
+            <th
+              aria-hidden="true"
+              class="react-combo-boxes-combobox__table-header foo"
+            >
+              Foo
+            </th>
+            <th
+              aria-hidden="true"
+              class="react-combo-boxes-combobox__table-header bar"
+            >
+              Bar
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          role="presentation"
+        >
+          <tr
+            class="react-combo-boxes-combobox__table-row"
+            id="id_option_apple"
+            role="option"
+            tabindex="-1"
+          >
+            <td
+              class="react-combo-boxes-combobox__table-cell foo"
+              role="presentation"
+            >
+              <span
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+              >
+                Foo 
+              </span>
+              Apple
+              <span
+                class="visuallyHiddenClassName"
+              >
+                 
+              </span>
+            </td>
+            <td
+              class="react-combo-boxes-combobox__table-cell bar"
+              role="presentation"
+            >
+              <span
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+              >
+                Bar 
+              </span>
+              Fruit
+              <span
+                class="visuallyHiddenClassName"
+              >
+                 
+              </span>
+            </td>
+          </tr>
+          <tr
+            class="react-combo-boxes-combobox__table-row"
+            id="id_option_banana"
+            role="option"
+            tabindex="-1"
+          >
+            <td
+              class="react-combo-boxes-combobox__table-cell foo"
+              role="presentation"
+            >
+              <span
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+              >
+                Foo 
+              </span>
+              Banana
+              <span
+                class="visuallyHiddenClassName"
+              >
+                 
+              </span>
+            </td>
+            <td
+              class="react-combo-boxes-combobox__table-cell bar"
+              role="presentation"
+            >
+              <span
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+              >
+                Bar 
+              </span>
+              Fruit
+              <span
+                class="visuallyHiddenClassName"
+              >
+                 
+              </span>
+            </td>
+          </tr>
+          <tr
+            class="react-combo-boxes-combobox__table-row"
+            id="id_option_potato"
+            role="option"
+            tabindex="-1"
+          >
+            <td
+              class="react-combo-boxes-combobox__table-cell foo"
+              role="presentation"
+            >
+              <span
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+              >
+                Foo 
+              </span>
+              Potato
+              <span
+                class="visuallyHiddenClassName"
+              >
+                 
+              </span>
+            </td>
+            <td
+              class="react-combo-boxes-combobox__table-cell bar"
+              role="presentation"
+            >
+              <span
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+              >
+                Bar 
+              </span>
+              Vegetable
+              <span
+                class="visuallyHiddenClassName"
+              >
+                 
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+      id="id_aria_description"
+    >
+      When results are available use up and down arrows to review and enter to select
+    </div>
+    <div
+      class="react-combo-boxes-combobox__not-found"
+      hidden=""
+      id="id_not_found"
+    />
+    <div
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+    >
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      >
+        <div />
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`cells with html renders a table with colgroups 1`] = `
 <div>
   <div

@@ -1,4 +1,5 @@
 import { makeBEMClass } from '../../helpers/make_bem_class';
+import { joinTokens } from '../../helpers/join_tokens';
 
 export function renderOption({ children: _, ...props }, state, componentProps) {
   const {
@@ -18,7 +19,7 @@ export function renderOption({ children: _, ...props }, state, componentProps) {
     className: makeBEMClass(classPrefix, 'table-row'),
     children: columns.map((column, index) => renderTableCell({
       role: 'presentation',
-      className: makeBEMClass(classPrefix, 'table-cell'),
+      className: joinTokens(makeBEMClass(classPrefix, 'table-cell'), column.cellClass),
       key: index,
       ...column.cellHtml,
       children: (

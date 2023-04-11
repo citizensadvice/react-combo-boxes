@@ -1,5 +1,11 @@
 # Change log
 
+## 2.3.0
+
+### Added
+
+- Table layout now allows a `cellClass` property on columns to add additional classes to cells.
+
 ## 2.2.0
 
 ### Added

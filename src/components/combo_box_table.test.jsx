@@ -166,6 +166,29 @@ describe('cells with html', () => {
   });
 });
 
+describe('cells with class names', () => {
+  const options = [
+    { label: 'Apple', type: 'Fruit', colour: 'Green' },
+    { label: 'Banana', type: 'Fruit', colour: 'Yellow' },
+    { label: 'Potato', type: 'Vegetable', colour: 'Brown' },
+  ];
+
+  const columns = [
+    { name: 'label', label: 'Foo', cellClass: 'foo' },
+    { name: 'type', label: 'Bar', cellClass: 'bar' },
+  ];
+
+  it('renders a table with colgroups', () => {
+    const { container } = render((
+      <ComboBoxWrapper
+        options={options}
+        columns={columns}
+      />
+    ));
+    expect(container).toMatchSnapshot();
+  });
+});
+
 describe('grouped', () => {
   const options = [
     { name: 'Apple', type: 'Fruit', colour: 'Green' },
