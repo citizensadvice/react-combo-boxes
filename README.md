@@ -1,5 +1,7 @@
 # React combo box
 
+[![npm version](https://badge.fury.io/js/@citizensadvice%2Freact-combo-boxes.svg)](https://badge.fury.io/js/@citizensadvice%2Freact-combo-boxes)
+
 Combo boxes implemented in React.
 
 The combo boxes follow the design patterns in [ARIA Authoring Practices guidelines][1] 
@@ -28,6 +30,16 @@ npm start
 ```
 
 See package.json for more commands.
+
+## Releasing a new version
+
+1. Finalize version in `main` - don't change the package.json version
+2. Create a release branch with a name matching `release-vx.x.x` and push to github.
+3. Update the changelog with the changes
+4. Run `npx np --any-branch` against this branch - this will update the package.json version
+5. Make sure the version update was pushed to github 
+6. Merge to `main`
+7. Update the github releases with the changes
 
 [1]: https://w3c.github.io/aria-practices/
 [2]: https://citizensadvice.github.io/react-list-boxes
