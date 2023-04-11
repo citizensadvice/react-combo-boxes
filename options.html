@@ -2,16 +2,24 @@
 </code></pre> <p>Where <code>Option</code> has the type:</p> <pre><code class="language-js">type Option <span class="operator token">=</span> <span class="punctuation token">{</span>
   <span class="comment token">// The visible label</span>
   label<span class="operator token">?</span><span class="operator token">:</span> string<span class="punctuation token">;</span>
+  <span class="comment token">// Used as a fallback for `label`</span>
+  name<span class="operator token">?</span><span class="operator token">:</span> string<span class="punctuation token">;</span>
+  <span class="comment token">// Used as a fallback for `label` and `name`</span>
+  title<span class="operator token">?</span><span class="operator token">:</span> string<span class="punctuation token">;</span>
   <span class="comment token">// Is the option disabled and unselectable</span>
   disabled<span class="operator token">?</span><span class="operator token">:</span> boolean<span class="punctuation token">;</span>
   <span class="comment token">// Group the option by this key</span>
   group<span class="operator token">?</span><span class="operator token">:</span> string<span class="punctuation token">;</span>
   <span class="comment token">// Used to calculate the options identity</span>
   value<span class="operator token">?</span><span class="operator token">:</span> any<span class="punctuation token">;</span>
-  <span class="comment token">// Used to calculate the options identity</span>
+  <span class="comment token">// Used as a fallback for `value`</span>
   id<span class="operator token">?</span><span class="operator token">:</span> string<span class="punctuation token">;</span>
   <span class="comment token">// HTML attributes to add to the option</span>
   html<span class="operator token">?</span><span class="operator token">:</span> object<span class="punctuation token">;</span>
+  <span class="comment token">// A description of the option - only used on `&lt;Radio>` and `&lt;Checkboxes>`</span>
+  description<span class="operator token">?</span><span class="operator token">:</span> string <span class="operator token">|</span> ReactElement<span class="punctuation token">;</span>
+  <span class="comment token">// Used as a fallback for `description`</span>
+  hint<span class="operator token">?</span><span class="operator token">:</span> string <span class="operator token">|</span> ReactElement<span class="punctuation token">;</span>
 <span class="punctuation token">}</span><span class="punctuation token">;</span>
 </code></pre> <h2 id="mapoption"><code>mapOption</code></h2> <p>If your options don&#39;t match this signature you can use the <code>mapOption</code> to map them to the signature.</p> <pre><code class="language-js"><span class="function function-variable token">mapOption</span><span class="operator token">:</span> <span class="punctuation token">(</span><span class="parameter token"><span class="literal-property property token">option</span><span class="operator token">:</span> any</span><span class="punctuation token">)</span> <span class="operator token">=></span> Option
 </code></pre> <p>Example:</p> <pre><code class="language-js"><span class="keyword token">const</span> <span class="punctuation token">[</span>value<span class="punctuation token">,</span> setValue<span class="punctuation token">]</span> <span class="operator token">=</span> <span class="function token">useState</span><span class="punctuation token">(</span>initialValue<span class="punctuation token">)</span><span class="punctuation token">;</span>
@@ -30,4 +38,4 @@
   mapOption<span class="operator token">=</span><span class="punctuation token">{</span>mapOption<span class="punctuation token">}</span>
 <span class="operator token">/</span><span class="operator token">></span>
 </code></pre> <h2 id="option-identity">Option identity</h2> <p>When determining which option is selected the &quot;identity&quot; of the option is compared.</p> <p>The identity is calculated by the equivalent of:</p> <pre><code class="language-js"><span class="function token">String</span><span class="punctuation token">(</span>option<span class="operator token">?.</span>value <span class="operator token">??</span> option<span class="operator token">?.</span>id <span class="operator token">??</span> option<span class="operator token">?.</span>label <span class="operator token">??</span> option <span class="operator token">??</span> <span class="string token">''</span><span class="punctuation token">)</span>
-</code></pre> </main><script src="/react-combo-boxes/index.56a9672d.js" type="module"></script></body></html>
+</code></pre> </main><script src="/react-combo-boxes/index.eed918d8.js" type="module"></script></body></html>
