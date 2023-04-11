@@ -4,7 +4,9 @@
 
 ### Added
 
-- `<Radios>` and `Checkboxes` now support an `onChange` event handler
+- `<Radios>` and `<Checkboxes>` now support an `onChange` event handler
+- `name` and `title` are now used as fallbacks for `label` when passing options
+- `hint` is now used as a fallback for `description` when passing options to `<Checkboxes>` and `<Radios>`
 
 ## 2.1.0
 

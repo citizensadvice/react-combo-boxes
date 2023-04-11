@@ -762,6 +762,46 @@ describe('options', () => {
       });
     });
 
+    describe('name', () => {
+      it('is used as a fallback for label', async () => {
+        const options = [{ name: 'Foo' }, { name: 'Bar' }];
+        const spy = jest.fn();
+        render(<ComboBoxWrapper options={options} value="Bar" onValue={spy} />);
+        await userEvent.tab();
+        expectToHaveSelectedOption(screen.getByRole('option', { name: 'Bar' }));
+        await userEvent.keyboard('{ArrowUp}{Enter}');
+        expect(spy).toHaveBeenCalledWith({ name: 'Foo' });
+      });
+
+      it('is not used if label is present', async () => {
+        const options = [{ label: 'Fizz', name: 'Foo' }, { label: 'Buzz', name: 'Bar' }];
+        const spy = jest.fn();
+        render(<ComboBoxWrapper options={options} value="Buzz" onValue={spy} />);
+        await userEvent.tab();
+        expectToHaveSelectedOption(screen.getByRole('option', { name: 'Buzz' }));
+      });
+    });
+
+    describe('title', () => {
+      it('is used as a fallback for label', async () => {
+        const options = [{ title: 'Foo' }, { title: 'Bar' }];
+        const spy = jest.fn();
+        render(<ComboBoxWrapper options={options} value="Bar" onValue={spy} />);
+        await userEvent.tab();
+        expectToHaveSelectedOption(screen.getByRole('option', { name: 'Bar' }));
+        await userEvent.keyboard('{ArrowUp}{Enter}');
+        expect(spy).toHaveBeenCalledWith({ title: 'Foo' });
+      });
+
+      it('is not used if name is present', async () => {
+        const options = [{ name: 'Fizz', title: 'Foo' }, { name: 'Buzz', title: 'Bar' }];
+        const spy = jest.fn();
+        render(<ComboBoxWrapper options={options} value="Buzz" onValue={spy} />);
+        await userEvent.tab();
+        expectToHaveSelectedOption(screen.getByRole('option', { name: 'Buzz' }));
+      });
+    });
+
     describe('html', () => {
       it('sets attributes on the option', async () => {
         const options = [{ label: 'foo', html: { 'data-foo': 'bar', className: 'class' } }];

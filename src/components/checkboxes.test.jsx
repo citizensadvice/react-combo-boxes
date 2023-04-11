@@ -135,6 +135,20 @@ describe('options', () => {
       });
     });
 
+    describe('hint', () => {
+      it('is used as a fallback for description', () => {
+        const options = [{ label: 'foo', hint: 'foo bar' }];
+        render(<Test options={options} />);
+        expect(screen.getByRole('checkbox')).toHaveAccessibleDescription('foo bar');
+      });
+
+      it('is not used if description is present', () => {
+        const options = [{ label: 'foo', description: 'fizz buzz', hint: 'foo bar' }];
+        render(<Test options={options} />);
+        expect(screen.getByRole('checkbox')).toHaveAccessibleDescription('fizz buzz');
+      });
+    });
+
     describe('html', () => {
       it('sets attributes on the checkbox', () => {
         const options = [{ label: 'foo', html: { 'data-foo': 'bar', className: 'class' } }];
