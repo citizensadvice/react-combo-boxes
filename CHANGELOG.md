@@ -1,5 +1,11 @@
 # Change log
 
+## 2.4.0
+
+### Added
+
+- `Checkboxes` and `<Radios>` now have a `renderLabelWrapper` option
+
 ## 2.3.0
 
 ### Added

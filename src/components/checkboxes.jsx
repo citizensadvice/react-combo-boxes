@@ -1,4 +1,4 @@
-import { useCallback, useRef, memo } from 'react';
+import { Fragment, useCallback, useRef, memo } from 'react';
 import PropTypes from 'prop-types';
 import { useNormalisedOptions } from '../hooks/use_normalised_options';
 import { renderGroupedOptions } from '../helpers/render_grouped_options';
@@ -22,6 +22,7 @@ export const Checkboxes = memo((rawProps) => {
     renderWrapper,
     renderInput,
     renderLabel,
+    renderLabelWrapper,
     renderDescription,
     renderGroup,
     renderGroupLabel,
@@ -102,24 +103,30 @@ export const Checkboxes = memo((rawProps) => {
               ...html,
               ref: (el) => handleRef(identity, el, html?.ref),
             }, { option, checked }, optionisedProps)}
-            {renderLabel({
-              htmlFor: key,
+            {renderLabelWrapper({
               children: (
                 <>
-                  {group ? renderGroupAccessibleLabel({
-                    className: visuallyHiddenClassName,
-                    children: `${group.label} `,
-                  }, { group }, optionisedProps) : null}
-                  {label}
+                  {renderLabel({
+                    htmlFor: key,
+                    children: (
+                      <>
+                        {group ? renderGroupAccessibleLabel({
+                          className: visuallyHiddenClassName,
+                          children: `${group.label} `,
+                        }, { group }, optionisedProps) : null}
+                        {label}
+                      </>
+                    ),
+                    className: makeBEMClass(classPrefix, 'label'),
+                  }, { option, checked }, optionisedProps)}
+                  {!!description && (renderDescription({
+                    id: `${key}_description`,
+                    children: description,
+                    className: makeBEMClass(classPrefix, 'description'),
+                  }, { option, group, checked }, optionisedProps))}
                 </>
               ),
-              className: makeBEMClass(classPrefix, 'label'),
-            }, { option, checked }, optionisedProps)}
-            {!!description && (renderDescription({
-              id: `${key}_description`,
-              children: description,
-              className: makeBEMClass(classPrefix, 'description'),
-            }, { option, group, checked }, optionisedProps))}
+            })}
           </>
         ),
         key,
@@ -139,6 +146,7 @@ Checkboxes.propTypes = {
   renderWrapper: PropTypes.func,
   renderInput: PropTypes.func,
   renderLabel: PropTypes.func,
+  renderLabelWrapper: PropTypes.func,
   renderDescription: PropTypes.func,
   renderGroup: PropTypes.func,
   renderGroupLabel: PropTypes.func,
@@ -154,6 +162,8 @@ Checkboxes.defaultProps = {
   renderWrapper: (props) => <div {...props} />,
   renderInput: (props) => <input {...props} />,
   renderLabel: (props) => <label {...props} />,
+  // eslint-disable-next-line react/jsx-no-useless-fragment
+  renderLabelWrapper: (props) => <Fragment {...props} />,
   renderDescription: (props) => <div {...props} />,
   renderGroup: (props) => <div {...props} />,
   renderGroupLabel: (props) => <div {...props} />,

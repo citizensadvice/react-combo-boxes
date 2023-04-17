@@ -12,7 +12,7 @@ body {
   grid-template: "nav main" / 20em;
   color: $text-colour;
 
-  @media (max-width: 50em) {
+  @media (width <= 50em) {
     grid: "main" auto "nav" auto;
   }
 }
