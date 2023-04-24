@@ -1,10 +1,16 @@
 # Change log
 
+## 2.4.1
+
+### Fixed
+
+- `<Checkboxes>` and `<Radios>` now have a space between the label and description
+
 ## 2.4.0
 
 ### Added
 
-- `Checkboxes` and `<Radios>` now have a `renderLabelWrapper` option
+- `<Checkboxes>` and `<Radios>` now have a `renderLabelWrapper` option
 
 ## 2.3.0
 

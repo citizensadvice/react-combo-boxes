@@ -119,6 +119,7 @@ export const Checkboxes = memo((rawProps) => {
                     ),
                     className: makeBEMClass(classPrefix, 'label'),
                   }, { option, checked }, optionisedProps)}
+                  {description && ' '}
                   {!!description && (renderDescription({
                     id: `${key}_description`,
                     children: description,
