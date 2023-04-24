@@ -15,8 +15,9 @@ export const ListBox = forwardRef((
       options,
       renderListBox,
       renderGroup,
-      renderGroupLabel,
       renderGroupAccessibleLabel,
+      renderGroupLabel,
+      renderGroupName,
       renderOption,
       renderValue,
       visuallyHiddenClassName,
@@ -48,7 +49,11 @@ export const ListBox = forwardRef((
                 'aria-hidden': 'true',
                 className: makeBEMClass(classPrefix, 'group-label'),
                 ...html,
-                children: label,
+                children: renderGroupName(
+                  { children: label },
+                  { ...componentState, group },
+                  componentProps,
+                ),
               }, { ...componentState, group }, componentProps)}
               {groupChildren}
             </>
@@ -82,7 +87,7 @@ export const ListBox = forwardRef((
                 { ...componentState, selected, option, group },
                 componentProps,
               )}
-              <span className="visuallyHiddenClassName">
+              <span className={visuallyHiddenClassName}>
                 {'\u00A0'}
               </span>
             </>
@@ -101,8 +106,9 @@ ListBox.propTypes = {
     options: PropTypes.array.isRequired,
     renderListBox: PropTypes.func.isRequired,
     renderGroup: PropTypes.func.isRequired,
-    renderGroupLabel: PropTypes.func.isRequired,
     renderGroupAccessibleLabel: PropTypes.func.isRequired,
+    renderGroupLabel: PropTypes.func.isRequired,
+    renderGroupName: PropTypes.func.isRequired,
     renderOption: PropTypes.func.isRequired,
     renderValue: PropTypes.func.isRequired,
     tabBetweenOptions: PropTypes.bool,

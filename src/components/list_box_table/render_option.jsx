@@ -36,7 +36,7 @@ export function renderOption({ children: _, ...props }, state, componentProps) {
           {renderColumnValue({
             children: option.value[column.name],
           }, { ...state, column }, componentProps)}
-          <span className="visuallyHiddenClassName">
+          <span className={visuallyHiddenClassName}>
             {'\u00A0'}
           </span>
         </>

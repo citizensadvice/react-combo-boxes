@@ -1,5 +1,15 @@
 # Change log
 
+## 2.5.0
+
+### Added
+
+- `renderGroupName` option added to `<ComboBox>` and `<DropDown>`
+
+### Fixed
+
+- Visually hidden incorrectly applied on non-breaking spaces in a list box
+
 ## 2.4.1
 
 ### Fixed

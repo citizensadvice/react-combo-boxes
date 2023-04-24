@@ -420,8 +420,9 @@ ComboBox.propTypes = {
   renderInput: PropTypes.func,
   renderListBox: PropTypes.func,
   renderGroup: PropTypes.func,
-  renderGroupLabel: PropTypes.func,
   renderGroupAccessibleLabel: PropTypes.func,
+  renderGroupLabel: PropTypes.func,
+  renderGroupName: PropTypes.func,
   renderOption: PropTypes.func,
   renderValue: PropTypes.func,
   renderDownArrow: PropTypes.func,
@@ -496,8 +497,10 @@ ComboBox.defaultProps = {
   renderListBox: (props) => <ul {...props} />,
   // eslint-disable-next-line react/jsx-no-useless-fragment
   renderGroup: (props) => <Fragment {...props} />,
-  renderGroupLabel: (props) => <li {...props} />,
   renderGroupAccessibleLabel: (props) => <span {...props} />,
+  renderGroupLabel: (props) => <li {...props} />,
+  // eslint-disable-next-line react/jsx-no-useless-fragment
+  renderGroupName: (props) => <Fragment {...props} />,
   renderOption: (props) => <li {...props} />,
   // eslint-disable-next-line react/jsx-no-useless-fragment
   renderValue: (props) => <Fragment {...props} />,
