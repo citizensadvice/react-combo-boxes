@@ -2995,6 +2995,50 @@ describe('renderGroupLabel', () => {
   });
 });
 
+describe('renderGroupName', () => {
+  it('allows the group label to be replaced', async () => {
+    render(
+      <ComboBoxWrapper
+        options={[{ label: 'foo', group: 'bar' }]}
+        renderGroupName={(props) => (
+          <span>
+            {props.children}
+            {' '}
+            foo
+          </span>
+        )}
+      />,
+    );
+    await userEvent.tab();
+
+    const group = screen.getByRole('listbox').firstChild;
+    expect(group).toHaveTextContent('foo');
+  });
+
+  it('is called with context and props', async () => {
+    const spy = jest.fn(() => null);
+    render((
+      <ComboBoxWrapper options={[{ label: 'foo', group: 'bar' }]} renderGroupName={spy} test="foo" />
+    ));
+    await userEvent.tab();
+
+    expect(spy).toHaveBeenLastCalledWith(
+      { children: 'bar' },
+      {
+        'aria-autocomplete': 'none',
+        'aria-busy': false,
+        expanded: true,
+        search: null,
+        notFound: false,
+        currentOption: null,
+        suggestedOption: null,
+        group: expect.objectContaining({ label: 'bar' }),
+      },
+      expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
+    );
+  });
+});
+
 describe('renderOption', () => {
   it('allows the option to be replaced', async () => {
     render(

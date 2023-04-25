@@ -87,7 +87,7 @@ exports[`cells with class names renders a table with colgroups 1`] = `
               </span>
               Apple
               <span
-                class="visuallyHiddenClassName"
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
                  
               </span>
@@ -103,7 +103,7 @@ exports[`cells with class names renders a table with colgroups 1`] = `
               </span>
               Fruit
               <span
-                class="visuallyHiddenClassName"
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
                  
               </span>
@@ -126,7 +126,7 @@ exports[`cells with class names renders a table with colgroups 1`] = `
               </span>
               Banana
               <span
-                class="visuallyHiddenClassName"
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
                  
               </span>
@@ -142,7 +142,7 @@ exports[`cells with class names renders a table with colgroups 1`] = `
               </span>
               Fruit
               <span
-                class="visuallyHiddenClassName"
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
                  
               </span>
@@ -165,7 +165,7 @@ exports[`cells with class names renders a table with colgroups 1`] = `
               </span>
               Potato
               <span
-                class="visuallyHiddenClassName"
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
                  
               </span>
@@ -181,7 +181,7 @@ exports[`cells with class names renders a table with colgroups 1`] = `
               </span>
               Vegetable
               <span
-                class="visuallyHiddenClassName"
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
                  
               </span>
@@ -278,7 +278,7 @@ exports[`cells with html renders a table with colgroups 1`] = `
             >
               Apple
               <span
-                class="visuallyHiddenClassName"
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
                  
               </span>
@@ -289,7 +289,7 @@ exports[`cells with html renders a table with colgroups 1`] = `
             >
               Fruit
               <span
-                class="visuallyHiddenClassName"
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
                  
               </span>
@@ -307,7 +307,7 @@ exports[`cells with html renders a table with colgroups 1`] = `
             >
               Banana
               <span
-                class="visuallyHiddenClassName"
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
                  
               </span>
@@ -318,7 +318,7 @@ exports[`cells with html renders a table with colgroups 1`] = `
             >
               Fruit
               <span
-                class="visuallyHiddenClassName"
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
                  
               </span>
@@ -336,7 +336,7 @@ exports[`cells with html renders a table with colgroups 1`] = `
             >
               Potato
               <span
-                class="visuallyHiddenClassName"
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
                  
               </span>
@@ -347,7 +347,7 @@ exports[`cells with html renders a table with colgroups 1`] = `
             >
               Vegetable
               <span
-                class="visuallyHiddenClassName"
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
                  
               </span>
@@ -444,7 +444,7 @@ exports[`columns as names only renders a table as the list box 1`] = `
             >
               Apple
               <span
-                class="visuallyHiddenClassName"
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
                  
               </span>
@@ -455,7 +455,7 @@ exports[`columns as names only renders a table as the list box 1`] = `
             >
               Fruit
               <span
-                class="visuallyHiddenClassName"
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
                  
               </span>
@@ -473,7 +473,7 @@ exports[`columns as names only renders a table as the list box 1`] = `
             >
               Banana
               <span
-                class="visuallyHiddenClassName"
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
                  
               </span>
@@ -484,7 +484,7 @@ exports[`columns as names only renders a table as the list box 1`] = `
             >
               Fruit
               <span
-                class="visuallyHiddenClassName"
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
                  
               </span>
@@ -502,7 +502,7 @@ exports[`columns as names only renders a table as the list box 1`] = `
             >
               Potato
               <span
-                class="visuallyHiddenClassName"
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
                  
               </span>
@@ -513,7 +513,7 @@ exports[`columns as names only renders a table as the list box 1`] = `
             >
               Vegetable
               <span
-                class="visuallyHiddenClassName"
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
                  
               </span>
@@ -532,7 +532,7 @@ exports[`columns as names only renders a table as the list box 1`] = `
             >
               Tomato
               <span
-                class="visuallyHiddenClassName"
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
                  
               </span>
@@ -543,7 +543,7 @@ exports[`columns as names only renders a table as the list box 1`] = `
             >
               Vegetable
               <span
-                class="visuallyHiddenClassName"
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
                  
               </span>
@@ -665,7 +665,7 @@ exports[`columns with headers renders a table with headers 1`] = `
               </span>
               Apple
               <span
-                class="visuallyHiddenClassName"
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
                  
               </span>
@@ -681,7 +681,7 @@ exports[`columns with headers renders a table with headers 1`] = `
               </span>
               Fruit
               <span
-                class="visuallyHiddenClassName"
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
                  
               </span>
@@ -704,7 +704,7 @@ exports[`columns with headers renders a table with headers 1`] = `
               </span>
               Banana
               <span
-                class="visuallyHiddenClassName"
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
                  
               </span>
@@ -720,7 +720,7 @@ exports[`columns with headers renders a table with headers 1`] = `
               </span>
               Fruit
               <span
-                class="visuallyHiddenClassName"
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
                  
               </span>
@@ -743,7 +743,7 @@ exports[`columns with headers renders a table with headers 1`] = `
               </span>
               Potato
               <span
-                class="visuallyHiddenClassName"
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
                  
               </span>
@@ -759,7 +759,7 @@ exports[`columns with headers renders a table with headers 1`] = `
               </span>
               Vegetable
               <span
-                class="visuallyHiddenClassName"
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
                  
               </span>
@@ -860,7 +860,7 @@ exports[`columns with html renders a table with colgroups 1`] = `
             >
               Apple
               <span
-                class="visuallyHiddenClassName"
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
                  
               </span>
@@ -871,7 +871,7 @@ exports[`columns with html renders a table with colgroups 1`] = `
             >
               Fruit
               <span
-                class="visuallyHiddenClassName"
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
                  
               </span>
@@ -889,7 +889,7 @@ exports[`columns with html renders a table with colgroups 1`] = `
             >
               Banana
               <span
-                class="visuallyHiddenClassName"
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
                  
               </span>
@@ -900,7 +900,7 @@ exports[`columns with html renders a table with colgroups 1`] = `
             >
               Fruit
               <span
-                class="visuallyHiddenClassName"
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
                  
               </span>
@@ -918,7 +918,7 @@ exports[`columns with html renders a table with colgroups 1`] = `
             >
               Potato
               <span
-                class="visuallyHiddenClassName"
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
                  
               </span>
@@ -929,7 +929,7 @@ exports[`columns with html renders a table with colgroups 1`] = `
             >
               Vegetable
               <span
-                class="visuallyHiddenClassName"
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
                  
               </span>
@@ -1042,7 +1042,7 @@ exports[`grouped renders a table with groups 1`] = `
               </span>
               Apple
               <span
-                class="visuallyHiddenClassName"
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
                  
               </span>
@@ -1053,7 +1053,7 @@ exports[`grouped renders a table with groups 1`] = `
             >
               Green
               <span
-                class="visuallyHiddenClassName"
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
                  
               </span>
@@ -1076,7 +1076,7 @@ exports[`grouped renders a table with groups 1`] = `
               </span>
               Banana
               <span
-                class="visuallyHiddenClassName"
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
                  
               </span>
@@ -1087,7 +1087,7 @@ exports[`grouped renders a table with groups 1`] = `
             >
               Yellow
               <span
-                class="visuallyHiddenClassName"
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
                  
               </span>
@@ -1121,7 +1121,7 @@ exports[`grouped renders a table with groups 1`] = `
               </span>
               Potato
               <span
-                class="visuallyHiddenClassName"
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
                  
               </span>
@@ -1132,7 +1132,7 @@ exports[`grouped renders a table with groups 1`] = `
             >
               Brown
               <span
-                class="visuallyHiddenClassName"
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
                  
               </span>
