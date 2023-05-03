@@ -1,6 +1,6 @@
 # Change log
 
-## Unreleased
+## 2.5.1
 
 ### Fixed
 
