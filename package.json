@@ -65,10 +65,10 @@
     "prop-types": "^15.7.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "stylelint": "^15.6.0",
+    "stylelint": "^15.6.1",
     "stylelint-config-standard": "^33.0.0",
-    "stylelint-config-standard-scss": "^8.0.0",
-    "stylelint-scss": "^4.6.0"
+    "stylelint-config-standard-scss": "^9.0.0",
+    "stylelint-scss": "^5.0.0"
   },
   "peerDependencies": {
     "@testing-library/user-event": ">= 4.0.0",

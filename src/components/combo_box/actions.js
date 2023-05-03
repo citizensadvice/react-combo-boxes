@@ -61,8 +61,12 @@ function applyAutoselect(action) {
   };
 }
 
-export function setClosed() {
-  return { type: SET_CLOSED };
+function setClosed() {
+  return (dispatch, _, getProps) => {
+    const { onSearch } = getProps();
+    onSearch?.('');
+    dispatch({ type: SET_CLOSED });
+  };
 }
 
 export function setExpanded() {
@@ -167,7 +171,7 @@ export function onKeyDown(event) {
 
     if (key === 'Escape') {
       event.preventDefault();
-      dispatch({ type: SET_CLOSED });
+      dispatch(setClosed());
       inputRef.current.focus();
       return;
     }
@@ -182,7 +186,7 @@ export function onKeyDown(event) {
           if (mustHaveSelection) {
             dispatch(onSelectValue(focusedOption));
           } else {
-            dispatch({ type: SET_CLOSED });
+            dispatch(setClosed());
           }
           inputRef.current.focus();
         } else if (expanded) {
@@ -307,7 +311,7 @@ export function onKeyDown(event) {
           if (focusedOption && !focusedOption?.unselectable) {
             dispatch(onSelectValue(focusedOption));
           } else {
-            dispatch({ type: SET_CLOSED });
+            dispatch(setClosed());
           }
           inputRef.current.focus();
         }
@@ -447,7 +451,7 @@ export function onBlur() {
       return;
     }
 
-    dispatch({ type: SET_CLOSED });
+    dispatch(setClosed());
   };
 }
 
