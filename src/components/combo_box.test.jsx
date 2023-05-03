@@ -420,14 +420,16 @@ describe('options', () => {
 
           describe('when no option has been selected', () => {
             it('closes the list box and clears the search', async () => {
-              const spy = jest.fn();
-              render(<ComboBoxWrapper options={options} onValue={spy} />);
+              const onSearch = jest.fn();
+              const onValue = jest.fn();
+              render(<ComboBoxWrapper options={options} onValue={onValue} onSearch={onSearch} />);
               await userEvent.type(screen.getByRole('combobox'), 'app');
               await userEvent.tab();
               await waitFor(() => {
                 expect(screen.getByRole('listbox', { hidden: true })).not.toBeVisible();
               });
-              expect(spy).not.toHaveBeenCalled();
+              expect(onValue).not.toHaveBeenCalled();
+              expect(onSearch).toHaveBeenLastCalledWith('');
               expect(screen.getByRole('combobox')).toHaveValue('');
             });
           });
@@ -456,6 +458,14 @@ describe('options', () => {
           expectToBeClosed();
           expect(screen.getByRole('combobox')).toHaveValue('Apple');
         });
+
+        it('clears the search value', async () => {
+          const onSearch = jest.fn();
+          render(<ComboBoxWrapper options={options} onSearch={onSearch} />);
+          await userEvent.tab();
+          await userEvent.keyboard('{ArrowDown}{Enter}{ArrowDown}{ArrowDown}{Escape}');
+          expect(onSearch).toHaveBeenLastCalledWith('');
+        });
       });
 
       describe('when pressing ArrowUp + alt on an option', () => {
@@ -464,6 +474,14 @@ describe('options', () => {
           await userEvent.tab();
           await userEvent.keyboard('{ArrowDown}{Alt>}{ArrowUp}{/Alt}');
           expectToBeClosed();
+        });
+
+        it('clears the search value', async () => {
+          const onSearch = jest.fn();
+          render(<ComboBoxWrapper options={options} onSearch={onSearch} />);
+          await userEvent.tab();
+          await userEvent.keyboard('{ArrowDown}{Alt>}{ArrowUp}{/Alt}');
+          expect(onSearch).toHaveBeenLastCalledWith('');
         });
 
         describe('with no value', () => {
@@ -723,16 +741,26 @@ describe('options', () => {
 
         describe('when bluring the listbox', () => {
           it('closes the listbox without selecting the item', async () => {
-            const spy = jest.fn();
-            render(<ComboBoxWrapper options={options} onValue={spy} />);
+            const onSearch = jest.fn();
+            const onValue = jest.fn();
+            render(<ComboBoxWrapper options={options} onValue={onValue} onSearch={onSearch} />);
             await userEvent.tab();
             await userEvent.keyboard('{ArrowDown}{ArrowDown}');
             await userEvent.tab();
             await waitFor(() => {
               expect(screen.getByRole('listbox', { hidden: true })).not.toBeVisible();
             });
-            expect(spy).not.toHaveBeenCalled();
+            expect(onValue).not.toHaveBeenCalled();
+            expect(onSearch).toHaveBeenLastCalledWith('');
             expect(document.body).toHaveFocus();
+          });
+
+          it('clears the search value', async () => {
+            const onSearch = jest.fn();
+            render(<ComboBoxWrapper options={options} onSearch={onSearch} />);
+            await userEvent.tab();
+            await userEvent.keyboard('{ArrowDown}{Alt>}{ArrowUp}{/Alt}');
+            expect(onSearch).toHaveBeenLastCalledWith('');
           });
         });
       });
@@ -2243,14 +2271,53 @@ describe('selectOnBlur', () => {
   const options = ['Apple', 'Pear', 'Orange'];
 
   describe('when true', () => {
-    it('calls onValue when bluring the list box', async () => {
-      const spy = jest.fn();
-      render(<ComboBoxWrapper options={options} onValue={spy} selectOnBlur />);
-      await userEvent.tab();
-      await userEvent.keyboard('{ArrowDown}');
-      await userEvent.tab();
-      await waitFor(() => {
-        expect(spy).toHaveBeenCalledWith('Apple');
+    describe('with a value', () => {
+      it('calls onValue when bluring the list box', async () => {
+        const onValue = jest.fn();
+        const onSearch = jest.fn();
+        render(
+          <ComboBoxWrapper options={options} onValue={onValue} onSearch={onSearch} selectOnBlur />,
+        );
+        await userEvent.tab();
+        await userEvent.keyboard('{ArrowDown}');
+        await userEvent.tab();
+        await waitFor(() => {
+          expect(onValue).toHaveBeenCalledWith('Apple');
+        });
+        expect(onSearch).toHaveBeenCalledWith('Apple');
+      });
+    });
+
+    describe('with an unselectable value', () => {
+      it('does not call onValue', async () => {
+        const onValue = jest.fn();
+        const onSearch = jest.fn();
+        render(
+          <ComboBoxWrapper options={[{ name: 'Apple', disabled: true }]} onValue={onValue} onSearch={onSearch} selectOnBlur />,
+        );
+        await userEvent.tab();
+        await userEvent.keyboard('{ArrowDown}');
+        await userEvent.tab();
+        await waitFor(() => {
+          expect(onSearch).toHaveBeenLastCalledWith('');
+        });
+        expect(onValue).not.toHaveBeenCalled();
+      });
+    });
+
+    describe('without a value', () => {
+      it('does not call onValue', async () => {
+        const onValue = jest.fn();
+        const onSearch = jest.fn();
+        render(
+          <ComboBoxWrapper options={options} onValue={onValue} onSearch={onSearch} selectOnBlur />,
+        );
+        await userEvent.tab();
+        await userEvent.tab();
+        await waitFor(() => {
+          expect(onSearch).toHaveBeenLastCalledWith('');
+        });
+        expect(onValue).not.toHaveBeenCalled();
       });
     });
   });
