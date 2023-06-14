@@ -1,6 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const emoji = require('node-emoji');
 const { marked } = require('marked');
+const { markedHighlight } = require('marked-highlight');
 const Prism = require('prismjs');
 const path = require('path');
 const { name } = require('./package.json');
@@ -17,6 +18,19 @@ renderer.link = function link(href, title, text) {
   return originalLink.call(this, href, title, text);
 };
 
+marked.use(
+  markedHighlight({
+    highlight(code, lang) {
+      return Prism.highlight(code, Prism.languages[lang], lang);
+    },
+  }),
+);
+
+marked.use({
+  mangle: false,
+  headerIds: false,
+});
+
 module.exports = {
   rootDir: 'examples/',
   filters: {
@@ -24,7 +38,7 @@ module.exports = {
     packageInclude: (text) => text.replace(/from '(..\/)+src';$/mg, `from '${name}';`),
     markdown: (text) => marked(
       text.replace(/:([\w\d_-]+):/g, (m, code) => emoji.get(code) || m),
-      { highlight: (code, lang) => Prism.highlight(code, Prism.languages[lang], lang), renderer },
+      { renderer },
     ),
   },
 };
