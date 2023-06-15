@@ -366,7 +366,10 @@ export function onChange(event) {
 
 export function onFocus() {
   return (dispatch, getState, getProps) => {
-    const { onSearch, selectedOption, expandOnFocus, disabled, readOnly, value } = getProps();
+    const {
+      onSearch, selectedOption, expandOnFocus, disabled, readOnly, value, mustHaveSelection,
+    } = getProps();
+    const { expanded } = getState();
 
     if (disabled || readOnly) {
       return;
@@ -377,8 +380,8 @@ export function onFocus() {
     dispatch({
       type: SET_FOCUSED_OPTION,
       focusedOption: selectedOption,
-      expanded: expandOnFocus,
-      focusListBox: false,
+      expanded: expanded || expandOnFocus,
+      focusListBox: mustHaveSelection,
     });
   };
 }
