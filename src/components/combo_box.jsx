@@ -297,7 +297,7 @@ export const ComboBox = memo(forwardRef((rawProps, ref) => {
             {renderDownArrow({
               id: `${id}_down_arrow`,
               className: makeBEMClass(classPrefix, 'down-arrow'),
-              hidden: value || !options.length,
+              hidden: value?.label || !options.length || disabled,
             }, componentState, optionisedProps)}
             {renderClearButton({
               id: `${id}_clear_button`,
@@ -308,7 +308,7 @@ export const ComboBox = memo(forwardRef((rawProps, ref) => {
               onClick: (e) => dispatch(onClearValue(e)),
               onKeyDown: (e) => dispatch(onClearValue(e)),
               onKeyUp: (e) => dispatch(onClearValue(e)),
-              hidden: disabled || readOnly || !value || search === '',
+              hidden: disabled || readOnly || !value?.label || search === '',
               tabIndex: -1,
             }, componentState, optionisedProps)}
             <ListBox

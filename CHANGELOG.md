@@ -1,5 +1,13 @@
 # Change log
 
+## Unreleased
+
+### Fixed
+
+- Simplification of how focus is managed to fix issues with the focus jumping back when tabbing from a combo-box
+- The remove cross will no longer show if a selected option's label is blank
+- Search suggestions example was not displaying any options
+
 ## 2.5.1
 
 ### Fixed
@@ -171,12 +179,12 @@
 
 ## 1.0.0-rc.16
 
-- changed highlight methods to return a render function 
+- changed highlight methods to return a render function
 - export highlighters
 - swapped order of the returned values for useConfineListBox
 - simplified useAsyncSearch
 
-## 1.0.0-rc.15 
+## 1.0.0-rc.15
 
 - Update focus and contrast styles
 - Added `classPrefix` property and restructured classes

@@ -1198,6 +1198,19 @@ describe('clear button', () => {
     expect(remove).not.toBeVisible();
   });
 
+  it('is not present with a blank value', () => {
+    render(<ComboBoxWrapper options={options} value="" />);
+    const remove = document.getElementById('id_clear_button');
+    expect(remove).not.toBeVisible();
+  });
+
+  it('is not present with a blank label', () => {
+    const value = { label: '', value: 'x' };
+    render(<ComboBoxWrapper options={[value]} value={value} />);
+    const remove = document.getElementById('id_clear_button');
+    expect(remove).not.toBeVisible();
+  });
+
   it('is not present when disabled', () => {
     render(<ComboBoxWrapper options={options} value="Apple" disabled />);
     const remove = document.getElementById('id_clear_button');
@@ -1259,6 +1272,47 @@ describe('clear button', () => {
     act(() => remove.focus());
     await userEvent.type(remove, 'x', { skipClick: true });
     expect(spy).not.toHaveBeenCalled();
+  });
+});
+
+describe('down arrow', () => {
+  const options = ['Apple', 'Orange', 'Banana'];
+
+  it('is not present without options', () => {
+    render(<ComboBoxWrapper options={null} />);
+    const arrow = document.getElementById('id_down_arrow');
+    expect(arrow).not.toBeVisible();
+  });
+
+  it('is not present with options and a value', () => {
+    render(<ComboBoxWrapper options={options} value="apple" />);
+    const arrow = document.getElementById('id_down_arrow');
+    expect(arrow).not.toBeVisible();
+  });
+
+  it('is present with options and no value', () => {
+    render(<ComboBoxWrapper options={options} />);
+    const arrow = document.getElementById('id_down_arrow');
+    expect(arrow).toBeVisible();
+  });
+
+  it('is not present with options when disabled', () => {
+    render(<ComboBoxWrapper options={options} disabled />);
+    const arrow = document.getElementById('id_down_arrow');
+    expect(arrow).not.toBeVisible();
+  });
+
+  it('is present with options and a blank value', () => {
+    render(<ComboBoxWrapper options={options} value="" />);
+    const arrow = document.getElementById('id_down_arrow');
+    expect(arrow).toBeVisible();
+  });
+
+  it('is present with options and a blank value label', () => {
+    const value = { label: '', value: 'x' };
+    render(<ComboBoxWrapper options={[options]} value={value} />);
+    const arrow = document.getElementById('id_down_arrow');
+    expect(arrow).toBeVisible();
   });
 });
 

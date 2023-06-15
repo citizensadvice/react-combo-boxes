@@ -21,7 +21,7 @@ const options = [
 
 function renderValue(_, { search, option: { label } }) {
   return (
-    <TokenHighlight search={search} label={label} inverse />
+    <TokenHighlight search={search} value={label} inverse />
   );
 }
 
