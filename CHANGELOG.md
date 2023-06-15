@@ -4,7 +4,8 @@
 
 ### Fixed
 
-- Simplification of handling blurring to fix issues with the focus jumping back when tabbing from a combo-box
+- Simplification of how focus is managed to fix issues with the focus jumping back when tabbing from a combo-box
+- The remove cross will no longer show if a selected option's label is blank
 - Search suggestions example was not displaying any options
 
 ## 2.5.1
