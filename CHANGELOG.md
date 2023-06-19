@@ -1,8 +1,15 @@
 # Change log
 
-## Unreleased
+## 2.6.1
 
-### 2.6.0
+### Fixed
+
+- `marked-highlight` should have been a devDependency
+
+
+## 2.6.0
+
+### Fixed
 
 - Simplification of how focus is managed to fix issues with the focus jumping back when tabbing from a combo-box
 - The remove cross will no longer show if a selected option's label is blank
