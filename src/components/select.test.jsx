@@ -459,13 +459,19 @@ describe('placeholderOption', () => {
 
   it('renders a placeholder option', () => {
     render(<Test options={options} placeholderOption="Please select…" />);
-    expect(screen.getAllByRole('option')[0]).toHaveTextContent('Please select…');
     expect(screen.getByRole('combobox')).toHaveValue('');
+    expect(screen.getByRole('combobox')).toHaveDisplayValue('Please select…');
   });
 
   it('renders with a selected value', () => {
     render(<Test options={options} placeholderOption="Please select…" value="Orange" />);
     expect(screen.getByRole('combobox')).toHaveValue('Orange');
+  });
+
+  it('renders a blank placeholder option', () => {
+    render(<Test options={options} placeholderOption="" />);
+    expect(screen.getByRole('combobox')).toHaveValue('');
+    expect(screen.getByRole('combobox')).toHaveDisplayValue('');
   });
 });
 
