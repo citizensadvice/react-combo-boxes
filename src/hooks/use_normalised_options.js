@@ -32,7 +32,7 @@ export function useNormalisedOptions({
     const normalisedOptions = [];
     const emptyGroup = [];
 
-    if (placeholderOption) {
+    if (placeholderOption != null) {
       normalisedOptions.push({
         label: placeholderOption,
         identity: '',

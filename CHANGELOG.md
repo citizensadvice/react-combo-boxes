@@ -1,11 +1,16 @@
 # Change log
 
+## 2.6.2
+
+### Fixed
+
+- `placeholderOption` should allow a blank value
+
 ## 2.6.1
 
 ### Fixed
 
 - `marked-highlight` should have been a devDependency
-
 
 ## 2.6.0
 
