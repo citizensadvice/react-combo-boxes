@@ -153,7 +153,7 @@ describe('with a customised userEvent', () => {
   it('uses the supplied userEvent', async () => {
     // Using the wrong user event will cause a timeout
     jest.useFakeTimers();
-    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
+    const user = await userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
 
     render(<ComboBoxWrapper />);
     await selectComboBoxOption({ from: 'Label', searchFor: 'fo', select: 'foe', userEvent: user });
