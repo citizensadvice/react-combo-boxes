@@ -1,4 +1,4 @@
-/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable import/no-extraneous-dependencies, testing-library/no-debugging-utils */
 import { waitFor, screen, isInaccessible, prettyDOM, within } from '@testing-library/react';
 import importedUserEvent from '@testing-library/user-event';
 
