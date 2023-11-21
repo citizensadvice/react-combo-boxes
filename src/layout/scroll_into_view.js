@@ -8,7 +8,7 @@
 export function scrollIntoView({ option, listbox, input }) {
   if (!option) {
     if (listbox) {
-      listbox.scrollTop = 0; // eslint-disable-line no-param-reassign
+      listbox.scrollTop = 0;
     }
     return;
   }

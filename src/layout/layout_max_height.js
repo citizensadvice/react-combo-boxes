@@ -65,9 +65,9 @@ export function layoutMaxHeight(
   }
 
   if (orientation) {
-    listbox.dataset.orientation = orientation; // eslint-disable-line no-param-reassign
+    listbox.dataset.orientation = orientation;
   } else {
-    delete listbox.dataset.orientation; // eslint-disable-line no-param-reassign
+    delete listbox.dataset.orientation;
   }
   listbox.style.setProperty('bottom', bottom ? `${bottom}px` : '');
   listbox.style.setProperty('max-height', maxHeight ? `${maxHeight}px` : '');

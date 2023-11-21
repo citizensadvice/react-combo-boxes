@@ -145,7 +145,7 @@ describe('selecting a value from a combo box', () => {
         </div>
       </>,
     );
-    // eslint-disable-next-line testing-library/no-node-access
+
     await selectComboBoxOption({
       from: 'Label',
       select: 'foe',

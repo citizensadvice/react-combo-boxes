@@ -13,7 +13,7 @@ import { tokenise } from '../helpers/tokenise';
 export function tokenHighlighter(term, query) {
   if (String.prototype.normalize) {
     // Splits, for example, é into e + unicode accent
-    term = term.normalize('NFD'); // eslint-disable-line no-param-reassign
+    term = term.normalize('NFD');
   }
   const tokenised = tokenise(query);
   const result = [];
@@ -25,7 +25,7 @@ export function tokenHighlighter(term, query) {
   let match;
   // Because of the accent and punctuation handling, a parser is the easiest approach
   do {
-    char = term[cursor++] || ''; // eslint-disable-line no-plusplus
+    char = term[cursor++] || '';
     if (rAccent.test(char)) {
       // Skip accents
       if (currentTerm && match && currentTerm.length === match.length) {
@@ -53,7 +53,7 @@ export function tokenHighlighter(term, query) {
         buffer = '';
       }
       currentTerm += char.toLowerCase();
-      // eslint-disable-next-line no-loop-func
+
       match = tokenised.find((token) => currentTerm.indexOf(token) === 0);
       if (match) {
         if (currentTerm.length <= match.length) {

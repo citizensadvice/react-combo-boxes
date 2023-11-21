@@ -73,7 +73,7 @@ export const Select = memo(
               optionisedProps,
             );
           },
-          // eslint-disable-next-line react/prop-types
+
           renderOption(option) {
             const { identity, label, key, html, disabled, group } = option;
             return renderOption(

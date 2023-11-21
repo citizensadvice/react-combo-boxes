@@ -43,7 +43,7 @@ export const Checkboxes = memo((rawProps) => {
     if (typeof ref === 'function') {
       ref(el);
     } else if (ref) {
-      ref.current = el; // eslint-disable-line no-param-reassign
+      ref.current = el;
     }
   }, []);
 

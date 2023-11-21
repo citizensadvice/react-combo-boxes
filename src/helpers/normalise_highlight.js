@@ -10,13 +10,13 @@ export function normaliseHighlight(highlight) {
         typeof part === 'string' &&
         typeof collection[0] === 'string'
       ) {
-        collection[0] += part; // eslint-disable-line no-param-reassign
+        collection[0] += part;
       } else if (
         Array.isArray(collection[0]) &&
         Array.isArray(part) &&
         part[0]
       ) {
-        collection[0][0] += part[0]; // eslint-disable-line no-param-reassign
+        collection[0][0] += part[0];
       } else if (part && part[0]) {
         collection.unshift(part);
       }
