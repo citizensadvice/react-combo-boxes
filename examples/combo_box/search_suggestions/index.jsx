@@ -11,7 +11,7 @@ const options = [
   'css is visible',
   'css is selector',
   'css is hard',
-  'css isn\'t being applied',
+  "css isn't being applied",
   'css is not',
   'css is not a function',
   'css syallbus',
@@ -21,7 +21,11 @@ const options = [
 
 function renderValue(_, { search, option: { label } }) {
   return (
-    <TokenHighlight search={search} value={label} inverse />
+    <TokenHighlight
+      search={search}
+      value={label}
+      inverse
+    />
   );
 }
 
@@ -53,10 +57,11 @@ export function Example() {
         renderValue={renderValue}
       />
 
-      <label htmlFor="output">
-        Current value
-      </label>
-      <output htmlFor="select" id="output">
+      <label htmlFor="output">Current value</label>
+      <output
+        htmlFor="select"
+        id="output"
+      >
         {JSON.stringify(value, undefined, ' ')}
       </output>
     </>

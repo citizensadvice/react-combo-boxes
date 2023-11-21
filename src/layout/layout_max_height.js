@@ -5,7 +5,10 @@
  * @param {Number} [options.minMaxHeight = 0] minimum max height
  * @param {Boolean} [options.allowMove = true] allow moving the listbox above the input
  */
-export function layoutMaxHeight({ listbox, input }, { contain = 'body', minMaxHeight = 0, allowReposition = true } = {}) {
+export function layoutMaxHeight(
+  { listbox, input },
+  { contain = 'body', minMaxHeight = 0, allowReposition = true } = {},
+) {
   // This height determines when the listbox should be moved above
   listbox.style.setProperty('max-height', '10em');
 
@@ -16,7 +19,8 @@ export function layoutMaxHeight({ listbox, input }, { contain = 'body', minMaxHe
   let containerBottom = Infinity;
   let containerTop = -Infinity;
   if (containerBounding) {
-    const clientBottom = containerBounding.height - container.clientHeight - container.clientTop;
+    const clientBottom =
+      containerBounding.height - container.clientHeight - container.clientTop;
     containerBottom = containerBounding.bottom - clientBottom;
     containerTop = containerBounding.top + container.clientTop;
   }
@@ -51,10 +55,7 @@ export function layoutMaxHeight({ listbox, input }, { contain = 'body', minMaxHe
     // Move to top
     orientation = 'top';
     bottom = inputBounding.height;
-    maxHeight = Math.max(
-      minMaxHeight,
-      inputBounding.top - maxTop - extras,
-    );
+    maxHeight = Math.max(minMaxHeight, inputBounding.top - maxTop - extras);
   } else {
     // Keep at bottom
     maxHeight = Math.max(

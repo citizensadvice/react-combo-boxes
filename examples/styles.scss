@@ -1,19 +1,19 @@
-@import "npm:normalize.css/normalize.css";
-@import "npm:prismjs/themes/prism.css";
+@import 'npm:normalize.css/normalize.css';
+@import 'npm:prismjs/themes/prism.css';
 
 $text-colour: #161616;
 
-@import "../styles/dropdown";
-@import "../styles/combobox";
+@import '../styles/dropdown';
+@import '../styles/combobox';
 
 body {
   font: 1em/1.5 sans-serif;
   display: grid;
-  grid-template: "nav main" / 20em;
+  grid-template: 'nav main' / 20em;
   color: $text-colour;
 
   @media (width <= 50em) {
-    grid: "main" auto "nav" auto;
+    grid: 'main' auto 'nav' auto;
   }
 }
 
@@ -79,7 +79,7 @@ nav {
 
 code,
 output {
-  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  font-family: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
   background: rgba(27 31 35 / 5%);
   font-size: 85%;
   padding: 0.2em 0.4em;
@@ -137,7 +137,7 @@ label,
   font-weight: bold;
 }
 
-input[type="text"] {
+input[type='text'] {
   width: 30em;
   max-width: 100%;
 }

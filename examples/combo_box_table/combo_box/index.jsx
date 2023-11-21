@@ -9,7 +9,14 @@ import {
 } from '../../../src';
 import cats from '../../data/cats.json';
 
-const columns = ['breed', 'country', 'origin', 'bodyType', 'coatLength', 'pattern'];
+const columns = [
+  'breed',
+  'country',
+  'origin',
+  'bodyType',
+  'coatLength',
+  'pattern',
+];
 
 function mapOption({ breed }) {
   return breed;
@@ -18,18 +25,28 @@ function mapOption({ breed }) {
 function renderValue({ children }, { search, column: { name } }) {
   if (name === 'breed') {
     return (
-      <TokenHighlight search={search} value={children} />
+      <TokenHighlight
+        search={search}
+        value={children}
+      />
     );
   }
   return children;
 }
 
-const onLayoutListBox = [layoutMaxWidth, layoutMaxHeight, layoutColumnsAlignLeft];
+const onLayoutListBox = [
+  layoutMaxWidth,
+  layoutMaxHeight,
+  layoutColumnsAlignLeft,
+];
 
 export function Example() {
   const [value, setValue] = useState(null);
   const [search, setSearch] = useState(null);
-  const filteredOptions = useTokenSearch(search, { options: cats, index: mapOption });
+  const filteredOptions = useTokenSearch(search, {
+    options: cats,
+    index: mapOption,
+  });
 
   return (
     <>
@@ -52,10 +69,11 @@ export function Example() {
         mapOption={mapOption}
       />
 
-      <label htmlFor="output">
-        Current value
-      </label>
-      <output htmlFor="select" id="output">
+      <label htmlFor="output">Current value</label>
+      <output
+        htmlFor="select"
+        id="output"
+      >
         {JSON.stringify(value, undefined, ' ')}
       </output>
     </>

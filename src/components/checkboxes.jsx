@@ -59,7 +59,11 @@ export const Checkboxes = memo((rawProps) => {
         identities.push(key);
       }
     });
-    onValues?.(options.filter((o) => identities.includes(o.identity)).map((o) => o.value));
+    onValues?.(
+      options
+        .filter((o) => identities.includes(o.identity))
+        .map((o) => o.value),
+    );
     onChange?.(e);
   }
 
@@ -67,71 +71,105 @@ export const Checkboxes = memo((rawProps) => {
     options,
     renderGroup(group) {
       const { children, key, label, html } = group;
-      return renderGroup({
-        key,
-        className: makeBEMClass(groupClassPrefix),
-        children: (
-          <>
-            {renderGroupLabel({
-              children: label,
-              className: makeBEMClass(groupClassPrefix, 'label'),
-              ...html,
-            }, { group }, optionisedProps)}
-            {children}
-          </>
-        ),
-      }, { group }, optionisedProps);
+      return renderGroup(
+        {
+          key,
+          className: makeBEMClass(groupClassPrefix),
+          children: (
+            <>
+              {renderGroupLabel(
+                {
+                  children: label,
+                  className: makeBEMClass(groupClassPrefix, 'label'),
+                  ...html,
+                },
+                { group },
+                optionisedProps,
+              )}
+              {children}
+            </>
+          ),
+        },
+        { group },
+        optionisedProps,
+      );
     },
     renderOption(option) {
-      const { identity, label, key, html, disabled, description, group } = option;
-      const checked = selectedOptions.some((item) => item.identity === identity);
+      const { identity, label, key, html, disabled, description, group } =
+        option;
+      const checked = selectedOptions.some(
+        (item) => item.identity === identity,
+      );
 
-      return renderWrapper({
-        className: makeBEMClass(classPrefix),
-        children: (
-          <>
-            {renderInput({
-              'aria-describedby': description ? `${key}_description` : null,
-              checked,
-              disabled,
-              id: key,
-              name,
-              onChange: handleChange,
-              type: 'checkbox',
-              value: identity,
-              className: makeBEMClass(classPrefix, 'input'),
-              ...html,
-              ref: (el) => handleRef(identity, el, html?.ref),
-            }, { option, checked }, optionisedProps)}
-            {renderLabelWrapper({
-              children: (
-                <>
-                  {renderLabel({
-                    htmlFor: key,
-                    children: (
-                      <>
-                        {group ? renderGroupAccessibleLabel({
-                          className: visuallyHiddenClassName,
-                          children: `${group.label} `,
-                        }, { group }, optionisedProps) : null}
-                        {label}
-                      </>
-                    ),
-                    className: makeBEMClass(classPrefix, 'label'),
-                  }, { option, checked }, optionisedProps)}
-                  {description && ' '}
-                  {!!description && (renderDescription({
-                    id: `${key}_description`,
-                    children: description,
-                    className: makeBEMClass(classPrefix, 'description'),
-                  }, { option, group, checked }, optionisedProps))}
-                </>
-              ),
-            })}
-          </>
-        ),
-        key,
-      }, { option, group, checked }, optionisedProps);
+      return renderWrapper(
+        {
+          className: makeBEMClass(classPrefix),
+          children: (
+            <>
+              {renderInput(
+                {
+                  'aria-describedby': description ? `${key}_description` : null,
+                  checked,
+                  disabled,
+                  id: key,
+                  name,
+                  onChange: handleChange,
+                  type: 'checkbox',
+                  value: identity,
+                  className: makeBEMClass(classPrefix, 'input'),
+                  ...html,
+                  ref: (el) => handleRef(identity, el, html?.ref),
+                },
+                { option, checked },
+                optionisedProps,
+              )}
+              {renderLabelWrapper({
+                children: (
+                  <>
+                    {renderLabel(
+                      {
+                        htmlFor: key,
+                        children: (
+                          <>
+                            {group
+                              ? renderGroupAccessibleLabel(
+                                  {
+                                    className: visuallyHiddenClassName,
+                                    children: `${group.label} `,
+                                  },
+                                  { group },
+                                  optionisedProps,
+                                )
+                              : null}
+                            {label}
+                          </>
+                        ),
+                        className: makeBEMClass(classPrefix, 'label'),
+                      },
+                      { option, checked },
+                      optionisedProps,
+                    )}
+                    {description && ' '}
+                    {!!description &&
+                      renderDescription(
+                        {
+                          id: `${key}_description`,
+                          children: description,
+                          className: makeBEMClass(classPrefix, 'description'),
+                        },
+                        { option, group, checked },
+                        optionisedProps,
+                      )}
+                  </>
+                ),
+              })}
+            </>
+          ),
+          key,
+        },
+        { option, group, checked },
+        optionisedProps,
+      );
     },
   });
 });

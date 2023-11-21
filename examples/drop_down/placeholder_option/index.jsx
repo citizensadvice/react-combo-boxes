@@ -1,13 +1,7 @@
 import { useRef, useState } from 'react';
 import { DropDown } from '../../../src';
 
-const options = [
-  'Apple',
-  'Banana',
-  'Cherry',
-  'Mango',
-  'Ugli fruit',
-];
+const options = ['Apple', 'Banana', 'Cherry', 'Mango', 'Ugli fruit'];
 
 export function Example() {
   const [value, setValue] = useState(null);
@@ -31,10 +25,11 @@ export function Example() {
         options={options}
       />
 
-      <label htmlFor="output">
-        Current value
-      </label>
-      <output htmlFor="drop-down" id="output">
+      <label htmlFor="output">Current value</label>
+      <output
+        htmlFor="drop-down"
+        id="output"
+      >
         {JSON.stringify(value, undefined, ' ')}
       </output>
     </>

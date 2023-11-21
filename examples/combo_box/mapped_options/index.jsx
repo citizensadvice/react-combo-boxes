@@ -14,14 +14,19 @@ const dedupedEmoji = emoji.filter(({ name }) => {
 
 export function Example() {
   const index = useCallback((o) => `${o.name} ${o.char}`, []);
-  const map = useCallback(({ name, char, group }) => ({ label: `${name} ${char}`, group }), []);
+  const map = useCallback(
+    ({ name, char, group }) => ({ label: `${name} ${char}`, group }),
+    [],
+  );
   const [value, setValue] = useState(null);
   const [search, setSearch] = useState(null);
   // The list of emoji can be thousands.  This rather ruins performance so limit results to 100.
-  const filteredOptions = useTokenSearch(
-    search,
-    { options: dedupedEmoji, index, minLength: 1, maxResults: 100 },
-  );
+  const filteredOptions = useTokenSearch(search, {
+    options: dedupedEmoji,
+    index,
+    minLength: 1,
+    maxResults: 100,
+  });
 
   return (
     <>
@@ -41,10 +46,11 @@ export function Example() {
         mapOption={map}
       />
 
-      <label htmlFor="output">
-        Current value
-      </label>
-      <output htmlFor="select" id="output">
+      <label htmlFor="output">Current value</label>
+      <output
+        htmlFor="select"
+        id="output"
+      >
         {JSON.stringify(value, undefined, ' ')}
       </output>
     </>

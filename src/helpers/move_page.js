@@ -48,8 +48,12 @@ export function movePage(direction, options, focusedOption, { skip }) {
 
     const currentRect = element.getBoundingClientRect();
 
-    if ((direction === 'down' && currentRect.bottom >= referenceRect.top + parentRect.height)
-      || (direction === 'up' && currentRect.top <= referenceRect.bottom - parentRect.height)) {
+    if (
+      (direction === 'down' &&
+        currentRect.bottom >= referenceRect.top + parentRect.height) ||
+      (direction === 'up' &&
+        currentRect.top <= referenceRect.bottom - parentRect.height)
+    ) {
       return prevOption === focusedOption ? nextOption : prevOption;
     }
     prevOption = nextOption;

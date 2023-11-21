@@ -9,7 +9,10 @@ function mapOption({ name, code }) {
 export function Example() {
   const [value, setValue] = useState(null);
   const [search, setSearch] = useState(null);
-  const filteredOptions = useTokenSearch(search, { options: countries, index: mapOption });
+  const filteredOptions = useTokenSearch(search, {
+    options: countries,
+    index: mapOption,
+  });
   const [autoselect, setAutoselect] = useState('inline');
   const [tabAutocomplete, setTabAutocomplete] = useState(false);
   const [showSelectedLabel, setShowSelectedLabel] = useState(false);
@@ -53,8 +56,7 @@ export function Example() {
                 setAutoselect(false);
               }
             }}
-          />
-          {' '}
+          />{' '}
           <code>false</code>
         </label>
         <label>
@@ -67,8 +69,7 @@ export function Example() {
                 setAutoselect(true);
               }
             }}
-          />
-          {' '}
+          />{' '}
           <code>true</code>
         </label>
         <label>
@@ -81,8 +82,7 @@ export function Example() {
                 setAutoselect('inline');
               }
             }}
-          />
-          {' '}
+          />{' '}
           <code>&quot;inline&quot;</code>
         </label>
       </fieldset>
@@ -92,8 +92,7 @@ export function Example() {
           type="checkbox"
           onChange={({ target: { checked } }) => setManagedFocus(checked)}
           checked={managedFocus}
-        />
-        {' '}
+        />{' '}
         Toggle managed focus
       </label>
 
@@ -102,8 +101,7 @@ export function Example() {
           type="checkbox"
           onChange={({ target: { checked } }) => setTabAutocomplete(checked)}
           checked={tabAutocomplete}
-        />
-        {' '}
+        />{' '}
         Toggle tab completion
       </label>
 
@@ -112,8 +110,7 @@ export function Example() {
           type="checkbox"
           onChange={({ target: { checked } }) => setShowSelectedLabel(checked)}
           checked={showSelectedLabel}
-        />
-        {' '}
+        />{' '}
         Toggle show selected label
       </label>
 
@@ -122,8 +119,7 @@ export function Example() {
           type="checkbox"
           onChange={({ target: { checked } }) => setExpandOnFocus(checked)}
           checked={expandOnFocus}
-        />
-        {' '}
+        />{' '}
         Toggle expand on focus
       </label>
 
@@ -132,15 +128,15 @@ export function Example() {
           type="checkbox"
           onChange={({ target: { checked } }) => setSelectOnBlur(checked)}
           checked={selectOnBlur}
-        />
-        {' '}
+        />{' '}
         Toggle select on blur
       </label>
 
-      <label htmlFor="output">
-        Current value
-      </label>
-      <output htmlFor="select" id="output">
+      <label htmlFor="output">Current value</label>
+      <output
+        htmlFor="select"
+        id="output"
+      >
         {JSON.stringify(value, undefined, ' ')}
       </output>
     </>

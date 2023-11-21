@@ -8,7 +8,7 @@ similar function to a `<select>`.
 
 ## Usage
 
-This is a stateless controlled component.  You must respond to `onValue` to update the selected value.
+This is a stateless controlled component. You must respond to `onValue` to update the selected value.
 
 ```js
 const [value, setValue] = useState(initialValue);
@@ -17,7 +17,7 @@ const [value, setValue] = useState(initialValue);
   options={options}
   value={value}
   onValue={setValue}
-/>
+/>;
 ```
 
 ## Props
@@ -28,13 +28,13 @@ const [value, setValue] = useState(initialValue);
 
 ### `options: Array<any>`
 
-The options to display. [See options][options].  
+The options to display. [See options][options].
 
 Radios take an additional `description` property that allows an optional description to be added to a radio.
 
 ### `mapOption: (option: any) => Option | string`
 
-Map an option into label, value, disabled and group. [See options][options]  
+Map an option into label, value, disabled and group. [See options][options]
 
 ### `value: any`
 
@@ -54,7 +54,7 @@ Mark all the radios in the radio group as required.
 
 #### `classPrefix: string = "react-combo-boxes-radio'`
 
-By default the component is built using BEM style class names.  This sets the prefix for all those classes.
+By default the component is built using BEM style class names. This sets the prefix for all those classes.
 
 Set to falsey to remove the BEM classes.
 
@@ -90,16 +90,15 @@ Each render method has the signature
 
 The render functions available are:
 
-| Name                         | Default value                        | Description                                                                         |
-| ----                         | ----                                 | ----                                                                                |
-| `renderWrapper`              | `(props) => <div {...props} />`      | Renders the wrapper for each radio                                                  |
-| `renderInput`                | `(props) => <input {...props} />`    | Renders the radio input                                                             |
-| `renderLabel`                | `(props) => <label {...props} />`    | Renders label for a radio                                                           |
-| `renderLabelWrapper`         | `(props) => <Fragment {...props} />` | Allows an element to wraps the label and description                                |
-| `renderDescription`          | `(props) => <div {...props} />`      | Renders the optional description for a radio                                        |
-| `renderGroup`                | `(props) => <div {...props} />`      | Wraps a group of options                                                            |
-| `renderGroupLabel`           | `(props) => <div {...props} />`      | Renders the visible label for a group. This will be ignored by a screen-reader      |
-| `renderGroupAccessibleLabel` | `(props) => <span {...props} />`     | Renders the accessible label for a group.  This will be read out before each option |
-
+| Name                         | Default value                        | Description                                                                        |
+| ---------------------------- | ------------------------------------ | ---------------------------------------------------------------------------------- |
+| `renderWrapper`              | `(props) => <div {...props} />`      | Renders the wrapper for each radio                                                 |
+| `renderInput`                | `(props) => <input {...props} />`    | Renders the radio input                                                            |
+| `renderLabel`                | `(props) => <label {...props} />`    | Renders label for a radio                                                          |
+| `renderLabelWrapper`         | `(props) => <Fragment {...props} />` | Allows an element to wraps the label and description                               |
+| `renderDescription`          | `(props) => <div {...props} />`      | Renders the optional description for a radio                                       |
+| `renderGroup`                | `(props) => <div {...props} />`      | Wraps a group of options                                                           |
+| `renderGroupLabel`           | `(props) => <div {...props} />`      | Renders the visible label for a group. This will be ignored by a screen-reader     |
+| `renderGroupAccessibleLabel` | `(props) => <span {...props} />`     | Renders the accessible label for a group. This will be read out before each option |
 
 [options]: options.md

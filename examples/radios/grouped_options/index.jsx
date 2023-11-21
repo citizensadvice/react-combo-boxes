@@ -24,12 +24,8 @@ export function Example() {
           options={options}
         />
       </fieldset>
-      <label htmlFor="output">
-        Current value
-      </label>
-      <output id="output">
-        {JSON.stringify(value, undefined, ' ')}
-      </output>
+      <label htmlFor="output">Current value</label>
+      <output id="output">{JSON.stringify(value, undefined, ' ')}</output>
     </>
   );
 }

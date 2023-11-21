@@ -32,11 +32,7 @@ function ComboBoxWrapper({ id = 'id', value: _value = null, ...props }) {
         {...props}
       />
       <label htmlFor={`output-${id}`}>Output</label>
-      <output
-        id={`output-${id}`}
-      >
-        {value}
-      </output>
+      <output id={`output-${id}`}>{value}</output>
     </>
   );
 }
@@ -46,11 +42,7 @@ function DropDownWrapper() {
 
   return (
     <>
-      <div
-        id="drop-down-label"
-      >
-        Label
-      </div>
+      <div id="drop-down-label">Label</div>
       <DropDown
         aria-labelledby="drop-down-label"
         id="id"
@@ -59,11 +51,7 @@ function DropDownWrapper() {
         options={values}
       />
       <label htmlFor="output">Output</label>
-      <output
-        id="output"
-      >
-        {value}
-      </output>
+      <output id="output">{value}</output>
     </>
   );
 }
@@ -71,31 +59,56 @@ function DropDownWrapper() {
 describe('selecting a value from a combo box', () => {
   it('selects a value', async () => {
     render(<ComboBoxWrapper />);
-    await selectComboBoxOption({ from: 'Label', searchFor: 'fo', select: 'foe', userEvent });
+    await selectComboBoxOption({
+      from: 'Label',
+      searchFor: 'fo',
+      select: 'foe',
+      userEvent,
+    });
     expect(screen.getByLabelText('Output')).toHaveValue('foe');
   });
 
   it('selects a regular expression from', async () => {
     render(<ComboBoxWrapper />);
-    await selectComboBoxOption({ from: /Labe/, searchFor: 'fo', select: 'foe', userEvent });
+    await selectComboBoxOption({
+      from: /Labe/,
+      searchFor: 'fo',
+      select: 'foe',
+      userEvent,
+    });
     expect(screen.getByLabelText('Output')).toHaveValue('foe');
   });
 
   it('selects an object from', async () => {
     render(<ComboBoxWrapper />);
-    await selectComboBoxOption({ from: { name: 'Label' }, searchFor: 'fo', select: 'foe', userEvent });
+    await selectComboBoxOption({
+      from: { name: 'Label' },
+      searchFor: 'fo',
+      select: 'foe',
+      userEvent,
+    });
     expect(screen.getByLabelText('Output')).toHaveValue('foe');
   });
 
   it('selects using a regular expression select', async () => {
     render(<ComboBoxWrapper />);
-    await selectComboBoxOption({ from: 'Label', searchFor: 'fo', select: /foe/, userEvent });
+    await selectComboBoxOption({
+      from: 'Label',
+      searchFor: 'fo',
+      select: /foe/,
+      userEvent,
+    });
     expect(screen.getByLabelText('Output')).toHaveValue('foe');
   });
 
   it('selects an object select', async () => {
     render(<ComboBoxWrapper />);
-    await selectComboBoxOption({ from: 'Label', searchFor: 'fo', select: { name: 'foe' }, userEvent });
+    await selectComboBoxOption({
+      from: 'Label',
+      searchFor: 'fo',
+      select: { name: 'foe' },
+      userEvent,
+    });
     expect(screen.getByLabelText('Output')).toHaveValue('foe');
   });
 
@@ -106,13 +119,23 @@ describe('selecting a value from a combo box', () => {
   });
 
   it('selects with an empty search', async () => {
-    render(<ComboBoxWrapper value="fee" options={values} />);
-    await selectComboBoxOption({ from: 'Label', searchFor: '', select: 'foe', userEvent });
+    render(
+      <ComboBoxWrapper
+        value="fee"
+        options={values}
+      />,
+    );
+    await selectComboBoxOption({
+      from: 'Label',
+      searchFor: '',
+      select: 'foe',
+      userEvent,
+    });
     expect(screen.getByLabelText('Output')).toHaveValue('foe');
   });
 
   it('selects from a specific container', async () => {
-    render((
+    render(
       <>
         <div id="foo">
           <ComboBoxWrapper id="foo-combo-box" />
@@ -120,10 +143,15 @@ describe('selecting a value from a combo box', () => {
         <div id="bar">
           <ComboBoxWrapper id="bar-combo-box" />
         </div>
-      </>
-    ));
+      </>,
+    );
     // eslint-disable-next-line testing-library/no-node-access
-    await selectComboBoxOption({ from: 'Label', select: 'foe', container: document.getElementById('bar'), userEvent });
+    await selectComboBoxOption({
+      from: 'Label',
+      select: 'foe',
+      container: document.getElementById('bar'),
+      userEvent,
+    });
     expect(screen.getAllByLabelText('Output')[1]).toHaveValue('foe');
   });
 });
@@ -153,10 +181,17 @@ describe('with a customised userEvent', () => {
   it('uses the supplied userEvent', async () => {
     // Using the wrong user event will cause a timeout
     jest.useFakeTimers();
-    const user = await userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
+    const user = await userEvent.setup({
+      advanceTimers: jest.advanceTimersByTime,
+    });
 
     render(<ComboBoxWrapper />);
-    await selectComboBoxOption({ from: 'Label', searchFor: 'fo', select: 'foe', userEvent: user });
+    await selectComboBoxOption({
+      from: 'Label',
+      searchFor: 'fo',
+      select: 'foe',
+      userEvent: user,
+    });
     expect(screen.getByLabelText('Output')).toHaveValue('foe');
   });
 });

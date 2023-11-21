@@ -36,7 +36,7 @@ const filteredOptions = useTokenSearch(search, { options });
 />
 ```
 
-This is a controlled component.  You must update `value` in response to `onValue`.
+This is a controlled component. You must update `value` in response to `onValue`.
 
 The `onSearch` function is called with the current search value and should be used to update the options.
 
@@ -46,11 +46,11 @@ The `onSearch` function is called with the current search value and should be us
 
 #### `options: Array<any>`
 
-The options to display. [See options][options].  
+The options to display. [See options][options].
 
 #### `mapOption: (option: any) => Option | string`
 
-Map an option into label, value, disabled and group. [See options][options]  
+Map an option into label, value, disabled and group. [See options][options]
 
 #### `value: any`
 
@@ -69,7 +69,7 @@ See [combo-box on ARIA practices][aria-practices-combo-box].
 
 #### `busy: boolean`
 
-Used with an async search to say the component is currently busy.  This sets `aria-busy`.
+Used with an async search to say the component is currently busy. This sets `aria-busy`.
 
 ### HTML attributes
 
@@ -79,7 +79,7 @@ Used with an async search to say the component is currently busy.  This sets `ar
 
 #### `classPrefix: string = "react-combo-boxes'`
 
-By default the component is built using BEM style class names.  This sets the prefix for all those classes.
+By default the component is built using BEM style class names. This sets the prefix for all those classes.
 
 Set to falsey to remove the BEM classes.
 
@@ -121,7 +121,7 @@ The following attributes will be passed to the `<input>` element.
 
 #### `managedFocus: boolean = true`
 
-When true, the document focus moves to the selected option.  When false the selected option is exposed to a screen-reader by `aria-activedescendant`.
+When true, the document focus moves to the selected option. When false the selected option is exposed to a screen-reader by `aria-activedescendant`.
 
 This defaults to `true` for maximum compatibility with older screen-readers.
 
@@ -146,7 +146,7 @@ If set to false the list box will remain open and continue to show existing on n
 
 #### `expandOnFocus: boolean = true`
 
-Expand the list box when then component is focused.  If `false` the use must type before the list box is expanded.
+Expand the list box when then component is focused. If `false` the use must type before the list box is expanded.
 
 #### `selectOnBlur: boolean = true`
 
@@ -162,7 +162,7 @@ If set to `true`, the value in the `input` will be updated to match the currentl
 
 If `true`, pressing <kbd>Tab</kbd> while an autocompleted option is displayed will select it without moving the focus.
 
-If `false` pressing <kbd>Tab</kbd> moves to the next focusable element.  The option may still be selected if `selectOnBlur` is `true`.
+If `false` pressing <kbd>Tab</kbd> moves to the next focusable element. The option may still be selected if `selectOnBlur` is `true`.
 
 #### `tabBetweenOptions: boolean = false`
 
@@ -234,25 +234,25 @@ Each render method has the signature
 
 The render functions available are:
 
-| Name                         | Default value                        | Description                                                                         |
-| ----                         | ----                                 | ----                                                                                |
-| `renderWrapper`              | `(props) => <div {...props} />`      | Renders the component wrapper                                                       |
-| `renderInput`                | `(props) => <input {...props} />`    | Renders the combo-box input                                                         |
-| `renderDownArrow`            | `(props) => <span {...props} />`     | Renders down arrow displayed when options are available                             |
-| `renderClearButton`          | `(props) => <span {...props} />`     | Renders '×' button displayed when an option is selected                             |
-| `renderListBox`              | `(props) => <ul {...props} />`       | Renders the list-box                                                                |
-| `renderGroup`                | `(props) => <Fragment {...props} />` | Wraps a group of options                                                            |
-| `renderGroupAccessibleLabel` | `(props) => <span {...props} />`     | Renders the accessible label for a group.  This will be read out before each option |
-| `renderGroupLabel`           | `(props) => <li {...props} />`       | Renders the group including the options. This will be ignored by a screen-reader    |
-| `renderGroupName`            | `(props) => <Fragment {...props} />` | Renders the name of the group. This will be ignored by a screen-reader              |
-| `renderOption`               | `(props) => <li {...props} />`       | Renders an option                                                                   |
-| `renderValue`                | `(props) => <Fragment {...props} />` | Renders the value within an option.  See [Highlighters][highlighters].              |
-| `renderNotFound`             | `(props) => <div {...props} />`      | Renders the not found message                                                       |
-| `renderAriaDescription`      | `(props) => <div {...props} />`      | Renders the assistive hint of the combo box                                         |
+| Name                         | Default value                        | Description                                                                        |
+| ---------------------------- | ------------------------------------ | ---------------------------------------------------------------------------------- |
+| `renderWrapper`              | `(props) => <div {...props} />`      | Renders the component wrapper                                                      |
+| `renderInput`                | `(props) => <input {...props} />`    | Renders the combo-box input                                                        |
+| `renderDownArrow`            | `(props) => <span {...props} />`     | Renders down arrow displayed when options are available                            |
+| `renderClearButton`          | `(props) => <span {...props} />`     | Renders '×' button displayed when an option is selected                            |
+| `renderListBox`              | `(props) => <ul {...props} />`       | Renders the list-box                                                               |
+| `renderGroup`                | `(props) => <Fragment {...props} />` | Wraps a group of options                                                           |
+| `renderGroupAccessibleLabel` | `(props) => <span {...props} />`     | Renders the accessible label for a group. This will be read out before each option |
+| `renderGroupLabel`           | `(props) => <li {...props} />`       | Renders the group including the options. This will be ignored by a screen-reader   |
+| `renderGroupName`            | `(props) => <Fragment {...props} />` | Renders the name of the group. This will be ignored by a screen-reader             |
+| `renderOption`               | `(props) => <li {...props} />`       | Renders an option                                                                  |
+| `renderValue`                | `(props) => <Fragment {...props} />` | Renders the value within an option. See [Highlighters][highlighters].              |
+| `renderNotFound`             | `(props) => <div {...props} />`      | Renders the not found message                                                      |
+| `renderAriaDescription`      | `(props) => <div {...props} />`      | Renders the assistive hint of the combo box                                        |
 
 #### `onLayoutListBox: (listbox: Element) => void | []<(listbox: Element) => void>`
 
-This is called whenever the listbox is displayed or the options change.                   
+This is called whenever the listbox is displayed or the options change.
 
 This can be used to position or resize the listbox.
 

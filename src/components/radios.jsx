@@ -31,80 +31,115 @@ export const Radios = memo((rawProps) => {
     selectedOption,
   } = optionisedProps;
 
-  const handleChange = useCallback((e) => {
-    onValue?.(options.find((o) => o.identity === e.target.value)?.value);
-    onChange?.(e);
-  }, [onChange, onValue, options]);
+  const handleChange = useCallback(
+    (e) => {
+      onValue?.(options.find((o) => o.identity === e.target.value)?.value);
+      onChange?.(e);
+    },
+    [onChange, onValue, options],
+  );
 
   return renderGroupedOptions({
     options,
     renderGroup(group) {
       const { children, key, label, html } = group;
-      return renderGroup({
-        key,
-        className: makeBEMClass(groupClassPrefix),
-        children: (
-          <>
-            {renderGroupLabel({
-              children: label,
-              className: makeBEMClass(groupClassPrefix, 'label'),
-              ...html,
-            }, { group }, optionisedProps)}
-            {children}
-          </>
-        ),
-      }, { group }, optionisedProps);
+      return renderGroup(
+        {
+          key,
+          className: makeBEMClass(groupClassPrefix),
+          children: (
+            <>
+              {renderGroupLabel(
+                {
+                  children: label,
+                  className: makeBEMClass(groupClassPrefix, 'label'),
+                  ...html,
+                },
+                { group },
+                optionisedProps,
+              )}
+              {children}
+            </>
+          ),
+        },
+        { group },
+        optionisedProps,
+      );
     },
     renderOption(option) {
-      const { identity, label, key, html, disabled, description, group } = option;
+      const { identity, label, key, html, disabled, description, group } =
+        option;
       const checked = selectedOption?.identity === identity;
 
-      return renderWrapper({
-        className: makeBEMClass(classPrefix),
-        children: (
-          <>
-            {renderInput({
-              'aria-describedby': description ? `${key}_description` : null,
-              checked,
-              disabled,
-              id: key,
-              name,
-              onChange: handleChange,
-              type: 'radio',
-              value: identity,
-              required,
-              className: makeBEMClass(classPrefix, 'input'),
-              ...html,
-            }, { option, checked }, optionisedProps)}
-            {renderLabelWrapper({
-              children: (
-                <>
-                  {renderLabel({
-                    htmlFor: key,
-                    children: (
-                      <>
-                        {group ? renderGroupAccessibleLabel({
-                          className: visuallyHiddenClassName,
-                          children: `${group.label} `,
-                        }, { group }, optionisedProps) : null}
-                        {label}
-                      </>
-                    ),
-                    className: makeBEMClass(classPrefix, 'label'),
-                  }, { option, checked }, optionisedProps)}
-                  {description && ' '}
-                  {!!description && (renderDescription({
-                    id: `${key}_description`,
-                    children: description,
-                    className: makeBEMClass(classPrefix, 'description'),
-                  }, { option, group, checked }, optionisedProps))}
-                </>
-              ),
-            })}
-          </>
-        ),
-        key,
-      }, { option, group, checked }, optionisedProps);
+      return renderWrapper(
+        {
+          className: makeBEMClass(classPrefix),
+          children: (
+            <>
+              {renderInput(
+                {
+                  'aria-describedby': description ? `${key}_description` : null,
+                  checked,
+                  disabled,
+                  id: key,
+                  name,
+                  onChange: handleChange,
+                  type: 'radio',
+                  value: identity,
+                  required,
+                  className: makeBEMClass(classPrefix, 'input'),
+                  ...html,
+                },
+                { option, checked },
+                optionisedProps,
+              )}
+              {renderLabelWrapper({
+                children: (
+                  <>
+                    {renderLabel(
+                      {
+                        htmlFor: key,
+                        children: (
+                          <>
+                            {group
+                              ? renderGroupAccessibleLabel(
+                                  {
+                                    className: visuallyHiddenClassName,
+                                    children: `${group.label} `,
+                                  },
+                                  { group },
+                                  optionisedProps,
+                                )
+                              : null}
+                            {label}
+                          </>
+                        ),
+                        className: makeBEMClass(classPrefix, 'label'),
+                      },
+                      { option, checked },
+                      optionisedProps,
+                    )}
+                    {description && ' '}
+                    {!!description &&
+                      renderDescription(
+                        {
+                          id: `${key}_description`,
+                          children: description,
+                          className: makeBEMClass(classPrefix, 'description'),
+                        },
+                        { option, group, checked },
+                        optionisedProps,
+                      )}
+                  </>
+                ),
+              })}
+            </>
+          ),
+          key,
+        },
+        { option, group, checked },
+        optionisedProps,
+      );
     },
   });
 });

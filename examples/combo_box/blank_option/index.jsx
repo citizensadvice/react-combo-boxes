@@ -1,12 +1,7 @@
 import { useState } from 'react';
 import { ComboBox, useTokenSearch } from '../../../src';
 
-const options = [
-  'Apple',
-  'Orange',
-  'Banana',
-  '',
-];
+const options = ['Apple', 'Orange', 'Banana', ''];
 
 export function Example() {
   const [value, setValue] = useState('');
@@ -30,10 +25,11 @@ export function Example() {
         options={filteredOptions}
       />
 
-      <label htmlFor="output">
-        Current value
-      </label>
-      <output htmlFor="select" id="output">
+      <label htmlFor="output">Current value</label>
+      <output
+        htmlFor="select"
+        id="output"
+      >
         {JSON.stringify(value, undefined, ' ')}
       </output>
     </>

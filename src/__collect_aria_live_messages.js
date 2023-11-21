@@ -49,11 +49,21 @@ export function liveMessages(root = document.body) {
 
   liveMessageObservers.push(observer);
 
-  observer.observe(root, { subtree: true, childList: true, characterData: true });
-
-  document.querySelectorAll('[aria-live=polite],[aria-live=assertive]').forEach((node) => {
-    observer.observe(node, { subtree: true, childList: true, characterData: true });
+  observer.observe(root, {
+    subtree: true,
+    childList: true,
+    characterData: true,
   });
+
+  document
+    .querySelectorAll('[aria-live=polite],[aria-live=assertive]')
+    .forEach((node) => {
+      observer.observe(node, {
+        subtree: true,
+        childList: true,
+        characterData: true,
+      });
+    });
 
   return {
     getMessages: async () => {

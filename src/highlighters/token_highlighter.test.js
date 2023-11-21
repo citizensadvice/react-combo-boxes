@@ -29,17 +29,35 @@ it('does not highlight a failed partial match', () => {
 });
 
 it('highlights multiple terms separated by spaces', () => {
-  expect(tokenHighlighter('foo foobar bar', 'foo')).toEqual([['foo'], ' ', ['foo'], 'bar bar']);
+  expect(tokenHighlighter('foo foobar bar', 'foo')).toEqual([
+    ['foo'],
+    ' ',
+    ['foo'],
+    'bar bar',
+  ]);
 });
 
 it('highlights multiple terms separated by punctuation', () => {
-  expect(tokenHighlighter('foo(foobar;bar', 'foo')).toEqual([['foo'], '(', ['foo'], 'bar;bar']);
+  expect(tokenHighlighter('foo(foobar;bar', 'foo')).toEqual([
+    ['foo'],
+    '(',
+    ['foo'],
+    'bar;bar',
+  ]);
 });
 
 it('highlights multiple terms separated punctuation and spaces', () => {
-  expect(tokenHighlighter('foo (foobar); bar.', 'foo')).toEqual([['foo'], ' (', ['foo'], 'bar); bar.']);
+  expect(tokenHighlighter('foo (foobar); bar.', 'foo')).toEqual([
+    ['foo'],
+    ' (',
+    ['foo'],
+    'bar); bar.',
+  ]);
 });
 
 it('highlights terms with accents', () => {
-  expect(tokenHighlighter('fóo\u0327ba\u0327r foé', 'foo')).toEqual([['fóo\u0327'], 'ba\u0327r foé']);
+  expect(tokenHighlighter('fóo\u0327ba\u0327r foé', 'foo')).toEqual([
+    ['fóo\u0327'],
+    'ba\u0327r foé',
+  ]);
 });

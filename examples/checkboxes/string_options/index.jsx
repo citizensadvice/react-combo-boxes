@@ -1,13 +1,7 @@
 import { useState } from 'react';
 import { Checkboxes } from '../../../src';
 
-const options = [
-  'Apple',
-  'Banana',
-  'Cherry',
-  'Mango',
-  'Ugli fruit',
-];
+const options = ['Apple', 'Banana', 'Cherry', 'Mango', 'Ugli fruit'];
 
 export function Example() {
   const [values, setValues] = useState(null);
@@ -22,12 +16,8 @@ export function Example() {
           options={options}
         />
       </fieldset>
-      <label htmlFor="output">
-        Current value
-      </label>
-      <output id="output">
-        {JSON.stringify(values, undefined, ' ')}
-      </output>
+      <label htmlFor="output">Current value</label>
+      <output id="output">{JSON.stringify(values, undefined, ' ')}</output>
     </>
   );
 }

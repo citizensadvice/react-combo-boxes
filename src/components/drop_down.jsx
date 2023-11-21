@@ -1,10 +1,20 @@
-import { forwardRef, useCallback, useContext, useEffect, useState } from 'react';
+import {
+  forwardRef,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import PropTypes from 'prop-types';
 import { ComboBox } from './combo_box';
 import { classPrefix as defaultClassPrefix } from '../constants/class_prefix';
 import { makeBEMClass } from '../helpers/make_bem_class';
 import { rNonPrintableKey } from '../constants/r_non_printable_key';
-import { setExpanded, setFocusedOption, onSelectValue } from './combo_box/actions';
+import {
+  setExpanded,
+  setFocusedOption,
+  onSelectValue,
+} from './combo_box/actions';
 import { findOption as defaultFindOption } from '../helpers/find_option';
 import { joinTokens } from '../helpers/join_tokens';
 import { useEvent } from '../hooks/use_event';
@@ -36,7 +46,7 @@ function renderInput(props, state, componentProps) {
       autoComplete: null,
       children: (children ?? value?.label ?? selectedOption?.label) || '\u00A0',
       className: makeBEMClass(classPrefix, 'combobox'),
-      tabIndex: (disabled || !options?.length) ? null : 0,
+      tabIndex: disabled || !options?.length ? null : 0,
       type: null,
       value: null,
     },
@@ -102,13 +112,17 @@ const ComboBoxWrapper = forwardRef((props, ref) => {
     dispatch(setExpanded());
   }
 
-  return renderWrapper({
-    ...wrapperProps,
-    'aria-busy': null,
-    ref,
-    onKeyDown,
-    onClick,
-  }, componentState, componentProps);
+  return renderWrapper(
+    {
+      ...wrapperProps,
+      'aria-busy': null,
+      ref,
+      onKeyDown,
+      onClick,
+    },
+    componentState,
+    componentProps,
+  );
 });
 
 ComboBoxWrapper.propTypes = {
@@ -126,24 +140,32 @@ ComboBoxWrapper.propTypes = {
 export const DropDown = forwardRef((props, ref) => {
   const { renderWrapper, renderListBox } = props;
 
-  const newRenderWrapper = useCallback((wrapperProps, componentState, componentProps) => (
-    <ComboBoxWrapper
-      {...wrapperProps}
-      componentState={componentState}
-      componentProps={{ ...componentProps, renderWrapper }}
-    />
-  ), [renderWrapper]);
+  const newRenderWrapper = useCallback(
+    (wrapperProps, componentState, componentProps) => (
+      <ComboBoxWrapper
+        {...wrapperProps}
+        componentState={componentState}
+        componentProps={{ ...componentProps, renderWrapper }}
+      />
+    ),
+    [renderWrapper],
+  );
 
-  const newRenderListBox = useCallback((wrapperProps, componentState, componentProps) => (
-    componentProps.renderListBoxWrapper(
-      {
-        className: makeBEMClass(componentProps.classPrefix, 'listbox-wrapper'),
-        children: renderListBox(wrapperProps, componentState, componentProps),
-      },
-      componentState,
-      componentProps,
-    )
-  ), [renderListBox]);
+  const newRenderListBox = useCallback(
+    (wrapperProps, componentState, componentProps) =>
+      componentProps.renderListBoxWrapper(
+        {
+          className: makeBEMClass(
+            componentProps.classPrefix,
+            'listbox-wrapper',
+          ),
+          children: renderListBox(wrapperProps, componentState, componentProps),
+        },
+        componentState,
+        componentProps,
+      ),
+    [renderListBox],
+  );
 
   return (
     <ComboBox

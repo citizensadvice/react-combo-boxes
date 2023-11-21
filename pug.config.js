@@ -34,11 +34,14 @@ marked.use({
 module.exports = {
   rootDir: 'examples/',
   filters: {
-    highlight: (code) => Prism.highlight(code, Prism.languages.javascript, 'javascript'),
-    packageInclude: (text) => text.replace(/from '(..\/)+src';$/mg, `from '${name}';`),
-    markdown: (text) => marked(
-      text.replace(/:([\w\d_-]+):/g, (m, code) => emoji.get(code) || m),
-      { renderer },
-    ),
+    highlight: (code) =>
+      Prism.highlight(code, Prism.languages.javascript, 'javascript'),
+    packageInclude: (text) =>
+      text.replace(/from '(..\/)+src';$/gm, `from '${name}';`),
+    markdown: (text) =>
+      marked(
+        text.replace(/:([\w\d_-]+):/g, (m, code) => emoji.get(code) || m),
+        { renderer },
+      ),
   },
 };

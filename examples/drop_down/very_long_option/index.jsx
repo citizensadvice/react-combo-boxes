@@ -28,10 +28,11 @@ export function Example() {
         options={options}
       />
 
-      <label htmlFor="output">
-        Current value
-      </label>
-      <output htmlFor="drop-down" id="output">
+      <label htmlFor="output">Current value</label>
+      <output
+        htmlFor="drop-down"
+        id="output"
+      >
         {JSON.stringify(value, undefined, ' ')}
       </output>
     </>

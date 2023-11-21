@@ -27,11 +27,17 @@ export function useThunkReducer(reducer, props, initialState) {
   propsRef.current = props;
 
   // Special dispatch that will call a returned function with (dispatch, getState, getProps)
-  const thunkDispatch = useCallback((data) => (
-    typeof data === 'function'
-      ? data(thunkDispatch, () => stateRef.current, () => propsRef.current)
-      : dispatch(data)
-  ), []);
+  const thunkDispatch = useCallback(
+    (data) =>
+      typeof data === 'function'
+        ? data(
+            thunkDispatch,
+            () => stateRef.current,
+            () => propsRef.current,
+          )
+        : dispatch(data),
+    [],
+  );
 
   return [state, thunkDispatch];
 }

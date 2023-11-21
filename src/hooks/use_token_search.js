@@ -5,9 +5,10 @@ export function useTokenSearch(
   query,
   { options, index, tokenise, minLength, maxResults },
 ) {
-  const searcher = useMemo(() => (
-    tokenSearcher(options, { index, tokenise })
-  ), [options, index, tokenise]);
+  const searcher = useMemo(
+    () => tokenSearcher(options, { index, tokenise }),
+    [options, index, tokenise],
+  );
 
   return useMemo(() => {
     if (minLength && (!query || query?.trim().length < minLength)) {

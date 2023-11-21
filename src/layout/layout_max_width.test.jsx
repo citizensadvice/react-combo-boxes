@@ -4,9 +4,15 @@ it('sets the max width at so the element is not larger than the body', () => {
   const listbox = document.createElement('div');
   document.body.appendChild(listbox);
 
-  jest.spyOn(document.body, 'getBoundingClientRect').mockImplementation(() => ({ right: 100, width: 0 }));
-  jest.spyOn(document.documentElement, 'clientWidth', 'get').mockImplementation(() => 120);
-  jest.spyOn(listbox, 'getBoundingClientRect').mockImplementation(() => ({ left: 50 }));
+  jest
+    .spyOn(document.body, 'getBoundingClientRect')
+    .mockImplementation(() => ({ right: 100, width: 0 }));
+  jest
+    .spyOn(document.documentElement, 'clientWidth', 'get')
+    .mockImplementation(() => 120);
+  jest
+    .spyOn(listbox, 'getBoundingClientRect')
+    .mockImplementation(() => ({ left: 50 }));
 
   layoutMaxWidth({ listbox });
 
@@ -20,10 +26,18 @@ it('sets the max width at so the element is not larger than a custom element', (
   const listbox = document.createElement('div');
   container.appendChild(listbox);
 
-  jest.spyOn(document.body, 'getBoundingClientRect').mockImplementation(() => ({ right: 150 }));
-  jest.spyOn(container, 'getBoundingClientRect').mockImplementation(() => ({ right: 100, width: 0 }));
-  jest.spyOn(document.documentElement, 'clientWidth', 'get').mockImplementation(() => 120);
-  jest.spyOn(listbox, 'getBoundingClientRect').mockImplementation(() => ({ left: 50 }));
+  jest
+    .spyOn(document.body, 'getBoundingClientRect')
+    .mockImplementation(() => ({ right: 150 }));
+  jest
+    .spyOn(container, 'getBoundingClientRect')
+    .mockImplementation(() => ({ right: 100, width: 0 }));
+  jest
+    .spyOn(document.documentElement, 'clientWidth', 'get')
+    .mockImplementation(() => 120);
+  jest
+    .spyOn(listbox, 'getBoundingClientRect')
+    .mockImplementation(() => ({ left: 50 }));
 
   layoutMaxWidth({ listbox }, { contain: 'section' });
 
@@ -37,12 +51,20 @@ it('sets the max width taking account of scrollbars', () => {
   const listbox = document.createElement('div');
   container.appendChild(listbox);
 
-  jest.spyOn(document.body, 'getBoundingClientRect').mockImplementation(() => ({ right: 150 }));
-  jest.spyOn(container, 'getBoundingClientRect').mockImplementation(() => ({ right: 100, width: 100 }));
+  jest
+    .spyOn(document.body, 'getBoundingClientRect')
+    .mockImplementation(() => ({ right: 150 }));
+  jest
+    .spyOn(container, 'getBoundingClientRect')
+    .mockImplementation(() => ({ right: 100, width: 100 }));
   jest.spyOn(container, 'clientWidth', 'get').mockImplementation(() => 70);
   jest.spyOn(container, 'clientLeft', 'get').mockImplementation(() => 10);
-  jest.spyOn(document.documentElement, 'clientWidth', 'get').mockImplementation(() => 120);
-  jest.spyOn(listbox, 'getBoundingClientRect').mockImplementation(() => ({ left: 50 }));
+  jest
+    .spyOn(document.documentElement, 'clientWidth', 'get')
+    .mockImplementation(() => 120);
+  jest
+    .spyOn(listbox, 'getBoundingClientRect')
+    .mockImplementation(() => ({ left: 50 }));
 
   layoutMaxWidth({ listbox }, { contain: 'section' });
 
@@ -53,9 +75,15 @@ it('sets the max width at so the element is not larger than the viewport', () =>
   const listbox = document.createElement('div');
   document.body.appendChild(listbox);
 
-  jest.spyOn(document.body, 'getBoundingClientRect').mockImplementation(() => ({ right: 100, width: 0 }));
-  jest.spyOn(document.documentElement, 'clientWidth', 'get').mockImplementation(() => 90);
-  jest.spyOn(listbox, 'getBoundingClientRect').mockImplementation(() => ({ left: 50 }));
+  jest
+    .spyOn(document.body, 'getBoundingClientRect')
+    .mockImplementation(() => ({ right: 100, width: 0 }));
+  jest
+    .spyOn(document.documentElement, 'clientWidth', 'get')
+    .mockImplementation(() => 90);
+  jest
+    .spyOn(listbox, 'getBoundingClientRect')
+    .mockImplementation(() => ({ left: 50 }));
 
   layoutMaxWidth({ listbox });
 
@@ -66,9 +94,15 @@ it('does not set a negative max-width', () => {
   const listbox = document.createElement('div');
   document.body.appendChild(listbox);
 
-  jest.spyOn(document.body, 'getBoundingClientRect').mockImplementation(() => ({ right: 100, width: 0 }));
-  jest.spyOn(document.documentElement, 'clientWidth', 'get').mockImplementation(() => 125);
-  jest.spyOn(listbox, 'getBoundingClientRect').mockImplementation(() => ({ left: 130 }));
+  jest
+    .spyOn(document.body, 'getBoundingClientRect')
+    .mockImplementation(() => ({ right: 100, width: 0 }));
+  jest
+    .spyOn(document.documentElement, 'clientWidth', 'get')
+    .mockImplementation(() => 125);
+  jest
+    .spyOn(listbox, 'getBoundingClientRect')
+    .mockImplementation(() => ({ left: 130 }));
 
   layoutMaxWidth({ listbox });
 
@@ -79,9 +113,15 @@ it('does not set less than a minMaxWidth', () => {
   const listbox = document.createElement('div');
   document.body.appendChild(listbox);
 
-  jest.spyOn(document.body, 'getBoundingClientRect').mockImplementation(() => ({ right: 100, width: 0 }));
-  jest.spyOn(document.documentElement, 'clientWidth', 'get').mockImplementation(() => 90);
-  jest.spyOn(listbox, 'getBoundingClientRect').mockImplementation(() => ({ left: 50 }));
+  jest
+    .spyOn(document.body, 'getBoundingClientRect')
+    .mockImplementation(() => ({ right: 100, width: 0 }));
+  jest
+    .spyOn(document.documentElement, 'clientWidth', 'get')
+    .mockImplementation(() => 90);
+  jest
+    .spyOn(listbox, 'getBoundingClientRect')
+    .mockImplementation(() => ({ left: 50 }));
 
   layoutMaxWidth({ listbox }, { minMaxWidth: 50 });
 
@@ -93,9 +133,15 @@ it('subtracts the right margin from the maxwidth', () => {
   document.body.appendChild(listbox);
   listbox.style.setProperty('margin-right', '15px');
 
-  jest.spyOn(document.body, 'getBoundingClientRect').mockImplementation(() => ({ right: 100, width: 0 }));
-  jest.spyOn(document.documentElement, 'clientWidth', 'get').mockImplementation(() => 120);
-  jest.spyOn(listbox, 'getBoundingClientRect').mockImplementation(() => ({ left: 50 }));
+  jest
+    .spyOn(document.body, 'getBoundingClientRect')
+    .mockImplementation(() => ({ right: 100, width: 0 }));
+  jest
+    .spyOn(document.documentElement, 'clientWidth', 'get')
+    .mockImplementation(() => 120);
+  jest
+    .spyOn(listbox, 'getBoundingClientRect')
+    .mockImplementation(() => ({ left: 50 }));
 
   layoutMaxWidth({ listbox });
 
@@ -110,9 +156,15 @@ describe('when box-sizing border-box', () => {
     listbox.style.setProperty('padding', '10px');
     listbox.style.setProperty('border-width', '1px');
 
-    jest.spyOn(document.body, 'getBoundingClientRect').mockImplementation(() => ({ right: 100, width: 0 }));
-    jest.spyOn(document.documentElement, 'clientWidth', 'get').mockImplementation(() => 120);
-    jest.spyOn(listbox, 'getBoundingClientRect').mockImplementation(() => ({ left: 50 }));
+    jest
+      .spyOn(document.body, 'getBoundingClientRect')
+      .mockImplementation(() => ({ right: 100, width: 0 }));
+    jest
+      .spyOn(document.documentElement, 'clientWidth', 'get')
+      .mockImplementation(() => 120);
+    jest
+      .spyOn(listbox, 'getBoundingClientRect')
+      .mockImplementation(() => ({ left: 50 }));
 
     layoutMaxWidth({ listbox });
 
@@ -127,9 +179,15 @@ describe('when box-sizing content-box', () => {
     listbox.style.setProperty('padding', '10px');
     listbox.style.setProperty('border-width', '1px');
 
-    jest.spyOn(document.body, 'getBoundingClientRect').mockImplementation(() => ({ right: 100, width: 0 }));
-    jest.spyOn(document.documentElement, 'clientWidth', 'get').mockImplementation(() => 120);
-    jest.spyOn(listbox, 'getBoundingClientRect').mockImplementation(() => ({ left: 50 }));
+    jest
+      .spyOn(document.body, 'getBoundingClientRect')
+      .mockImplementation(() => ({ right: 100, width: 0 }));
+    jest
+      .spyOn(document.documentElement, 'clientWidth', 'get')
+      .mockImplementation(() => 120);
+    jest
+      .spyOn(listbox, 'getBoundingClientRect')
+      .mockImplementation(() => ({ left: 50 }));
 
     layoutMaxWidth({ listbox });
 
@@ -144,8 +202,12 @@ describe('when contain is null', () => {
     listbox.style.setProperty('padding', '10px');
     listbox.style.setProperty('border', '1px solid black');
 
-    jest.spyOn(document.documentElement, 'clientWidth', 'get').mockImplementation(() => 120);
-    jest.spyOn(listbox, 'getBoundingClientRect').mockImplementation(() => ({ left: 50 }));
+    jest
+      .spyOn(document.documentElement, 'clientWidth', 'get')
+      .mockImplementation(() => 120);
+    jest
+      .spyOn(listbox, 'getBoundingClientRect')
+      .mockImplementation(() => ({ left: 50 }));
 
     layoutMaxWidth({ listbox }, { contain: null });
 
@@ -160,8 +222,12 @@ describe('when contain does not find an element', () => {
     listbox.style.setProperty('padding', '10px');
     listbox.style.setProperty('border', '1px solid black');
 
-    jest.spyOn(document.documentElement, 'clientWidth', 'get').mockImplementation(() => 120);
-    jest.spyOn(listbox, 'getBoundingClientRect').mockImplementation(() => ({ left: 50 }));
+    jest
+      .spyOn(document.documentElement, 'clientWidth', 'get')
+      .mockImplementation(() => 120);
+    jest
+      .spyOn(listbox, 'getBoundingClientRect')
+      .mockImplementation(() => ({ left: 50 }));
 
     layoutMaxWidth({ listbox }, { contain: '.foo' });
 

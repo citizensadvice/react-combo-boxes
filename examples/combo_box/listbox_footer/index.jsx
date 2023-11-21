@@ -1,13 +1,7 @@
 import { useState } from 'react';
 import { ComboBox, useTokenSearch } from '../../../src';
 
-const options = [
-  'Apple',
-  'Orange',
-  'Lemon',
-  'Raspberry',
-  'Strawberry',
-];
+const options = ['Apple', 'Orange', 'Lemon', 'Raspberry', 'Strawberry'];
 
 function renderListBox({ hidden, className, ...props }) {
   return (
@@ -20,9 +14,7 @@ function renderListBox({ hidden, className, ...props }) {
         {...props}
       />
       <div className="list-footer">
-        <a href="https://en.wikipedia.org/wiki/Fruit">
-          More about fruit
-        </a>
+        <a href="https://en.wikipedia.org/wiki/Fruit">More about fruit</a>
       </div>
     </div>
   );
@@ -51,10 +43,11 @@ export function Example() {
         renderListBox={renderListBox}
       />
 
-      <label htmlFor="output">
-        Current value
-      </label>
-      <output htmlFor="select" id="output">
+      <label htmlFor="output">Current value</label>
+      <output
+        htmlFor="select"
+        id="output"
+      >
         {JSON.stringify(value, undefined, ' ')}
       </output>
     </>

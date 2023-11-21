@@ -29,7 +29,10 @@ function index({ breed }) {
 function renderValue({ children }, { search, column: { name } }) {
   if (name === 'breed') {
     return (
-      <TokenHighlight search={search} value={children} />
+      <TokenHighlight
+        search={search}
+        value={children}
+      />
     );
   }
   return children;
@@ -68,10 +71,11 @@ export function Example() {
         size={100}
       />
 
-      <label htmlFor="output">
-        Current value
-      </label>
-      <output htmlFor="select" id="output">
+      <label htmlFor="output">Current value</label>
+      <output
+        htmlFor="select"
+        id="output"
+      >
         {JSON.stringify(value, undefined, ' ')}
       </output>
     </>

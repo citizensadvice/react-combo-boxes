@@ -5,11 +5,16 @@ it('filters empty parts', () => {
 });
 
 it('joins parts', () => {
-  expect(normaliseHighlight(['f', 'oo', ['b'], ['ar']])).toEqual(['foo', ['bar']]);
+  expect(normaliseHighlight(['f', 'oo', ['b'], ['ar']])).toEqual([
+    'foo',
+    ['bar'],
+  ]);
 });
 
 it('renormalises to NFC', () => {
-  expect(normaliseHighlight(['föo'.normalize('NFD'), ['bär'.normalize('NFD')]])).toEqual(['föo', ['bär']]);
+  expect(
+    normaliseHighlight(['föo'.normalize('NFD'), ['bär'.normalize('NFD')]]),
+  ).toEqual(['föo', ['bär']]);
 });
 
 describe('if normalize is not supported', () => {

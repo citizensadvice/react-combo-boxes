@@ -1,6 +1,6 @@
 # `<DropDownTable>`
 
-An alternative layout for a drop down.  This places the results in a table which is more readable for tabulated data.
+An alternative layout for a drop down. This places the results in a table which is more readable for tabulated data.
 
 This has the same options as [DropDown][drop-down] and [ComboBoxTable][combo-box-table].
 
@@ -20,9 +20,9 @@ const options = [
 <DropDownTable
   {...props}
   options={options}
-  columns={['name', 'age', 'height']} 
+  columns={['name', 'age', 'height']}
   mapOption={map}
-/>
+/>;
 ```
 
 [drop-down]: drop_down.md

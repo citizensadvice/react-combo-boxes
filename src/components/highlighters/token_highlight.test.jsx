@@ -4,12 +4,22 @@ import { render } from '@testing-library/react';
 import { TokenHighlight } from './token_highlight';
 
 it('highlights empty string', () => {
-  const { container } = render(<TokenHighlight value="" search="" />);
+  const { container } = render(
+    <TokenHighlight
+      value=""
+      search=""
+    />,
+  );
   expect(container).toMatchInlineSnapshot(`<div />`);
 });
 
 it('highlights with an empty search', () => {
-  const { container } = render(<TokenHighlight value="foo" search="" />);
+  const { container } = render(
+    <TokenHighlight
+      value="foo"
+      search=""
+    />,
+  );
   expect(container).toMatchInlineSnapshot(`
 <div>
   foo
@@ -18,7 +28,12 @@ it('highlights with an empty search', () => {
 });
 
 it('highlights with no match', () => {
-  const { container } = render(<TokenHighlight value="foo foobar" search="bar" />);
+  const { container } = render(
+    <TokenHighlight
+      value="foo foobar"
+      search="bar"
+    />,
+  );
   expect(container).toMatchInlineSnapshot(`
 <div>
   foo foobar
@@ -27,7 +42,12 @@ it('highlights with no match', () => {
 });
 
 it('highlights with a match', () => {
-  const { container } = render(<TokenHighlight value="foo foobar" search="foo" />);
+  const { container } = render(
+    <TokenHighlight
+      value="foo foobar"
+      search="foo"
+    />,
+  );
   expect(container).toMatchInlineSnapshot(`
 <div>
   <span
@@ -52,7 +72,13 @@ it('highlights with a match', () => {
 });
 
 it('inverses the a highlight', () => {
-  const { container } = render(<TokenHighlight value="foo foobar" search="foo" inverse />);
+  const { container } = render(
+    <TokenHighlight
+      value="foo foobar"
+      search="foo"
+      inverse
+    />,
+  );
   expect(container).toMatchInlineSnapshot(`
 <div>
   <span

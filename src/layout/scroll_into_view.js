@@ -35,7 +35,8 @@ export function scrollIntoView({ option, listbox, input }) {
   const parentTop = parent.scrollTop;
   const parentBottom = parentTop + parent.clientHeight;
 
-  const scrollPaddingTop = parseFloat(window.getComputedStyle(parent).scrollPaddingTop) || 0;
+  const scrollPaddingTop =
+    parseFloat(window.getComputedStyle(parent).scrollPaddingTop) || 0;
 
   if (parentTop - scrollPaddingTop > elementTop) {
     parent.scrollTop = elementTop - scrollPaddingTop;
@@ -53,6 +54,9 @@ export function scrollIntoView({ option, listbox, input }) {
     const inputRect = input.getBoundingClientRect();
     window.scrollTo(window.scrollX, window.scrollY + inputRect.top);
   } else if (elementRect.bottom > height) {
-    window.scrollTo(window.scrollX, window.scrollY + elementRect.bottom - height);
+    window.scrollTo(
+      window.scrollX,
+      window.scrollY + elementRect.bottom - height,
+    );
   }
 }

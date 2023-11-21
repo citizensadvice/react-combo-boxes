@@ -1,12 +1,6 @@
 {
-  "extends": [
-    "airbnb",
-    "plugin:react/jsx-runtime"
-  ],
-  "plugins": [
-    "react-hooks",
-    "babel"
-  ],
+  "extends": ["airbnb", "plugin:react/jsx-runtime", "prettier"],
+  "plugins": ["react-hooks", "babel"],
   "env": {
     "browser": true
   },
@@ -20,7 +14,15 @@
     "import/no-default-export": "error",
     "object-curly-newline": ["error", { "consistent": true }],
     "no-restricted-syntax": "off",
-    "no-unused-vars": ["error", { "vars": "all", "args": "after-used", "varsIgnorePattern": "^_\\d*$", "argsIgnorePattern": "^_\\d*$" }],
+    "no-unused-vars": [
+      "error",
+      {
+        "vars": "all",
+        "args": "after-used",
+        "varsIgnorePattern": "^_\\d*$",
+        "argsIgnorePattern": "^_\\d*$"
+      }
+    ],
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "error",
     "react/jsx-props-no-spreading": "off",
@@ -44,11 +46,7 @@
       "env": {
         "jest": true
       },
-      "plugins": [
-        "jest",
-        "jest-dom",
-        "testing-library"
-      ],
+      "plugins": ["jest", "jest-dom", "testing-library"],
       "extends": [
         "plugin:jest/recommended",
         "plugin:testing-library/react",

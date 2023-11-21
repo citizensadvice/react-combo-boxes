@@ -14,11 +14,13 @@ export function tokenSearcher(
 
     const tokenised = tokenise(query);
     return indexed
-      .map((tokens, i) => (
-        tokenised.every((token) => tokens.some((part) => part.indexOf(token) === 0))
+      .map((tokens, i) =>
+        tokenised.every((token) =>
+          tokens.some((part) => part.indexOf(token) === 0),
+        )
           ? options[i]
-          : null
-      ))
+          : null,
+      )
       .filter((o) => o !== null && o !== '');
   };
 }

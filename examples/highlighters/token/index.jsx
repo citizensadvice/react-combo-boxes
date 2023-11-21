@@ -12,7 +12,10 @@ const options = [
 
 function renderValue({ children }, { search }) {
   return (
-    <TokenHighlight value={children} search={search} />
+    <TokenHighlight
+      value={children}
+      search={search}
+    />
   );
 }
 
@@ -39,10 +42,11 @@ export function Example() {
         renderValue={renderValue}
       />
 
-      <label htmlFor="output">
-        Current value
-      </label>
-      <output htmlFor="select" id="output">
+      <label htmlFor="output">Current value</label>
+      <output
+        htmlFor="select"
+        id="output"
+      >
         {JSON.stringify(value, undefined, ' ')}
       </output>
     </>

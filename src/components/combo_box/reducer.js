@@ -1,10 +1,20 @@
 import { shallowEqualObjects } from 'shallow-equal';
-import { SET_SEARCH, SET_EXPANDED, SET_CLOSED, SET_FOCUSED_OPTION, SET_FOCUS_LIST_BOX } from './actions';
+import {
+  SET_SEARCH,
+  SET_EXPANDED,
+  SET_CLOSED,
+  SET_FOCUSED_OPTION,
+  SET_FOCUS_LIST_BOX,
+} from './actions';
 
 function applyAutoselect(state, { setAutoselect, setInlineAutoselect }) {
   const { focusListBox, suggestedOption } = state;
 
-  if (focusListBox || (!setAutoselect && !setInlineAutoselect) || !suggestedOption) {
+  if (
+    focusListBox ||
+    (!setAutoselect && !setInlineAutoselect) ||
+    !suggestedOption
+  ) {
     return {
       ...state,
       inlineAutoselect: false,
@@ -60,7 +70,8 @@ function reduce(state, { type, ...params }) {
         suggestedOption = null,
       } = params;
 
-      const focusListBox = (paramFocusListBox ?? state.focusListBox) && !!focusedOption;
+      const focusListBox =
+        (paramFocusListBox ?? state.focusListBox) && !!focusedOption;
 
       return {
         ...state,
@@ -71,9 +82,7 @@ function reduce(state, { type, ...params }) {
       };
     }
     case SET_FOCUS_LIST_BOX: {
-      const {
-        focusListBox,
-      } = params;
+      const { focusListBox } = params;
 
       return {
         ...state,
@@ -87,10 +96,10 @@ function reduce(state, { type, ...params }) {
 }
 
 export function reducer(state, action) {
-  const newState = [
-    reduce,
-    applyAutoselect,
-  ].reduce((currentState, fn) => fn(currentState, action), state);
+  const newState = [reduce, applyAutoselect].reduce(
+    (currentState, fn) => fn(currentState, action),
+    state,
+  );
 
   if (shallowEqualObjects(newState, state)) {
     return state;

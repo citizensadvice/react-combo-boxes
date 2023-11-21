@@ -1,5 +1,11 @@
 /* eslint-disable import/no-extraneous-dependencies, testing-library/no-debugging-utils */
-import { waitFor, screen, isInaccessible, prettyDOM, within } from '@testing-library/react';
+import {
+  waitFor,
+  screen,
+  isInaccessible,
+  prettyDOM,
+  within,
+} from '@testing-library/react';
 import importedUserEvent from '@testing-library/user-event';
 
 function options(name) {
@@ -49,14 +55,24 @@ export async function selectComboBoxOption({
   container = document.body,
   userEvent = importedUserEvent,
 }) {
-  const comboBox = await within(container).findByRole('combobox', options(from));
+  const comboBox = await within(container).findByRole(
+    'combobox',
+    options(from),
+  );
   // Suport ARIA 1.1
   let textBox = comboBox;
   if (!textBox.matches('input')) {
-    const ids = (comboBox.getAttribute('aria-owns') || '').split(/\s+/).filter(Boolean);
+    const ids = (comboBox.getAttribute('aria-owns') || '')
+      .split(/\s+/)
+      .filter(Boolean);
     // Technically the textbox can be child, or owned by the combobox
     // If it is a readonly combobox there will be no textbox
-    textBox = within(comboBox).queryByRole('textbox') || within(container).queryAllByRole('textbox').find((id) => ids.include(id)) || comboBox;
+    textBox =
+      within(comboBox).queryByRole('textbox') ||
+      within(container)
+        .queryAllByRole('textbox')
+        .find((id) => ids.include(id)) ||
+      comboBox;
   }
 
   await userEvent.click(textBox);
@@ -78,8 +94,13 @@ export async function selectComboBoxOption({
         comboBox.getAttribute('aria-controls'), // ARIA 1.2
         comboBox.getAttribute('aria-owns'), // ARIA 1.0 / 1.1
         textBox.getAttribute('aria-controls'), // ARIA 1.1
-      ].join(' ').split(/\s+/).filter(Boolean);
-      listBox = within(container).getAllByRole('listbox').find((listbox) => ids.includes(listbox.id));
+      ]
+        .join(' ')
+        .split(/\s+/)
+        .filter(Boolean);
+      listBox = within(container)
+        .getAllByRole('listbox')
+        .find((listbox) => ids.includes(listbox.id));
       expect(listBox).toBeInTheDocument();
       option = within(listBox).getByRole('option', options(select));
     });
@@ -95,7 +116,9 @@ export async function selectComboBoxOption({
 
       const listBoxes = screen.queryAllByRole('listbox', { hidden: true });
       if (!listBoxes) {
-        message += `\n\nNo elements with the role "listbox" found in document:\n\n${prettyDOM(document.body)}`;
+        message += `\n\nNo elements with the role "listbox" found in document:\n\n${prettyDOM(
+          document.body,
+        )}`;
       } else {
         message += '\n\nHere are the found elements with the role "listbox":';
         listBoxes.forEach((box) => {

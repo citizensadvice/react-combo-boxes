@@ -19,7 +19,10 @@ const onLayoutListBox = [
 export function Example() {
   const [value, setValue] = useState(null);
   const [search, setSearch] = useState(null);
-  const filteredOptions = useTokenSearch(search, { options: countries, index: mapOption });
+  const filteredOptions = useTokenSearch(search, {
+    options: countries,
+    index: mapOption,
+  });
 
   return (
     <div
@@ -51,10 +54,11 @@ export function Example() {
         onLayoutListBox={onLayoutListBox}
       />
 
-      <label htmlFor="output">
-        Current value
-      </label>
-      <output htmlFor="select" id="output">
+      <label htmlFor="output">Current value</label>
+      <output
+        htmlFor="select"
+        id="output"
+      >
         {JSON.stringify(value, undefined, ' ')}
       </output>
       <div style={{ height: '1000px', width: '500px' }} />

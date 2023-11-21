@@ -40,15 +40,15 @@ export function Example() {
           onChange={({ target: { checked } }) => {
             setClearOnSelect(checked);
           }}
-        />
-        {' '}
+        />{' '}
         <code>clearOnSelect</code>
       </label>
 
-      <label htmlFor="output">
-        Selected value
-      </label>
-      <output htmlFor="select" id="output">
+      <label htmlFor="output">Selected value</label>
+      <output
+        htmlFor="select"
+        id="output"
+      >
         {JSON.stringify(value, undefined, ' ')}
       </output>
     </>

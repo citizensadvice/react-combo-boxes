@@ -86,7 +86,12 @@ describe('with an open list box', () => {
       function skipOption(option) {
         return option.label === 'Apple';
       }
-      render(<ComboBoxWrapper options={options} skipOption={skipOption} />);
+      render(
+        <ComboBoxWrapper
+          options={options}
+          skipOption={skipOption}
+        />,
+      );
       await userEvent.tab();
       await userEvent.keyboard('{Home}');
       expectToHaveFocusedOption(screen.getByRole('option', { name: 'Banana' }));
@@ -96,7 +101,12 @@ describe('with an open list box', () => {
       function skipOption(option) {
         return option.label === 'Orange';
       }
-      render(<ComboBoxWrapper options={options} skipOption={skipOption} />);
+      render(
+        <ComboBoxWrapper
+          options={options}
+          skipOption={skipOption}
+        />,
+      );
       await userEvent.tab();
       await userEvent.keyboard('{End}');
       expectToHaveFocusedOption(screen.getByRole('option', { name: 'Banana' }));
@@ -109,7 +119,9 @@ describe('with a closed list box', () => {
     it('does not change the option', async () => {
       render(<ComboBoxWrapper options={options} />);
       await userEvent.tab();
-      await userEvent.keyboard('{ArrowDown}{ArrowDown}{Enter}{Home}{ArrowDown}');
+      await userEvent.keyboard(
+        '{ArrowDown}{ArrowDown}{Enter}{Home}{ArrowDown}',
+      );
       expectToHaveFocusedOption(screen.getByRole('option', { name: 'Banana' }));
     });
   });
@@ -128,8 +140,16 @@ describe('autoselect is true', () => {
   describe('backspace', () => {
     describe('ctrl+d', () => {
       it('does not auto-select an option', async () => {
-        render(<ComboBoxWrapper options={['foo', 'bar']} autoselect />);
-        await userEvent.type(screen.getByRole('combobox'), 'fo{Control>}d{/Control}');
+        render(
+          <ComboBoxWrapper
+            options={['foo', 'bar']}
+            autoselect
+          />,
+        );
+        await userEvent.type(
+          screen.getByRole('combobox'),
+          'fo{Control>}d{/Control}',
+        );
         expectToBeOpen();
       });
     });
@@ -137,16 +157,32 @@ describe('autoselect is true', () => {
     describe('delete', () => {
       describe('ctrl+h', () => {
         it('does not auto-select an option', async () => {
-          render(<ComboBoxWrapper options={['foo', 'bar']} autoselect />);
-          await userEvent.type(screen.getByRole('combobox'), 'foo{Control>}h{/Control}');
+          render(
+            <ComboBoxWrapper
+              options={['foo', 'bar']}
+              autoselect
+            />,
+          );
+          await userEvent.type(
+            screen.getByRole('combobox'),
+            'foo{Control>}h{/Control}',
+          );
           expectToBeOpen();
         });
       });
 
       describe('ctrl+k', () => {
         it('does not auto-select an option', async () => {
-          render(<ComboBoxWrapper options={['foo', 'bar']} autoselect />);
-          await userEvent.type(screen.getByRole('combobox'), 'fo{Control>}k{/Control}');
+          render(
+            <ComboBoxWrapper
+              options={['foo', 'bar']}
+              autoselect
+            />,
+          );
+          await userEvent.type(
+            screen.getByRole('combobox'),
+            'fo{Control>}k{/Control}',
+          );
           expectToBeOpen();
         });
       });

@@ -12,14 +12,20 @@ const options = [
 
 function renderValue({ children }, { search }) {
   return (
-    <SubstringHighlight value={children} search={search} />
+    <SubstringHighlight
+      value={children}
+      search={search}
+    />
   );
 }
 
 export function Example() {
   const [value, setValue] = useState(null);
   const [search, setSearch] = useState(null);
-  const filteredOptions = useMemo(() => options.filter((v) => v.includes(search)), [search]);
+  const filteredOptions = useMemo(
+    () => options.filter((v) => v.includes(search)),
+    [search],
+  );
 
   return (
     <>
@@ -39,10 +45,11 @@ export function Example() {
         renderValue={renderValue}
       />
 
-      <label htmlFor="output">
-        Current value
-      </label>
-      <output htmlFor="select" id="output">
+      <label htmlFor="output">Current value</label>
+      <output
+        htmlFor="select"
+        id="output"
+      >
         {JSON.stringify(value, undefined, ' ')}
       </output>
     </>

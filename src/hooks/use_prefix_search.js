@@ -5,9 +5,10 @@ export function usePrefixSearch(
   query,
   { options, index, minLength, maxResults },
 ) {
-  const searcher = useMemo(() => (
-    prefixSearcher(options, { index })
-  ), [options, index]);
+  const searcher = useMemo(
+    () => prefixSearcher(options, { index }),
+    [options, index],
+  );
 
   return useMemo(() => {
     if (minLength && (!query || query?.trim().length < minLength)) {

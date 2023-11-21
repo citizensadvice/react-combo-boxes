@@ -27,7 +27,9 @@ export function Example() {
   const [search, setSearch] = useState(null);
   const [searchDebounce, setSearchDebounce] = useState(200);
   const [busyDebounce, setBusyDebounce] = useState(400);
-  const [filteredOptions, busy] = useFindOptions(search, { debounce: searchDebounce });
+  const [filteredOptions, busy] = useFindOptions(search, {
+    debounce: searchDebounce,
+  });
 
   return (
     <>
@@ -90,8 +92,7 @@ export function Example() {
                 setAutoselect(false);
               }
             }}
-          />
-          {' '}
+          />{' '}
           <code>false</code>
         </label>
         <label>
@@ -104,8 +105,7 @@ export function Example() {
                 setAutoselect(true);
               }
             }}
-          />
-          {' '}
+          />{' '}
           <code>true</code>
         </label>
         <label>
@@ -118,16 +118,16 @@ export function Example() {
                 setAutoselect('inline');
               }
             }}
-          />
-          {' '}
+          />{' '}
           <code>&quot;inline&quot;</code>
         </label>
       </fieldset>
 
-      <label htmlFor="output">
-        Current value
-      </label>
-      <output htmlFor="select" id="output">
+      <label htmlFor="output">Current value</label>
+      <output
+        htmlFor="select"
+        id="output"
+      >
         {JSON.stringify(value, undefined, ' ')}
       </output>
     </>
