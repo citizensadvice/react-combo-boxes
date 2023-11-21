@@ -137,6 +137,8 @@ ComboBoxWrapper.propTypes = {
   }).isRequired,
 };
 
+ComboBoxWrapper.displayName = 'comboBoxWrapper';
+
 export const DropDown = forwardRef((props, ref) => {
   const { renderWrapper, renderListBox } = props;
 

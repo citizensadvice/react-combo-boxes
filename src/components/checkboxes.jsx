@@ -43,7 +43,7 @@ export const Checkboxes = memo((rawProps) => {
     if (typeof ref === 'function') {
       ref(el);
     } else if (ref) {
-      ref.current = el; // eslint-disable-line no-param-reassign
+      ref.current = el;
     }
   }, []);
 
@@ -201,7 +201,7 @@ Checkboxes.defaultProps = {
   renderWrapper: (props) => <div {...props} />,
   renderInput: (props) => <input {...props} />,
   renderLabel: (props) => <label {...props} />,
-  // eslint-disable-next-line react/jsx-no-useless-fragment
+
   renderLabelWrapper: (props) => <Fragment {...props} />,
   renderDescription: (props) => <div {...props} />,
   renderGroup: (props) => <div {...props} />,

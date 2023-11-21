@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 const emoji = require('node-emoji');
 const { marked } = require('marked');
 const { markedHighlight } = require('marked-highlight');
@@ -13,7 +12,7 @@ renderer.link = function link(href, title, text) {
   if (/^(?!\/\/|\w+:)/.test(href)) {
     const parts = path.parse(href);
     const url = new URL(href, 'http://invalid/');
-    href = path.join(parts.dir, `${parts.name}.pug${url.hash}`); // eslint-disable-line no-param-reassign
+    href = path.join(parts.dir, `${parts.name}.pug${url.hash}`);
   }
   return originalLink.call(this, href, title, text);
 };

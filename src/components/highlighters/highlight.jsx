@@ -21,8 +21,8 @@ export function Highlight({ children, inverse }) {
     return highlighted.join('');
   }
 
-  const parts = highlighted.map((part) =>
-    Array.isArray(part) ? <mark>{part}</mark> : part,
+  const parts = highlighted.map(
+    (part) => (Array.isArray(part) ? <mark>{part}</mark> : part), //eslint-disable-line react/jsx-key
   );
   const highlight = React.createElement(Fragment, null, ...parts);
 

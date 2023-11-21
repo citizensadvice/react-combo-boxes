@@ -1,19 +1,40 @@
 {
-  "extends": ["airbnb", "plugin:react/jsx-runtime", "prettier"],
-  "plugins": ["react-hooks", "babel"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:import/recommended",
+    "plugin:react/recommended",
+    "plugin:react/jsx-runtime",
+    "plugin:react-hooks/recommended",
+    "plugin:@eslint-community/eslint-comments/recommended",
+    "prettier"
+  ],
   "env": {
-    "browser": true
+    "browser": true,
+    "es2024": true
   },
   "parserOptions": {
     "ecmaVersion": "latest"
   },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".json"]
+      }
+    },
+    "react": {
+      "version": "detect"
+    }
+  },
   "rules": {
-    "babel/no-unused-expressions": "error",
+    "@eslint-community/eslint-comments/no-unused-disable": "error",
+    "@eslint-community/eslint-comments/disable-enable-pair": [
+      "error",
+      { "allowWholeFile": true }
+    ],
     "import/extensions": ["error", "never", { "json": "always" }],
     "import/prefer-default-export": "off",
     "import/no-default-export": "error",
-    "object-curly-newline": ["error", { "consistent": true }],
-    "no-restricted-syntax": "off",
+    "import/no-named-as-default": "off",
     "no-unused-vars": [
       "error",
       {
@@ -22,23 +43,7 @@
         "varsIgnorePattern": "^_\\d*$",
         "argsIgnorePattern": "^_\\d*$"
       }
-    ],
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "error",
-    "react/jsx-props-no-spreading": "off",
-    "react/no-unused-prop-types": "off",
-    "react/forbid-prop-types": "off",
-    "jsx-a11y/aria-role": "off",
-    "jsx-a11y/aria-proptypes": "off",
-    "jsx-a11y/click-events-have-key-events": "off",
-    "jsx-a11y/control-has-associated-label": "off",
-    "jsx-a11y/interactive-supports-focus": "off",
-    "jsx-a11y/label-has-for": "off",
-    "jsx-a11y/label-has-associated-control": "off",
-    "jsx-a11y/no-noninteractive-element-to-interactive-role": "off",
-    "jsx-a11y/no-static-element-interactions": "off",
-    "jsx-a11y/role-has-required-aria-props": "off",
-    "no-unused-expressions": "off"
+    ]
   },
   "overrides": [
     {
@@ -54,6 +59,7 @@
       ],
       "rules": {
         "import/no-extraneous-dependencies": "off",
+        "react/display-name": "off",
         "react/jsx-no-bind": "off",
         "react/prop-types": "off",
         "jest/expect-expect": "off",
@@ -66,6 +72,15 @@
       "rules": {
         "import/no-extraneous-dependencies": "off",
         "react/prop-types": "off"
+      }
+    },
+    {
+      "files": ["jest.config.js", "pug.config.js"],
+      "parserOptions": {
+        "sourceType": "script"
+      },
+      "env": {
+        "node": true
       }
     }
   ]

@@ -1,5 +1,3 @@
-/* eslint-disable quotes */
-
 import { render } from '@testing-library/react';
 import { Highlight } from './highlight';
 

@@ -1,5 +1,3 @@
-/* eslint-disable global-require */
-
 beforeEach(() => {
   jest.resetModules();
 });

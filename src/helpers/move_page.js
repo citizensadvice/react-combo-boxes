@@ -43,7 +43,7 @@ export function movePage(direction, options, focusedOption, { skip }) {
 
     const element = document.getElementById(nextOption.key);
     if (!element) {
-      continue; // eslint-disable-line no-continue
+      continue;
     }
 
     const currentRect = element.getBoundingClientRect();

@@ -8,7 +8,7 @@ export function useCombineRefs(...refs) {
         if (typeof ref === 'function') {
           ref(value);
         } else if (ref) {
-          ref.current = value; // eslint-disable-line no-param-reassign
+          ref.current = value;
         }
       });
     },

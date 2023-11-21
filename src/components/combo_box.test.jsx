@@ -1,5 +1,3 @@
-/* eslint-disable testing-library/no-node-access */
-
 import { useEffect, useState, forwardRef } from 'react';
 import { render, waitFor, act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';

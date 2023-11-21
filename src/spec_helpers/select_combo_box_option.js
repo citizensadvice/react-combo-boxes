@@ -1,4 +1,4 @@
-/* eslint-disable import/no-extraneous-dependencies, testing-library/no-debugging-utils */
+/* eslint-disable testing-library/no-debugging-utils */
 import {
   waitFor,
   screen,

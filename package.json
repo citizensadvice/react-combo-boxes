@@ -34,6 +34,7 @@
     "release": "npx np --any-branch"
   },
   "devDependencies": {
+    "@eslint-community/eslint-plugin-eslint-comments": "^4.1.0",
     "@parcel/resolver-glob": "^2.10.3",
     "@parcel/transformer-pug": "^2.10.3",
     "@parcel/transformer-sass": "^2.10.3",
@@ -44,13 +45,10 @@
     "@testing-library/user-event": "^14.5.1",
     "autoprefixer": "^10.4.16",
     "eslint": "^8.54.0",
-    "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-babel": "^5.3.1",
     "eslint-plugin-import": "^2.29.0",
     "eslint-plugin-jest": "^27.6.0",
     "eslint-plugin-jest-dom": "^5.1.0",
-    "eslint-plugin-jsx-a11y": "^6.8.0",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-testing-library": "^6.2.0",

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-Object.defineProperties(global.navigator, {
+Object.defineProperties(globalThis.navigator, {
   vendor: {
     get() {
       return 'Apple Computers, Inc.';
