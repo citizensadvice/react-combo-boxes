@@ -201,7 +201,7 @@ Checkboxes.defaultProps = {
   renderWrapper: (props) => <div {...props} />,
   renderInput: (props) => <input {...props} />,
   renderLabel: (props) => <label {...props} />,
-
+  // eslint-disable-next-line react/jsx-no-useless-fragment
   renderLabelWrapper: (props) => <Fragment {...props} />,
   renderDescription: (props) => <div {...props} />,
   renderGroup: (props) => <div {...props} />,
