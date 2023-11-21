@@ -29,13 +29,20 @@ function index({ breed }) {
 function renderValue({ children }, { search, column: { name } }) {
   if (name === 'breed') {
     return (
-      <TokenHighlight search={search} value={children} />
+      <TokenHighlight
+        search={search}
+        value={children}
+      />
     );
   }
   return children;
 }
 
-const onLayoutListBox = [layoutMaxWidth, layoutMaxHeight, layoutColumnsAlignLeft];
+const onLayoutListBox = [
+  layoutMaxWidth,
+  layoutMaxHeight,
+  layoutColumnsAlignLeft,
+];
 
 export function Example() {
   const [value, setValue] = useState(null);
@@ -63,10 +70,11 @@ export function Example() {
         onLayoutListBox={onLayoutListBox}
       />
 
-      <label htmlFor="output">
-        Current value
-      </label>
-      <output htmlFor="select" id="output">
+      <label htmlFor="output">Current value</label>
+      <output
+        htmlFor="select"
+        id="output"
+      >
         {JSON.stringify(value, undefined, ' ')}
       </output>
     </>

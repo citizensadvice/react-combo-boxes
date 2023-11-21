@@ -2,7 +2,14 @@ import { useRef, useState } from 'react';
 import { DropDownTable, layoutMaxWidth, layoutMaxHeight } from '../../../src';
 import cats from '../../data/cats.json';
 
-const columns = ['breed', 'country', 'origin', 'bodyType', 'coatLength', 'pattern'];
+const columns = [
+  'breed',
+  'country',
+  'origin',
+  'bodyType',
+  'coatLength',
+  'pattern',
+];
 
 function mapOption({ breed }) {
   return { label: breed };
@@ -35,10 +42,11 @@ export function Example() {
         mapOption={mapOption}
       />
 
-      <label htmlFor="output">
-        Current value
-      </label>
-      <output htmlFor="drop-down" id="output">
+      <label htmlFor="output">Current value</label>
+      <output
+        htmlFor="drop-down"
+        id="output"
+      >
         {JSON.stringify(value, undefined, ' ')}
       </output>
     </>

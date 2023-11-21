@@ -37,16 +37,27 @@ function applyAutoselect(action) {
       lastKeyRef: { current: key },
       options,
       tabAutocomplete,
-      inputRef: { current: { selectionStart } },
+      inputRef: {
+        current: { selectionStart },
+      },
     } = getProps();
 
     let suggestedOption = null;
     if ((autoselect || tabAutocomplete) && search) {
-      suggestedOption = findSuggestedOption({ options, findSuggestion, search });
+      suggestedOption = findSuggestedOption({
+        options,
+        findSuggestion,
+        search,
+      });
     }
 
     const removeAutoselect = autoselect && key === 'Backspace';
-    const setInlineAutoselect = autoselect === 'inline' && search && selectionStart === search.length && suggestedOption && !removeAutoselect;
+    const setInlineAutoselect =
+      autoselect === 'inline' &&
+      search &&
+      selectionStart === search.length &&
+      suggestedOption &&
+      !removeAutoselect;
     const setAutoselect = autoselect === true && search && suggestedOption;
 
     dispatch({
@@ -86,8 +97,13 @@ export function setFocusedOption(focusedOption) {
 export function onSelectValue(newValue, expanded) {
   return (dispatch, getState, getProps) => {
     const {
-      onSearch, onValue, inputRef, closeOnSelect,
-      value, editable, clearOnSelect,
+      onSearch,
+      onValue,
+      inputRef,
+      closeOnSelect,
+      value,
+      editable,
+      clearOnSelect,
     } = getProps();
     const expand = expanded === undefined ? !closeOnSelect : expanded;
     dispatch({ type: SET_CLOSED, expanded: expand });
@@ -99,9 +115,13 @@ export function onSelectValue(newValue, expanded) {
       const { current: input } = inputRef;
       input.value = newValue?.label ?? '';
       if (document.activeElement === input && input.setSelectionRange) {
-        input.setSelectionRange(input.value.length, input.value.length, 'forward');
+        input.setSelectionRange(
+          input.value.length,
+          input.value.length,
+          'forward',
+        );
       }
-      onSearch?.(clearOnSelect ? '' : (newValue?.label || ''));
+      onSearch?.(clearOnSelect ? '' : newValue?.label || '');
     }
     onValue?.(newValue ? newValue.value : null);
   };
@@ -109,10 +129,18 @@ export function onSelectValue(newValue, expanded) {
 
 export function onKeyDown(event) {
   return (dispatch, getState, getProps) => {
-    const { expanded, focusListBox, focusedOption, suggestedOption } = getState();
+    const { expanded, focusListBox, focusedOption, suggestedOption } =
+      getState();
     const {
-      options, inputRef, lastKeyRef, skipOption: skip,
-      mustHaveSelection, editable, disabled, readOnly, selectOnBlur,
+      options,
+      inputRef,
+      lastKeyRef,
+      skipOption: skip,
+      mustHaveSelection,
+      editable,
+      disabled,
+      readOnly,
+      selectOnBlur,
     } = getProps();
 
     if (disabled || readOnly) {
@@ -153,14 +181,14 @@ export function onKeyDown(event) {
       dispatch({ type: SET_FOCUSED_OPTION, focusedOption: null });
     }
 
-    if (event.target !== inputRef.current
-      && editable
-      && focusListBox
-      && (
-        ['Delete', 'Backspace', 'ArrowLeft', 'ArrowRight'].includes(key)
-        || !rNonPrintableKey.test(key)
-        || (!isMac() && ['Home', 'End'].includes(key))
-      )) {
+    if (
+      event.target !== inputRef.current &&
+      editable &&
+      focusListBox &&
+      (['Delete', 'Backspace', 'ArrowLeft', 'ArrowRight'].includes(key) ||
+        !rNonPrintableKey.test(key) ||
+        (!isMac() && ['Home', 'End'].includes(key)))
+    ) {
       // If the user is manipulating text or moving the cursor
       // return focus to the input
       // Mostly this works, but sadly it doesn't work with composition events (Dead key)
@@ -192,7 +220,10 @@ export function onKeyDown(event) {
         } else if (expanded) {
           dispatch({
             type: SET_FOCUSED_OPTION,
-            focusedOption: previousInList(options, index, { skip, allowEmpty: editable }),
+            focusedOption: previousInList(options, index, {
+              skip,
+              allowEmpty: editable,
+            }),
             focusListBox: true,
           });
         } else {
@@ -205,7 +236,10 @@ export function onKeyDown(event) {
         if (expanded && !altKey) {
           dispatch({
             type: SET_FOCUSED_OPTION,
-            focusedOption: nextInList(options, index, { skip, allowEmpty: editable }),
+            focusedOption: nextInList(options, index, {
+              skip,
+              allowEmpty: editable,
+            }),
             focusListBox: true,
           });
         } else {
@@ -275,22 +309,36 @@ export function onKeyDown(event) {
         break;
       case 'Tab': {
         const { tabBetweenOptions, tabAutocomplete, value } = getProps();
-        if (tabAutocomplete && suggestedOption && expanded && !focusListBox
-          && suggestedOption.identity !== value?.identity
-          && !shiftKey && !altKey && !ctrlKey && !metaKey
+        if (
+          tabAutocomplete &&
+          suggestedOption &&
+          expanded &&
+          !focusListBox &&
+          suggestedOption.identity !== value?.identity &&
+          !shiftKey &&
+          !altKey &&
+          !ctrlKey &&
+          !metaKey
         ) {
           event.preventDefault();
           dispatch(onSelectValue(suggestedOption));
           break;
         }
 
-        if (tabBetweenOptions && event.target === inputRef.current && expanded) {
+        if (
+          tabBetweenOptions &&
+          event.target === inputRef.current &&
+          expanded
+        ) {
           let option;
           if (shiftKey) {
             if (index === -1) {
               break;
             }
-            option = previousInList(options, index, { skip, allowEmpty: editable });
+            option = previousInList(options, index, {
+              skip,
+              allowEmpty: editable,
+            });
           } else {
             option = nextInList(options, index, { skip, allowEmpty: editable });
           }
@@ -332,11 +380,19 @@ export function onChange(event) {
       onSearch,
       selectedOption,
       value,
-      inputRef: { current: { selectionStart } },
+      inputRef: {
+        current: { selectionStart },
+      },
     } = getProps();
-    let { target: { value: search } } = event;
+    let {
+      target: { value: search },
+    } = event;
 
-    if (inlineAutoselect && key === 'Backspace' && selectionStart === search.length) {
+    if (
+      inlineAutoselect &&
+      key === 'Backspace' &&
+      selectionStart === search.length
+    ) {
       search = search.slice(0, -1);
     }
 
@@ -348,12 +404,14 @@ export function onChange(event) {
 
     onSearch?.(search);
 
-    dispatch(applyAutoselect({
-      type: SET_SEARCH,
-      focusedOption,
-      search,
-      selectedOption,
-    }));
+    dispatch(
+      applyAutoselect({
+        type: SET_SEARCH,
+        focusedOption,
+        search,
+        selectedOption,
+      }),
+    );
 
     if (!search && value) {
       dispatch(onSelectValue(null, true));
@@ -367,7 +425,13 @@ export function onChange(event) {
 export function onFocus() {
   return (dispatch, getState, getProps) => {
     const {
-      onSearch, selectedOption, expandOnFocus, disabled, readOnly, value, mustHaveSelection,
+      onSearch,
+      selectedOption,
+      expandOnFocus,
+      disabled,
+      readOnly,
+      value,
+      mustHaveSelection,
     } = getProps();
     const { expanded } = getState();
 
@@ -438,17 +502,19 @@ export function onInputMouseUp(e) {
 export function onBlur() {
   return (dispatch, getState, getProps) => {
     const { expanded, focusedOption } = getState();
-    const { value, selectOnBlur, tabBetweenOptions, disabled, readOnly } = getProps();
+    const { value, selectOnBlur, tabBetweenOptions, disabled, readOnly } =
+      getProps();
 
     if (disabled || readOnly) {
       return;
     }
 
-    if (selectOnBlur
-      && expanded
-      && !tabBetweenOptions
-      && focusedOption
-      && value?.identity !== focusedOption?.identity
+    if (
+      selectOnBlur &&
+      expanded &&
+      !tabBetweenOptions &&
+      focusedOption &&
+      value?.identity !== focusedOption?.identity
     ) {
       dispatch(onSelectValue(focusedOption));
       return;
@@ -495,21 +561,19 @@ export function onOptionsChanged() {
     if (!expanded) {
       return;
     }
-    const {
-      options,
-      mustHaveSelection,
-      selectedOption,
-    } = getProps();
+    const { options, mustHaveSelection, selectedOption } = getProps();
 
     let newOption = options.find((o) => o.identity === focusedOption?.identity);
     if (mustHaveSelection && !newOption) {
       newOption = selectedOption;
     }
 
-    dispatch(applyAutoselect({
-      type: SET_FOCUSED_OPTION,
-      focusedOption: newOption,
-    }));
+    dispatch(
+      applyAutoselect({
+        type: SET_FOCUSED_OPTION,
+        focusedOption: newOption,
+      }),
+    );
   };
 }
 

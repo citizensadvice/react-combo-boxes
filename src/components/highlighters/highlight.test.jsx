@@ -26,7 +26,9 @@ it('renders a highlight', () => {
 });
 
 it('renders an inverse highlight', () => {
-  const { container } = render(<Highlight inverse>{['f', ['o'], 'o']}</Highlight>);
+  const { container } = render(
+    <Highlight inverse>{['f', ['o'], 'o']}</Highlight>,
+  );
   expect(container).toMatchInlineSnapshot(`
 <div>
   <span

@@ -8,9 +8,20 @@ const options = [
   { label: 'Raspberry fool', highlighted: '<em>Raspberry</em> fool' },
 ];
 
-function renderValue({ children }, { option: { value: { highlighted } } }) {
+function renderValue(
+  { children },
+  {
+    option: {
+      value: { highlighted },
+    },
+  },
+) {
   return (
-    <DelimitedHighlight value={highlighted || children} start="<em>" end="</em>" />
+    <DelimitedHighlight
+      value={highlighted || children}
+      start="<em>"
+      end="</em>"
+    />
   );
 }
 
@@ -37,10 +48,11 @@ export function Example() {
         renderValue={renderValue}
       />
 
-      <label htmlFor="output">
-        Current value
-      </label>
-      <output htmlFor="select" id="output">
+      <label htmlFor="output">Current value</label>
+      <output
+        htmlFor="select"
+        id="output"
+      >
         {JSON.stringify(value, undefined, ' ')}
       </output>
     </>

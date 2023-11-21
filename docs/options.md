@@ -58,7 +58,7 @@ const mapOption = useCallback(({ name, deleted }) => {
   value={value}
   setValue={setValue}
   mapOption={mapOption}
-/>
+/>;
 ```
 
 ## Option identity
@@ -68,6 +68,5 @@ When determining which option is selected the "identity" of the option is compar
 The identity is calculated by the equivalent of:
 
 ```js
-String(option?.value ?? option?.id ?? option?.label ?? option ?? '')
+String(option?.value ?? option?.id ?? option?.label ?? option ?? '');
 ```
-

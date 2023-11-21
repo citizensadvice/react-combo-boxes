@@ -5,7 +5,18 @@ export function optionise(rawOption, mapOption) {
   }
 
   if (option != null && typeof option === 'object') {
-    const { label, group, value, disabled, html, id, description, name, title, hint } = option;
+    const {
+      label,
+      group,
+      value,
+      disabled,
+      html,
+      id,
+      description,
+      name,
+      title,
+      hint,
+    } = option;
     const calculatedLabel = label ?? name ?? title ?? '';
     return {
       label: calculatedLabel,

@@ -20,9 +20,11 @@
     "prebuild": "rm -rf .gh-pages",
     "build": "parcel build ./examples/index.pug",
     "start": "parcel ./examples/index.pug",
+    "format": "prettier . --write",
+    "lint:format": "prettier . --check",
     "lint:js": "eslint . --ext .js --ext .jsx --max-warnings=0",
     "lint:scss": "stylelint \"**/*.scss\" --max-warnings=0",
-    "lint": "npm run lint:js && npm run lint:scss",
+    "lint": "npm run lint:format && npm run lint:js && npm run lint:scss",
     "test": "jest",
     "predeploy": "npm run lint",
     "deploy": "npm run build -- --public-url \"/react-combo-boxes/\" --no-cache && gh-pages -d .gh-pages",
@@ -43,6 +45,7 @@
     "autoprefixer": "^10.4.16",
     "eslint": "^8.54.0",
     "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-babel": "^5.3.1",
     "eslint-plugin-import": "^2.29.0",
     "eslint-plugin-jest": "^27.6.0",
@@ -60,6 +63,7 @@
     "normalize.css": "^8.0.1",
     "parcel": "^2.10.3",
     "postcss": "^8.4.31",
+    "prettier": "^3.1.0",
     "prismjs": "^1.29.0",
     "process": "^0.11.10",
     "prop-types": "^15.7.2",
@@ -84,6 +88,10 @@
     "shallow-equal": "^3.1.0"
   },
   "sideEffects": false,
+  "prettier": {
+    "singleAttributePerLine": true,
+    "singleQuote": true
+  },
   "targets": {
     "main": false,
     "default": {

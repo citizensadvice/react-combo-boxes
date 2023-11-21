@@ -71,16 +71,27 @@ it('ignores empty items', () => {
 
 describe('options as objects', () => {
   it('defaults to indexing label', () => {
-    const collection = [{ label: 'apple', id: 1 }, { label: 'apricot', id: 2 }, { label: 'banana', id: 3 }];
+    const collection = [
+      { label: 'apple', id: 1 },
+      { label: 'apricot', id: 2 },
+      { label: 'banana', id: 3 },
+    ];
     const search = tokenSearcher(collection);
     const result = search('ap');
-    expect(result).toEqual([{ label: 'apple', id: 1 }, { label: 'apricot', id: 2 }]);
+    expect(result).toEqual([
+      { label: 'apple', id: 1 },
+      { label: 'apricot', id: 2 },
+    ]);
   });
 });
 
 describe('index', () => {
   it('customises the indexed value', () => {
-    const collection = [{ text: 'apple' }, { text: 'apricot' }, { text: 'banana' }];
+    const collection = [
+      { text: 'apple' },
+      { text: 'apricot' },
+      { text: 'banana' },
+    ];
     function index(option) {
       return option.text;
     }
@@ -92,7 +103,11 @@ describe('index', () => {
 
 describe('tokenise', () => {
   it('customises the tokeniser', () => {
-    const collection = [{ label: 'apple' }, { label: 'apricot' }, { label: 'cherry' }];
+    const collection = [
+      { label: 'apple' },
+      { label: 'apricot' },
+      { label: 'cherry' },
+    ];
     function tokenise(option) {
       return option.split('');
     }
@@ -104,7 +119,11 @@ describe('tokenise', () => {
 
 describe('locale', () => {
   it('customises the tokeniser', () => {
-    const collection = [{ label: 'apple' }, { label: 'apricot' }, { label: 'cherry' }];
+    const collection = [
+      { label: 'apple' },
+      { label: 'apricot' },
+      { label: 'cherry' },
+    ];
     function tokenise(option) {
       return option.split('');
     }

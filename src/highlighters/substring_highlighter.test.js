@@ -21,11 +21,20 @@ it('highlights a matching partial term at start of term', () => {
 });
 
 it('highlights a matching partial term in middle of term', () => {
-  expect(substringHighlighter('foobarfoo', 'bar')).toEqual(['foo', ['bar'], 'foo']);
+  expect(substringHighlighter('foobarfoo', 'bar')).toEqual([
+    'foo',
+    ['bar'],
+    'foo',
+  ]);
 });
 
 it('highlights all matching parts', () => {
-  expect(substringHighlighter('foobarfoobar', 'bar')).toEqual(['foo', ['bar'], 'foo', ['bar']]);
+  expect(substringHighlighter('foobarfoobar', 'bar')).toEqual([
+    'foo',
+    ['bar'],
+    'foo',
+    ['bar'],
+  ]);
 });
 
 it('highlights a matching partial term at the end of the term', () => {

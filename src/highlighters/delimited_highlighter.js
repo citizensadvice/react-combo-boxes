@@ -16,10 +16,9 @@ export function delimitedHighlighter(term, { start, end } = {}) {
     if (endIndex === -1) {
       break;
     }
-    highlighted.push(
-      term.slice(index, startIndex),
-      [term.slice(startIndex + start.length, endIndex)],
-    );
+    highlighted.push(term.slice(index, startIndex), [
+      term.slice(startIndex + start.length, endIndex),
+    ]);
     index = endIndex + end.length;
   } while (index < term.length);
 

@@ -23,12 +23,12 @@ function searcher(value) {
   }
 
   return found
-    .filter((term) => (
-      (!match[2] || term.startsWith(match[2].toLowerCase())) && !new RegExp(`\\b${match[1]}:${term}\\b`).test(value)
-    ))
-    .map((term) => (
-      `${value}${term.slice((match[2] || '').length)} `
-    ));
+    .filter(
+      (term) =>
+        (!match[2] || term.startsWith(match[2].toLowerCase())) &&
+        !new RegExp(`\\b${match[1]}:${term}\\b`).test(value),
+    )
+    .map((term) => `${value}${term.slice((match[2] || '').length)} `);
 }
 
 function renderInput(props, { expanded, suggestedOption }) {
@@ -45,7 +45,13 @@ function renderInput(props, { expanded, suggestedOption }) {
         className={className}
         value={suggestedValue}
         disabled
-        style={{ position: 'absolute', left: 0, background: 'white', zIndex: -1, color: '#999' }}
+        style={{
+          position: 'absolute',
+          left: 0,
+          background: 'white',
+          zIndex: -1,
+          color: '#999',
+        }}
       />
     </>
   );
@@ -100,8 +106,7 @@ export function Example() {
                 setAutoselect(false);
               }
             }}
-          />
-          {' '}
+          />{' '}
           <code>false</code>
         </label>
         <label>
@@ -114,8 +119,7 @@ export function Example() {
                 setAutoselect(true);
               }
             }}
-          />
-          {' '}
+          />{' '}
           <code>true</code>
         </label>
         <label>
@@ -128,16 +132,16 @@ export function Example() {
                 setAutoselect('inline');
               }
             }}
-          />
-          {' '}
+          />{' '}
           <code>&quot;inline&quot;</code>
         </label>
       </fieldset>
 
-      <label htmlFor="output">
-        Current value
-      </label>
-      <output htmlFor="select" id="output">
+      <label htmlFor="output">Current value</label>
+      <output
+        htmlFor="select"
+        id="output"
+      >
         {JSON.stringify(value, undefined, ' ')}
       </output>
     </>

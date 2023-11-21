@@ -50,16 +50,27 @@ it('finds matching items without trimming right white space', () => {
 
 describe('options as objects', () => {
   it('defaults to indexing label', () => {
-    const collection = [{ label: 'apple', id: 1 }, { label: 'apricot', id: 2 }, { label: 'banana', id: 3 }];
+    const collection = [
+      { label: 'apple', id: 1 },
+      { label: 'apricot', id: 2 },
+      { label: 'banana', id: 3 },
+    ];
     const search = prefixSearcher(collection);
     const result = search('ap');
-    expect(result).toEqual([{ label: 'apple', id: 1 }, { label: 'apricot', id: 2 }]);
+    expect(result).toEqual([
+      { label: 'apple', id: 1 },
+      { label: 'apricot', id: 2 },
+    ]);
   });
 });
 
 describe('index', () => {
   it('customises the indexed value', () => {
-    const collection = [{ text: 'apple' }, { text: 'apricot' }, { text: 'banana' }];
+    const collection = [
+      { text: 'apple' },
+      { text: 'apricot' },
+      { text: 'banana' },
+    ];
     function index(option) {
       return option.text;
     }

@@ -34,7 +34,10 @@ export function AriaLiveMessage({
 
   useEffect(() => {
     const newMessage = makeMessage();
-    const timeout = setTimeout(() => setMessage(newMessage), debouceMilliseconds);
+    const timeout = setTimeout(
+      () => setMessage(newMessage),
+      debouceMilliseconds,
+    );
     return () => clearTimeout(timeout);
   }, [showListBox, showNotFound, options, focusedOption, makeMessage]);
 
@@ -47,9 +50,7 @@ export function AriaLiveMessage({
         aria-atomic="true"
         aria-live="polite"
       >
-        <div key={message}>
-          {message}
-        </div>
+        <div key={message}>{message}</div>
       </div>
     </div>
   );

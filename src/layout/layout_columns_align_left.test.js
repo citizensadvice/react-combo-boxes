@@ -21,7 +21,8 @@ describe('when natural table width is the auto table width', () => {
 
     const table = listbox.querySelector('table');
 
-    jest.spyOn(table, 'clientWidth', 'get')
+    jest
+      .spyOn(table, 'clientWidth', 'get')
       .mockImplementationOnce(() => 100)
       .mockImplementationOnce(() => 100);
 
@@ -56,12 +57,15 @@ describe('when natural table width not less then the auto table width', () => {
 
     const table = listbox.querySelector('table');
 
-    jest.spyOn(table, 'clientWidth', 'get')
+    jest
+      .spyOn(table, 'clientWidth', 'get')
       .mockImplementationOnce(() => 100)
       .mockImplementationOnce(() => 90);
 
     table.querySelectorAll('td').forEach((td) => {
-      jest.spyOn(td, 'getBoundingClientRect').mockImplementation(() => ({ width: 20 }));
+      jest
+        .spyOn(td, 'getBoundingClientRect')
+        .mockImplementation(() => ({ width: 20 }));
     });
 
     layoutColumnsAlignLeft({ listbox });
@@ -100,12 +104,15 @@ describe('when natural table width not less then the auto table width', () => {
 
     const table = listbox.querySelector('table');
 
-    jest.spyOn(table, 'clientWidth', 'get')
+    jest
+      .spyOn(table, 'clientWidth', 'get')
       .mockImplementationOnce(() => 100)
       .mockImplementationOnce(() => 90);
 
     table.querySelectorAll('tr:nth-child(2) td').forEach((td) => {
-      jest.spyOn(td, 'getBoundingClientRect').mockImplementation(() => ({ width: 20 }));
+      jest
+        .spyOn(td, 'getBoundingClientRect')
+        .mockImplementation(() => ({ width: 20 }));
     });
 
     layoutColumnsAlignLeft({ listbox });

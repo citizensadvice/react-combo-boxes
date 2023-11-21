@@ -1,5 +1,5 @@
-@import "./variables";
-@import "./sr_only";
+@import './variables';
+@import './sr_only';
 
 @mixin react-combo-boxes-listbox-container {
   list-style: none;
@@ -7,7 +7,8 @@
   width: max-content;
   max-width: 100%;
   background-color: white;
-  border: $react-combo-boxes-focus-border-width solid $react-combo-boxes-border-color;
+  border: $react-combo-boxes-focus-border-width solid
+    $react-combo-boxes-border-color;
   max-height: 30rem;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
@@ -18,18 +19,22 @@
   min-height: 1.5em;
   box-sizing: border-box;
   box-shadow:
-    0 $react-combo-boxes-focus-border-width 0 0 $react-combo-boxes-focus-border-color,
-    $react-combo-boxes-focus-border-width  0 0 0 $react-combo-boxes-focus-border-color,
+    0 $react-combo-boxes-focus-border-width 0 0
+      $react-combo-boxes-focus-border-color,
+    $react-combo-boxes-focus-border-width 0 0 0
+      $react-combo-boxes-focus-border-color,
     -$react-combo-boxes-focus-border-width 0 0 0 $react-combo-boxes-focus-border-color,
     0 2px 4px #aaa;
   overscroll-behavior: none;
   -ms-scroll-chaining: none;
 
-  &[data-orientation="top"] {
+  &[data-orientation='top'] {
     margin: 1em 1em 0 0;
     box-shadow:
-      0 (-$react-combo-boxes-focus-border-width) 0 0 $react-combo-boxes-focus-border-color,
-      $react-combo-boxes-focus-border-width  0 0 0 $react-combo-boxes-focus-border-color,
+      0 (-$react-combo-boxes-focus-border-width) 0 0
+        $react-combo-boxes-focus-border-color,
+      $react-combo-boxes-focus-border-width 0 0 0
+        $react-combo-boxes-focus-border-color,
       -$react-combo-boxes-focus-border-width 0 0 0 $react-combo-boxes-focus-border-color,
       0 -2px 4px #aaa;
   }
@@ -55,7 +60,7 @@
       background-color: $react-combo-boxes-background-color-active;
     }
 
-    &[aria-selected="true"] {
+    &[aria-selected='true'] {
       background-color: $react-combo-boxes-background-color-selected;
       color: $react-combo-boxes-color-selected;
 
@@ -68,7 +73,7 @@
       outline: none;
     }
 
-    &[aria-disabled="true"] {
+    &[aria-disabled='true'] {
       opacity: 0.5;
       cursor: not-allowed;
     }
@@ -87,7 +92,8 @@
     }
   }
 
-  &__group-label ~ &__option { // stylelint-disable-line no-descending-specificity
+  // stylelint-disable-next-line no-descending-specificity
+  &__group-label ~ &__option {
     padding-left: 1.5em;
   }
 
@@ -97,7 +103,8 @@
     padding: 0;
   }
 
-  &__group > &__option { // stylelint-disable-line no-descending-specificity
+  // stylelint-disable-next-line no-descending-specificity
+  &__group > &__option {
     padding-left: 1.5em;
   }
 
@@ -144,11 +151,8 @@
   }
 
   &__table-cell {
-    padding:
-      $react-combo-boxes-padding-y
-      2 * $react-combo-boxes-padding-x
-      $react-combo-boxes-padding-y
-      $react-combo-boxes-padding-x;
+    padding: $react-combo-boxes-padding-y 2 * $react-combo-boxes-padding-x
+      $react-combo-boxes-padding-y $react-combo-boxes-padding-x;
     border: none;
     vertical-align: top;
   }

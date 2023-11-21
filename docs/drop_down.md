@@ -6,10 +6,10 @@ This follows the ARIA non-editable [combo box][aria-practices] design pattern.
 
 > :warning: **Warning** the native `<select>` will be more accessible and easier to use on many devices.
 >
-> This control may be useful if options require complex styling.  However a radio group may also be more appropriate.
+> This control may be useful if options require complex styling. However a radio group may also be more appropriate.
 >
 > There are significant differences between the way a `<select>` is represented and interacted with
-> on different devices and in different operating systems.  This control has to take a single approach and
+> on different devices and in different operating systems. This control has to take a single approach and
 > may confuse some users.
 
 ## Usage
@@ -32,7 +32,7 @@ const [value, setValue] = useState(initialValue);
 />
 ```
 
-This is a controlled component.  You must update `value` in response to `onValue`.
+This is a controlled component. You must update `value` in response to `onValue`.
 
 Unlike a regular `<select>` the value of this component will not be submitted with a form.
 If you wish to submit the value add a `<input type="hidden" name="name" value="value" />` element.

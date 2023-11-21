@@ -1,10 +1,14 @@
-export function layoutMaxWidth({ listbox }, { contain = 'body', minMaxWidth = 0 } = {}) {
+export function layoutMaxWidth(
+  { listbox },
+  { contain = 'body', minMaxWidth = 0 } = {},
+) {
   const elBounding = listbox.getBoundingClientRect();
   const container = contain ? listbox.closest(contain) : null;
   const containerBounding = container?.getBoundingClientRect();
   let containerRight = Infinity;
   if (containerBounding) {
-    const clientRight = containerBounding.width - container.clientWidth - container.clientLeft;
+    const clientRight =
+      containerBounding.width - container.clientWidth - container.clientLeft;
     containerRight = containerBounding.right - clientRight;
   }
   const windowRight = document.documentElement.clientWidth;

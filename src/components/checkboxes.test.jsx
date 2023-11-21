@@ -21,15 +21,16 @@ describe('options', () => {
     const options = ['Apple', 'Banana', 'Orange'];
 
     it('renders checkbox group', () => {
-      const { container } = render(
-        <Test options={options} />,
-      );
+      const { container } = render(<Test options={options} />);
       expect(container).toMatchSnapshot();
     });
 
     it('renders checkboxes with selected values', () => {
       render(
-        <Test options={options} values={['Apple', 'Orange']} />,
+        <Test
+          options={options}
+          values={['Apple', 'Orange']}
+        />,
       );
       expect(screen.getAllByRole('checkbox', { checked: true })).toEqual([
         screen.getByRole('checkbox', { name: 'Apple' }),
@@ -39,14 +40,26 @@ describe('options', () => {
 
     it('triggers the onValues callback', async () => {
       const spy = jest.fn();
-      render(<Test options={options} onValues={spy} values={['Apple']} />);
+      render(
+        <Test
+          options={options}
+          onValues={spy}
+          values={['Apple']}
+        />,
+      );
       await userEvent.click(screen.getByRole('checkbox', { name: 'Banana' }));
       expect(spy).toHaveBeenCalledWith(['Apple', 'Banana']);
     });
 
     it('triggers the onValues callback when values are removed', async () => {
       const spy = jest.fn();
-      render(<Test options={options} onValues={spy} values={['Banana']} />);
+      render(
+        <Test
+          options={options}
+          onValues={spy}
+          values={['Banana']}
+        />,
+      );
       await userEvent.click(screen.getByRole('checkbox', { name: 'Banana' }));
       expect(spy).toHaveBeenCalledWith([]);
     });
@@ -78,7 +91,11 @@ describe('options', () => {
 
   describe('options as array of objects', () => {
     describe('label', () => {
-      const options = [{ label: 'Apple' }, { label: 'Banana' }, { label: 'Orange' }];
+      const options = [
+        { label: 'Apple' },
+        { label: 'Banana' },
+        { label: 'Orange' },
+      ];
 
       it('updates when the value changes', async () => {
         render(<Test options={options} />);
@@ -93,23 +110,51 @@ describe('options', () => {
 
     describe('value', () => {
       it('is used as a options identity', async () => {
-        const options = [{ label: 'foo', value: 1 }, { label: 'foo', value: 2 }, { label: 'foo', value: 3 }];
-        render(<Test options={options} values={[2]} />);
-        expect(screen.getByRole('checkbox', { checked: true }).value).toEqual('2');
+        const options = [
+          { label: 'foo', value: 1 },
+          { label: 'foo', value: 2 },
+          { label: 'foo', value: 3 },
+        ];
+        render(
+          <Test
+            options={options}
+            values={[2]}
+          />,
+        );
+        expect(screen.getByRole('checkbox', { checked: true }).value).toEqual(
+          '2',
+        );
         const checkboxes = screen.getAllByRole('checkbox');
         await userEvent.click(checkboxes[0]);
-        expect(screen.getAllByRole('checkbox', { checked: true })).toEqual([checkboxes[0], checkboxes[1]]);
+        expect(screen.getAllByRole('checkbox', { checked: true })).toEqual([
+          checkboxes[0],
+          checkboxes[1],
+        ]);
       });
     });
 
     describe('id', () => {
       it('is used as a options identity', async () => {
-        const options = [{ label: 'foo', id: 1 }, { label: 'foo', id: 2 }, { label: 'foo', id: 3 }];
-        render(<Test options={options} values={[2]} />);
-        expect(screen.getByRole('checkbox', { checked: true }).value).toEqual('2');
+        const options = [
+          { label: 'foo', id: 1 },
+          { label: 'foo', id: 2 },
+          { label: 'foo', id: 3 },
+        ];
+        render(
+          <Test
+            options={options}
+            values={[2]}
+          />,
+        );
+        expect(screen.getByRole('checkbox', { checked: true }).value).toEqual(
+          '2',
+        );
         const checkboxes = screen.getAllByRole('checkbox');
         await userEvent.click(checkboxes[0]);
-        expect(screen.getAllByRole('checkbox', { checked: true })).toEqual([checkboxes[0], checkboxes[1]]);
+        expect(screen.getAllByRole('checkbox', { checked: true })).toEqual([
+          checkboxes[0],
+          checkboxes[1],
+        ]);
       });
     });
 
@@ -122,7 +167,12 @@ describe('options', () => {
 
       it('will display a disabled checkboz as checked', () => {
         const options = [{ label: 'foo', disabled: true }];
-        render(<Test options={options} values={['foo']} />);
+        render(
+          <Test
+            options={options}
+            values={['foo']}
+          />,
+        );
         expect(screen.getByRole('checkbox')).toBeChecked();
       });
     });
@@ -131,7 +181,9 @@ describe('options', () => {
       it('sets the description', () => {
         const options = [{ label: 'foo', description: 'foo bar' }];
         render(<Test options={options} />);
-        expect(screen.getByRole('checkbox')).toHaveAccessibleDescription('foo bar');
+        expect(screen.getByRole('checkbox')).toHaveAccessibleDescription(
+          'foo bar',
+        );
       });
     });
 
@@ -139,19 +191,27 @@ describe('options', () => {
       it('is used as a fallback for description', () => {
         const options = [{ label: 'foo', hint: 'foo bar' }];
         render(<Test options={options} />);
-        expect(screen.getByRole('checkbox')).toHaveAccessibleDescription('foo bar');
+        expect(screen.getByRole('checkbox')).toHaveAccessibleDescription(
+          'foo bar',
+        );
       });
 
       it('is not used if description is present', () => {
-        const options = [{ label: 'foo', description: 'fizz buzz', hint: 'foo bar' }];
+        const options = [
+          { label: 'foo', description: 'fizz buzz', hint: 'foo bar' },
+        ];
         render(<Test options={options} />);
-        expect(screen.getByRole('checkbox')).toHaveAccessibleDescription('fizz buzz');
+        expect(screen.getByRole('checkbox')).toHaveAccessibleDescription(
+          'fizz buzz',
+        );
       });
     });
 
     describe('html', () => {
       it('sets attributes on the checkbox', () => {
-        const options = [{ label: 'foo', html: { 'data-foo': 'bar', className: 'class' } }];
+        const options = [
+          { label: 'foo', html: { 'data-foo': 'bar', className: 'class' } },
+        ];
         render(<Test options={options} />);
         expect(screen.getByRole('checkbox')).toHaveAttribute('data-foo', 'bar');
         expect(screen.getByRole('checkbox')).toHaveClass('class');
@@ -200,55 +260,78 @@ describe('options', () => {
       it('does not render them', () => {
         const options = [{ label: 'foo', 'data-foo': 'bar' }];
         render(<Test options={options} />);
-        expect(screen.getByRole('checkbox')).not.toHaveAttribute('data-foo', 'bar');
+        expect(screen.getByRole('checkbox')).not.toHaveAttribute(
+          'data-foo',
+          'bar',
+        );
       });
     });
   });
 
   describe('mapOption', () => {
     describe('mapOption returns an object', () => {
-      const options = [{ name: 'Apple' }, { name: 'Banana' }, { name: 'Orange' }];
+      const options = [
+        { name: 'Apple' },
+        { name: 'Banana' },
+        { name: 'Orange' },
+      ];
 
       it('maps options', async () => {
-        render(<Test
-          options={options}
-          mapOption={({ name }) => ({ label: name })}
-        />);
+        render(
+          <Test
+            options={options}
+            mapOption={({ name }) => ({ label: name })}
+          />,
+        );
         const option = screen.getByRole('checkbox', { name: 'Banana' });
         await userEvent.click(option);
         expect(screen.getByRole('checkbox', { checked: true })).toEqual(option);
       });
 
       it('accepts value as a primitive', () => {
-        render(<Test
-          options={options}
-          values={['Banana']}
-          mapOption={({ name }) => ({ label: name })}
-        />);
-        expect(screen.getByRole('checkbox', { name: 'Banana', checked: true })).toBeInTheDocument();
+        render(
+          <Test
+            options={options}
+            values={['Banana']}
+            mapOption={({ name }) => ({ label: name })}
+          />,
+        );
+        expect(
+          screen.getByRole('checkbox', { name: 'Banana', checked: true }),
+        ).toBeInTheDocument();
       });
     });
 
     describe('mapOption returns a string', () => {
-      const options = [{ name: 'Apple' }, { name: 'Banana' }, { name: 'Orange' }];
+      const options = [
+        { name: 'Apple' },
+        { name: 'Banana' },
+        { name: 'Orange' },
+      ];
 
       it('maps options', async () => {
-        render(<Test
-          options={options}
-          mapOption={({ name }) => name}
-        />);
+        render(
+          <Test
+            options={options}
+            mapOption={({ name }) => name}
+          />,
+        );
         const option = screen.getByRole('checkbox', { name: 'Banana' });
         await userEvent.click(option);
         expect(screen.getByRole('checkbox', { checked: true })).toEqual(option);
       });
 
       it('accepts value as a primitive', () => {
-        render(<Test
-          options={options}
-          values={['Banana']}
-          mapOption={({ name }) => name}
-        />);
-        expect(screen.getByRole('checkbox', { name: 'Banana', checked: true })).toBeInTheDocument();
+        render(
+          <Test
+            options={options}
+            values={['Banana']}
+            mapOption={({ name }) => name}
+          />,
+        );
+        expect(
+          screen.getByRole('checkbox', { name: 'Banana', checked: true }),
+        ).toBeInTheDocument();
       });
     });
   });
@@ -257,7 +340,12 @@ describe('options', () => {
 describe('name', () => {
   it('sets the name', () => {
     const options = ['Apple'];
-    render(<Test options={options} name="foo" />);
+    render(
+      <Test
+        options={options}
+        name="foo"
+      />,
+    );
     const checkbox = screen.getByRole('checkbox');
     expect(checkbox).toHaveProperty('name', 'foo');
   });
@@ -267,26 +355,44 @@ describe('onChange', () => {
   it('is called if a checkbox changes checked state', async () => {
     const options = ['Apple', 'Banana'];
     const onChange = jest.fn();
-    render(<Test options={options} onChange={onChange} onValue={null} />);
+    render(
+      <Test
+        options={options}
+        onChange={onChange}
+        onValue={null}
+      />,
+    );
     const checkbox = screen.getByRole('checkbox', { name: 'Banana' });
     await userEvent.click(checkbox);
-    expect(onChange).toHaveBeenCalledWith(expect.objectContaining({
-      target: checkbox,
-    }));
+    expect(onChange).toHaveBeenCalledWith(
+      expect.objectContaining({
+        target: checkbox,
+      }),
+    );
   });
 });
 
 describe('classPrefix', () => {
   it('when null removes the class', () => {
     const options = ['Apple'];
-    render(<Test options={options} classPrefix={null} />);
+    render(
+      <Test
+        options={options}
+        classPrefix={null}
+      />,
+    );
     const checkbox = screen.getByRole('checkbox');
     expect(checkbox).not.toHaveClass();
   });
 
   it('sets the class', () => {
     const options = ['Apple'];
-    render(<Test options={options} classPrefix="bar" />);
+    render(
+      <Test
+        options={options}
+        classPrefix="bar"
+      />,
+    );
     const checkbox = screen.getByRole('checkbox');
     expect(checkbox).toHaveClass('bar__input');
   });
@@ -294,10 +400,24 @@ describe('classPrefix', () => {
 
 describe('renderWrapper', () => {
   it('customises the wrapper', () => {
-    const spy = jest.fn((props) => <div data-foo="bar" {...props} />);
-    render(<Test options={['Apple']} renderWrapper={spy} test="foo" />);
+    const spy = jest.fn((props) => (
+      <div
+        data-foo="bar"
+        {...props}
+      />
+    ));
+    render(
+      <Test
+        options={['Apple']}
+        renderWrapper={spy}
+        test="foo"
+      />,
+    );
 
-    expect(screen.getByRole('checkbox').parentNode).toHaveAttribute('data-foo', 'bar');
+    expect(screen.getByRole('checkbox').parentNode).toHaveAttribute(
+      'data-foo',
+      'bar',
+    );
     expect(spy).toHaveBeenCalledWith(
       expect.any(Object),
       {
@@ -315,8 +435,19 @@ describe('renderWrapper', () => {
 
 describe('renderInput', () => {
   it('customises the input', () => {
-    const spy = jest.fn((props) => <input data-foo="bar" {...props} />);
-    render(<Test options={['Apple']} renderInput={spy} test="foo" />);
+    const spy = jest.fn((props) => (
+      <input
+        data-foo="bar"
+        {...props}
+      />
+    ));
+    render(
+      <Test
+        options={['Apple']}
+        renderInput={spy}
+        test="foo"
+      />,
+    );
 
     expect(screen.getByRole('checkbox')).toHaveAttribute('data-foo', 'bar');
     expect(spy).toHaveBeenCalledWith(
@@ -336,8 +467,19 @@ describe('renderInput', () => {
 
 describe('renderLabel', () => {
   it('customises the label', () => {
-    const spy = jest.fn((props) => <label data-foo="bar" {...props} />);
-    render(<Test options={['Apple']} renderLabel={spy} test="foo" />);
+    const spy = jest.fn((props) => (
+      <label
+        data-foo="bar"
+        {...props}
+      />
+    ));
+    render(
+      <Test
+        options={['Apple']}
+        renderLabel={spy}
+        test="foo"
+      />,
+    );
 
     expect(document.querySelector('label')).toHaveAttribute('data-foo', 'bar');
     expect(spy).toHaveBeenCalledWith(
@@ -357,11 +499,24 @@ describe('renderLabel', () => {
 
 describe('renderDescription', () => {
   it('customises the description', () => {
-    const spy = jest.fn((props) => <div data-foo="bar" {...props} />);
-    render(<Test options={[{ label: 'Apple', description: 'fizz' }]} renderDescription={spy} test="foo" />);
+    const spy = jest.fn((props) => (
+      <div
+        data-foo="bar"
+        {...props}
+      />
+    ));
+    render(
+      <Test
+        options={[{ label: 'Apple', description: 'fizz' }]}
+        renderDescription={spy}
+        test="foo"
+      />,
+    );
 
     const checkbox = screen.getByRole('checkbox');
-    expect(document.getElementById(checkbox.getAttribute('aria-describedby'))).toHaveAttribute('data-foo', 'bar');
+    expect(
+      document.getElementById(checkbox.getAttribute('aria-describedby')),
+    ).toHaveAttribute('data-foo', 'bar');
     expect(spy).toHaveBeenCalledWith(
       expect.any(Object),
       {
@@ -379,8 +534,19 @@ describe('renderDescription', () => {
 
 describe('renderGroup', () => {
   it('customises the group', () => {
-    const spy = jest.fn((props) => <div data-foo="bar" {...props} />);
-    render(<Test options={[{ label: 'Apple', group: 'fizz' }]} renderGroup={spy} test="foo" />);
+    const spy = jest.fn((props) => (
+      <div
+        data-foo="bar"
+        {...props}
+      />
+    ));
+    render(
+      <Test
+        options={[{ label: 'Apple', group: 'fizz' }]}
+        renderGroup={spy}
+        test="foo"
+      />,
+    );
 
     const checkbox = screen.getByRole('checkbox');
     expect(checkbox.parentNode.parentNode).toHaveAttribute('data-foo', 'bar');
@@ -399,11 +565,25 @@ describe('renderGroup', () => {
 
 describe('renderGroupLabel', () => {
   it('customises the group label', () => {
-    const spy = jest.fn((props) => <div data-foo="bar" {...props} />);
-    render(<Test options={[{ label: 'Apple', group: 'fizz' }]} renderGroupLabel={spy} test="foo" />);
+    const spy = jest.fn((props) => (
+      <div
+        data-foo="bar"
+        {...props}
+      />
+    ));
+    render(
+      <Test
+        options={[{ label: 'Apple', group: 'fizz' }]}
+        renderGroupLabel={spy}
+        test="foo"
+      />,
+    );
 
     const checkbox = screen.getByRole('checkbox');
-    expect(checkbox.parentNode.parentNode.firstElementChild).toHaveAttribute('data-foo', 'bar');
+    expect(checkbox.parentNode.parentNode.firstElementChild).toHaveAttribute(
+      'data-foo',
+      'bar',
+    );
     expect(spy).toHaveBeenCalledWith(
       expect.any(Object),
       {
@@ -419,10 +599,24 @@ describe('renderGroupLabel', () => {
 
 describe('renderGroupAccessibleLabel', () => {
   it('customises the group accessible label', () => {
-    const spy = jest.fn((props) => <div data-foo="bar" {...props} />);
-    render(<Test options={[{ label: 'Apple', group: 'fizz' }]} renderGroupAccessibleLabel={spy} test="foo" />);
+    const spy = jest.fn((props) => (
+      <div
+        data-foo="bar"
+        {...props}
+      />
+    ));
+    render(
+      <Test
+        options={[{ label: 'Apple', group: 'fizz' }]}
+        renderGroupAccessibleLabel={spy}
+        test="foo"
+      />,
+    );
 
-    expect(document.querySelector('label').firstElementChild).toHaveAttribute('data-foo', 'bar');
+    expect(document.querySelector('label').firstElementChild).toHaveAttribute(
+      'data-foo',
+      'bar',
+    );
     expect(spy).toHaveBeenCalledWith(
       expect.any(Object),
       {

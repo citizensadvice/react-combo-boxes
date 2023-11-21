@@ -1,13 +1,7 @@
 import { useState } from 'react';
 import { ComboBox, useTokenSearch } from '../../../src';
 
-const options = [
-  'Apple',
-  'Banana',
-  'Cherry',
-  'Mango',
-  'Ugli fruit',
-];
+const options = ['Apple', 'Banana', 'Cherry', 'Mango', 'Ugli fruit'];
 
 function renderInput({ 'aria-owns': ariaControls, ...props }) {
   return (
@@ -48,15 +42,15 @@ export function Example() {
           type="checkbox"
           onChange={({ target: { checked } }) => setManagedFocus(checked)}
           checked={managedFocus}
-        />
-        {' '}
+        />{' '}
         Toggle managed focus
       </label>
 
-      <label htmlFor="output">
-        Current value
-      </label>
-      <output htmlFor="select" id="output">
+      <label htmlFor="output">Current value</label>
+      <output
+        htmlFor="select"
+        id="output"
+      >
         {JSON.stringify(value, undefined, ' ')}
       </output>
     </>

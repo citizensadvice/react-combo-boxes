@@ -13,10 +13,7 @@ export function Example() {
   const [value, setValue] = useState('Lemon');
   return (
     <>
-
-      <label htmlFor="select">
-        Select
-      </label>
+      <label htmlFor="select">Select</label>
       <Select
         id="select"
         value={value}
@@ -24,10 +21,11 @@ export function Example() {
         options={options}
       />
 
-      <label htmlFor="output">
-        Current value
-      </label>
-      <output htmlFor="select" id="output">
+      <label htmlFor="output">Current value</label>
+      <output
+        htmlFor="select"
+        id="output"
+      >
         {JSON.stringify(value, undefined, ' ')}
       </output>
     </>

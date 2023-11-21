@@ -28,43 +28,51 @@ describe('columns as names only', () => {
   const columns = ['label', 'type'];
 
   it('renders a table as the list box', () => {
-    const { container } = render((
+    const { container } = render(
       <DropDownWrapper
         options={options}
         columns={columns}
-      />
-    ));
+      />,
+    );
     expect(container).toMatchSnapshot();
   });
 
   it('allows selection by click', async () => {
     const spy = jest.fn();
-    render((
+    render(
       <DropDownWrapper
         options={options}
         columns={columns}
         onValue={spy}
-      />
-    ));
+      />,
+    );
     await userEvent.click(screen.getByRole('combobox'));
     await userEvent.click(screen.getByRole('option', { name: /Banana/ }));
-    expect(spy).toHaveBeenCalledWith({ label: 'Banana', type: 'Fruit', colour: 'Yellow' });
+    expect(spy).toHaveBeenCalledWith({
+      label: 'Banana',
+      type: 'Fruit',
+      colour: 'Yellow',
+    });
   });
 
   it('allows selection by keyboard', async () => {
     const spy = jest.fn();
-    render((
+    render(
       <DropDownWrapper
         options={options}
         columns={columns}
         onValue={spy}
-      />
-    ));
+      />,
+    );
 
     await userEvent.tab();
     await userEvent.keyboard('{ArrowDown}{ArrowDown}{Enter}');
 
-    expect(spy).toHaveBeenCalledWith({ label: 'Banana', type: 'Fruit', colour: 'Yellow' });
+    expect(spy).toHaveBeenCalledWith({
+      label: 'Banana',
+      type: 'Fruit',
+      colour: 'Yellow',
+    });
   });
 });
 
@@ -81,42 +89,50 @@ describe('columns with headers', () => {
   ];
 
   it('renders a table with headers', () => {
-    const { container } = render((
+    const { container } = render(
       <DropDownWrapper
         options={options}
         columns={columns}
-      />
-    ));
+      />,
+    );
     expect(container).toMatchSnapshot();
   });
 
   it('allows selection by click', async () => {
     const spy = jest.fn();
-    render((
+    render(
       <DropDownWrapper
         options={options}
         columns={columns}
         onValue={spy}
-      />
-    ));
+      />,
+    );
     await userEvent.click(screen.getByRole('combobox'));
     await userEvent.click(screen.getByRole('option', { name: /Banana/ }));
-    expect(spy).toHaveBeenCalledWith({ label: 'Banana', type: 'Fruit', colour: 'Yellow' });
+    expect(spy).toHaveBeenCalledWith({
+      label: 'Banana',
+      type: 'Fruit',
+      colour: 'Yellow',
+    });
   });
 
   it('allows selection by keyboard', async () => {
     const spy = jest.fn();
-    render((
+    render(
       <DropDownWrapper
         options={options}
         columns={columns}
         onValue={spy}
-      />
-    ));
+      />,
+    );
     await userEvent.tab();
     await userEvent.keyboard('{ArrowDown}{ArrowDown}{Enter}');
 
-    expect(spy).toHaveBeenCalledWith({ label: 'Banana', type: 'Fruit', colour: 'Yellow' });
+    expect(spy).toHaveBeenCalledWith({
+      label: 'Banana',
+      type: 'Fruit',
+      colour: 'Yellow',
+    });
   });
 });
 
@@ -133,12 +149,12 @@ describe('columns with html', () => {
   ];
 
   it('renders a table with colgroups', () => {
-    const { container } = render((
+    const { container } = render(
       <DropDownWrapper
         options={options}
         columns={columns}
-      />
-    ));
+      />,
+    );
     expect(container).toMatchSnapshot();
   });
 });
@@ -156,12 +172,12 @@ describe('cells with html', () => {
   ];
 
   it('renders a table with colgroups', () => {
-    const { container } = render((
+    const { container } = render(
       <DropDownWrapper
         options={options}
         columns={columns}
-      />
-    ));
+      />,
+    );
     expect(container).toMatchSnapshot();
   });
 });
@@ -183,44 +199,52 @@ describe('grouped', () => {
   }
 
   it('renders a table with groups', () => {
-    const { container } = render((
+    const { container } = render(
       <DropDownWrapper
         options={options}
         columns={columns}
         mapOption={map}
-      />
-    ));
+      />,
+    );
     expect(container).toMatchSnapshot();
   });
 
   it('allows selection by click', async () => {
     const spy = jest.fn();
-    render((
+    render(
       <DropDownWrapper
         options={options}
         columns={columns}
         onValue={spy}
         mapOption={map}
-      />
-    ));
+      />,
+    );
     await userEvent.click(screen.getByRole('combobox'));
     await userEvent.click(screen.getByRole('option', { name: /Banana/ }));
-    expect(spy).toHaveBeenCalledWith({ name: 'Banana', type: 'Fruit', colour: 'Yellow' });
+    expect(spy).toHaveBeenCalledWith({
+      name: 'Banana',
+      type: 'Fruit',
+      colour: 'Yellow',
+    });
   });
 
   it('allows selection by keyboard', async () => {
     const spy = jest.fn();
-    render((
+    render(
       <DropDownWrapper
         options={options}
         columns={columns}
         onValue={spy}
         mapOption={map}
-      />
-    ));
+      />,
+    );
     await userEvent.tab();
     await userEvent.keyboard('{ArrowDown}{ArrowDown}{Enter}');
 
-    expect(spy).toHaveBeenCalledWith({ name: 'Banana', type: 'Fruit', colour: 'Yellow' });
+    expect(spy).toHaveBeenCalledWith({
+      name: 'Banana',
+      type: 'Fruit',
+      colour: 'Yellow',
+    });
   });
 });

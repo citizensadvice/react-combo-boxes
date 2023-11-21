@@ -27,7 +27,7 @@ const options = useMemo(() => (
 
 ## `useAsyncSearch(term: string, { searcher: Searcher, debounce: number, catchErrors: boolean = false })`
 
-This wraps a search function.  It supports debouncing, catching errors and cancelling requests.
+This wraps a search function. It supports debouncing, catching errors and cancelling requests.
 
 Returns an array of `[results: any, busy: boolean, error: Error]`
 
@@ -38,8 +38,8 @@ Returns an array of `[results: any, busy: boolean, error: Error]`
 Options:
 
 - `searcher` (`async (search: string, { signal }: { signal: AbortSignal }) => any`) **Required**, a function to search.
-  First argument is the query.  Also passes the signal of an `AbortController` for cancelling requests.
-- `debounce` (`number`) milliseconds to debounce the search 
+  First argument is the query. Also passes the signal of an `AbortController` for cancelling requests.
+- `debounce` (`number`) milliseconds to debounce the search
 - `catchErrors` (`boolean`) if true, catch errors and return them as the third array argument.
 
 Example:
@@ -51,7 +51,7 @@ const [search, setSearch] = useState();
 
 const searcher = useCallback((query, { signal }) => {
   if (!query) {
-    return [] 
+    return []
   }
   const url = new URL(apiUrl);
   url.searchParams.set('query', query);
@@ -76,14 +76,14 @@ const [options, busy, error] = useSearch(search, { searcher, catchErrors: true }
 const filteredOptions = useTokenSearch(query, { options });
 ```
 
-Searches an array of options.  The options are split into words.  When searching
+Searches an array of options. The options are split into words. When searching
 any options containing a word starting with the search term will be returned.
 
 By default it will search either strings, or `label` property if the options are objects.
 
 You can customise how the array indexed by providing an index function with the signature `function (option: Object): Array<String>`.
 
-The tokeniser can also be replaced.  This is function with the signature `function (string: String): Array<String>`
+The tokeniser can also be replaced. This is function with the signature `function (string: String): Array<String>`
 
 ## `usePrefixSearch(query, { options, index, minLength, maxResults })`
 
@@ -91,7 +91,7 @@ The tokeniser can also be replaced.  This is function with the signature `functi
 const filteredOptions = usePrefixSearch(query, { options });
 ```
 
-Searches an array of options for a matching prefix.  This will find options starting with the search term.
+Searches an array of options for a matching prefix. This will find options starting with the search term.
 
 By default it will search either strings, or `label` property if the options are objects.
 

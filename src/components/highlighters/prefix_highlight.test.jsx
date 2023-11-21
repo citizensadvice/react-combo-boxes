@@ -4,12 +4,22 @@ import { render } from '@testing-library/react';
 import { PrefixHighlight } from './prefix_highlight';
 
 it('highlights empty string', () => {
-  const { container } = render(<PrefixHighlight value="" search="" />);
+  const { container } = render(
+    <PrefixHighlight
+      value=""
+      search=""
+    />,
+  );
   expect(container).toMatchInlineSnapshot(`<div />`);
 });
 
 it('highlights with an empty search', () => {
-  const { container } = render(<PrefixHighlight value="foo" search="" />);
+  const { container } = render(
+    <PrefixHighlight
+      value="foo"
+      search=""
+    />,
+  );
   expect(container).toMatchInlineSnapshot(`
 <div>
   foo
@@ -18,7 +28,12 @@ it('highlights with an empty search', () => {
 });
 
 it('highlights with no match', () => {
-  const { container } = render(<PrefixHighlight value="foobar foo" search="bar" />);
+  const { container } = render(
+    <PrefixHighlight
+      value="foobar foo"
+      search="bar"
+    />,
+  );
   expect(container).toMatchInlineSnapshot(`
 <div>
   foobar foo
@@ -27,7 +42,12 @@ it('highlights with no match', () => {
 });
 
 it('highlights with a match', () => {
-  const { container } = render(<PrefixHighlight value="foobar foo" search="foo" />);
+  const { container } = render(
+    <PrefixHighlight
+      value="foobar foo"
+      search="foo"
+    />,
+  );
   expect(container).toMatchInlineSnapshot(`
 <div>
   <span
@@ -48,7 +68,13 @@ it('highlights with a match', () => {
 });
 
 it('inverses the a highlight', () => {
-  const { container } = render(<PrefixHighlight value="foobar foo" search="foo" inverse />);
+  const { container } = render(
+    <PrefixHighlight
+      value="foobar foo"
+      search="foo"
+      inverse
+    />,
+  );
   expect(container).toMatchInlineSnapshot(`
 <div>
   <span

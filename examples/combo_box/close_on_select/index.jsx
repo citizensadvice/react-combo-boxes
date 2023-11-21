@@ -4,9 +4,14 @@ import countries from '../../data/countries.json';
 
 const regions = countries
   .map(({ region }) => ({ name: region, isRegion: true }))
-  .filter((item, i, ar) => item.name && ar.findIndex((sub) => sub.name === item.name) === i);
+  .filter(
+    (item, i, ar) =>
+      item.name && ar.findIndex((sub) => sub.name === item.name) === i,
+  );
 
-const countriesAndRegions = [...countries, ...regions].sort((a, b) => a.name.localeCompare(b.name));
+const countriesAndRegions = [...countries, ...regions].sort((a, b) =>
+  a.name.localeCompare(b.name),
+);
 
 function mapOption({ name }) {
   return name;
@@ -80,15 +85,15 @@ export function Example() {
           onChange={({ target: { checked } }) => {
             setCloseOnSelect(checked);
           }}
-        />
-        {' '}
+        />{' '}
         <code>closeOnSelect</code>
       </label>
 
-      <label htmlFor="output">
-        Current value
-      </label>
-      <output htmlFor="select" id="output">
+      <label htmlFor="output">Current value</label>
+      <output
+        htmlFor="select"
+        id="output"
+      >
         {JSON.stringify(value, undefined, ' ')}
       </output>
     </>

@@ -13,14 +13,18 @@ describe('options', () => {
       { initialProps: { query: null } },
     );
 
-    expect(searcher).toHaveBeenCalledWith(null, { signal: expect.any(AbortSignal) });
+    expect(searcher).toHaveBeenCalledWith(null, {
+      signal: expect.any(AbortSignal),
+    });
     expect(result.current).toEqual([undefined, true, null]);
     await waitFor(() => {
       expect(result.current).toEqual([['foo'], false, null]);
     });
 
     rerender({ query: 'foo' });
-    expect(searcher).toHaveBeenCalledWith('foo', { signal: expect.any(AbortSignal) });
+    expect(searcher).toHaveBeenCalledWith('foo', {
+      signal: expect.any(AbortSignal),
+    });
     expect(result.current).toEqual([['foo'], true, null]);
     await waitFor(() => {
       expect(result.current).toEqual([['bar'], false, null]);
@@ -48,11 +52,15 @@ describe('options', () => {
     );
 
     expect(result.current).toEqual([undefined, true, null]);
-    expect(searcher).toHaveBeenLastCalledWith('foo', { signal: expect.objectContaining({ aborted: false }) });
+    expect(searcher).toHaveBeenLastCalledWith('foo', {
+      signal: expect.objectContaining({ aborted: false }),
+    });
 
     // Second search
     rerender({ query: 'bar' });
-    expect(searcher).toHaveBeenLastCalledWith('bar', { signal: expect.objectContaining({ aborted: false }) });
+    expect(searcher).toHaveBeenLastCalledWith('bar', {
+      signal: expect.objectContaining({ aborted: false }),
+    });
     expect(result.current).toEqual([undefined, true, null]);
 
     // Check abort signal on first search
@@ -99,7 +107,9 @@ describe('debounce', () => {
     });
 
     expect(searcher).toHaveBeenCalledTimes(1);
-    expect(searcher).toHaveBeenCalledWith('f', { signal: expect.any(AbortSignal) });
+    expect(searcher).toHaveBeenCalledWith('f', {
+      signal: expect.any(AbortSignal),
+    });
     expect(result.current).toEqual([['foo'], false, null]);
   });
 });

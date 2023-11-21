@@ -25,18 +25,28 @@ function mapOption({ breed }) {
 function renderValue({ children }, { search, column: { name } }) {
   if (name === 'breed') {
     return (
-      <TokenHighlight search={search} value={children} />
+      <TokenHighlight
+        search={search}
+        value={children}
+      />
     );
   }
   return children;
 }
 
-const onLayoutListBox = [layoutMaxWidth, layoutMaxHeight, layoutColumnsAlignLeft];
+const onLayoutListBox = [
+  layoutMaxWidth,
+  layoutMaxHeight,
+  layoutColumnsAlignLeft,
+];
 
 export function Example() {
   const [value, setValue] = useState(null);
   const [search, setSearch] = useState(null);
-  const filteredOptions = useTokenSearch(search, { options: cats, index: mapOption });
+  const filteredOptions = useTokenSearch(search, {
+    options: cats,
+    index: mapOption,
+  });
   const [managedFocus, setManagedFocus] = useState(true);
 
   return (
@@ -61,10 +71,11 @@ export function Example() {
         managedFocus={managedFocus}
       />
 
-      <label htmlFor="output">
-        Current value
-      </label>
-      <output htmlFor="select" id="output">
+      <label htmlFor="output">Current value</label>
+      <output
+        htmlFor="select"
+        id="output"
+      >
         {JSON.stringify(value, undefined, ' ')}
       </output>
 
@@ -73,8 +84,7 @@ export function Example() {
           type="checkbox"
           onChange={({ target: { checked } }) => setManagedFocus(checked)}
           checked={managedFocus}
-        />
-        {' '}
+        />{' '}
         Toggle managed focus
       </label>
     </>

@@ -45,7 +45,9 @@ export function useNormalisedOptions({
 
     rawOptions?.forEach((o) => {
       const option = optionise(o, mapOption);
-      option.key = idGenerator.uniqueId(option.html?.id || `${id || ''}_option_${option.label}`);
+      option.key = idGenerator.uniqueId(
+        option.html?.id || `${id || ''}_option_${option.label}`,
+      );
       delete option?.html?.id;
       if (option.group) {
         let group = groups.get(option.group);
@@ -67,24 +69,31 @@ export function useNormalisedOptions({
       emptyGroup.push(option);
     });
 
-    return [].concat(...normalisedOptions).map((option, index) => ({ ...option, index }));
+    return []
+      .concat(...normalisedOptions)
+      .map((option, index) => ({ ...option, index }));
   }, [id, rawOptions, placeholderOption, mapOption]);
 
-  const value = useMemo(() => (
-    rawValue != null ? optionise(rawValue, mapOption) : rawValue
-  ), [rawValue, mapOption]);
+  const value = useMemo(
+    () => (rawValue != null ? optionise(rawValue, mapOption) : rawValue),
+    [rawValue, mapOption],
+  );
 
   const selectedOption = useMemo(() => {
-    const option = options.find((o) => o.identity === (value?.identity ?? value));
+    const option = options.find(
+      (o) => o.identity === (value?.identity ?? value),
+    );
     if (option || !mustHaveSelection) {
       return option || null;
     }
     return options.find((o) => !o.unselectable);
   }, [value, options, mustHaveSelection]);
 
-  const values = useMemo(() => (
-    (rawValues || []).map((v) => (v !== null ? optionise(v, mapOption) : v))
-  ), [rawValues, mapOption]);
+  const values = useMemo(
+    () =>
+      (rawValues || []).map((v) => (v !== null ? optionise(v, mapOption) : v)),
+    [rawValues, mapOption],
+  );
 
   const selectedOptions = useMemo(() => {
     const selected = [];

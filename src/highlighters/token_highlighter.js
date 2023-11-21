@@ -37,7 +37,10 @@ export function tokenHighlighter(term, query) {
       // Breaks a term
       if (currentTerm) {
         if (highlightEnds) {
-          result.push([buffer.slice(0, highlightEnds)], buffer.slice(highlightEnds));
+          result.push(
+            [buffer.slice(0, highlightEnds)],
+            buffer.slice(highlightEnds),
+          );
         } else {
           result.push(buffer);
         }

@@ -63,15 +63,15 @@ export function Example() {
           type="checkbox"
           onChange={({ target: { checked } }) => setManagedFocus(checked)}
           checked={managedFocus}
-        />
-        {' '}
+        />{' '}
         Toggle managed focus
       </label>
 
-      <label htmlFor="output">
-        Current value
-      </label>
-      <output htmlFor="select" id="output">
+      <label htmlFor="output">Current value</label>
+      <output
+        htmlFor="select"
+        id="output"
+      >
         {JSON.stringify(value, undefined, ' ')}
       </output>
     </>

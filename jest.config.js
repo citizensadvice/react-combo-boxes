@@ -3,13 +3,8 @@ module.exports = {
   collectCoverageFrom: ['src/**/*.js?(x)'],
   setupFilesAfterEnv: ['./src/__jest_setup.js'],
   testEnvironment: 'jsdom',
-  testPathIgnorePatterns: [
-    '/node_modules/',
-    '/dist/',
-  ],
+  testPathIgnorePatterns: ['/node_modules/', '/dist/'],
   transform: {
-    '^.+\\.(t|j)sx?$': [
-      '@swc/jest',
-    ],
+    '^.+\\.(t|j)sx?$': ['@swc/jest'],
   },
 };

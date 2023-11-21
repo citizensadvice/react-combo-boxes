@@ -9,40 +9,46 @@ function renderNothing() {
   return null;
 }
 
-export const ComboBoxTable = forwardRef(({ columns: rawColumns, ...props }, ref) => {
-  const columns = useMemo(() => (
-    rawColumns.map((column) => {
-      if (typeof column === 'string') {
-        return {
-          name: column,
-        };
-      }
-      return column;
-    })
-  ), [rawColumns]);
+export const ComboBoxTable = forwardRef(
+  ({ columns: rawColumns, ...props }, ref) => {
+    const columns = useMemo(
+      () =>
+        rawColumns.map((column) => {
+          if (typeof column === 'string') {
+            return {
+              name: column,
+            };
+          }
+          return column;
+        }),
+      [rawColumns],
+    );
 
-  return (
-    <ComboBox
-      ref={ref}
-      {...props}
-      columns={columns}
-      renderValue={renderNothing}
-      renderListBox={renderListBox}
-      renderOption={renderOption}
-      renderGroupLabel={renderGroupLabel}
-    />
-  );
-});
+    return (
+      <ComboBox
+        ref={ref}
+        {...props}
+        columns={columns}
+        renderValue={renderNothing}
+        renderListBox={renderListBox}
+        renderOption={renderOption}
+        renderGroupLabel={renderGroupLabel}
+      />
+    );
+  },
+);
 
 ComboBoxTable.propTypes = {
-  columns: PropTypes.arrayOf(PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      label: PropTypes.string,
-      html: PropTypes.object,
-    }),
-  ])).isRequired,
+  columns: PropTypes.arrayOf(
+    PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        label: PropTypes.string,
+        html: PropTypes.object,
+      }),
+    ]),
+  ).isRequired,
   renderTableWrapper: PropTypes.func,
   renderTable: PropTypes.func,
   renderTableHeaderCell: PropTypes.func,

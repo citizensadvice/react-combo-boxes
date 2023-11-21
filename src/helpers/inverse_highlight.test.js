@@ -1,7 +1,11 @@
 import { inverseHighlight } from './inverse_highlight';
 
 it('inverses a highlight', () => {
-  expect(inverseHighlight(['foo', ['bar'], 'fizz'])).toEqual([['foo'], 'bar', ['fizz']]);
+  expect(inverseHighlight(['foo', ['bar'], 'fizz'])).toEqual([
+    ['foo'],
+    'bar',
+    ['fizz'],
+  ]);
 });
 
 it('inverses with no existing highlight', () => {
@@ -13,5 +17,9 @@ it('does not highlight lone spaces', () => {
 });
 
 it('does not highlight leading and trailing spaces', () => {
-  expect(inverseHighlight([['foo'], ' bar ', ['foo']])).toEqual(['foo ', ['bar'], ' foo']);
+  expect(inverseHighlight([['foo'], ' bar ', ['foo']])).toEqual([
+    'foo ',
+    ['bar'],
+    ' foo',
+  ]);
 });

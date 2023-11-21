@@ -3,7 +3,8 @@ import { usePrefixSearch } from './use_prefix_search';
 
 it('filters string options', () => {
   const { result, rerender } = renderHook(
-    ({ query }) => usePrefixSearch(query, { options: ['foo', 'bar', 'foe bar', 'fabar'] }),
+    ({ query }) =>
+      usePrefixSearch(query, { options: ['foo', 'bar', 'foe bar', 'fabar'] }),
     { initialProps: { query: null } },
   );
 
@@ -25,9 +26,13 @@ it('filters string options', () => {
 
 it('filters object string options', () => {
   const { result } = renderHook(
-    ({ query }) => usePrefixSearch(query, {
-      options: [{ label: 'foo', id: 1 }, { label: 'bar', id: '2' }],
-    }),
+    ({ query }) =>
+      usePrefixSearch(query, {
+        options: [
+          { label: 'foo', id: 1 },
+          { label: 'bar', id: '2' },
+        ],
+      }),
     { initialProps: { query: 'f' } },
   );
 
@@ -37,10 +42,14 @@ it('filters object string options', () => {
 describe('index', () => {
   it('selects with property to index', () => {
     const { result } = renderHook(
-      ({ query }) => usePrefixSearch(query, {
-        options: [{ text: 'foo', id: 1 }, { text: 'bar', id: 2 }],
-        index: (o) => o.text,
-      }),
+      ({ query }) =>
+        usePrefixSearch(query, {
+          options: [
+            { text: 'foo', id: 1 },
+            { text: 'bar', id: 2 },
+          ],
+          index: (o) => o.text,
+        }),
       { initialProps: { query: 'b' } },
     );
 
@@ -51,7 +60,8 @@ describe('index', () => {
 describe('minLength', () => {
   it('returns nil unless the search is of minLength', () => {
     const { result, rerender } = renderHook(
-      ({ query }) => usePrefixSearch(query, { options: ['foo', 'bar'], minLength: 2 }),
+      ({ query }) =>
+        usePrefixSearch(query, { options: ['foo', 'bar'], minLength: 2 }),
       { initialProps: { query: null } },
     );
 
@@ -71,7 +81,11 @@ describe('minLength', () => {
 describe('maxResults', () => {
   it('limits the results returned', async () => {
     const { result } = renderHook(
-      ({ query }) => usePrefixSearch(query, { options: ['foo', 'bar', 'foe', 'fog'], maxResults: 2 }),
+      ({ query }) =>
+        usePrefixSearch(query, {
+          options: ['foo', 'bar', 'foe', 'fog'],
+          maxResults: 2,
+        }),
       { initialProps: { query: 'f' } },
     );
 

@@ -8,7 +8,7 @@ This uses the same basic props as `<DropDown>` and `<ComboBox>` and they maybe u
 
 ## Usage
 
-This is a stateless controlled component.  You must respond to `onValue` or `onChange` to update the selected value.
+This is a stateless controlled component. You must respond to `onValue` or `onChange` to update the selected value.
 
 ```js
 const [value, setValue] = useState(initialValue);
@@ -17,7 +17,7 @@ const [value, setValue] = useState(initialValue);
   options={options}
   value={value}
   onValue={setValue}
-/>
+/>;
 ```
 
 ## Props
@@ -28,11 +28,11 @@ Set a placeholder option
 
 ### `options: Array<any>`
 
-The options to display. [See options][options].  
+The options to display. [See options][options].
 
 ### `mapOption: (option: any) => Option | string`
 
-Map an option into label, value, disabled and group. [See options][options]  
+Map an option into label, value, disabled and group. [See options][options]
 
 ### `value: any`
 
@@ -56,15 +56,15 @@ The ref will be passed to the `<select>` element.
 
 ### `multiple: boolean = false`
 
-Allow multiple options to be selected.  If this option is selected use `values` to set the values and `onValues` to get the values.
+Allow multiple options to be selected. If this option is selected use `values` to set the values and `onValues` to get the values.
 
 ### `renderOption: (props) => React.ReactNode`
 
-Customise the rendering of an option.  Defaults to `(props) => <option {...props> />`.
+Customise the rendering of an option. Defaults to `(props) => <option {...props> />`.
 
 ### `renderOptGroup: (props) => React.ReactNode`
 
-Customise the rendering of an optgroup.  Defaults to `(props) => <optgroup {...props> />`.
+Customise the rendering of an optgroup. Defaults to `(props) => <optgroup {...props> />`.
 
 ### Other props
 
