@@ -372,6 +372,21 @@ describe('onChange', () => {
   });
 });
 
+describe('placeholderOption', () => {
+  it('does not create an option', () => {
+    const options = ['Apple', 'Banana'];
+    render(
+      <Test
+        options={options}
+        placeholderOption="Foo"
+      />,
+    );
+    expect(
+      screen.queryByRole('checkbox', { name: 'Foo' }),
+    ).not.toBeInTheDocument();
+  });
+});
+
 describe('classPrefix', () => {
   it('when null removes the class', () => {
     const options = ['Apple'];

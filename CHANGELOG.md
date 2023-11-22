@@ -1,5 +1,11 @@
 # Change log
 
+## Unreleased
+
+### Fixes
+
+- `placeholderOption` should not produce an option for `<Radios>` and `<Checkboxes>`
+
 ## 2.6.2
 
 ### Fixed
