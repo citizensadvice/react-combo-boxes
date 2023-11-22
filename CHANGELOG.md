@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+### Added
+
+- Added a new `layout_popover` to resolves issues displaying list boxes inside
+  of scrolling areas or a modal `<dialog>`. This has a peer dependency of floating-ui
+
 ### Fixes
 
 - `placeholderOption` should not produce an option for `<Radios>` and `<Checkboxes>`

@@ -28,6 +28,9 @@
   overscroll-behavior: none;
   -ms-scroll-chaining: none;
 
+  // For when displayed as a popover
+  inset: auto;
+
   &[data-orientation='top'] {
     margin: 1em 1em 0 0;
     box-shadow:
