@@ -9,11 +9,15 @@ $text-colour: #161616;
 body {
   font: 1em/1.5 sans-serif;
   display: grid;
-  grid-template: 'nav main' / 20em;
+  grid-template: 'nav main' 'footer footer' minmax(min-content, max-content) / 20em;
   color: $text-colour;
+  min-height: 100vh;
 
   @media (width <= 50em) {
-    grid: 'main' auto 'nav' auto;
+    grid-template:
+      'main' minmax(min-content, max-content) 'nav' auto
+      'footer' minmax(min-content, max-content)
+      / 1fr;
   }
 }
 
@@ -27,6 +31,11 @@ main {
 nav {
   grid-area: nav;
   border-right: 1px solid #ddd;
+
+  @media (width <= 50em) {
+    border-top: 1px solid #ddd;
+    border-right: none;
+  }
 
   > div {
     font-weight: bold;
@@ -75,6 +84,14 @@ nav {
   a:not([href]):hover {
     background-color: #caeaff;
   }
+}
+
+footer {
+  grid-area: footer;
+  border-top: 1px solid #ddd;
+  text-align: right;
+  padding: 0 1em;
+  font-size: 0.9em;
 }
 
 code,

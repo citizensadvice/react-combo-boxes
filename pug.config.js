@@ -3,7 +3,7 @@ const { marked } = require('marked');
 const { markedHighlight } = require('marked-highlight');
 const Prism = require('prismjs');
 const path = require('path');
-const { name } = require('./package.json');
+const { name, version } = require('./package.json');
 
 const renderer = new marked.Renderer();
 const originalLink = renderer.link;
@@ -42,5 +42,8 @@ module.exports = {
         text.replace(/:([\w\d_-]+):/g, (m, code) => emoji.get(code) || m),
         { renderer },
       ),
+  },
+  locals: {
+    version,
   },
 };
