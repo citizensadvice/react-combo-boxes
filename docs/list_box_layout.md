@@ -76,6 +76,9 @@ function layoutMaxWidth(listbox: Element): void
 
 ### `layoutPopover`
 
+> This has a dependency on `@floating-ui/react` and is exported as `@citizensadvice/react-combo_boxes/layout_popover`
+> to prevent this being a required dependency.
+
 This displays the listbox using `position: fixed` and positioned with
 [floating ui](https://floating-ui.com/).
 

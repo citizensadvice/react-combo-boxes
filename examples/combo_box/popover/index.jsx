@@ -2,10 +2,10 @@ import { useState } from 'react';
 import {
   ComboBox,
   useTokenSearch,
-  layoutPopover,
   layoutMaxWidth,
   layoutMaxHeight,
 } from '../../../src';
+import { layoutPopover } from '../../../src/layout/layout_popover';
 
 const options = [
   'Apple',

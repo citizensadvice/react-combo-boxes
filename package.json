@@ -8,8 +8,9 @@
   "source": "src/index.js",
   "exports": {
     ".": "./dist/index.js",
-    "./spec-helpers": "./dist/spec_helpers/index.js",
-    "./helpers": "./dist/helpers/index.js"
+    "./helpers": "./dist/helpers/index.js",
+    "./layout_popover": "./dist/layout/layout_popover.js",
+    "./spec-helpers": "./dist/spec_helpers/index.js"
   },
   "files": [
     "dist/**/*",
