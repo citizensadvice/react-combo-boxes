@@ -9,7 +9,7 @@ import { visuallyHiddenClassName } from '../constants/visually_hidden_class_name
 export const Radios = memo((rawProps) => {
   const optionisedProps = Object.freeze({
     ...rawProps,
-    ...useNormalisedOptions(rawProps),
+    ...useNormalisedOptions({ ...rawProps, placeholderOption: undefined }),
   });
 
   const {
