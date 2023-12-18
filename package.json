@@ -73,11 +73,15 @@
     "stylelint-scss": "^6.0.0"
   },
   "peerDependencies": {
+    "@floating-ui/react": "^0.26.2",
     "@testing-library/user-event": ">= 4.0.0",
     "prop-types": ">= 15",
     "react": ">= 16.8"
   },
   "peerDependenciesMeta": {
+    "@floating-ui/react": {
+      "optional": true
+    },
     "@testing-library/user-event": {
       "optional": true
     }

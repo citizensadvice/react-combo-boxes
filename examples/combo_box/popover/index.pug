@@ -1,0 +1,14 @@
+extends ../../layout.pug
+
+block variables
+  - const title = 'List box displayed as a popover'
+  - const example = 'combo_box/popover'
+
+block main
+  include:markdown README.md
+
+  div(data-react-example=example)
+
+  pre.language-js
+    code.language-js
+      include:highlight:packageInclude index.jsx
