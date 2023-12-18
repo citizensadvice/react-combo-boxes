@@ -17,15 +17,16 @@ export function useLayoutListBox({
     }
     cancelAnimationFrame(animationFrameRef.current);
     animationFrameRef.current = requestAnimationFrame(() => {
+      // The ref may change before the animation frame
+      const { current: listbox } = listboxRef;
+      const { current: input } = inputRef;
+      if (!listbox || !input) {
+        return;
+      }
       []
         .concat(onLayoutListBox)
         .filter(Boolean)
-        .forEach((fn) =>
-          fn({
-            listbox: listboxRef.current,
-            input: inputRef.current,
-          }),
-        );
+        .forEach((fn) => fn({ listbox, input }));
     });
   });
 

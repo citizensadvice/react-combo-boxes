@@ -10,6 +10,7 @@
 ### Fixes
 
 - `placeholderOption` should not produce an option for `<Radios>` and `<Checkboxes>`
+- layout functions could be called without the listbox or input as null if the ref changed before the animation frame
 
 ## 2.6.2
 
