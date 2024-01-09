@@ -2,6 +2,9 @@ export function layoutMaxWidth(
   { listbox },
   { contain = 'body', minMaxWidth = 0 } = {},
 ) {
+  if (listbox.hidden) {
+    return;
+  }
   const elBounding = listbox.getBoundingClientRect();
   const container = contain ? listbox.closest(contain) : null;
   const containerBounding = container?.getBoundingClientRect();

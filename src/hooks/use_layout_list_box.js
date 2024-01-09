@@ -31,9 +31,6 @@ export function useLayoutListBox({
   });
 
   useLayoutEffect(() => {
-    if (!showListBox) {
-      return;
-    }
     layout();
   }, [layout, options, showListBox]);
 

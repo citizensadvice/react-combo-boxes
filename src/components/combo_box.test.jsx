@@ -4762,7 +4762,7 @@ describe('onLayoutListBox', () => {
       .mockImplementation((cb) => cb());
   });
 
-  it('is not called when the component is rendered', async () => {
+  it('is called when the component is rendered', async () => {
     const onLayoutListBox = jest.fn();
     render(
       <ComboBoxWrapper
@@ -4770,7 +4770,10 @@ describe('onLayoutListBox', () => {
         onLayoutListBox={onLayoutListBox}
       />,
     );
-    expect(onLayoutListBox).not.toHaveBeenCalled();
+    expect(onLayoutListBox).toHaveBeenCalledWith({
+      listbox: screen.getByRole('listbox', { hidden: true }),
+      input: screen.getByRole('combobox'),
+    });
   });
 
   it('is called when the listbox is displayed', async () => {
@@ -4810,7 +4813,7 @@ describe('onLayoutListBox', () => {
     });
   });
 
-  it('is not called when the listbox is closed', async () => {
+  it('is called when the listbox is closed', async () => {
     const onLayoutListBox = jest.fn();
     render(
       <ComboBoxWrapper
@@ -4821,7 +4824,10 @@ describe('onLayoutListBox', () => {
     await userEvent.tab();
     onLayoutListBox.mockClear();
     await userEvent.keyboard('{Escape}');
-    expect(onLayoutListBox).not.toHaveBeenCalled();
+    expect(onLayoutListBox).toHaveBeenCalledWith({
+      listbox: screen.getByRole('listbox', { hidden: true }),
+      input: screen.getByRole('combobox'),
+    });
   });
 
   it('accepts an array of handlers', async () => {
