@@ -10,6 +10,7 @@ import { computePosition, offset, platform } from '@floating-ui/react';
  */
 export function layoutPopover({ listbox, input }) {
   if (listbox.hidden) {
+    listbox.hidePopover?.();
     return;
   }
   // Clear existing styles
