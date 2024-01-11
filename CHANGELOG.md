@@ -1,6 +1,6 @@
 # Change log
 
-## Unreleased
+## 2.8.0
 
 ### Changed
 
@@ -9,7 +9,7 @@
 
 ### Fixed
 
-- `layout_popover` is not showing the popover in the top layer when in a modal dialog that is opened and closed
+- `layout_popover` is not hiding the popover when a listbox is closed which can result in the listbox not being in the top layer
 
 ## 2.7.0
 
