@@ -1,6 +1,6 @@
 {
   "name": "@citizensadvice/react-combo-boxes",
-  "version": "2.8.0-alpha.2",
+  "version": "2.8.0",
   "description": "A combo box implementations in React",
   "license": "ISC",
   "author": "Daniel Lewis",
