@@ -1,5 +1,16 @@
 # Change log
 
+## Unreleased
+
+### Changed
+
+- (Potentially breaking): Layout functions are now called when the listbox is hidden,
+  allowing clean-up methods to be run
+
+### Fixed
+
+- `layout_popover` is not showing the popover in the top layer when in a modal dialog that is opened and closed
+
 ## 2.7.0
 
 ### Added

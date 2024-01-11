@@ -9,6 +9,9 @@ export function layoutMaxHeight(
   { listbox, input },
   { contain = 'body', minMaxHeight = 0, allowReposition = true } = {},
 ) {
+  if (listbox.hidden) {
+    return;
+  }
   // This height determines when the listbox should be moved above
   listbox.style.setProperty('max-height', '10em');
 

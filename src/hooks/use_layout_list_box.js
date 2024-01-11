@@ -12,30 +12,35 @@ export function useLayoutListBox({
   const animationFrameRef = useRef();
 
   const layout = useEvent(() => {
+    // The ref may change before the animation frame
+    const { current: listbox } = listboxRef;
+    const { current: input } = inputRef;
+    if (listbox?.isConnnected && input?.isConnnected) {
+      return;
+    }
+    []
+      .concat(onLayoutListBox)
+      .filter(Boolean)
+      .forEach((fn) => fn({ listbox, input }));
+  });
+
+  const animateLayout = useEvent(() => {
     if (!onLayoutListBox) {
       return;
     }
     cancelAnimationFrame(animationFrameRef.current);
-    animationFrameRef.current = requestAnimationFrame(() => {
-      // The ref may change before the animation frame
-      const { current: listbox } = listboxRef;
-      const { current: input } = inputRef;
-      if (!listbox || !input) {
-        return;
-      }
-      []
-        .concat(onLayoutListBox)
-        .filter(Boolean)
-        .forEach((fn) => fn({ listbox, input }));
-    });
+    animationFrameRef.current = requestAnimationFrame(layout);
   });
 
   useLayoutEffect(() => {
-    if (!showListBox) {
-      return;
+    if (showListBox) {
+      animateLayout();
+    } else {
+      // Call layout functions to clean-up
+      cancelAnimationFrame(animationFrameRef.current);
+      layout();
     }
-    layout();
-  }, [layout, options, showListBox]);
+  }, [animateLayout, layout, options, showListBox]);
 
   useEffect(() => {
     const { current: listbox } = listboxRef;
@@ -44,13 +49,13 @@ export function useLayoutListBox({
       return undefined;
     }
 
-    function handleScroll(e) {
-      if (e.target.contains(listbox)) {
-        layout();
+    const handleScroll = (e) => {
+      if (listbox && e.target.contains(listbox)) {
+        animateLayout();
       }
-    }
+    };
 
-    window.addEventListener('resize', layout, { passive: true });
+    window.addEventListener('resize', animateLayout, { passive: true });
     document.addEventListener('scroll', handleScroll, {
       passive: true,
       capture: true,
@@ -58,11 +63,11 @@ export function useLayoutListBox({
 
     return () => {
       cancelAnimationFrame(animationFrameRef.current);
-      window.removeEventListener('resize', layout, { passive: true });
+      window.removeEventListener('resize', animateLayout, { passive: true });
       document.removeEventListener('scroll', handleScroll, {
         passive: true,
         capture: true,
       });
     };
-  }, [showListBox, layout, listboxRef]);
+  }, [showListBox, animateLayout, listboxRef]);
 }

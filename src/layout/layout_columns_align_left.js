@@ -7,6 +7,9 @@
  *  This reallocates this excess white-space to the last table cell
  */
 export function layoutColumnsAlignLeft({ listbox }) {
+  if (listbox.hidden) {
+    return;
+  }
   const table = listbox.querySelector('table');
   if (!table) {
     return;

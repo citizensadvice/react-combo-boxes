@@ -24,23 +24,6 @@ beforeEach(() => {
     .mockImplementation((cb) => cb());
 });
 
-it('does not run callback if showListBox if false', async () => {
-  const spy = jest.fn();
-
-  renderHook(() =>
-    useLayoutListBox({
-      showListBox: false,
-      options: ['foo'],
-      onLayoutListBox: spy,
-      listboxRef,
-      inputRef,
-    }),
-  );
-
-  expect(spy).not.toHaveBeenCalled();
-  expect(requestAnimationFrameSpy).not.toHaveBeenCalled();
-});
-
 it('does nothing is onLayoutListBox is unset', async () => {
   renderHook(() =>
     useLayoutListBox({
@@ -219,4 +202,20 @@ it('does not run helpers if scrolling not a parent', async () => {
   });
 
   expect(spy).not.toHaveBeenCalled();
+});
+
+it('runs the callback when showListBox changes', async () => {
+  const spy = jest.fn();
+
+  renderHook(() =>
+    useLayoutListBox({
+      showListBox: false,
+      options: ['foo'],
+      onLayoutListBox: spy,
+      listboxRef,
+      inputRef,
+    }),
+  );
+
+  expect(spy).toHaveBeenCalledWith({ listbox, input });
 });
