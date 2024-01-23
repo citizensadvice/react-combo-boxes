@@ -12,16 +12,15 @@ export function useLayoutListBox({
   const animationFrameRef = useRef();
 
   const layout = useEvent(() => {
-    // The ref may change before the animation frame
     const { current: listbox } = listboxRef;
     const { current: input } = inputRef;
-    if (listbox?.isConnnected && input?.isConnnected) {
-      return;
+    // The ref may change before the animation frame
+    if (listbox?.isConnected && input?.isConnected) {
+      []
+        .concat(onLayoutListBox)
+        .filter(Boolean)
+        .forEach((fn) => fn({ listbox, input }));
     }
-    []
-      .concat(onLayoutListBox)
-      .filter(Boolean)
-      .forEach((fn) => fn({ listbox, input }));
   });
 
   const animateLayout = useEvent(() => {
