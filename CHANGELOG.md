@@ -1,6 +1,6 @@
 # Change log
 
-## Unreleased
+## 2.8.1
 
 - Fix misspelled condition means layout functions are run without the listbox or input
 
