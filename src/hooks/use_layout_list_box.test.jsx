@@ -8,17 +8,17 @@ let inputRef;
 let container;
 let requestAnimationFrameSpy;
 
-beforeAll(() => {
+beforeEach(() => {
+  document.body.replaceChildren();
   listbox = document.createElement('div');
   container = document.createElement('div');
+  input = document.createElement('div');
   container.appendChild(listbox);
+  container.appendChild(input);
   document.body.appendChild(container);
   listboxRef = { current: listbox };
-  input = document.createElement('div');
   inputRef = { current: input };
-});
 
-beforeEach(() => {
   requestAnimationFrameSpy = jest
     .spyOn(window, 'requestAnimationFrame')
     .mockImplementation((cb) => cb());
@@ -218,4 +218,76 @@ it('runs the callback when showListBox changes', async () => {
   );
 
   expect(spy).toHaveBeenCalledWith({ listbox, input });
+});
+
+it('does not run handlers if listbox does not exist', async () => {
+  const spy = jest.fn();
+
+  listboxRef.current = null;
+
+  renderHook(() =>
+    useLayoutListBox({
+      showListBox: true,
+      options: ['foo'],
+      onLayoutListBox: spy,
+      listboxRef,
+      inputRef,
+    }),
+  );
+
+  expect(spy).not.toHaveBeenCalled();
+});
+
+it('does not run handlers if listbox is disconnected', async () => {
+  const spy = jest.fn();
+
+  listbox.remove();
+
+  renderHook(() =>
+    useLayoutListBox({
+      showListBox: true,
+      options: ['foo'],
+      onLayoutListBox: spy,
+      listboxRef,
+      inputRef,
+    }),
+  );
+
+  expect(spy).not.toHaveBeenCalled();
+});
+
+it('does not run handlers if input does not exist', async () => {
+  const spy = jest.fn();
+
+  inputRef.current = null;
+
+  renderHook(() =>
+    useLayoutListBox({
+      showListBox: true,
+      options: ['foo'],
+      onLayoutListBox: spy,
+      listboxRef,
+      inputRef,
+    }),
+  );
+
+  expect(spy).not.toHaveBeenCalled();
+});
+
+it('does not run handlers if input is disconnected', async () => {
+  const spy = jest.fn();
+
+  input.remove();
+
+  renderHook(() =>
+    useLayoutListBox({
+      showListBox: true,
+      options: ['foo'],
+      onLayoutListBox: spy,
+      listboxRef,
+      inputRef,
+    }),
+  );
+
+  expect(spy).not.toHaveBeenCalled();
 });
