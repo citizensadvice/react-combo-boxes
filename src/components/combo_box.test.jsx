@@ -4284,8 +4284,9 @@ describe('renderGroup', () => {
     render(
       <ComboBoxWrapper
         options={[{ label: 'foo', group: 'bar' }]}
-        renderGroup={(props) => (
+        renderGroup={({ key, ...props }) => (
           <dl
+            key={key}
             data-foo="bar"
             {...props}
           />
@@ -4422,8 +4423,9 @@ describe('renderOption', () => {
     render(
       <ComboBoxWrapper
         options={['foo']}
-        renderOption={(props) => (
+        renderOption={({ key, ...props }) => (
           <dl
+            key={key}
             data-foo="bar"
             {...props}
           />

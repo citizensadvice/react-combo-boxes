@@ -8,13 +8,15 @@ const { name, version } = require('./package.json');
 const renderer = new marked.Renderer();
 const originalLink = renderer.link;
 
-renderer.link = function link(href, title, text) {
+renderer.link = function link(token) {
+  let { href } = token;
   if (/^(?!\/\/|\w+:)/.test(href)) {
     const parts = path.parse(href);
     const url = new URL(href, 'http://invalid/');
     href = path.join(parts.dir, `${parts.name}.pug${url.hash}`);
   }
-  return originalLink.call(this, href, title, text);
+  token.href = href;
+  return originalLink.call(this, token);
 };
 
 marked.use(

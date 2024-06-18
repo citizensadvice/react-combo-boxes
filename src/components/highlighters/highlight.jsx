@@ -10,7 +10,7 @@ function emptyHighlight(highlight) {
   );
 }
 
-export function Highlight({ children, inverse }) {
+export function Highlight({ children, inverse = false }) {
   const { visuallyHiddenClassName } = useContext(Context);
   let highlighted = children;
   if (inverse) {
@@ -47,8 +47,4 @@ Highlight.propTypes = {
     ]),
   ).isRequired,
   inverse: PropTypes.bool,
-};
-
-Highlight.defaultProps = {
-  inverse: false,
 };

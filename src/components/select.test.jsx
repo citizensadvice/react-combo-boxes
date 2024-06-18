@@ -724,8 +724,9 @@ describe('renderOption', () => {
     render(
       <Test
         options={options}
-        renderOption={(props) => (
+        renderOption={({ key, ...props }) => (
           <option
+            key={key}
             {...props}
             data-foo="bar"
           />
@@ -771,8 +772,9 @@ describe('renderOptGroup', () => {
     render(
       <Test
         options={options}
-        renderOptGroup={(props) => (
+        renderOptGroup={({ key, ...props }) => (
           <optgroup
+            key={key}
             {...props}
             data-foo="bar"
           />

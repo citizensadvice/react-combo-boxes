@@ -24,6 +24,27 @@ function renderNull() {
   return null;
 }
 
+const defaultProps = {
+  children: null,
+  classPrefix: `${defaultClassPrefix}dropdown`,
+  disabled: false,
+  editable: false,
+  expandOnFocus: false,
+  required: false,
+  foundOptionsMessage: null,
+  notFoundMessage: null,
+  renderClearButton: renderNull,
+  renderDownArrow: renderNull,
+  renderComboBox: (props) => <div {...props} />,
+  renderDropDown: renderNull,
+  renderListBoxWrapper: (props) => <div {...props} />,
+  mustHaveSelection: true,
+  findOption: defaultFindOption,
+};
+
+const defaultRenderWrapper = (props) => <div {...props} />;
+const defaultRenderListBox = (props) => <ul {...props} />;
+
 function renderInput(props, state, componentProps) {
   const {
     id,
@@ -139,46 +160,58 @@ ComboBoxWrapper.propTypes = {
 
 ComboBoxWrapper.displayName = 'comboBoxWrapper';
 
-export const DropDown = forwardRef((props, ref) => {
-  const { renderWrapper, renderListBox } = props;
-
-  const newRenderWrapper = useCallback(
-    (wrapperProps, componentState, componentProps) => (
-      <ComboBoxWrapper
-        {...wrapperProps}
-        componentState={componentState}
-        componentProps={{ ...componentProps, renderWrapper }}
-      />
-    ),
-    [renderWrapper],
-  );
-
-  const newRenderListBox = useCallback(
-    (wrapperProps, componentState, componentProps) =>
-      componentProps.renderListBoxWrapper(
-        {
-          className: makeBEMClass(
-            componentProps.classPrefix,
-            'listbox-wrapper',
-          ),
-          children: renderListBox(wrapperProps, componentState, componentProps),
-        },
-        componentState,
-        componentProps,
+export const DropDown = forwardRef(
+  (
+    {
+      renderWrapper = defaultRenderWrapper,
+      renderListBox = defaultRenderListBox,
+      ...props
+    },
+    ref,
+  ) => {
+    const newRenderWrapper = useCallback(
+      (wrapperProps, componentState, componentProps) => (
+        <ComboBoxWrapper
+          {...wrapperProps}
+          componentState={componentState}
+          componentProps={{ ...componentProps, renderWrapper }}
+        />
       ),
-    [renderListBox],
-  );
+      [renderWrapper],
+    );
 
-  return (
-    <ComboBox
-      ref={ref}
-      renderInput={renderInput}
-      {...props}
-      renderWrapper={newRenderWrapper}
-      renderListBox={newRenderListBox}
-    />
-  );
-});
+    const newRenderListBox = useCallback(
+      (wrapperProps, componentState, componentProps) =>
+        componentProps.renderListBoxWrapper(
+          {
+            className: makeBEMClass(
+              componentProps.classPrefix,
+              'listbox-wrapper',
+            ),
+            children: renderListBox(
+              wrapperProps,
+              componentState,
+              componentProps,
+            ),
+          },
+          componentState,
+          componentProps,
+        ),
+      [renderListBox],
+    );
+
+    return (
+      <ComboBox
+        ref={ref}
+        renderInput={renderInput}
+        {...defaultProps}
+        {...props}
+        renderWrapper={newRenderWrapper}
+        renderListBox={newRenderListBox}
+      />
+    );
+  },
+);
 
 DropDown.propTypes = {
   children: PropTypes.node,
@@ -198,26 +231,6 @@ DropDown.propTypes = {
   renderListBoxWrapper: PropTypes.func,
   mustHaveSelection: PropTypes.bool,
   findOption: PropTypes.func,
-};
-
-DropDown.defaultProps = {
-  children: null,
-  classPrefix: `${defaultClassPrefix}dropdown`,
-  disabled: false,
-  editable: false,
-  expandOnFocus: false,
-  required: false,
-  foundOptionsMessage: null,
-  notFoundMessage: null,
-  renderWrapper: (props) => <div {...props} />,
-  renderClearButton: renderNull,
-  renderDownArrow: renderNull,
-  renderComboBox: (props) => <div {...props} />,
-  renderDropDown: renderNull,
-  renderListBox: (props) => <ul {...props} />,
-  renderListBoxWrapper: (props) => <div {...props} />,
-  mustHaveSelection: true,
-  findOption: defaultFindOption,
 };
 
 DropDown.displayName = 'DropDown';

@@ -12,9 +12,9 @@ const options = [
 function renderGroup(props, { groupChildren, group: { key, label } }) {
   return (
     <li
+      key={key}
       role="group"
       aria-labelledby={key}
-      key={key}
     >
       <div
         className="react-combo-boxes-dropdown__group-label"
