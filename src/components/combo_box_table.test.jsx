@@ -403,8 +403,9 @@ describe('customisation', () => {
           options={options}
           columns={columns}
           mapOption={map}
-          renderTableHeaderCell={(props) => (
+          renderTableHeaderCell={({ key, ...props }) => (
             <th
+              key={key}
               data-foo="bar"
               {...props}
             />
@@ -562,8 +563,9 @@ describe('customisation', () => {
           options={options}
           columns={columns}
           mapOption={map}
-          renderTableRow={(props) => (
+          renderTableRow={({ key, ...props }) => (
             <tr
+              key={key}
               data-foo="bar"
               {...props}
             />
@@ -618,8 +620,9 @@ describe('customisation', () => {
           options={options}
           columns={columns}
           mapOption={map}
-          renderTableCell={(props) => (
+          renderTableCell={({ key, ...props }) => (
             <td
+              key={key}
               data-foo="bar"
               {...props}
             />

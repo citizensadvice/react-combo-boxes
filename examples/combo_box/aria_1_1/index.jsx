@@ -4,12 +4,13 @@ import { ComboBox, useTokenSearch } from '../../../src';
 const options = ['Apple', 'Orange', 'Lemon', 'Raspberry', 'Strawberry'];
 
 function renderWrapper(
-  props,
+  { key, ...props },
   { expanded },
   { id, 'aria-labelledby': ariaLabelledBy },
 ) {
   return (
     <div
+      key={key}
       {...props}
       role="combobox"
       aria-owns={`${id}_listbox`}

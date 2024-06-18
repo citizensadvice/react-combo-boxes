@@ -1,5 +1,12 @@
 # Change log
 
+## Unreleased
+
+- React 18.3 support
+  - Remove default props in favour of default parameters
+  - Fix warnings on spreading `key`
+- Remove Node 16 from the test matrix
+
 ## 2.8.1
 
 - Fix misspelled condition means layout functions are run without the listbox or input

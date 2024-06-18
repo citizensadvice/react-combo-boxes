@@ -3,9 +3,32 @@ import PropTypes from 'prop-types';
 import { useNormalisedOptions } from '../hooks/use_normalised_options';
 import { renderGroupedOptions } from '../helpers/render_grouped_options';
 
+const defaultProps = {
+  placeholderOption: null,
+  multiple: false,
+  value: undefined,
+  values: null,
+  onChange: null,
+  onValue: null,
+  onValues: null,
+  renderOption: ({ key, ...props }) => (
+    <option
+      key={key}
+      {...props}
+    />
+  ),
+  renderOptGroup: ({ key, ...props }) => (
+    <optgroup
+      key={key}
+      {...props}
+    />
+  ),
+};
+
 export const Select = memo(
   forwardRef((rawProps, ref) => {
     const optionisedProps = Object.freeze({
+      ...defaultProps,
       ...rawProps,
       ...useNormalisedOptions(rawProps, { mustHaveSelection: true }),
     });
@@ -105,18 +128,6 @@ Select.propTypes = {
   values: PropTypes.arrayOf(PropTypes.any),
   renderOption: PropTypes.func,
   renderOptGroup: PropTypes.func,
-};
-
-Select.defaultProps = {
-  placeholderOption: null,
-  multiple: false,
-  value: undefined,
-  values: null,
-  onChange: null,
-  onValue: null,
-  onValues: null,
-  renderOption: (props) => <option {...props} />,
-  renderOptGroup: (props) => <optgroup {...props} />,
 };
 
 Select.displayName = 'Select';
