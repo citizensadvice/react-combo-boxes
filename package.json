@@ -4,13 +4,13 @@
   "description": "A combo box implementations in React",
   "license": "ISC",
   "author": "Daniel Lewis",
-  "main": "dist/index.js",
+  "main": "dist/src/index.js",
   "source": "src/index.js",
   "exports": {
-    ".": "./dist/index.js",
-    "./helpers": "./dist/helpers/index.js",
-    "./layout_popover": "./dist/layout/layout_popover.js",
-    "./spec-helpers": "./dist/spec_helpers/index.js"
+    ".": "./dist/src/index.js",
+    "./helpers": "./dist/src/helpers/index.js",
+    "./layout_popover": "./dist/src/layout/layout_popover.js",
+    "./spec-helpers": "./dist/src/spec_helpers/index.js"
   },
   "files": [
     "dist/**/*",
