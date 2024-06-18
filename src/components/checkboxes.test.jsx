@@ -415,8 +415,9 @@ describe('classPrefix', () => {
 
 describe('renderWrapper', () => {
   it('customises the wrapper', () => {
-    const spy = jest.fn((props) => (
+    const spy = jest.fn(({ key, ...props }) => (
       <div
+        key={key}
         data-foo="bar"
         {...props}
       />
@@ -549,8 +550,9 @@ describe('renderDescription', () => {
 
 describe('renderGroup', () => {
   it('customises the group', () => {
-    const spy = jest.fn((props) => (
+    const spy = jest.fn(({ key, ...props }) => (
       <div
+        key={key}
         data-foo="bar"
         {...props}
       />

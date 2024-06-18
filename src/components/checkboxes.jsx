@@ -6,8 +6,36 @@ import { classPrefix as defaultClassPrefix } from '../constants/class_prefix';
 import { makeBEMClass } from '../helpers/make_bem_class';
 import { visuallyHiddenClassName } from '../constants/visually_hidden_class_name';
 
+const defaultProps = {
+  classPrefix: `${defaultClassPrefix}checkbox`,
+  groupClassPrefix: `${defaultClassPrefix}checkbox-group`,
+  onValues: undefined,
+  onChange: undefined,
+  values: null,
+  renderWrapper: ({ key, ...props }) => (
+    <div
+      key={key}
+      {...props}
+    />
+  ),
+  renderInput: (props) => <input {...props} />,
+  renderLabel: (props) => <label {...props} />,
+  // eslint-disable-next-line react/jsx-no-useless-fragment
+  renderLabelWrapper: (props) => <Fragment {...props} />,
+  renderDescription: (props) => <div {...props} />,
+  renderGroup: ({ key, ...props }) => (
+    <div
+      key={key}
+      {...props}
+    />
+  ),
+  renderGroupLabel: (props) => <div {...props} />,
+  renderGroupAccessibleLabel: (props) => <span {...props} />,
+};
+
 export const Checkboxes = memo((rawProps) => {
   const optionisedProps = Object.freeze({
+    ...defaultProps,
     ...rawProps,
     ...useNormalisedOptions({ ...rawProps, placeholderOption: undefined }),
   });
@@ -190,23 +218,6 @@ Checkboxes.propTypes = {
   renderGroup: PropTypes.func,
   renderGroupLabel: PropTypes.func,
   renderGroupAccessibleLabel: PropTypes.func,
-};
-
-Checkboxes.defaultProps = {
-  classPrefix: `${defaultClassPrefix}checkbox`,
-  groupClassPrefix: `${defaultClassPrefix}checkbox-group`,
-  onValues: undefined,
-  onChange: undefined,
-  values: null,
-  renderWrapper: (props) => <div {...props} />,
-  renderInput: (props) => <input {...props} />,
-  renderLabel: (props) => <label {...props} />,
-  // eslint-disable-next-line react/jsx-no-useless-fragment
-  renderLabelWrapper: (props) => <Fragment {...props} />,
-  renderDescription: (props) => <div {...props} />,
-  renderGroup: (props) => <div {...props} />,
-  renderGroupLabel: (props) => <div {...props} />,
-  renderGroupAccessibleLabel: (props) => <span {...props} />,
 };
 
 Checkboxes.displayName = 'Checkboxes';

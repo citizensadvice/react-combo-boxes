@@ -9,6 +9,39 @@ function renderNothing() {
   return null;
 }
 
+const defaultProps = {
+  renderTableWrapper: (props) => <div {...props} />,
+  renderTable: (props) => <table {...props} />,
+  renderTableHeaderCell: ({ key, ...props }) => (
+    <th
+      key={key}
+      {...props}
+    />
+  ),
+  renderTableGroupRow: (props) => <tr {...props} />,
+  renderTableGroupHeaderCell: ({ key, ...props }) => (
+    <th
+      key={key}
+      {...props}
+    />
+  ),
+  renderTableRow: ({ key, ...props }) => (
+    <tr
+      key={key}
+      {...props}
+    />
+  ),
+  renderTableCellColumnAccessibleLabel: (props) => <span {...props} />,
+  renderTableCell: ({ key, ...props }) => (
+    <td
+      key={key}
+      {...props}
+    />
+  ),
+  // eslint-disable-next-line react/jsx-no-useless-fragment
+  renderColumnValue: (props) => <Fragment {...props} />,
+};
+
 export const DropDownTable = forwardRef(
   ({ columns: rawColumns, ...props }, ref) => {
     const columns = useMemo(
@@ -27,6 +60,7 @@ export const DropDownTable = forwardRef(
     return (
       <DropDown
         ref={ref}
+        {...defaultProps}
         {...props}
         columns={columns}
         renderValue={renderNothing}
@@ -58,19 +92,6 @@ DropDownTable.propTypes = {
   renderTableCellColumnAccessibleLabel: PropTypes.func,
   renderTableCell: PropTypes.func,
   renderColumnValue: PropTypes.func,
-};
-
-DropDownTable.defaultProps = {
-  renderTableWrapper: (props) => <div {...props} />,
-  renderTable: (props) => <table {...props} />,
-  renderTableHeaderCell: (props) => <th {...props} />,
-  renderTableGroupRow: (props) => <tr {...props} />,
-  renderTableGroupHeaderCell: (props) => <th {...props} />,
-  renderTableRow: (props) => <tr {...props} />,
-  renderTableCellColumnAccessibleLabel: (props) => <span {...props} />,
-  renderTableCell: (props) => <td {...props} />,
-  // eslint-disable-next-line react/jsx-no-useless-fragment
-  renderColumnValue: (props) => <Fragment {...props} />,
 };
 
 DropDownTable.displayName = 'DropDownTable';

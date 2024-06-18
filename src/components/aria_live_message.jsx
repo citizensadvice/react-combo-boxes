@@ -8,12 +8,12 @@ const debouceMilliseconds = 1400; // https://github.com/alphagov/accessible-auto
 export function AriaLiveMessage({
   showListBox,
   showNotFound,
-  options,
-  focusedOption,
+  options = null,
+  focusedOption = null,
   visuallyHiddenClassName,
-  notFoundMessage,
-  foundOptionsMessage,
-  selectedOptionMessage,
+  notFoundMessage = null,
+  foundOptionsMessage = null,
+  selectedOptionMessage = null,
 }) {
   const [message, setMessage] = useState('');
 
@@ -68,12 +68,4 @@ AriaLiveMessage.propTypes = {
   notFoundMessage: PropTypes.func,
   foundOptionsMessage: PropTypes.func,
   selectedOptionMessage: PropTypes.func,
-};
-
-AriaLiveMessage.defaultProps = {
-  options: null,
-  focusedOption: null,
-  notFoundMessage: null,
-  foundOptionsMessage: null,
-  selectedOptionMessage: null,
 };
