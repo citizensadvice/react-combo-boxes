@@ -3,11 +3,7 @@ import { act, render } from '@testing-library/react';
 import { liveMessages } from '../__collect_aria_live_messages';
 import { AriaLiveMessage } from './aria_live_message';
 
-function Test(props) {
-  return <AriaLiveMessage {...props} />;
-}
-
-Test.defaultProps = {
+const defaultProps = {
   showListBox: false,
   showNotFound: false,
   visuallyHiddenClassName: 'sr-only',
@@ -17,6 +13,15 @@ Test.defaultProps = {
   selectedOptionMessage: (option, options) =>
     `${option.label} ${option.index + 1} of ${options.length} is highlighted`,
 };
+
+function Test(props) {
+  return (
+    <AriaLiveMessage
+      {...defaultProps}
+      {...props}
+    />
+  );
+}
 
 it('generates a live not found message', async () => {
   jest.useFakeTimers();

@@ -60,11 +60,11 @@ Allow multiple options to be selected. If this option is selected use `values` t
 
 ### `renderOption: (props) => React.ReactNode`
 
-Customise the rendering of an option. Defaults to `(props) => <option {...props> />`.
+Customise the rendering of an option. Defaults to `({ key, ...props }) => <option key={key} {...props> />`.
 
 ### `renderOptGroup: (props) => React.ReactNode`
 
-Customise the rendering of an optgroup. Defaults to `(props) => <optgroup {...props> />`.
+Customise the rendering of an optgroup. Defaults to `({ key, ...props }) => <optgroup key={key} {...props> />`.
 
 ### Other props
 

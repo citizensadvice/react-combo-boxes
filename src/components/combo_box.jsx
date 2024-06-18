@@ -43,9 +43,97 @@ import { scrollIntoView } from '../layout/scroll_into_view';
 import { useLayoutListBox } from '../hooks/use_layout_list_box';
 import { Context } from './combo_box/context';
 
+const defaultProps = {
+  options: null,
+  mapOption: null,
+  value: undefined,
+
+  busy: false,
+  busyDebounce: 400,
+
+  'aria-describedby': null,
+  className: null,
+  classPrefix: `${defaultClassPrefix}combobox`,
+
+  'aria-invalid': null,
+  autoComplete: 'off',
+  autoCapitalize: null,
+  autoCorrect: null,
+  autoFocus: null,
+  disabled: null,
+  inputMode: null,
+  maxLength: null,
+  minLength: null,
+  pattern: null,
+  placeholder: null,
+  readOnly: null,
+  required: null,
+  size: null,
+  spellCheck: null,
+
+  onBlur: null,
+  onChange: null,
+  onFocus: null,
+  onLayoutFocusedOption: scrollIntoView,
+  onLayoutListBox: null,
+  onSearch: null,
+  onValue: null,
+
+  editable: true,
+  autoselect: false,
+  clearOnSelect: false,
+  closeOnSelect: true,
+  expandOnFocus: true,
+  findSuggestion: findOption,
+  managedFocus: true,
+  selectOnBlur: true,
+  mustHaveSelection: false,
+  skipOption: undefined,
+  showSelectedLabel: undefined,
+  tabAutocomplete: false,
+  tabBetweenOptions: false,
+
+  assistiveHint:
+    'When results are available use up and down arrows to review and enter to select',
+  notFoundMessage: () => 'No results found',
+  foundOptionsMessage: (options) =>
+    `${options.length} result${options.length > 1 ? 's are' : ' is'} available`,
+  selectedOptionMessage: (option, options) =>
+    `${option.label} ${option.index + 1} of ${options.length} is highlighted`,
+
+  renderWrapper: (props) => <div {...props} />,
+  renderInput: (props) => <input {...props} />,
+  renderListBox: (props) => <ul {...props} />,
+  renderGroup: ({ key, ...props }) => (
+    <Fragment
+      key={key}
+      {...props}
+    />
+  ),
+  renderGroupAccessibleLabel: (props) => <span {...props} />,
+  renderGroupLabel: (props) => <li {...props} />,
+  // eslint-disable-next-line react/jsx-no-useless-fragment
+  renderGroupName: (props) => <Fragment {...props} />,
+  renderOption: ({ key, ...props }) => (
+    <li
+      key={key}
+      {...props}
+    />
+  ),
+  // eslint-disable-next-line react/jsx-no-useless-fragment
+  renderValue: (props) => <Fragment {...props} />,
+  renderDownArrow: (props) => <span {...props} />,
+  renderClearButton: (props) => <span {...props} />,
+  renderNotFound: (props) => <div {...props} />,
+  renderAriaDescription: (props) => <div {...props} />,
+
+  visuallyHiddenClassName: defaultVisuallyHiddenClassName,
+};
+
 export const ComboBox = memo(
   forwardRef((rawProps, ref) => {
     const optionisedProps = Object.freeze({
+      ...defaultProps,
       ...rawProps,
       ...useNormalisedOptions(rawProps),
     });
@@ -523,84 +611,6 @@ ComboBox.propTypes = {
   renderAriaDescription: PropTypes.func,
 
   visuallyHiddenClassName: PropTypes.string,
-};
-
-ComboBox.defaultProps = {
-  options: null,
-  mapOption: null,
-  value: undefined,
-
-  busy: false,
-  busyDebounce: 400,
-
-  'aria-describedby': null,
-  className: null,
-  classPrefix: `${defaultClassPrefix}combobox`,
-
-  'aria-invalid': null,
-  autoComplete: 'off',
-  autoCapitalize: null,
-  autoCorrect: null,
-  autoFocus: null,
-  disabled: null,
-  inputMode: null,
-  maxLength: null,
-  minLength: null,
-  pattern: null,
-  placeholder: null,
-  readOnly: null,
-  required: null,
-  size: null,
-  spellCheck: null,
-
-  onBlur: null,
-  onChange: null,
-  onFocus: null,
-  onLayoutFocusedOption: scrollIntoView,
-  onLayoutListBox: null,
-  onSearch: null,
-  onValue: null,
-
-  editable: true,
-  autoselect: false,
-  clearOnSelect: false,
-  closeOnSelect: true,
-  expandOnFocus: true,
-  findSuggestion: findOption,
-  managedFocus: true,
-  selectOnBlur: true,
-  mustHaveSelection: false,
-  skipOption: undefined,
-  showSelectedLabel: undefined,
-  tabAutocomplete: false,
-  tabBetweenOptions: false,
-
-  assistiveHint:
-    'When results are available use up and down arrows to review and enter to select',
-  notFoundMessage: () => 'No results found',
-  foundOptionsMessage: (options) =>
-    `${options.length} result${options.length > 1 ? 's are' : ' is'} available`,
-  selectedOptionMessage: (option, options) =>
-    `${option.label} ${option.index + 1} of ${options.length} is highlighted`,
-
-  renderWrapper: (props) => <div {...props} />,
-  renderInput: (props) => <input {...props} />,
-  renderListBox: (props) => <ul {...props} />,
-  // eslint-disable-next-line react/jsx-no-useless-fragment
-  renderGroup: (props) => <Fragment {...props} />,
-  renderGroupAccessibleLabel: (props) => <span {...props} />,
-  renderGroupLabel: (props) => <li {...props} />,
-  // eslint-disable-next-line react/jsx-no-useless-fragment
-  renderGroupName: (props) => <Fragment {...props} />,
-  renderOption: (props) => <li {...props} />,
-  // eslint-disable-next-line react/jsx-no-useless-fragment
-  renderValue: (props) => <Fragment {...props} />,
-  renderDownArrow: (props) => <span {...props} />,
-  renderClearButton: (props) => <span {...props} />,
-  renderNotFound: (props) => <div {...props} />,
-  renderAriaDescription: (props) => <div {...props} />,
-
-  visuallyHiddenClassName: defaultVisuallyHiddenClassName,
 };
 
 ComboBox.displayName = 'ComboBox';

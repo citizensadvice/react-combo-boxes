@@ -26,6 +26,7 @@ export const ListBox = forwardRef(
       },
       componentState,
       componentState: { currentOption },
+      hidden = false,
       ...props
     },
     ref,
@@ -37,6 +38,7 @@ export const ListBox = forwardRef(
         className: makeBEMClass(classPrefix, 'listbox'),
         onMouseDown: (e) => e.preventDefault(),
         ...props,
+        hidden,
         children: renderGroupedOptions({
           options,
           renderGroup(group) {
@@ -145,13 +147,6 @@ ListBox.propTypes = {
   id: PropTypes.string.isRequired,
   onSelectOption: PropTypes.func.isRequired,
   onFocusOption: PropTypes.func,
-};
-
-ListBox.defaultProps = {
-  'aria-activedescendant': null,
-  focusedRef: null,
-  hidden: false,
-  onFocusOption: null,
 };
 
 ListBox.displayName = 'ListBox';
