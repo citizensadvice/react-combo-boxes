@@ -1,6 +1,6 @@
 # Change log
 
-## 2.9.0
+## Unreleased
 
 - React 18.3 support
   - Remove default props in favour of default parameters
