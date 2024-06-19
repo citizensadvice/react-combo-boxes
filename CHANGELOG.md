@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- If the value is updated for a combo-box and the listbox is visible and there is no user entered search, onSearch will be triggered
 - React 18.3 support
   - Remove default props in favour of default parameters
   - Fix warnings on spreading `key`

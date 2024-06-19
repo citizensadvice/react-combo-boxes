@@ -1579,6 +1579,47 @@ describe('value', () => {
       expectToHaveFocusedOption(screen.getByRole('option', { name: 'Banana' }));
     });
 
+    it('calls onSearch for an open list box with no search', async () => {
+      const onSearch = jest.fn();
+      const { rerender } = render(
+        <ComboBoxWrapper
+          options={options}
+          onSearch={onSearch}
+        />,
+      );
+      await userEvent.tab();
+      await userEvent.keyboard('{ArrowDown}');
+      rerender(
+        <ComboBoxWrapper
+          options={options}
+          onSearch={onSearch}
+          value="Banana"
+        />,
+      );
+      expect(onSearch).toHaveBeenCalledWith('Banana');
+    });
+
+    it('does not call onSearch for an open list box with a search', async () => {
+      const onSearch = jest.fn();
+      const { rerender } = render(
+        <ComboBoxWrapper
+          options={options}
+          onSearch={onSearch}
+        />,
+      );
+      await userEvent.tab();
+      await userEvent.type(screen.getByRole('combobox'), 'foo');
+      onSearch.mockClear();
+      rerender(
+        <ComboBoxWrapper
+          options={options}
+          onSearch={onSearch}
+          value="Banana"
+        />,
+      );
+      expect(onSearch).not.toHaveBeenCalled();
+    });
+
     it('changes the value of a closed listbox', async () => {
       const { rerender } = render(<ComboBoxWrapper options={options} />);
       await userEvent.tab();
@@ -1592,6 +1633,27 @@ describe('value', () => {
       expect(document.activeElement).toHaveValue('Banana');
       await userEvent.keyboard('{ArrowDown}');
       expectToHaveFocusedOption(screen.getByRole('option', { name: 'Banana' }));
+    });
+
+    it('does not call onSearch for an closed list box with no search', async () => {
+      const onSearch = jest.fn();
+      const { rerender } = render(
+        <ComboBoxWrapper
+          options={options}
+          onSearch={onSearch}
+        />,
+      );
+      await userEvent.tab();
+      await userEvent.keyboard('{ArrowDown}{Enter}');
+      onSearch.mockClear();
+      rerender(
+        <ComboBoxWrapper
+          options={options}
+          onSearch={onSearch}
+          value="Banana"
+        />,
+      );
+      expect(onSearch).not.toHaveBeenCalled();
     });
   });
 });
