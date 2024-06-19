@@ -9,41 +9,56 @@ function renderNothing() {
   return null;
 }
 
-const defaultProps = {
-  renderTableWrapper: (props) => <div {...props} />,
-  renderTable: (props) => <table {...props} />,
-  renderTableHeaderCell: ({ key, ...props }) => (
-    <th
-      key={key}
-      {...props}
-    />
-  ),
-  renderTableGroupRow: (props) => <tr {...props} />,
-  renderTableGroupHeaderCell: ({ key, ...props }) => (
-    <th
-      key={key}
-      {...props}
-    />
-  ),
-  renderTableRow: ({ key, ...props }) => (
-    <tr
-      key={key}
-      {...props}
-    />
-  ),
-  renderTableCellColumnAccessibleLabel: (props) => <span {...props} />,
-  renderTableCell: ({ key, ...props }) => (
-    <td
-      key={key}
-      {...props}
-    />
-  ),
-  // eslint-disable-next-line react/jsx-no-useless-fragment
-  renderColumnValue: (props) => <Fragment {...props} />,
-};
+const defaultRenderTableWrapper = (props) => <div {...props} />;
+const defaultRenderTable = (props) => <table {...props} />;
+const defaultRenderTableHeaderCell = ({ key, ...props }) => (
+  <th
+    key={key}
+    {...props}
+  />
+);
+const defaultRenderTableGroupRow = (props) => <tr {...props} />;
+const defaultRenderTableGroupHeaderCell = ({ key, ...props }) => (
+  <th
+    key={key}
+    {...props}
+  />
+);
+const defaultRenderTableRow = ({ key, ...props }) => (
+  <tr
+    key={key}
+    {...props}
+  />
+);
+const defaultRenderTableCellColumnAccessibleLabel = (props) => (
+  <span {...props} />
+);
+const defaultRenderTableCell = ({ key, ...props }) => (
+  <td
+    key={key}
+    {...props}
+  />
+);
+// eslint-disable-next-line react/jsx-no-useless-fragment
+const defaultRenderColumnValue = (props) => <Fragment {...props} />;
 
 export const DropDownTable = forwardRef(
-  ({ columns: rawColumns, ...props }, ref) => {
+  (
+    {
+      columns: rawColumns,
+      renderTableWrapper = defaultRenderTableWrapper,
+      renderTable = defaultRenderTable,
+      renderTableHeaderCell = defaultRenderTableHeaderCell,
+      renderTableGroupRow = defaultRenderTableGroupRow,
+      renderTableGroupHeaderCell = defaultRenderTableGroupHeaderCell,
+      renderTableRow = defaultRenderTableRow,
+      renderTableCellColumnAccessibleLabel = defaultRenderTableCellColumnAccessibleLabel,
+      renderTableCell = defaultRenderTableCell,
+      renderColumnValue = defaultRenderColumnValue,
+      ...props
+    },
+    ref,
+  ) => {
     const columns = useMemo(
       () =>
         rawColumns.map((column) => {
@@ -60,13 +75,23 @@ export const DropDownTable = forwardRef(
     return (
       <DropDown
         ref={ref}
-        {...defaultProps}
         {...props}
         columns={columns}
         renderValue={renderNothing}
         renderListBox={renderListBox}
         renderOption={renderOption}
         renderGroupLabel={renderGroupLabel}
+        renderTableWrapper={renderTableWrapper}
+        renderTable={renderTable}
+        renderTableHeaderCell={renderTableHeaderCell}
+        renderTableGroupRow={renderTableGroupRow}
+        renderTableGroupHeaderCell={renderTableGroupHeaderCell}
+        renderTableRow={renderTableRow}
+        renderTableCellColumnAccessibleLabel={
+          renderTableCellColumnAccessibleLabel
+        }
+        renderTableCell={renderTableCell}
+        renderColumnValue={renderColumnValue}
       />
     );
   },

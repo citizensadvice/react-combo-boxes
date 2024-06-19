@@ -24,26 +24,10 @@ function renderNull() {
   return null;
 }
 
-const defaultProps = {
-  children: null,
-  classPrefix: `${defaultClassPrefix}dropdown`,
-  disabled: false,
-  editable: false,
-  expandOnFocus: false,
-  required: false,
-  foundOptionsMessage: null,
-  notFoundMessage: null,
-  renderClearButton: renderNull,
-  renderDownArrow: renderNull,
-  renderComboBox: (props) => <div {...props} />,
-  renderDropDown: renderNull,
-  renderListBoxWrapper: (props) => <div {...props} />,
-  mustHaveSelection: true,
-  findOption: defaultFindOption,
-};
-
+const defaultRenderComboBox = (props) => <div {...props} />;
 const defaultRenderWrapper = (props) => <div {...props} />;
 const defaultRenderListBox = (props) => <ul {...props} />;
+const defaultRenderListBoxWrapper = (props) => <div {...props} />;
 
 function renderInput(props, state, componentProps) {
   const {
@@ -163,8 +147,14 @@ ComboBoxWrapper.displayName = 'comboBoxWrapper';
 export const DropDown = forwardRef(
   (
     {
+      children = null,
+      classPrefix = `${defaultClassPrefix}dropdown`,
+      required = false,
+      renderComboBox = defaultRenderComboBox,
+      renderListBoxWrapper = defaultRenderListBoxWrapper,
       renderWrapper = defaultRenderWrapper,
       renderListBox = defaultRenderListBox,
+      findOption = defaultFindOption,
       ...props
     },
     ref,
@@ -204,11 +194,25 @@ export const DropDown = forwardRef(
       <ComboBox
         ref={ref}
         renderInput={renderInput}
-        {...defaultProps}
+        classPrefix={classPrefix}
+        disabled={false}
+        editable={false}
+        expandOnFocus={false}
+        required={required}
+        foundOptionsMessage={null}
+        notFoundMessage={null}
+        renderClearButton={renderNull}
+        renderDownArrow={renderNull}
+        renderComboBox={renderComboBox}
+        renderListBoxWrapper={renderListBoxWrapper}
+        mustHaveSelection
+        findOption={findOption}
         {...props}
         renderWrapper={newRenderWrapper}
         renderListBox={newRenderListBox}
-      />
+      >
+        {children}
+      </ComboBox>
     );
   },
 );
@@ -226,7 +230,6 @@ DropDown.propTypes = {
   renderClearButton: PropTypes.func,
   renderComboBox: PropTypes.func,
   renderDownArrow: PropTypes.func,
-  renderDropDown: PropTypes.func,
   renderListBox: PropTypes.func,
   renderListBoxWrapper: PropTypes.func,
   mustHaveSelection: PropTypes.bool,

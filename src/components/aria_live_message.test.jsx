@@ -3,21 +3,25 @@ import { act, render } from '@testing-library/react';
 import { liveMessages } from '../__collect_aria_live_messages';
 import { AriaLiveMessage } from './aria_live_message';
 
-const defaultProps = {
-  showListBox: false,
-  showNotFound: false,
-  visuallyHiddenClassName: 'sr-only',
-  notFoundMessage: () => 'No results found',
-  foundOptionsMessage: (options) =>
+function Test({
+  showListBox = false,
+  showNotFound = false,
+  visuallyHiddenClassName = 'sr-only',
+  notFoundMessage = () => 'No results found',
+  foundOptionsMessage = (options) =>
     `${options.length} result${options.length > 1 ? 's are' : ' is'} available`,
-  selectedOptionMessage: (option, options) =>
+  selectedOptionMessage = (option, options) =>
     `${option.label} ${option.index + 1} of ${options.length} is highlighted`,
-};
-
-function Test(props) {
+  ...props
+}) {
   return (
     <AriaLiveMessage
-      {...defaultProps}
+      showListBox={showListBox}
+      showNotFound={showNotFound}
+      visuallyHiddenClassName={visuallyHiddenClassName}
+      notFoundMessage={notFoundMessage}
+      foundOptionsMessage={foundOptionsMessage}
+      selectedOptionMessage={selectedOptionMessage}
       {...props}
     />
   );

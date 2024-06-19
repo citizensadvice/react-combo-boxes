@@ -6,172 +6,184 @@ import { classPrefix as defaultClassPrefix } from '../constants/class_prefix';
 import { makeBEMClass } from '../helpers/make_bem_class';
 import { visuallyHiddenClassName } from '../constants/visually_hidden_class_name';
 
-const defaultProps = {
-  classPrefix: `${defaultClassPrefix}radio`,
-  groupClassPrefix: `${defaultClassPrefix}radio-group`,
-  value: null,
-  onChange: null,
-  onValue: null,
-  renderWrapper: ({ key, ...props }) => (
-    <div
-      key={key}
-      {...props}
-    />
-  ),
-  renderInput: (props) => <input {...props} />,
-  renderLabel: (props) => <label {...props} />,
-  // eslint-disable-next-line react/jsx-no-useless-fragment
-  renderLabelWrapper: (props) => <Fragment {...props} />,
-  renderDescription: (props) => <div {...props} />,
-  renderGroup: ({ key, ...props }) => (
-    <div
-      key={key}
-      {...props}
-    />
-  ),
-  renderGroupLabel: (props) => <div {...props} />,
-  renderGroupAccessibleLabel: (props) => <span {...props} />,
-  required: false,
-};
+const defaultRenderWrapper = ({ key, ...props }) => (
+  <div
+    key={key}
+    {...props}
+  />
+);
+const defaultRenderInput = (props) => <input {...props} />;
+const defaultRenderLabel = (props) => <label {...props} />;
+// eslint-disable-next-line react/jsx-no-useless-fragment
+const defaultRenderLabelWrapper = (props) => <Fragment {...props} />;
+const defaultRenderDescription = (props) => <div {...props} />;
+const defaultRenderGroup = ({ key, ...props }) => (
+  <div
+    key={key}
+    {...props}
+  />
+);
+const defaultRenderGroupLabel = (props) => <div {...props} />;
+const defaultRenderGroupAccessibleLabel = (props) => <span {...props} />;
 
-export const Radios = memo((rawProps) => {
-  const optionisedProps = Object.freeze({
-    ...defaultProps,
-    ...rawProps,
-    ...useNormalisedOptions({ ...rawProps, placeholderOption: undefined }),
-  });
-
-  const {
-    required,
-    classPrefix,
-    groupClassPrefix,
+export const Radios = memo(
+  ({
+    classPrefix = `${defaultClassPrefix}radio`,
+    groupClassPrefix = `${defaultClassPrefix}radio-group`,
+    onChange = null,
+    onValue = null,
     name,
-    onChange,
-    onValue,
-    options,
-    renderWrapper,
-    renderInput,
-    renderLabel,
-    renderLabelWrapper,
-    renderDescription,
-    renderGroup,
-    renderGroupLabel,
-    renderGroupAccessibleLabel,
-    selectedOption,
-  } = optionisedProps;
+    renderWrapper = defaultRenderWrapper,
+    renderInput = defaultRenderInput,
+    renderLabel = defaultRenderLabel,
+    renderLabelWrapper = defaultRenderLabelWrapper,
+    renderDescription = defaultRenderDescription,
+    renderGroup = defaultRenderGroup,
+    renderGroupLabel = defaultRenderGroupLabel,
+    renderGroupAccessibleLabel = defaultRenderGroupAccessibleLabel,
+    required = false,
+    value: _value = null,
+    ...rawProps
+  }) => {
+    const optionisedProps = Object.freeze({
+      classPrefix,
+      groupClassPrefix,
+      onChange,
+      onValue,
+      renderWrapper,
+      renderInput,
+      renderLabel,
+      renderLabelWrapper,
+      renderDescription,
+      renderGroup,
+      renderGroupLabel,
+      renderGroupAccessibleLabel,
+      required,
+      ...rawProps,
+      ...useNormalisedOptions({
+        ...rawProps,
+        value: _value,
+        placeholderOption: undefined,
+      }),
+    });
 
-  const handleChange = useCallback(
-    (e) => {
-      onValue?.(options.find((o) => o.identity === e.target.value)?.value);
-      onChange?.(e);
-    },
-    [onChange, onValue, options],
-  );
+    const { options, selectedOption } = optionisedProps;
 
-  return renderGroupedOptions({
-    options,
-    renderGroup(group) {
-      const { children, key, label, html } = group;
-      return renderGroup(
-        {
-          key,
-          className: makeBEMClass(groupClassPrefix),
-          children: (
-            <>
-              {renderGroupLabel(
-                {
-                  children: label,
-                  className: makeBEMClass(groupClassPrefix, 'label'),
-                  ...html,
-                },
-                { group },
-                optionisedProps,
-              )}
-              {children}
-            </>
-          ),
-        },
-        { group },
-        optionisedProps,
-      );
-    },
-    renderOption(option) {
-      const { identity, label, key, html, disabled, description, group } =
-        option;
-      const checked = selectedOption?.identity === identity;
+    const handleChange = useCallback(
+      (e) => {
+        onValue?.(options.find((o) => o.identity === e.target.value)?.value);
+        onChange?.(e);
+      },
+      [onChange, onValue, options],
+    );
 
-      return renderWrapper(
-        {
-          className: makeBEMClass(classPrefix),
-          children: (
-            <>
-              {renderInput(
-                {
-                  'aria-describedby': description ? `${key}_description` : null,
-                  checked,
-                  disabled,
-                  id: key,
-                  name,
-                  onChange: handleChange,
-                  type: 'radio',
-                  value: identity,
-                  required,
-                  className: makeBEMClass(classPrefix, 'input'),
-                  ...html,
-                },
-                { option, checked },
-                optionisedProps,
-              )}
-              {renderLabelWrapper({
-                children: (
-                  <>
-                    {renderLabel(
-                      {
-                        htmlFor: key,
-                        children: (
-                          <>
-                            {group
-                              ? renderGroupAccessibleLabel(
-                                  {
-                                    className: visuallyHiddenClassName,
-                                    children: `${group.label} `,
-                                  },
-                                  { group },
-                                  optionisedProps,
-                                )
-                              : null}
-                            {label}
-                          </>
-                        ),
-                        className: makeBEMClass(classPrefix, 'label'),
-                      },
-                      { option, checked },
-                      optionisedProps,
-                    )}
-                    {description && ' '}
-                    {!!description &&
-                      renderDescription(
+    return renderGroupedOptions({
+      options,
+      renderGroup(group) {
+        const { children, key, label, html } = group;
+        return renderGroup(
+          {
+            key,
+            className: makeBEMClass(groupClassPrefix),
+            children: (
+              <>
+                {renderGroupLabel(
+                  {
+                    children: label,
+                    className: makeBEMClass(groupClassPrefix, 'label'),
+                    ...html,
+                  },
+                  { group },
+                  optionisedProps,
+                )}
+                {children}
+              </>
+            ),
+          },
+          { group },
+          optionisedProps,
+        );
+      },
+      renderOption(option) {
+        const { identity, label, key, html, disabled, description, group } =
+          option;
+        const checked = selectedOption?.identity === identity;
+
+        return renderWrapper(
+          {
+            className: makeBEMClass(classPrefix),
+            children: (
+              <>
+                {renderInput(
+                  {
+                    'aria-describedby': description
+                      ? `${key}_description`
+                      : null,
+                    checked,
+                    disabled,
+                    id: key,
+                    name,
+                    onChange: handleChange,
+                    type: 'radio',
+                    value: identity,
+                    required,
+                    className: makeBEMClass(classPrefix, 'input'),
+                    ...html,
+                  },
+                  { option, checked },
+                  optionisedProps,
+                )}
+                {renderLabelWrapper({
+                  children: (
+                    <>
+                      {renderLabel(
                         {
-                          id: `${key}_description`,
-                          children: description,
-                          className: makeBEMClass(classPrefix, 'description'),
+                          htmlFor: key,
+                          children: (
+                            <>
+                              {group
+                                ? renderGroupAccessibleLabel(
+                                    {
+                                      className: visuallyHiddenClassName,
+                                      children: `${group.label} `,
+                                    },
+                                    { group },
+                                    optionisedProps,
+                                  )
+                                : null}
+                              {label}
+                            </>
+                          ),
+                          className: makeBEMClass(classPrefix, 'label'),
                         },
-                        { option, group, checked },
+                        { option, checked },
                         optionisedProps,
                       )}
-                  </>
-                ),
-              })}
-            </>
-          ),
-          key,
-        },
-        { option, group, checked },
-        optionisedProps,
-      );
-    },
-  });
-});
+                      {description && ' '}
+                      {!!description &&
+                        renderDescription(
+                          {
+                            id: `${key}_description`,
+                            children: description,
+                            className: makeBEMClass(classPrefix, 'description'),
+                          },
+                          { option, group, checked },
+                          optionisedProps,
+                        )}
+                    </>
+                  ),
+                })}
+              </>
+            ),
+            key,
+          },
+          { option, group, checked },
+          optionisedProps,
+        );
+      },
+    });
+  },
+);
 
 Radios.propTypes = {
   classPrefix: PropTypes.string,
