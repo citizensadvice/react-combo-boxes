@@ -280,7 +280,7 @@ export const ComboBox = memo(
 
     // If the value changes and the list box is active and no search is set trigger onSearch with the new label
     useEffect(() => {
-      if (search === null && showListBox) {
+      if (search === null && expanded) {
         onSearch?.(value?.label);
       }
     }, [value?.identity]); // eslint-disable-line react-hooks/exhaustive-deps
