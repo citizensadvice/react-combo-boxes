@@ -590,6 +590,18 @@ describe('options', () => {
   });
 });
 
+describe('id', () => {
+  it('passes the id', () => {
+    render(
+      <Test
+        options={['Apple', 'Banana']}
+        id="foo"
+      />,
+    );
+    expect(screen.getByRole('combobox')).toHaveAttribute('id', 'foo');
+  });
+});
+
 describe('multiple', () => {
   describe('string options', () => {
     const options = ['Apple', 'Banana', 'Orange', 'Grape'];

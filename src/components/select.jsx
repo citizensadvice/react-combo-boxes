@@ -86,6 +86,7 @@ export const Select = memo(
 
       return (
         <select
+          id={id}
           value={reactValue}
           onChange={handleChange}
           ref={ref}
