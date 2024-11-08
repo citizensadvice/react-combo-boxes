@@ -1,10 +1,11 @@
+@use "sass:meta";
 @import 'npm:normalize.css/normalize.css';
 @import 'npm:prismjs/themes/prism.css';
 
 $text-colour: #161616;
 
-@import '../styles/dropdown';
-@import '../styles/combobox';
+@include meta.load-css('../styles/dropdown');
+@include meta.load-css('../styles/combobox');
 
 body {
   font: 1em/1.5 sans-serif;

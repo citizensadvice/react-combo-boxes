@@ -1,19 +1,21 @@
-@import './variables';
-@import './listbox';
+@use 'variables';
+@use 'listbox';
 
 .react-combo-boxes-combobox {
-  @include react-combo-boxes-listbox;
+  @include listbox.react-combo-boxes-listbox;
 
-  width: max-content;
-  position: relative;
-  max-width: 100%;
+  & {
+    width: max-content;
+    position: relative;
+    max-width: 100%;
+  }
 
-  @if $react-combo-boxes-enable-icons {
+  @if variables.$react-combo-boxes-enable-icons {
     &::before {
       content: '';
       vertical-align: middle;
       width: 0.9em;
-      margin-left: $react-combo-boxes-padding-x;
+      margin-left: variables.$react-combo-boxes-padding-x;
       display: inline-block;
       background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23555' d='M505 443L405 343c-4-4-10-7-17-7h-16a208 208 0 10-36 36v16c0 7 3 13 7 17l100 100c9 9 24 9 34 0l28-28c9-10 9-25 0-34zM208 336a128 128 0 110-256 128 128 0 010 256z'/%3E%3C/svg%3E")
         left
@@ -37,49 +39,49 @@
 
 .react-combo-boxes-combobox__listbox {
   &:not([data-orientation='top']) {
-    margin-top: -$react-combo-boxes-focus-border-width;
+    margin-top: -(variables.$react-combo-boxes-focus-border-width);
   }
 
   &[data-orientation='top'] {
-    margin-bottom: -$react-combo-boxes-focus-border-width;
+    margin-bottom: -(variables.$react-combo-boxes-focus-border-width);
   }
 }
 
 .react-combo-boxes-combobox__input {
-  @if $react-combo-boxes-enable-icons {
+  @if variables.$react-combo-boxes-enable-icons {
     padding: calc(
-        #{$react-combo-boxes-padding-y *
+        #{variables.$react-combo-boxes-padding-y *
           2} +
-          #{$react-combo-boxes-focus-border-width}
+          #{variables.$react-combo-boxes-focus-border-width}
       )
-      calc(#{$react-combo-boxes-padding-x * 2} + 0.7em)
+      calc(#{variables.$react-combo-boxes-padding-x * 2} + 0.7em)
       calc(
-        #{$react-combo-boxes-padding-y *
+        #{variables.$react-combo-boxes-padding-y *
           2} -
           0.1em +
-          #{$react-combo-boxes-focus-border-width}
+          #{variables.$react-combo-boxes-focus-border-width}
       );
   } @else {
     padding: calc(
-        #{$react-combo-boxes-padding-y *
+        #{variables.$react-combo-boxes-padding-y *
           2} +
-          #{$react-combo-boxes-focus-border-width}
+          #{variables.$react-combo-boxes-focus-border-width}
       )
       calc(
-        #{$react-combo-boxes-padding-x} +
-          #{$react-combo-boxes-focus-border-width}
+        #{variables.$react-combo-boxes-padding-x} +
+          #{variables.$react-combo-boxes-focus-border-width}
       )
       calc(
-        #{$react-combo-boxes-padding-y *
+        #{variables.$react-combo-boxes-padding-y *
           2} -
           0.1em +
-          #{$react-combo-boxes-focus-border-width}
+          #{variables.$react-combo-boxes-focus-border-width}
       );
   }
 
   width: 100%;
   border: none;
-  box-shadow: inset 0 0 0 1px $react-combo-boxes-border-color;
+  box-shadow: inset 0 0 0 1px variables.$react-combo-boxes-border-color;
   box-sizing: border-box;
   appearance: none;
   line-height: inherit;
@@ -87,18 +89,18 @@
 
   &:focus {
     box-shadow:
-      inset 0 0 0 $react-combo-boxes-focus-border-width
-        $react-combo-boxes-border-color,
-      0 0 0 $react-combo-boxes-focus-border-width
-        $react-combo-boxes-focus-border-color;
+      inset 0 0 0 variables.$react-combo-boxes-focus-border-width
+        variables.$react-combo-boxes-border-color,
+      0 0 0 variables.$react-combo-boxes-focus-border-width
+        variables.$react-combo-boxes-focus-border-color;
   }
 
   .react-combo-boxes-combobox:focus-within & {
     box-shadow:
-      inset 0 0 0 $react-combo-boxes-focus-border-width
-        $react-combo-boxes-border-color,
-      0 0 0 $react-combo-boxes-focus-border-width
-        $react-combo-boxes-focus-border-color;
+      inset 0 0 0 variables.$react-combo-boxes-focus-border-width
+        variables.$react-combo-boxes-border-color,
+      0 0 0 variables.$react-combo-boxes-focus-border-width
+        variables.$react-combo-boxes-focus-border-color;
   }
 
   &::-ms-clear {
@@ -109,34 +111,36 @@
 }
 
 .react-combo-boxes-combobox__not-found {
-  @include react-combo-boxes-listbox-container;
+  @include listbox.react-combo-boxes-listbox-container;
 
-  padding: $react-combo-boxes-padding-y $react-combo-boxes-padding-x;
+  padding: variables.$react-combo-boxes-padding-y
+    variables.$react-combo-boxes-padding-x;
 
   &:not([data-orientation='top']) {
-    margin-top: -$react-combo-boxes-focus-border-width;
+    margin-top: -(variables.$react-combo-boxes-focus-border-width);
   }
 
   &[data-orientation='top'] {
-    margin-bottom: -$react-combo-boxes-focus-border-width;
+    margin-bottom: -(variables.$react-combo-boxes-focus-border-width);
   }
 }
 
 .react-combo-boxes-combobox__error-message {
-  @include react-combo-boxes-listbox-container;
+  @include listbox.react-combo-boxes-listbox-container;
 
-  padding: $react-combo-boxes-padding-y $react-combo-boxes-padding-x;
+  padding: variables.$react-combo-boxes-padding-y
+    variables.$react-combo-boxes-padding-x;
 
   &:not([data-orientation='top']) {
-    margin-top: -$react-combo-boxes-focus-border-width;
+    margin-top: -(variables.$react-combo-boxes-focus-border-width);
   }
 
   &[data-orientation='top'] {
-    margin-bottom: -$react-combo-boxes-focus-border-width;
+    margin-bottom: -(variables.$react-combo-boxes-focus-border-width);
   }
 }
 
-@if $react-combo-boxes-enable-icons {
+@if variables.$react-combo-boxes-enable-icons {
   .react-combo-boxes-combobox__down-arrow {
     vertical-align: middle;
     display: inline-block;
@@ -144,11 +148,11 @@
     top: 0;
     right: 0;
     bottom: 0;
-    width: calc(0.7em + #{$react-combo-boxes-padding-x * 2});
+    width: calc(0.7em + #{variables.$react-combo-boxes-padding-x * 2});
     pointer-events: none;
     background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 512'%3E%3Cpath d='M31 192h258c17 0 26 22 14 34L174 355c-8 8-20 8-28 0L17 226c-12-12-3-34 14-34z'/%3E%3C/svg%3E%0A")
       right
-      $react-combo-boxes-padding-x
+      variables.$react-combo-boxes-padding-x
       center /
       0.7em
       no-repeat;
@@ -165,11 +169,11 @@
     top: 0;
     right: 0;
     bottom: 0;
-    width: calc(0.7em + #{$react-combo-boxes-padding-x * 2});
+    width: calc(0.7em + #{variables.$react-combo-boxes-padding-x * 2});
     cursor: pointer;
     background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 352 512'%3E%3Cpath fill='%23555' d='M243 256l100-100c12-12 12-32 0-45l-22-22a31 31 0 00-45 0L176 189 76 89a31 31 0 00-45 0L9 111a31 31 0 000 45l100 100L9 356a31 31 0 000 45l22 22c13 12 33 12 45 0l100-100 100 100c12 12 32 12 45 0l22-22c12-13 12-33 0-45L243 256z'/%3E%3C/svg%3E")
       right
-      $react-combo-boxes-padding-x
+      variables.$react-combo-boxes-padding-x
       center /
       0.7em
       no-repeat;
