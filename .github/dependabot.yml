@@ -4,6 +4,13 @@ updates:
     directory: '/'
     schedule:
       interval: 'weekly'
+    groups:
+      # Group everything except major version updates
+      # and security vulnerabilities together
+      regular-updates:
+        update-types:
+          - "minor"
+          - "patch"
 
   - package-ecosystem: 'github-actions'
     directory: '/'
