@@ -9,8 +9,8 @@ updates:
       # and security vulnerabilities together
       regular-updates:
         update-types:
-          - "minor"
-          - "patch"
+          - 'minor'
+          - 'patch'
 
   - package-ecosystem: 'github-actions'
     directory: '/'
