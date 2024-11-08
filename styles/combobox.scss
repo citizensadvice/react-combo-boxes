@@ -2,13 +2,11 @@
 @use 'listbox';
 
 .react-combo-boxes-combobox {
-  @include listbox.react-combo-boxes-listbox;
+  width: max-content;
+  position: relative;
+  max-width: 100%;
 
-  & {
-    width: max-content;
-    position: relative;
-    max-width: 100%;
-  }
+  @include listbox.react-combo-boxes-listbox;
 
   @if variables.$react-combo-boxes-enable-icons {
     &::before {

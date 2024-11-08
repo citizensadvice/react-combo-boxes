@@ -3,14 +3,12 @@
 @use 'sr_only';
 
 .react-combo-boxes-dropdown {
-  @include listbox.react-combo-boxes-listbox;
+  box-sizing: border-box;
+  width: max-content;
+  max-width: 100%;
+  position: relative;
 
-  & {
-    box-sizing: border-box;
-    width: max-content;
-    max-width: 100%;
-    position: relative;
-  }
+  @include listbox.react-combo-boxes-listbox;
 }
 
 .react-combo-boxes-dropdown__listbox-wrapper {
