@@ -1,6 +1,6 @@
 import { act, render } from '@testing-library/react';
 
-import { liveMessages } from '../__collect_aria_live_messages';
+import { liveMessages } from '../__collect_aria_live_messages__';
 import { AriaLiveMessage } from './aria_live_message';
 
 function Test({

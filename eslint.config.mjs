@@ -1,36 +1,30 @@
-import { fixupConfigRules } from '@eslint/compat';
+import comments from '@eslint-community/eslint-plugin-eslint-comments/configs';
+import eslintConfigPrettier from 'eslint-config-prettier';
 import globals from 'globals';
+import importPlugin from 'eslint-plugin-import';
 import jest from 'eslint-plugin-jest';
 import jestDom from 'eslint-plugin-jest-dom';
-import testingLibrary from 'eslint-plugin-testing-library';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import js from '@eslint/js';
-import { FlatCompat } from '@eslint/eslintrc';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all,
-});
+import reactHooksPlugin from 'eslint-plugin-react-hooks';
+import reactPlugin from 'eslint-plugin-react';
+import testingLibrary from 'eslint-plugin-testing-library';
 
 export default [
   {
     ignores: ['node_modules', 'dist', 'es', 'cjs', 'coverage', '.gh-pages'],
   },
-  ...fixupConfigRules(
-    compat.extends(
-      'eslint:recommended',
-      'plugin:import/recommended',
-      'plugin:react/recommended',
-      'plugin:react/jsx-runtime',
-      'plugin:react-hooks/recommended',
-      'plugin:@eslint-community/eslint-comments/recommended',
-      'prettier',
-    ),
-  ),
+  js.configs.recommended,
+  importPlugin.flatConfigs.recommended,
+  reactPlugin.configs.flat.recommended,
+  reactPlugin.configs.flat['jsx-runtime'],
+  {
+    plugins: {
+      'react-hooks': reactHooksPlugin,
+    },
+    rules: reactHooksPlugin.configs.recommended.rules,
+  },
+  comments.recommended,
+  eslintConfigPrettier,
   {
     languageOptions: {
       globals: {
@@ -46,10 +40,6 @@ export default [
         node: {
           extensions: ['.js', '.jsx', '.json'],
         },
-      },
-
-      react: {
-        version: 'detect',
       },
     },
 
@@ -88,24 +78,14 @@ export default [
       'react/jsx-no-useless-fragment': 'error',
     },
   },
-  ...compat
-    .extends(
-      'plugin:jest/recommended',
-      'plugin:testing-library/react',
-      'plugin:jest-dom/recommended',
-    )
-    .map((config) => ({
-      ...config,
-      files: ['**/*.test.{js,jsx}', 'src/__*.js', 'src/spec_helpers/*.js'],
-    })),
   {
-    files: ['**/*.test.{js,jsx}', 'src/__*.js', 'src/spec_helpers/*.js'],
+    files: [
+      '**/*.test.{js,jsx}',
+      'src/spec_helpers/*.js',
+      'src/__*__.{js,jsx}',
+    ],
 
-    plugins: {
-      jest,
-      'jest-dom': jestDom,
-      'testing-library': testingLibrary,
-    },
+    plugins: { jest, 'jest-dom': jestDom, 'testing-library': testingLibrary },
 
     languageOptions: {
       globals: {
@@ -115,6 +95,9 @@ export default [
     },
 
     rules: {
+      ...jest.configs['flat/recommended'].rules,
+      ...jestDom.configs['flat/recommended'].rules,
+      ...testingLibrary.configs['flat/react'].rules,
       'import/no-extraneous-dependencies': 'off',
       'react/display-name': 'off',
       'react/jsx-no-bind': 'off',

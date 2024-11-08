@@ -2,7 +2,7 @@ import { useEffect, useState, forwardRef } from 'react';
 import { render, waitFor, act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ComboBox } from './combo_box';
-import { collectLiveMessages } from '../__collect_aria_live_messages';
+import { collectLiveMessages } from '../__collect_aria_live_messages__';
 
 const ComboBoxWrapper = forwardRef(({ value: _value, ...props }, ref) => {
   const [value, setValue] = useState(_value);
