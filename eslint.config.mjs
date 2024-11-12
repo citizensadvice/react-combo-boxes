@@ -41,6 +41,9 @@ export default [
           extensions: ['.js', '.jsx', '.json'],
         },
       },
+      react: {
+        version: 'detect',
+      },
     },
 
     rules: {
