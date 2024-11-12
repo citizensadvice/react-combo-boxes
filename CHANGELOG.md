@@ -1,6 +1,13 @@
 # Change log
 
-## Unreleased
+## 2.10.0-rc.1
+
+- Updates SASS from @import to @use to fix deprecation warnings (potentially breaking)
+- Updates SASS to fix mixed declaration errors
+- Add Node 22 to testing matrix
+- Switch to eslint 9
+
+## 2.9.0
 
 - If the value is updated for a combo-box and the listbox is visible and there is no user entered search, onSearch will be triggered
 - React 18.3 support
