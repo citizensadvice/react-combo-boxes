@@ -2,7 +2,7 @@ import { useCallback, useLayoutEffect, useRef } from 'react';
 
 // https://github.com/reactjs/rfcs/blob/useevent/text/0000-useevent.md
 export function useEvent(handler) {
-  const handlerRef = useRef(null);
+  const handlerRef = useRef(handler);
 
   useLayoutEffect(() => {
     handlerRef.current = handler;
