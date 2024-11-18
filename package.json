@@ -19,8 +19,9 @@
   "scripts": {
     "build:js": "rm -rf dist && swc ./src -d dist",
     "prebuild": "rm -rf .gh-pages",
+    "cache:clear": "rm -rf .parcel-cache",
     "build": "parcel build ./examples/index.pug",
-    "start": "parcel ./examples/index.pug",
+    "start": "npm run cache:clear && parcel ./examples/index.pug",
     "format": "prettier . --write",
     "lint:format": "prettier . --check",
     "lint:js": "eslint . --max-warnings=0",

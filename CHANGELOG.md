@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Do not close a combo-box or drop-down if the focus is leaving the browser window
+
+## 2.9.0
+
 - If the value is updated for a combo-box and the listbox is visible and there is no user entered search, onSearch will be triggered
 - React 18.3 support
   - Remove default props in favour of default parameters

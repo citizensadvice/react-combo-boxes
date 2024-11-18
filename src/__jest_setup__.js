@@ -1,5 +1,15 @@
 import '@testing-library/jest-dom';
 
+// Fix broken jsdom has focus https://github.com/jsdom/jsdom/issues/3794
+Object.defineProperty(document, 'hasFocus', {
+  writeable: true,
+  configurable: true,
+  enumerable: true,
+  value() {
+    return !!this.activeElement;
+  },
+});
+
 beforeEach(() => {
   expect.hasAssertions();
 });

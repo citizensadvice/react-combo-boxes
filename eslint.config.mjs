@@ -11,6 +11,9 @@ import testingLibrary from 'eslint-plugin-testing-library';
 
 export default [
   {
+    files: ['**/*.js', '**/*.jsx', '**/*.mjs', '**/*.cjs'],
+  },
+  {
     ignores: ['node_modules', 'dist', 'es', 'cjs', 'coverage', '.gh-pages'],
   },
   js.configs.recommended,
@@ -36,10 +39,14 @@ export default [
     },
 
     settings: {
+      'import/extensions': ['.js', '.jsx'],
       'import/resolver': {
         node: {
           extensions: ['.js', '.jsx', '.json'],
         },
+      },
+      react: {
+        version: 'detect',
       },
     },
 
@@ -61,9 +68,8 @@ export default [
         },
       ],
 
-      'import/prefer-default-export': 'off',
       'import/no-default-export': 'error',
-      'import/no-named-as-default': 'off',
+      'import/named': 'error',
 
       'no-unused-vars': [
         'error',
