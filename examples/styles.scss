@@ -1,11 +1,10 @@
 @use 'sass:meta';
+@use '../styles/dropdown';
+@use '../styles/combobox';
 @import 'npm:normalize.css/normalize.css';
 @import 'npm:prismjs/themes/prism.css';
 
 $text-colour: #161616;
-
-@include meta.load-css('../styles/dropdown');
-@include meta.load-css('../styles/combobox');
 
 body {
   font: 1em/1.5 sans-serif;
@@ -185,7 +184,7 @@ kbd {
 
   > label:not(:first-child),
   > .label:not(:first-child),
-  > fieldset {
+  > fieldset:not(:first-child) {
     margin-top: 1.5em;
   }
 }
