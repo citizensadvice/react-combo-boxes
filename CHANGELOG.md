@@ -1,8 +1,12 @@
 # Change log
 
-## Unreleased
+## 3.0.0-rc.1
 
+- Updates SASS from @import to @use to fix deprecation warnings (potentially breaking)
+- Updates SASS to fix mixed declaration errors
 - Do not close a combo-box or drop-down if the focus is leaving the browser window
+- Add Node 22 to testing matrix
+- Switch to eslint 9
 
 ## 2.9.0
 
