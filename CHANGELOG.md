@@ -1,6 +1,6 @@
 # Change log
 
-## 3.0.0-rc.1
+## 3.0.0
 
 - Updates SASS from @import to @use to fix deprecation warnings (potentially breaking)
 - Updates SASS to fix mixed declaration errors
