@@ -9,7 +9,10 @@ $text-colour: #161616;
 body {
   font: 1em/1.5 sans-serif;
   display: grid;
-  grid-template: 'nav main' 'footer footer' minmax(min-content, max-content) / 20em;
+  grid-template: 'nav main' 'footer footer' minmax(
+      min-content,
+      max-content
+    ) / 20em;
   color: $text-colour;
   min-height: 100vh;
 
