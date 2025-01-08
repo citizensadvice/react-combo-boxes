@@ -1,5 +1,9 @@
 # Change log
 
+## Unreleased
+
+- Added `tabindex="-1"` to the listbox table container to prevent it becoming an extra tab-stop
+
 ## 3.0.0
 
 - Updates SASS from @import to @use to fix deprecation warnings (potentially breaking)
