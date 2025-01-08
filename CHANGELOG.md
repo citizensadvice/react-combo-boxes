@@ -1,5 +1,9 @@
 # Change log
 
+## Unreleased
+
+- Fix floating UI peer dependency was pinned to an minor version
+
 ## 3.0.0
 
 - Updates SASS from @import to @use to fix deprecation warnings (potentially breaking)
