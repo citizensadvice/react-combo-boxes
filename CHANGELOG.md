@@ -1,9 +1,9 @@
 # Change log
 
-## Unreleased
+## 3.0.1
 
 - Added `tabindex="-1"` to the listbox table container to prevent it becoming an extra tab-stop
-- Fix floating UI peer dependency was pinned to an minor version
+- Fix floating UI peer dependency was pinned to a minor version
 
 ## 3.0.0
 
