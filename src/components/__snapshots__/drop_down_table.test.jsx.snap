@@ -23,6 +23,7 @@ exports[`cells with html renders a table with colgroups 1`] = `
       <div
         class="react-combo-boxes-dropdown__listbox react-combo-boxes-dropdown__false"
         hidden=""
+        tabindex="-1"
       >
         <table
           aria-labelledby="id-label"
@@ -174,6 +175,7 @@ exports[`columns as names only renders a table as the list box 1`] = `
       <div
         class="react-combo-boxes-dropdown__listbox react-combo-boxes-dropdown__false"
         hidden=""
+        tabindex="-1"
       >
         <table
           aria-labelledby="id-label"
@@ -355,6 +357,7 @@ exports[`columns with headers renders a table with headers 1`] = `
       <div
         class="react-combo-boxes-dropdown__listbox react-combo-boxes-dropdown__listbox--header"
         hidden=""
+        tabindex="-1"
       >
         <table
           aria-labelledby="id-label"
@@ -556,6 +559,7 @@ exports[`columns with html renders a table with colgroups 1`] = `
       <div
         class="react-combo-boxes-dropdown__listbox react-combo-boxes-dropdown__false"
         hidden=""
+        tabindex="-1"
       >
         <table
           aria-labelledby="id-label"
@@ -711,6 +715,7 @@ exports[`grouped renders a table with groups 1`] = `
       <div
         class="react-combo-boxes-dropdown__listbox react-combo-boxes-dropdown__false"
         hidden=""
+        tabindex="-1"
       >
         <table
           aria-labelledby="id-label"

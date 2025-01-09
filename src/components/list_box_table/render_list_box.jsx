@@ -24,6 +24,7 @@ export function renderListBox(
         hasHeader && 'listbox--header',
       ),
       onMouseDown: (e) => e.preventDefault(),
+      tabIndex: -1,
       ref,
       children: renderTable(
         {
