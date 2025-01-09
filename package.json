@@ -75,6 +75,7 @@
     "react-dom": "^18.3.1",
     "stylelint": "^16.10.0",
     "stylelint-config-standard": "^36.0.0",
+    "stylelint-config-standard-scss": "^14.0.0",
     "stylelint-scss": "^6.8.1"
   },
   "peerDependencies": {
@@ -92,8 +93,7 @@
     }
   },
   "dependencies": {
-    "shallow-equal": "^3.1.0",
-    "stylelint-config-standard-scss": "^14.0.0"
+    "shallow-equal": "^3.1.0"
   },
   "sideEffects": false,
   "prettier": {
