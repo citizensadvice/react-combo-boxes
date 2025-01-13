@@ -1,5 +1,9 @@
 # Change log
 
+## 3.0.2
+
+- Fix stylelint-config-standard-scss was accidentally added to dependencies instead of devDependencies
+
 ## 3.0.1
 
 - Added `tabindex="-1"` to the listbox table container to prevent it becoming an extra tab-stop
