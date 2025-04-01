@@ -11,6 +11,11 @@ updates:
         update-types:
           - 'minor'
           - 'patch'
+      # Must be updated together
+      react:
+        patterns:
+          - 'react'
+          - 'react-dom'
 
   - package-ecosystem: 'github-actions'
     directory: '/'
