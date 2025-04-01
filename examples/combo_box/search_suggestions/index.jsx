@@ -46,7 +46,7 @@ export function Example() {
         aria-labelledby="select-label"
         value={value}
         onValue={setValue}
-        onSearch={setValue}
+        onChange={(e) => setValue(e.target.value)}
         options={filteredOptions}
         showSelectedLabel
         managedFocus={false}
