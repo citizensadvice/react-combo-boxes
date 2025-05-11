@@ -29,14 +29,13 @@ export function renderOption({ children: _, ...props }, state, componentProps) {
             key: index,
             ...column.cellHtml,
             children: (
-              // Use non-breaking spaces to fix an issue with Chrome on VoiceOver removing spaces
               <>
                 {group &&
                   index === 0 &&
                   renderGroupAccessibleLabel(
                     {
                       className: visuallyHiddenClassName,
-                      children: `${group.label}\u00A0`,
+                      children: `${group.label} `,
                     },
                     state,
                     componentProps,
@@ -46,7 +45,7 @@ export function renderOption({ children: _, ...props }, state, componentProps) {
                     {
                       className: visuallyHiddenClassName,
                       children: option.value[column.name]
-                        ? `${column.label}\u00A0`
+                        ? `${column.label} `
                         : null,
                     },
                     { ...state, column },

@@ -1164,7 +1164,7 @@ describe('options', () => {
         await userEvent.tab();
         await userEvent.keyboard('{ArrowDown}{ArrowDown}');
         expectToHaveFocusedOption(
-          screen.getByRole('option', { name: /Orange/ }),
+          screen.getByRole('option', { name: 'Citrus Orange' }),
         );
       });
 
@@ -1178,6 +1178,21 @@ describe('options', () => {
         );
         await userEvent.tab();
         await userEvent.keyboard('{ArrowDown}{ArrowDown}{Enter}');
+        expect(spy).toHaveBeenCalledWith({ label: 'Orange', group: 'Citrus' });
+      });
+
+      it('triggers onValue when an option is selected by clicking', async () => {
+        const spy = jest.fn();
+        render(
+          <ComboBoxWrapper
+            options={options}
+            onValue={spy}
+          />,
+        );
+        await userEvent.tab();
+        await userEvent.click(
+          screen.getByRole('option', { name: 'Citrus Orange' }),
+        );
         expect(spy).toHaveBeenCalledWith({ label: 'Orange', group: 'Citrus' });
       });
 
@@ -2143,9 +2158,9 @@ describe('onSearch', () => {
       rerender(<ComboBoxWrapper options={newOptions} />);
       expect(container).toMatchSnapshot();
       expect(screen.getAllByRole('option').map((o) => o.textContent)).toEqual([
-        'Strawberry\u00A0',
-        'Raspberry\u00A0',
-        'Banana\u00A0',
+        'Strawberry',
+        'Raspberry',
+        'Banana',
       ]);
     });
 
@@ -4561,7 +4576,7 @@ describe('renderGroupAccessibleLabel', () => {
     await userEvent.tab();
     expect(spy).toHaveBeenLastCalledWith(
       expect.objectContaining({
-        children: 'bar\u00A0',
+        children: 'bar ',
       }),
       {
         'aria-autocomplete': 'none',

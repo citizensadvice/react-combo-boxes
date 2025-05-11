@@ -84,7 +84,7 @@ exports[`cells with class names renders a table with colgroups 1`] = `
               <span
                 class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
-                Foo 
+                Foo 
               </span>
               Apple
               <span
@@ -100,7 +100,7 @@ exports[`cells with class names renders a table with colgroups 1`] = `
               <span
                 class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
-                Bar 
+                Bar 
               </span>
               Fruit
               <span
@@ -123,7 +123,7 @@ exports[`cells with class names renders a table with colgroups 1`] = `
               <span
                 class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
-                Foo 
+                Foo 
               </span>
               Banana
               <span
@@ -139,7 +139,7 @@ exports[`cells with class names renders a table with colgroups 1`] = `
               <span
                 class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
-                Bar 
+                Bar 
               </span>
               Fruit
               <span
@@ -162,7 +162,7 @@ exports[`cells with class names renders a table with colgroups 1`] = `
               <span
                 class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
-                Foo 
+                Foo 
               </span>
               Potato
               <span
@@ -178,7 +178,7 @@ exports[`cells with class names renders a table with colgroups 1`] = `
               <span
                 class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
-                Bar 
+                Bar 
               </span>
               Vegetable
               <span
@@ -665,7 +665,7 @@ exports[`columns with headers renders a table with headers 1`] = `
               <span
                 class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
-                Name 
+                Name 
               </span>
               Apple
               <span
@@ -681,7 +681,7 @@ exports[`columns with headers renders a table with headers 1`] = `
               <span
                 class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
-                Type 
+                Type 
               </span>
               Fruit
               <span
@@ -704,7 +704,7 @@ exports[`columns with headers renders a table with headers 1`] = `
               <span
                 class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
-                Name 
+                Name 
               </span>
               Banana
               <span
@@ -720,7 +720,7 @@ exports[`columns with headers renders a table with headers 1`] = `
               <span
                 class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
-                Type 
+                Type 
               </span>
               Fruit
               <span
@@ -743,7 +743,7 @@ exports[`columns with headers renders a table with headers 1`] = `
               <span
                 class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
-                Name 
+                Name 
               </span>
               Potato
               <span
@@ -759,7 +759,7 @@ exports[`columns with headers renders a table with headers 1`] = `
               <span
                 class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
-                Type 
+                Type 
               </span>
               Vegetable
               <span
@@ -1044,7 +1044,7 @@ exports[`grouped renders a table with groups 1`] = `
               <span
                 class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
-                Fruit 
+                Fruit 
               </span>
               Apple
               <span
@@ -1078,7 +1078,7 @@ exports[`grouped renders a table with groups 1`] = `
               <span
                 class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
-                Fruit 
+                Fruit 
               </span>
               Banana
               <span
@@ -1123,7 +1123,7 @@ exports[`grouped renders a table with groups 1`] = `
               <span
                 class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
               >
-                Vegetable 
+                Vegetable 
               </span>
               Potato
               <span
@@ -1136,6 +1136,260 @@ exports[`grouped renders a table with groups 1`] = `
               class="react-combo-boxes-combobox__table-cell"
               role="presentation"
             >
+              Brown
+              <span
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+              >
+                 
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+      id="id_aria_description"
+    >
+      When results are available use up and down arrows to review and enter to select
+    </div>
+    <div
+      class="react-combo-boxes-combobox__not-found"
+      hidden=""
+      id="id_not_found"
+    />
+    <div
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+    >
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      >
+        <div />
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`grouped with columns with headers renders a table with headers 1`] = `
+<div>
+  <div
+    aria-busy="false"
+    class="react-combo-boxes-combobox"
+  >
+    <input
+      aria-autocomplete="none"
+      aria-describedby="id_aria_description"
+      aria-expanded="false"
+      aria-labelledby="id-label"
+      aria-owns="id_listbox"
+      autocomplete="off"
+      class="react-combo-boxes-combobox__input"
+      id="id"
+      role="combobox"
+      type="text"
+      value=""
+    />
+    <span
+      class="react-combo-boxes-combobox__down-arrow"
+      id="id_down_arrow"
+    />
+    <span
+      aria-label="Clear"
+      aria-labelledby="id_clear_button id-label id"
+      class="react-combo-boxes-combobox__clear-button"
+      hidden=""
+      id="id_clear_button"
+      role="button"
+      tabindex="-1"
+    />
+    <div
+      class="react-combo-boxes-combobox__listbox react-combo-boxes-combobox__listbox--header"
+      hidden=""
+      tabindex="-1"
+    >
+      <table
+        aria-labelledby="id-label"
+        class="react-combo-boxes-combobox__table"
+        id="id_listbox"
+        role="listbox"
+        tabindex="-1"
+      >
+        <colgroup>
+          <col />
+          <col />
+        </colgroup>
+        <thead
+          role="presentation"
+        >
+          <tr
+            role="presentation"
+          >
+            <th
+              aria-hidden="true"
+              class="react-combo-boxes-combobox__table-header"
+            >
+              Name
+            </th>
+            <th
+              aria-hidden="true"
+              class="react-combo-boxes-combobox__table-header"
+            >
+              Colour
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          role="presentation"
+        >
+          <tr
+            class="react-combo-boxes-combobox__table-group-row"
+          >
+            <th
+              aria-hidden="true"
+              class="react-combo-boxes-combobox__table-group-header"
+              colspan="2"
+            >
+              Fruit
+            </th>
+          </tr>
+          <tr
+            class="react-combo-boxes-combobox__table-row"
+            id="id_option_"
+            role="option"
+            tabindex="-1"
+          >
+            <td
+              class="react-combo-boxes-combobox__table-cell"
+              role="presentation"
+            >
+              <span
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+              >
+                Fruit 
+              </span>
+              <span
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+              >
+                Name 
+              </span>
+              Apple
+              <span
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+              >
+                 
+              </span>
+            </td>
+            <td
+              class="react-combo-boxes-combobox__table-cell"
+              role="presentation"
+            >
+              <span
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+              >
+                Colour 
+              </span>
+              Green
+              <span
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+              >
+                 
+              </span>
+            </td>
+          </tr>
+          <tr
+            class="react-combo-boxes-combobox__table-row"
+            id="id_option_1"
+            role="option"
+            tabindex="-1"
+          >
+            <td
+              class="react-combo-boxes-combobox__table-cell"
+              role="presentation"
+            >
+              <span
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+              >
+                Fruit 
+              </span>
+              <span
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+              >
+                Name 
+              </span>
+              Banana
+              <span
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+              >
+                 
+              </span>
+            </td>
+            <td
+              class="react-combo-boxes-combobox__table-cell"
+              role="presentation"
+            >
+              <span
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+              >
+                Colour 
+              </span>
+              Yellow
+              <span
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+              >
+                 
+              </span>
+            </td>
+          </tr>
+          <tr
+            class="react-combo-boxes-combobox__table-group-row"
+          >
+            <th
+              aria-hidden="true"
+              class="react-combo-boxes-combobox__table-group-header"
+              colspan="2"
+            >
+              Vegetable
+            </th>
+          </tr>
+          <tr
+            class="react-combo-boxes-combobox__table-row"
+            id="id_option_2"
+            role="option"
+            tabindex="-1"
+          >
+            <td
+              class="react-combo-boxes-combobox__table-cell"
+              role="presentation"
+            >
+              <span
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+              >
+                Vegetable 
+              </span>
+              <span
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+              >
+                Name 
+              </span>
+              Potato
+              <span
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+              >
+                 
+              </span>
+            </td>
+            <td
+              class="react-combo-boxes-combobox__table-cell"
+              role="presentation"
+            >
+              <span
+                class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+              >
+                Colour 
+              </span>
               Brown
               <span
                 class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"

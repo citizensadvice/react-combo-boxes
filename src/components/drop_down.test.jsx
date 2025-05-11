@@ -1342,7 +1342,9 @@ describe('options', () => {
         render(<DropDownWrapper options={options} />);
         await userEvent.click(screen.getByRole('combobox'));
         await userEvent.keyboard('{ArrowDown}');
-        expect(document.activeElement).toHaveTextContent('Orange');
+        expectToHaveFocusedOption(
+          screen.getByRole('option', { name: 'Citrus Orange' }),
+        );
       });
 
       it('does not select a group by typing', async () => {
@@ -1362,6 +1364,21 @@ describe('options', () => {
         );
         await userEvent.click(screen.getByRole('combobox'));
         await userEvent.keyboard('{ArrowDown}{Enter}');
+        expect(spy).toHaveBeenCalledWith({ label: 'Orange', group: 'Citrus' });
+      });
+
+      it('triggers onValue when an option is selected by clicking', async () => {
+        const spy = jest.fn();
+        render(
+          <DropDownWrapper
+            options={options}
+            onValue={spy}
+          />,
+        );
+        await userEvent.click(screen.getByRole('combobox'));
+        await userEvent.click(
+          screen.getByRole('option', { name: 'Citrus Orange' }),
+        );
         expect(spy).toHaveBeenCalledWith({ label: 'Orange', group: 'Citrus' });
       });
 

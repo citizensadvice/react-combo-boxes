@@ -1,5 +1,9 @@
 # Change log
 
+## Unreleased
+
+- Remove non-breaking space separators between options as the Mac Chrome bug requiring this has been resolved
+
 ## 3.0.2
 
 - Fix stylelint-config-standard-scss was accidentally added to dependencies instead of devDependencies

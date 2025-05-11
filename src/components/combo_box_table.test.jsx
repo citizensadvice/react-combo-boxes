@@ -48,7 +48,7 @@ describe('columns as names only', () => {
       />,
     );
     await userEvent.tab();
-    await userEvent.click(screen.getByRole('option', { name: /Banana/ }));
+    await userEvent.click(screen.getByRole('option', { name: 'Banana Fruit' }));
     expect(spy).toHaveBeenCalledWith({
       label: 'Banana',
       type: 'Fruit',
@@ -108,7 +108,9 @@ describe('columns with headers', () => {
       />,
     );
     await userEvent.tab();
-    await userEvent.click(screen.getByRole('option', { name: /Banana/ }));
+    await userEvent.click(
+      screen.getByRole('option', { name: 'Name Banana Type Fruit' }),
+    );
     expect(spy).toHaveBeenCalledWith({
       label: 'Banana',
       type: 'Fruit',
@@ -243,7 +245,9 @@ describe('grouped', () => {
       />,
     );
     await userEvent.tab();
-    await userEvent.click(screen.getByRole('option', { name: /Banana/ }));
+    await userEvent.click(
+      screen.getByRole('option', { name: 'Fruit Banana Yellow' }),
+    );
     expect(spy).toHaveBeenCalledWith({
       name: 'Banana',
       type: 'Fruit',
@@ -266,6 +270,78 @@ describe('grouped', () => {
 
     expect(spy).toHaveBeenCalledWith({
       name: 'Banana',
+      type: 'Fruit',
+      colour: 'Yellow',
+    });
+  });
+});
+
+describe('grouped with columns with headers', () => {
+  const options = [
+    { label: 'Apple', type: 'Fruit', colour: 'Green' },
+    { label: 'Banana', type: 'Fruit', colour: 'Yellow' },
+    { label: 'Potato', type: 'Vegetable', colour: 'Brown' },
+  ];
+
+  const columns = [
+    { name: 'label', label: 'Name' },
+    { name: 'colour', label: 'Colour' },
+  ];
+
+  function map({ name, type }) {
+    return {
+      label: name,
+      group: type,
+    };
+  }
+
+  it('renders a table with headers', () => {
+    const { container } = render(
+      <ComboBoxWrapper
+        options={options}
+        columns={columns}
+        mapOption={map}
+      />,
+    );
+    expect(container).toMatchSnapshot();
+  });
+
+  it('allows selection by click', async () => {
+    const spy = jest.fn();
+    render(
+      <ComboBoxWrapper
+        options={options}
+        columns={columns}
+        onValue={spy}
+        mapOption={map}
+      />,
+    );
+    await userEvent.tab();
+    await userEvent.click(
+      screen.getByRole('option', { name: 'Fruit Name Banana Colour Yellow' }),
+    );
+    expect(spy).toHaveBeenCalledWith({
+      label: 'Banana',
+      type: 'Fruit',
+      colour: 'Yellow',
+    });
+  });
+
+  it('allows selection by keyboard', async () => {
+    const spy = jest.fn();
+    render(
+      <ComboBoxWrapper
+        options={options}
+        columns={columns}
+        onValue={spy}
+        mapOption={map}
+      />,
+    );
+    await userEvent.tab();
+    await userEvent.keyboard('{ArrowDown}{ArrowDown}{Enter}');
+
+    expect(spy).toHaveBeenCalledWith({
+      label: 'Banana',
       type: 'Fruit',
       colour: 'Yellow',
     });
@@ -703,7 +779,7 @@ describe('customisation', () => {
         />,
       );
       expect(spy).toHaveBeenLastCalledWith(
-        { children: 'Vegetable\u00A0', className: visuallyHiddenClassName },
+        { children: 'Vegetable ', className: visuallyHiddenClassName },
         {
           'aria-autocomplete': 'none',
           'aria-busy': false,
@@ -758,7 +834,7 @@ describe('customisation', () => {
         />,
       );
       expect(spy).toHaveBeenLastCalledWith(
-        { children: 'Type\u00A0', className: visuallyHiddenClassName },
+        { children: 'Type ', className: visuallyHiddenClassName },
         {
           'aria-autocomplete': 'none',
           'aria-busy': false,
