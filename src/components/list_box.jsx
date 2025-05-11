@@ -16,12 +16,10 @@ export const ListBox = forwardRef(
         options,
         renderListBox,
         renderGroup,
-        renderGroupAccessibleLabel,
         renderGroupLabel,
         renderGroupName,
         renderOption,
         renderValue,
-        visuallyHiddenClassName,
         tabBetweenOptions,
       },
       componentState,
@@ -52,6 +50,7 @@ export const ListBox = forwardRef(
                       {
                         'aria-hidden': 'true',
                         className: makeBEMClass(classPrefix, 'group-label'),
+                        id: key,
                         ...html,
                         children: renderGroupName(
                           { children: label },
@@ -82,28 +81,15 @@ export const ListBox = forwardRef(
                 tabIndex: tabBetweenOptions && managedFocus ? 0 : -1,
                 'aria-selected': selected ? 'true' : null,
                 'aria-disabled': disabled ? 'true' : null,
+                'aria-labelledby': group ? `${group.key} ${key}` : null,
                 ref: selected ? focusedRef : null,
                 ...html,
                 onClick: disabled ? null : (e) => onSelectOption(e, option),
                 onFocus: onFocusOption ? (e) => onFocusOption(e, option) : null,
-                children: (
-                  <>
-                    {group
-                      ? renderGroupAccessibleLabel(
-                          {
-                            className: visuallyHiddenClassName,
-                            children: `${group.label} `,
-                          },
-                          { ...componentState, group },
-                          componentProps,
-                        )
-                      : null}
-                    {renderValue(
-                      { children: label },
-                      { ...componentState, selected, option, group },
-                      componentProps,
-                    )}
-                  </>
+                children: renderValue(
+                  { children: label },
+                  { ...componentState, selected, option, group },
+                  componentProps,
                 ),
               },
               { ...componentState, selected, option, group },
@@ -125,13 +111,11 @@ ListBox.propTypes = {
     options: PropTypes.array.isRequired,
     renderListBox: PropTypes.func.isRequired,
     renderGroup: PropTypes.func.isRequired,
-    renderGroupAccessibleLabel: PropTypes.func.isRequired,
     renderGroupLabel: PropTypes.func.isRequired,
     renderGroupName: PropTypes.func.isRequired,
     renderOption: PropTypes.func.isRequired,
     renderValue: PropTypes.func.isRequired,
     tabBetweenOptions: PropTypes.bool,
-    visuallyHiddenClassName: PropTypes.string.isRequired,
   }).isRequired,
   componentState: PropTypes.shape({
     currentOption: PropTypes.shape({

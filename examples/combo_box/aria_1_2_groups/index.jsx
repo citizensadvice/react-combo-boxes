@@ -32,6 +32,15 @@ function renderGroup(props, { groupChildren, group: { key, label } }) {
   );
 }
 
+function renderOption({ key, 'aria-labelledby': _, ...props }) {
+  return (
+    <li
+      key={key}
+      {...props}
+    />
+  );
+}
+
 export function Example() {
   const [value, setValue] = useState(null);
   const [search, setSearch] = useState(null);
@@ -55,7 +64,7 @@ export function Example() {
         options={filteredOptions}
         managedFocus={managedFocus}
         renderGroup={renderGroup}
-        renderGroupAccessibleLabel={() => null}
+        renderOption={renderOption}
       />
 
       <label>

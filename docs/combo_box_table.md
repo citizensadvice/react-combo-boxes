@@ -51,23 +51,21 @@ of `column: { label: string, name: string }` on the state.
 
 The render functions available are:
 
-| Name                                   | Default                                              | Description                                                                        |
-| -------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------------------------------------- |
-| `renderWrapper`                        | `(props) => <div {...props} />`                      | Renders the component wrapper                                                      |
-| `renderInput`                          | `(props) => <input {...props} />`                    | Renders the combo-box input                                                        |
-| `renderDownArrow`                      | `(props) => <span {...props} />`                     | Renders down arrow displayed when options are available                            |
-| `renderClearButton`                    | `(props) => <span {...props} />`                     | Renders '×' button displayed when an option is selected                            |
-| `renderTableWrapper`                   | `(props) => <div {...props} />`                      | Renders the element containing the table                                           |
-| `renderTable`                          | `(props) => <table {...props} />`                    | Renders a table, which is the list box                                             |
-| `renderTableHeaderCell`                | `({ key, ...props }) => <th key={key} {...props} />` | Renders a thead header cell with a column name                                     |
-| `renderTableGroupRow`                  | `(props) => <tr {...props} />`                       | Renders a row containing a group header                                            |
-| `renderTableGroupHeaderCell`           | `({ key, ...props }) => <th key={key} {...props} />` | Renders a cell containing the group label. This will be ignored by a screen-reader |
-| `renderTableRow`                       | `({ key, ...props }) => <tr key={key} {...props} />` | Renders a table row, which is a list box option                                    |
-| `renderTableCell`                      | `({ key, ...props }) => <th key={key} {...props} />` | Renders a table cell, one cell is rendered for each column                         |
-| `renderGroupAccessibleLabel`           | `(props) => <span {...props} />`                     | Renders the accessible label for a group. This will be read out before each option |
-| `renderTableCellColumnAccessibleLabel` | `(props) => <span {...props} />`                     | Renders the accessible label for column. This will be read out before each option  |
-| `renderColumnValue`                    | `(props) => <Fragment {...props} />`                 | Renders the value within a table cell                                              |
-| `renderNotFound`                       | `(props) => <div {...props} />`                      | Renders the not found message                                                      |
-| `renderAriaDescription`                | `(props) => <div {...props} />`                      | Renders the aria description of the combo box                                      |
+| Name                         | Default                                              | Description                                                                        |
+| ---------------------------- | ---------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| `renderWrapper`              | `(props) => <div {...props} />`                      | Renders the component wrapper                                                      |
+| `renderInput`                | `(props) => <input {...props} />`                    | Renders the combo-box input                                                        |
+| `renderDownArrow`            | `(props) => <span {...props} />`                     | Renders down arrow displayed when options are available                            |
+| `renderClearButton`          | `(props) => <span {...props} />`                     | Renders '×' button displayed when an option is selected                            |
+| `renderTableWrapper`         | `(props) => <div {...props} />`                      | Renders the element containing the table                                           |
+| `renderTable`                | `(props) => <table {...props} />`                    | Renders a table, which is the list box                                             |
+| `renderTableHeaderCell`      | `({ key, ...props }) => <th key={key} {...props} />` | Renders a thead header cell with a column name                                     |
+| `renderTableGroupRow`        | `(props) => <tr {...props} />`                       | Renders a row containing a group header                                            |
+| `renderTableGroupHeaderCell` | `({ key, ...props }) => <th key={key} {...props} />` | Renders a cell containing the group label. This will be ignored by a screen-reader |
+| `renderTableRow`             | `({ key, ...props }) => <tr key={key} {...props} />` | Renders a table row, which is a list box option                                    |
+| `renderTableCell`            | `({ key, ...props }) => <th key={key} {...props} />` | Renders a table cell, one cell is rendered for each column                         |
+| `renderColumnValue`          | `(props) => <Fragment {...props} />`                 | Renders the value within a table cell                                              |
+| `renderNotFound`             | `(props) => <div {...props} />`                      | Renders the not found message                                                      |
+| `renderAriaDescription`      | `(props) => <div {...props} />`                      | Renders the aria description of the combo box                                      |
 
 [aria-practices-combo-box-grid]: https://w3c.github.io/aria-practices/#grid-popup-keyboard-interaction

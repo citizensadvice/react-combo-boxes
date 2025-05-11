@@ -1,24 +1,35 @@
 import { makeBEMClass } from '../../helpers/make_bem_class';
 import { joinTokens } from '../../helpers/join_tokens';
 
-export function renderOption({ children: _, ...props }, state, componentProps) {
+export function renderOption(
+  { children: _, id, ...props },
+  state,
+  componentProps,
+) {
   const {
     classPrefix,
     columns,
     renderTableRow,
-    renderGroupAccessibleLabel,
-    renderTableCellColumnAccessibleLabel,
     renderTableCell,
     renderColumnValue,
-    visuallyHiddenClassName,
   } = componentProps;
   const { group, option } = state;
 
   return renderTableRow(
     {
       ...props,
+      id,
       className: makeBEMClass(classPrefix, 'table-row'),
-      children: columns.map((column, index) =>
+      'aria-labelledby': [
+        group?.key,
+        ...columns.flatMap((column) => [
+          column.label && `${componentProps.id}_column_${column.key}`,
+          `${option.key}_cell_${column.key}`,
+        ]),
+      ]
+        .filter(Boolean)
+        .join(' '),
+      children: columns.map((column) =>
         renderTableCell(
           {
             role: 'presentation',
@@ -26,40 +37,15 @@ export function renderOption({ children: _, ...props }, state, componentProps) {
               makeBEMClass(classPrefix, 'table-cell'),
               column.cellClass,
             ),
-            key: index,
+            key: column.key,
+            id: `${option.key}_cell_${column.key}`,
             ...column.cellHtml,
-            children: (
-              <>
-                {group &&
-                  index === 0 &&
-                  renderGroupAccessibleLabel(
-                    {
-                      className: visuallyHiddenClassName,
-                      children: `${group.label} `,
-                    },
-                    state,
-                    componentProps,
-                  )}
-                {column.label &&
-                  renderTableCellColumnAccessibleLabel(
-                    {
-                      className: visuallyHiddenClassName,
-                      children: option.value[column.name]
-                        ? `${column.label} `
-                        : null,
-                    },
-                    { ...state, column },
-                    componentProps,
-                  )}
-                {renderColumnValue(
-                  {
-                    children: option.value[column.name],
-                  },
-                  { ...state, column },
-                  componentProps,
-                )}
-                <span className={visuallyHiddenClassName}>{'\u00A0'}</span>
-              </>
+            children: renderColumnValue(
+              {
+                children: option.value[column.name],
+              },
+              { ...state, column },
+              componentProps,
             ),
           },
           { ...state, column },

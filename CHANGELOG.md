@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Remove non-breaking space separators between options as the Mac Chrome bug requiring this has been resolved
+- Use aria-labelledby for all option labels instead of inserting visually hidden text
 
 ## 3.0.2
 

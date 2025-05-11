@@ -224,65 +224,51 @@ exports[`options as array of objects group renders grouped options 1`] = `
       <li
         aria-hidden="true"
         class="react-combo-boxes-combobox__group-label"
+        id="id_group_citrus"
       >
         Citrus
       </li>
       <li
+        aria-labelledby="id_group_citrus id_option_orange"
         class="react-combo-boxes-combobox__option"
         id="id_option_orange"
         role="option"
         tabindex="-1"
       >
-        <span
-          class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-        >
-          Citrus 
-        </span>
         Orange
       </li>
       <li
+        aria-labelledby="id_group_citrus id_option_lemon"
         class="react-combo-boxes-combobox__option"
         id="id_option_lemon"
         role="option"
         tabindex="-1"
       >
-        <span
-          class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-        >
-          Citrus 
-        </span>
         Lemon
       </li>
       <li
         aria-hidden="true"
         class="react-combo-boxes-combobox__group-label"
+        id="id_group_berry"
       >
         Berry
       </li>
       <li
+        aria-labelledby="id_group_berry id_option_raspberry"
         class="react-combo-boxes-combobox__option"
         id="id_option_raspberry"
         role="option"
         tabindex="-1"
       >
-        <span
-          class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-        >
-          Berry 
-        </span>
         Raspberry
       </li>
       <li
+        aria-labelledby="id_group_berry id_option_strawberry"
         class="react-combo-boxes-combobox__option"
         id="id_option_strawberry"
         role="option"
         tabindex="-1"
       >
-        <span
-          class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-        >
-          Berry 
-        </span>
         Strawberry
       </li>
     </ul>

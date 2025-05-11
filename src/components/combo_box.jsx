@@ -52,7 +52,6 @@ const defaultRenderGroup = ({ key, ...props }) => (
     {...props}
   />
 );
-const defaultRenderGroupAccessibleLabel = (props) => <span {...props} />;
 const defaultRenderGroupLabel = (props) => <li {...props} />;
 // eslint-disable-next-line react/jsx-no-useless-fragment
 const defaultRenderGroupName = (props) => <Fragment {...props} />;
@@ -140,7 +139,6 @@ export const ComboBox = memo(
         renderInput = defaultRenderInput,
         renderListBox = defaultRenderListBox,
         renderGroup = defaultRenderGroup,
-        renderGroupAccessibleLabel = defaultRenderGroupAccessibleLabel,
         renderGroupLabel = defaultRenderGroupLabel,
         renderGroupName = defaultRenderGroupName,
         renderOption = defaultRenderOption,
@@ -207,7 +205,6 @@ export const ComboBox = memo(
         renderClearButton,
         renderDownArrow,
         renderGroup,
-        renderGroupAccessibleLabel,
         renderGroupLabel,
         renderGroupName,
         renderInput,
@@ -656,7 +653,6 @@ ComboBox.propTypes = {
   renderInput: PropTypes.func,
   renderListBox: PropTypes.func,
   renderGroup: PropTypes.func,
-  renderGroupAccessibleLabel: PropTypes.func,
   renderGroupLabel: PropTypes.func,
   renderGroupName: PropTypes.func,
   renderOption: PropTypes.func,
