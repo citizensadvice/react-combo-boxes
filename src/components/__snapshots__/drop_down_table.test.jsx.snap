@@ -40,6 +40,7 @@ exports[`cells with html renders a table with colgroups 1`] = `
             role="presentation"
           >
             <tr
+              aria-labelledby="id_option_apple_cell_label id_option_apple_cell_type"
               aria-selected="true"
               class="react-combo-boxes-dropdown__table-row"
               id="id_option_apple"
@@ -48,28 +49,21 @@ exports[`cells with html renders a table with colgroups 1`] = `
             >
               <td
                 class="foo"
+                id="id_option_apple_cell_label"
                 role="presentation"
               >
                 Apple
-                <span
-                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-                >
-                   
-                </span>
               </td>
               <td
                 class="bar"
+                id="id_option_apple_cell_type"
                 role="presentation"
               >
                 Fruit
-                <span
-                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-                >
-                   
-                </span>
               </td>
             </tr>
             <tr
+              aria-labelledby="id_option_banana_cell_label id_option_banana_cell_type"
               class="react-combo-boxes-dropdown__table-row"
               id="id_option_banana"
               role="option"
@@ -77,28 +71,21 @@ exports[`cells with html renders a table with colgroups 1`] = `
             >
               <td
                 class="foo"
+                id="id_option_banana_cell_label"
                 role="presentation"
               >
                 Banana
-                <span
-                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-                >
-                   
-                </span>
               </td>
               <td
                 class="bar"
+                id="id_option_banana_cell_type"
                 role="presentation"
               >
                 Fruit
-                <span
-                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-                >
-                   
-                </span>
               </td>
             </tr>
             <tr
+              aria-labelledby="id_option_potato_cell_label id_option_potato_cell_type"
               class="react-combo-boxes-dropdown__table-row"
               id="id_option_potato"
               role="option"
@@ -106,25 +93,17 @@ exports[`cells with html renders a table with colgroups 1`] = `
             >
               <td
                 class="foo"
+                id="id_option_potato_cell_label"
                 role="presentation"
               >
                 Potato
-                <span
-                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-                >
-                   
-                </span>
               </td>
               <td
                 class="bar"
+                id="id_option_potato_cell_type"
                 role="presentation"
               >
                 Vegetable
-                <span
-                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-                >
-                   
-                </span>
               </td>
             </tr>
           </tbody>
@@ -192,6 +171,7 @@ exports[`columns as names only renders a table as the list box 1`] = `
             role="presentation"
           >
             <tr
+              aria-labelledby="id_option_apple_cell_label id_option_apple_cell_type"
               aria-selected="true"
               class="react-combo-boxes-dropdown__table-row"
               id="id_option_apple"
@@ -200,28 +180,21 @@ exports[`columns as names only renders a table as the list box 1`] = `
             >
               <td
                 class="react-combo-boxes-dropdown__table-cell"
+                id="id_option_apple_cell_label"
                 role="presentation"
               >
                 Apple
-                <span
-                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-                >
-                   
-                </span>
               </td>
               <td
                 class="react-combo-boxes-dropdown__table-cell"
+                id="id_option_apple_cell_type"
                 role="presentation"
               >
                 Fruit
-                <span
-                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-                >
-                   
-                </span>
               </td>
             </tr>
             <tr
+              aria-labelledby="id_option_banana_cell_label id_option_banana_cell_type"
               class="react-combo-boxes-dropdown__table-row"
               id="id_option_banana"
               role="option"
@@ -229,28 +202,21 @@ exports[`columns as names only renders a table as the list box 1`] = `
             >
               <td
                 class="react-combo-boxes-dropdown__table-cell"
+                id="id_option_banana_cell_label"
                 role="presentation"
               >
                 Banana
-                <span
-                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-                >
-                   
-                </span>
               </td>
               <td
                 class="react-combo-boxes-dropdown__table-cell"
+                id="id_option_banana_cell_type"
                 role="presentation"
               >
                 Fruit
-                <span
-                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-                >
-                   
-                </span>
               </td>
             </tr>
             <tr
+              aria-labelledby="id_option_potato_cell_label id_option_potato_cell_type"
               class="react-combo-boxes-dropdown__table-row"
               id="id_option_potato"
               role="option"
@@ -258,29 +224,22 @@ exports[`columns as names only renders a table as the list box 1`] = `
             >
               <td
                 class="react-combo-boxes-dropdown__table-cell"
+                id="id_option_potato_cell_label"
                 role="presentation"
               >
                 Potato
-                <span
-                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-                >
-                   
-                </span>
               </td>
               <td
                 class="react-combo-boxes-dropdown__table-cell"
+                id="id_option_potato_cell_type"
                 role="presentation"
               >
                 Vegetable
-                <span
-                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-                >
-                   
-                </span>
               </td>
             </tr>
             <tr
               aria-disabled="true"
+              aria-labelledby="id_option_tomato_cell_label id_option_tomato_cell_type"
               class="react-combo-boxes-dropdown__table-row"
               id="id_option_tomato"
               role="option"
@@ -288,25 +247,192 @@ exports[`columns as names only renders a table as the list box 1`] = `
             >
               <td
                 class="react-combo-boxes-dropdown__table-cell"
+                id="id_option_tomato_cell_label"
                 role="presentation"
               >
                 Tomato
-                <span
-                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-                >
-                   
-                </span>
               </td>
               <td
                 class="react-combo-boxes-dropdown__table-cell"
+                id="id_option_tomato_cell_type"
                 role="presentation"
               >
                 Vegetable
-                <span
-                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-                >
-                   
-                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+      id="id_aria_description"
+    >
+      When results are available use up and down arrows to review and enter to select
+    </div>
+    <div
+      class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
+    >
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        role="status"
+      >
+        <div />
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`columns with headers and grouped renders a table with headers 1`] = `
+<div>
+  <div
+    class="react-combo-boxes-dropdown"
+  >
+    <div
+      aria-describedby="id_aria_description"
+      aria-expanded="false"
+      aria-labelledby="id-label id"
+      aria-owns="id_listbox"
+      class="react-combo-boxes-dropdown__combobox"
+      id="id"
+      role="combobox"
+      tabindex="0"
+    >
+       
+    </div>
+    <div
+      class="react-combo-boxes-dropdown__listbox-wrapper"
+    >
+      <div
+        class="react-combo-boxes-dropdown__listbox react-combo-boxes-dropdown__listbox--header"
+        hidden=""
+        tabindex="-1"
+      >
+        <table
+          aria-labelledby="id-label"
+          class="react-combo-boxes-dropdown__table"
+          id="id_listbox"
+          role="listbox"
+          tabindex="-1"
+        >
+          <colgroup>
+            <col />
+            <col />
+          </colgroup>
+          <thead
+            role="presentation"
+          >
+            <tr
+              role="presentation"
+            >
+              <th
+                class="react-combo-boxes-dropdown__table-header"
+                id="id_column_label"
+              >
+                Name
+              </th>
+              <th
+                class="react-combo-boxes-dropdown__table-header"
+                id="id_column_colour"
+              >
+                Colour
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            role="presentation"
+          >
+            <tr
+              class="react-combo-boxes-dropdown__table-group-row"
+            >
+              <th
+                aria-hidden="true"
+                class="react-combo-boxes-dropdown__table-group-header"
+                colspan="2"
+                id="id_group_fruit"
+              >
+                Fruit
+              </th>
+            </tr>
+            <tr
+              aria-labelledby="id_group_fruit id_column_label id_option__cell_label id_column_colour id_option__cell_colour"
+              aria-selected="true"
+              class="react-combo-boxes-dropdown__table-row"
+              id="id_option_"
+              role="option"
+              tabindex="-1"
+            >
+              <td
+                class="react-combo-boxes-dropdown__table-cell"
+                id="id_option__cell_label"
+                role="presentation"
+              >
+                Apple
+              </td>
+              <td
+                class="react-combo-boxes-dropdown__table-cell"
+                id="id_option__cell_colour"
+                role="presentation"
+              >
+                Green
+              </td>
+            </tr>
+            <tr
+              aria-labelledby="id_group_fruit id_column_label id_option_1_cell_label id_column_colour id_option_1_cell_colour"
+              class="react-combo-boxes-dropdown__table-row"
+              id="id_option_1"
+              role="option"
+              tabindex="-1"
+            >
+              <td
+                class="react-combo-boxes-dropdown__table-cell"
+                id="id_option_1_cell_label"
+                role="presentation"
+              >
+                Banana
+              </td>
+              <td
+                class="react-combo-boxes-dropdown__table-cell"
+                id="id_option_1_cell_colour"
+                role="presentation"
+              >
+                Yellow
+              </td>
+            </tr>
+            <tr
+              class="react-combo-boxes-dropdown__table-group-row"
+            >
+              <th
+                aria-hidden="true"
+                class="react-combo-boxes-dropdown__table-group-header"
+                colspan="2"
+                id="id_group_vegetable"
+              >
+                Vegetable
+              </th>
+            </tr>
+            <tr
+              aria-labelledby="id_group_vegetable id_column_label id_option_2_cell_label id_column_colour id_option_2_cell_colour"
+              class="react-combo-boxes-dropdown__table-row"
+              id="id_option_2"
+              role="option"
+              tabindex="-1"
+            >
+              <td
+                class="react-combo-boxes-dropdown__table-cell"
+                id="id_option_2_cell_label"
+                role="presentation"
+              >
+                Potato
+              </td>
+              <td
+                class="react-combo-boxes-dropdown__table-cell"
+                id="id_option_2_cell_colour"
+                role="presentation"
+              >
+                Brown
               </td>
             </tr>
           </tbody>
@@ -377,14 +503,14 @@ exports[`columns with headers renders a table with headers 1`] = `
               role="presentation"
             >
               <th
-                aria-hidden="true"
                 class="react-combo-boxes-dropdown__table-header"
+                id="id_column_label"
               >
                 Name
               </th>
               <th
-                aria-hidden="true"
                 class="react-combo-boxes-dropdown__table-header"
+                id="id_column_type"
               >
                 Type
               </th>
@@ -394,6 +520,7 @@ exports[`columns with headers renders a table with headers 1`] = `
             role="presentation"
           >
             <tr
+              aria-labelledby="id_column_label id_option_apple_cell_label id_column_type id_option_apple_cell_type"
               aria-selected="true"
               class="react-combo-boxes-dropdown__table-row"
               id="id_option_apple"
@@ -402,38 +529,21 @@ exports[`columns with headers renders a table with headers 1`] = `
             >
               <td
                 class="react-combo-boxes-dropdown__table-cell"
+                id="id_option_apple_cell_label"
                 role="presentation"
               >
-                <span
-                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-                >
-                  Name 
-                </span>
                 Apple
-                <span
-                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-                >
-                   
-                </span>
               </td>
               <td
                 class="react-combo-boxes-dropdown__table-cell"
+                id="id_option_apple_cell_type"
                 role="presentation"
               >
-                <span
-                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-                >
-                  Type 
-                </span>
                 Fruit
-                <span
-                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-                >
-                   
-                </span>
               </td>
             </tr>
             <tr
+              aria-labelledby="id_column_label id_option_banana_cell_label id_column_type id_option_banana_cell_type"
               class="react-combo-boxes-dropdown__table-row"
               id="id_option_banana"
               role="option"
@@ -441,38 +551,21 @@ exports[`columns with headers renders a table with headers 1`] = `
             >
               <td
                 class="react-combo-boxes-dropdown__table-cell"
+                id="id_option_banana_cell_label"
                 role="presentation"
               >
-                <span
-                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-                >
-                  Name 
-                </span>
                 Banana
-                <span
-                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-                >
-                   
-                </span>
               </td>
               <td
                 class="react-combo-boxes-dropdown__table-cell"
+                id="id_option_banana_cell_type"
                 role="presentation"
               >
-                <span
-                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-                >
-                  Type 
-                </span>
                 Fruit
-                <span
-                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-                >
-                   
-                </span>
               </td>
             </tr>
             <tr
+              aria-labelledby="id_column_label id_option_potato_cell_label id_column_type id_option_potato_cell_type"
               class="react-combo-boxes-dropdown__table-row"
               id="id_option_potato"
               role="option"
@@ -480,35 +573,17 @@ exports[`columns with headers renders a table with headers 1`] = `
             >
               <td
                 class="react-combo-boxes-dropdown__table-cell"
+                id="id_option_potato_cell_label"
                 role="presentation"
               >
-                <span
-                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-                >
-                  Name 
-                </span>
                 Potato
-                <span
-                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-                >
-                   
-                </span>
               </td>
               <td
                 class="react-combo-boxes-dropdown__table-cell"
+                id="id_option_potato_cell_type"
                 role="presentation"
               >
-                <span
-                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-                >
-                  Type 
-                </span>
                 Vegetable
-                <span
-                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-                >
-                   
-                </span>
               </td>
             </tr>
           </tbody>
@@ -580,6 +655,7 @@ exports[`columns with html renders a table with colgroups 1`] = `
             role="presentation"
           >
             <tr
+              aria-labelledby="id_option_apple_cell_label id_option_apple_cell_type"
               aria-selected="true"
               class="react-combo-boxes-dropdown__table-row"
               id="id_option_apple"
@@ -588,28 +664,21 @@ exports[`columns with html renders a table with colgroups 1`] = `
             >
               <td
                 class="react-combo-boxes-dropdown__table-cell"
+                id="id_option_apple_cell_label"
                 role="presentation"
               >
                 Apple
-                <span
-                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-                >
-                   
-                </span>
               </td>
               <td
                 class="react-combo-boxes-dropdown__table-cell"
+                id="id_option_apple_cell_type"
                 role="presentation"
               >
                 Fruit
-                <span
-                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-                >
-                   
-                </span>
               </td>
             </tr>
             <tr
+              aria-labelledby="id_option_banana_cell_label id_option_banana_cell_type"
               class="react-combo-boxes-dropdown__table-row"
               id="id_option_banana"
               role="option"
@@ -617,28 +686,21 @@ exports[`columns with html renders a table with colgroups 1`] = `
             >
               <td
                 class="react-combo-boxes-dropdown__table-cell"
+                id="id_option_banana_cell_label"
                 role="presentation"
               >
                 Banana
-                <span
-                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-                >
-                   
-                </span>
               </td>
               <td
                 class="react-combo-boxes-dropdown__table-cell"
+                id="id_option_banana_cell_type"
                 role="presentation"
               >
                 Fruit
-                <span
-                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-                >
-                   
-                </span>
               </td>
             </tr>
             <tr
+              aria-labelledby="id_option_potato_cell_label id_option_potato_cell_type"
               class="react-combo-boxes-dropdown__table-row"
               id="id_option_potato"
               role="option"
@@ -646,25 +708,17 @@ exports[`columns with html renders a table with colgroups 1`] = `
             >
               <td
                 class="react-combo-boxes-dropdown__table-cell"
+                id="id_option_potato_cell_label"
                 role="presentation"
               >
                 Potato
-                <span
-                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-                >
-                   
-                </span>
               </td>
               <td
                 class="react-combo-boxes-dropdown__table-cell"
+                id="id_option_potato_cell_type"
                 role="presentation"
               >
                 Vegetable
-                <span
-                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-                >
-                   
-                </span>
               </td>
             </tr>
           </tbody>
@@ -738,11 +792,13 @@ exports[`grouped renders a table with groups 1`] = `
                 aria-hidden="true"
                 class="react-combo-boxes-dropdown__table-group-header"
                 colspan="2"
+                id="id_group_fruit"
               >
                 Fruit
               </th>
             </tr>
             <tr
+              aria-labelledby="id_group_fruit id_option_apple_cell_name id_option_apple_cell_colour"
               aria-selected="true"
               class="react-combo-boxes-dropdown__table-row"
               id="id_option_apple"
@@ -751,33 +807,21 @@ exports[`grouped renders a table with groups 1`] = `
             >
               <td
                 class="react-combo-boxes-dropdown__table-cell"
+                id="id_option_apple_cell_name"
                 role="presentation"
               >
-                <span
-                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-                >
-                  Fruit 
-                </span>
                 Apple
-                <span
-                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-                >
-                   
-                </span>
               </td>
               <td
                 class="react-combo-boxes-dropdown__table-cell"
+                id="id_option_apple_cell_colour"
                 role="presentation"
               >
                 Green
-                <span
-                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-                >
-                   
-                </span>
               </td>
             </tr>
             <tr
+              aria-labelledby="id_group_fruit id_option_banana_cell_name id_option_banana_cell_colour"
               class="react-combo-boxes-dropdown__table-row"
               id="id_option_banana"
               role="option"
@@ -785,30 +829,17 @@ exports[`grouped renders a table with groups 1`] = `
             >
               <td
                 class="react-combo-boxes-dropdown__table-cell"
+                id="id_option_banana_cell_name"
                 role="presentation"
               >
-                <span
-                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-                >
-                  Fruit 
-                </span>
                 Banana
-                <span
-                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-                >
-                   
-                </span>
               </td>
               <td
                 class="react-combo-boxes-dropdown__table-cell"
+                id="id_option_banana_cell_colour"
                 role="presentation"
               >
                 Yellow
-                <span
-                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-                >
-                   
-                </span>
               </td>
             </tr>
             <tr
@@ -818,11 +849,13 @@ exports[`grouped renders a table with groups 1`] = `
                 aria-hidden="true"
                 class="react-combo-boxes-dropdown__table-group-header"
                 colspan="2"
+                id="id_group_vegetable"
               >
                 Vegetable
               </th>
             </tr>
             <tr
+              aria-labelledby="id_group_vegetable id_option_potato_cell_name id_option_potato_cell_colour"
               class="react-combo-boxes-dropdown__table-row"
               id="id_option_potato"
               role="option"
@@ -830,30 +863,17 @@ exports[`grouped renders a table with groups 1`] = `
             >
               <td
                 class="react-combo-boxes-dropdown__table-cell"
+                id="id_option_potato_cell_name"
                 role="presentation"
               >
-                <span
-                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-                >
-                  Vegetable 
-                </span>
                 Potato
-                <span
-                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-                >
-                   
-                </span>
               </td>
               <td
                 class="react-combo-boxes-dropdown__table-cell"
+                id="id_option_potato_cell_colour"
                 role="presentation"
               >
                 Brown
-                <span
-                  class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-                >
-                   
-                </span>
               </td>
             </tr>
           </tbody>

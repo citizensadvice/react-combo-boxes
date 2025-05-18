@@ -37,11 +37,6 @@ exports[`options as array of objects disabled sets the aria-disabled attribute 1
           tabindex="-1"
         >
           Apple
-          <span
-            class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-          >
-             
-          </span>
         </li>
         <li
           aria-disabled="true"
@@ -51,11 +46,6 @@ exports[`options as array of objects disabled sets the aria-disabled attribute 1
           tabindex="-1"
         >
           Banana
-          <span
-            class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-          >
-             
-          </span>
         </li>
       </ul>
     </div>
@@ -116,95 +106,56 @@ exports[`options as array of objects group renders grouped options 1`] = `
           tabindex="-1"
         >
           Apple
-          <span
-            class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-          >
-             
-          </span>
         </li>
         <li
           aria-hidden="true"
           class="react-combo-boxes-dropdown__group-label"
+          id="id_group_citrus"
         >
           Citrus
         </li>
         <li
+          aria-labelledby="id_group_citrus id_option_orange"
           class="react-combo-boxes-dropdown__option"
           id="id_option_orange"
           role="option"
           tabindex="-1"
         >
-          <span
-            class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-          >
-            Citrus 
-          </span>
           Orange
-          <span
-            class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-          >
-             
-          </span>
         </li>
         <li
+          aria-labelledby="id_group_citrus id_option_lemon"
           class="react-combo-boxes-dropdown__option"
           id="id_option_lemon"
           role="option"
           tabindex="-1"
         >
-          <span
-            class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-          >
-            Citrus 
-          </span>
           Lemon
-          <span
-            class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-          >
-             
-          </span>
         </li>
         <li
           aria-hidden="true"
           class="react-combo-boxes-dropdown__group-label"
+          id="id_group_berry"
         >
           Berry
         </li>
         <li
+          aria-labelledby="id_group_berry id_option_raspberry"
           class="react-combo-boxes-dropdown__option"
           id="id_option_raspberry"
           role="option"
           tabindex="-1"
         >
-          <span
-            class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-          >
-            Berry 
-          </span>
           Raspberry
-          <span
-            class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-          >
-             
-          </span>
         </li>
         <li
+          aria-labelledby="id_group_berry id_option_strawberry"
           class="react-combo-boxes-dropdown__option"
           id="id_option_strawberry"
           role="option"
           tabindex="-1"
         >
-          <span
-            class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-          >
-            Berry 
-          </span>
           Strawberry
-          <span
-            class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-          >
-             
-          </span>
         </li>
       </ul>
     </div>
@@ -265,11 +216,6 @@ exports[`options as array of objects label renders a closed drop down 1`] = `
           tabindex="-1"
         >
           Apple
-          <span
-            class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-          >
-             
-          </span>
         </li>
         <li
           class="react-combo-boxes-dropdown__option"
@@ -278,11 +224,6 @@ exports[`options as array of objects label renders a closed drop down 1`] = `
           tabindex="-1"
         >
           Banana
-          <span
-            class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-          >
-             
-          </span>
         </li>
         <li
           class="react-combo-boxes-dropdown__option"
@@ -291,11 +232,6 @@ exports[`options as array of objects label renders a closed drop down 1`] = `
           tabindex="-1"
         >
           Orange
-          <span
-            class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-          >
-             
-          </span>
         </li>
       </ul>
     </div>
@@ -354,13 +290,7 @@ exports[`options as array of objects missing label treats as a blank string 1`] 
           id="id_option_"
           role="option"
           tabindex="-1"
-        >
-          <span
-            class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-          >
-             
-          </span>
-        </li>
+        />
       </ul>
     </div>
     <div
@@ -420,11 +350,6 @@ exports[`options options as array of numbers renders a closed drop down 1`] = `
           tabindex="-1"
         >
           0
-          <span
-            class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-          >
-             
-          </span>
         </li>
         <li
           class="react-combo-boxes-dropdown__option"
@@ -433,11 +358,6 @@ exports[`options options as array of numbers renders a closed drop down 1`] = `
           tabindex="-1"
         >
           1
-          <span
-            class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-          >
-             
-          </span>
         </li>
         <li
           class="react-combo-boxes-dropdown__option"
@@ -446,11 +366,6 @@ exports[`options options as array of numbers renders a closed drop down 1`] = `
           tabindex="-1"
         >
           2
-          <span
-            class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-          >
-             
-          </span>
         </li>
         <li
           class="react-combo-boxes-dropdown__option"
@@ -459,11 +374,6 @@ exports[`options options as array of numbers renders a closed drop down 1`] = `
           tabindex="-1"
         >
           3
-          <span
-            class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-          >
-             
-          </span>
         </li>
       </ul>
     </div>
@@ -524,11 +434,6 @@ exports[`options options as array of strings renders a closed drop down 1`] = `
           tabindex="-1"
         >
           Apple
-          <span
-            class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-          >
-             
-          </span>
         </li>
         <li
           class="react-combo-boxes-dropdown__option"
@@ -537,11 +442,6 @@ exports[`options options as array of strings renders a closed drop down 1`] = `
           tabindex="-1"
         >
           Banana
-          <span
-            class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-          >
-             
-          </span>
         </li>
         <li
           class="react-combo-boxes-dropdown__option"
@@ -550,11 +450,6 @@ exports[`options options as array of strings renders a closed drop down 1`] = `
           tabindex="-1"
         >
           Orange
-          <span
-            class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-          >
-             
-          </span>
         </li>
       </ul>
     </div>
@@ -613,13 +508,7 @@ exports[`options options as null renders a closed drop down with the option as a
           id="id_option_"
           role="option"
           tabindex="-1"
-        >
-          <span
-            class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-          >
-             
-          </span>
-        </li>
+        />
       </ul>
     </div>
     <div
@@ -677,13 +566,7 @@ exports[`options options as undefined renders a closed drop down with the option
           id="id_option_"
           role="option"
           tabindex="-1"
-        >
-          <span
-            class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-          >
-             
-          </span>
-        </li>
+        />
       </ul>
     </div>
     <div
@@ -744,11 +627,6 @@ exports[`options updating options updates the options 1`] = `
           tabindex="-1"
         >
           Strawberry
-          <span
-            class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-          >
-             
-          </span>
         </li>
         <li
           class="react-combo-boxes-dropdown__option"
@@ -757,11 +635,6 @@ exports[`options updating options updates the options 1`] = `
           tabindex="-1"
         >
           Raspberry
-          <span
-            class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-          >
-             
-          </span>
         </li>
         <li
           class="react-combo-boxes-dropdown__option"
@@ -770,11 +643,6 @@ exports[`options updating options updates the options 1`] = `
           tabindex="-1"
         >
           Banana
-          <span
-            class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-          >
-             
-          </span>
         </li>
       </ul>
     </div>
@@ -835,11 +703,6 @@ exports[`placeholderOption renders a placeholder option 1`] = `
           tabindex="-1"
         >
           Please select…
-          <span
-            class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-          >
-             
-          </span>
         </li>
         <li
           class="react-combo-boxes-dropdown__option"
@@ -848,11 +711,6 @@ exports[`placeholderOption renders a placeholder option 1`] = `
           tabindex="-1"
         >
           Apple
-          <span
-            class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-          >
-             
-          </span>
         </li>
         <li
           class="react-combo-boxes-dropdown__option"
@@ -861,11 +719,6 @@ exports[`placeholderOption renders a placeholder option 1`] = `
           tabindex="-1"
         >
           Banana
-          <span
-            class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-          >
-             
-          </span>
         </li>
         <li
           class="react-combo-boxes-dropdown__option"
@@ -874,11 +727,6 @@ exports[`placeholderOption renders a placeholder option 1`] = `
           tabindex="-1"
         >
           Orange
-          <span
-            class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-          >
-             
-          </span>
         </li>
       </ul>
     </div>

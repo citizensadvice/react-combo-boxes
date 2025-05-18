@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import {
   DropDownTable,
   layoutMaxWidth,
@@ -16,8 +16,8 @@ const columns = [
   { name: 'pattern', label: 'Pattern' },
 ];
 
-function mapOption({ breed }) {
-  return { label: breed };
+function mapOption({ breed, bodyType }) {
+  return { label: breed, group: bodyType };
 }
 
 const onLayoutListBox = [
@@ -28,27 +28,24 @@ const onLayoutListBox = [
 
 export function Example() {
   const [value, setValue] = useState(null);
-  const ref = useRef();
 
   return (
     <>
-      <div
-        className="label"
-        onClick={() => ref.current.focus()}
+      <label
         id="drop-down-label"
+        htmlFor="select"
       >
-        Drop down
-      </div>
+        Select
+      </label>
       <DropDownTable
         id="drop-down"
         aria-labelledby="drop-down-label"
-        ref={ref}
         value={value}
         onValue={setValue}
-        onLayoutListBox={onLayoutListBox}
-        options={cats}
         columns={columns}
+        options={cats}
         mapOption={mapOption}
+        onLayoutListBox={onLayoutListBox}
       />
 
       <label htmlFor="output">Current value</label>

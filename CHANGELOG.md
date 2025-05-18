@@ -1,5 +1,12 @@
 # Change log
 
+## Unreleased
+
+- Remove non-breaking space separators between options as the Mac Chrome bug requiring this has been resolved
+- Removes the `renderGroupAccessibleLabel` and `renderTableCellColumnAccessibleLabel` from combo-boxes and drop downs as these are no longer required
+- Use aria-labelledby for all option labels instead of inserting visually hidden text
+- Fix an issue where drop down aria-live message was prefixed with "undefined"
+
 ## 3.0.2
 
 - Fix stylelint-config-standard-scss was accidentally added to dependencies instead of devDependencies

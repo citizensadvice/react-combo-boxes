@@ -1164,7 +1164,7 @@ describe('options', () => {
         await userEvent.tab();
         await userEvent.keyboard('{ArrowDown}{ArrowDown}');
         expectToHaveFocusedOption(
-          screen.getByRole('option', { name: /Orange/ }),
+          screen.getByRole('option', { name: 'Citrus Orange' }),
         );
       });
 
@@ -1178,6 +1178,21 @@ describe('options', () => {
         );
         await userEvent.tab();
         await userEvent.keyboard('{ArrowDown}{ArrowDown}{Enter}');
+        expect(spy).toHaveBeenCalledWith({ label: 'Orange', group: 'Citrus' });
+      });
+
+      it('triggers onValue when an option is selected by clicking', async () => {
+        const spy = jest.fn();
+        render(
+          <ComboBoxWrapper
+            options={options}
+            onValue={spy}
+          />,
+        );
+        await userEvent.tab();
+        await userEvent.click(
+          screen.getByRole('option', { name: 'Citrus Orange' }),
+        );
         expect(spy).toHaveBeenCalledWith({ label: 'Orange', group: 'Citrus' });
       });
 
@@ -2143,9 +2158,9 @@ describe('onSearch', () => {
       rerender(<ComboBoxWrapper options={newOptions} />);
       expect(container).toMatchSnapshot();
       expect(screen.getAllByRole('option').map((o) => o.textContent)).toEqual([
-        'Strawberry\u00A0',
-        'Raspberry\u00A0',
-        'Banana\u00A0',
+        'Strawberry',
+        'Raspberry',
+        'Banana',
       ]);
     });
 
@@ -4528,56 +4543,6 @@ describe('renderOption', () => {
   });
 });
 
-describe('renderGroupAccessibleLabel', () => {
-  it('allows the group accessible label to be replaced', async () => {
-    render(
-      <ComboBoxWrapper
-        options={[{ label: 'foo', group: 'bar' }]}
-        renderGroupAccessibleLabel={(props) => (
-          <dl
-            data-foo="bar"
-            {...props}
-          />
-        )}
-      />,
-    );
-    await userEvent.tab();
-    expect(screen.getByRole('option').firstChild.tagName).toEqual('DL');
-    expect(screen.getByRole('option').firstChild).toHaveAttribute(
-      'data-foo',
-      'bar',
-    );
-  });
-
-  it('is called with context and props', async () => {
-    const spy = jest.fn(() => null);
-    render(
-      <ComboBoxWrapper
-        options={[{ label: 'foo', group: 'bar' }]}
-        renderGroupAccessibleLabel={spy}
-        test="foo"
-      />,
-    );
-    await userEvent.tab();
-    expect(spy).toHaveBeenLastCalledWith(
-      expect.objectContaining({
-        children: 'bar\u00A0',
-      }),
-      {
-        'aria-autocomplete': 'none',
-        'aria-busy': false,
-        expanded: true,
-        search: null,
-        notFound: false,
-        currentOption: null,
-        suggestedOption: null,
-        group: expect.objectContaining({ label: 'bar' }),
-      },
-      expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
-    );
-  });
-});
-
 describe('renderValue', () => {
   it('allows the value to be replaced', async () => {
     render(
@@ -4801,19 +4766,6 @@ describe('renderNotFound', () => {
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
-  });
-});
-
-describe('visuallyHiddenClassName', () => {
-  it('allows custom props', async () => {
-    render(
-      <ComboBoxWrapper
-        options={[{ label: 'foo', group: 'bar' }]}
-        visuallyHiddenClassName="bar"
-      />,
-    );
-    await userEvent.tab();
-    expect(screen.getByRole('option').firstChild).toHaveClass('bar');
   });
 });
 

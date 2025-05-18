@@ -234,21 +234,20 @@ Each render method has the signature
 
 The render functions available are:
 
-| Name                         | Default value                                              | Description                                                                        |
-| ---------------------------- | ---------------------------------------------------------- | ---------------------------------------------------------------------------------- |
-| `renderWrapper`              | `(props) => <div {...props} />`                            | Renders the component wrapper                                                      |
-| `renderInput`                | `(props) => <input {...props} />`                          | Renders the combo-box input                                                        |
-| `renderDownArrow`            | `(props) => <span {...props} />`                           | Renders down arrow displayed when options are available                            |
-| `renderClearButton`          | `(props) => <span {...props} />`                           | Renders '×' button displayed when an option is selected                            |
-| `renderListBox`              | `(props) => <ul {...props} />`                             | Renders the list-box                                                               |
-| `renderGroup`                | `({ key, ...props }) => <Fragment key={key} {...props} />` | Wraps a group of options                                                           |
-| `renderGroupAccessibleLabel` | `(props) => <span {...props} />`                           | Renders the accessible label for a group. This will be read out before each option |
-| `renderGroupLabel`           | `(props) => <li {...props} />`                             | Renders the group including the options. This will be ignored by a screen-reader   |
-| `renderGroupName`            | `(props) => <Fragment {...props} />`                       | Renders the name of the group. This will be ignored by a screen-reader             |
-| `renderOption`               | `({ key, ...props }) => <li key={key} {...props} />`       | Renders an option                                                                  |
-| `renderValue`                | `(props) => <Fragment {...props} />`                       | Renders the value within an option. See [Highlighters][highlighters].              |
-| `renderNotFound`             | `(props) => <div {...props} />`                            | Renders the not found message                                                      |
-| `renderAriaDescription`      | `(props) => <div {...props} />`                            | Renders the assistive hint of the combo box                                        |
+| Name                    | Default value                                              | Description                                                           |
+| ----------------------- | ---------------------------------------------------------- | --------------------------------------------------------------------- |
+| `renderWrapper`         | `(props) => <div {...props} />`                            | Renders the component wrapper                                         |
+| `renderInput`           | `(props) => <input {...props} />`                          | Renders the combo-box input                                           |
+| `renderDownArrow`       | `(props) => <span {...props} />`                           | Renders down arrow displayed when options are available               |
+| `renderClearButton`     | `(props) => <span {...props} />`                           | Renders '×' button displayed when an option is selected               |
+| `renderListBox`         | `(props) => <ul {...props} />`                             | Renders the list-box                                                  |
+| `renderGroup`           | `({ key, ...props }) => <Fragment key={key} {...props} />` | Wraps a group of options                                              |
+| `renderGroupLabel`      | `(props) => <li {...props} />`                             | Renders the group including the options.                              |
+| `renderGroupName`       | `(props) => <Fragment {...props} />`                       | Renders the name of the group.                                        |
+| `renderOption`          | `({ key, ...props }) => <li key={key} {...props} />`       | Renders an option                                                     |
+| `renderValue`           | `(props) => <Fragment {...props} />`                       | Renders the value within an option. See [Highlighters][highlighters]. |
+| `renderNotFound`        | `(props) => <div {...props} />`                            | Renders the not found message                                         |
+| `renderAriaDescription` | `(props) => <div {...props} />`                            | Renders the assistive hint of the combo box                           |
 
 #### `onLayoutListBox: (listbox: Element) => void | []<(listbox: Element) => void>`
 

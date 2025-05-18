@@ -1,9 +1,10 @@
-import { Fragment, forwardRef, useMemo } from 'react';
+import { Fragment, forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import { ComboBox } from './combo_box';
 import { renderListBox } from './list_box_table/render_list_box';
 import { renderGroupLabel } from './list_box_table/render_group_label';
 import { renderOption } from './list_box_table/render_option';
+import { useNormalisedColumns } from '../hooks/use_normalised_columns';
 
 function renderNothing() {
   return null;
@@ -30,9 +31,6 @@ const defaultRenderTableRow = ({ key, ...props }) => (
     {...props}
   />
 );
-const defaultRenderTableCellColumnAccessibleLabel = (props) => (
-  <span {...props} />
-);
 const defaultRenderTableCell = ({ key, ...props }) => (
   <td
     key={key}
@@ -52,25 +50,13 @@ export const ComboBoxTable = forwardRef(
       renderTableGroupRow = defaultRenderTableGroupRow,
       renderTableGroupHeaderCell = defaultRenderTableGroupHeaderCell,
       renderTableRow = defaultRenderTableRow,
-      renderTableCellColumnAccessibleLabel = defaultRenderTableCellColumnAccessibleLabel,
       renderTableCell = defaultRenderTableCell,
       renderColumnValue = defaultRenderColumnValue,
       ...props
     },
     ref,
   ) => {
-    const columns = useMemo(
-      () =>
-        rawColumns.map((column) => {
-          if (typeof column === 'string') {
-            return {
-              name: column,
-            };
-          }
-          return column;
-        }),
-      [rawColumns],
-    );
+    const columns = useNormalisedColumns(rawColumns);
 
     return (
       <ComboBox
@@ -87,9 +73,6 @@ export const ComboBoxTable = forwardRef(
         renderTableGroupRow={renderTableGroupRow}
         renderTableGroupHeaderCell={renderTableGroupHeaderCell}
         renderTableRow={renderTableRow}
-        renderTableCellColumnAccessibleLabel={
-          renderTableCellColumnAccessibleLabel
-        }
         renderTableCell={renderTableCell}
         renderColumnValue={renderColumnValue}
       />
@@ -114,7 +97,6 @@ ComboBoxTable.propTypes = {
   renderTableGroupRow: PropTypes.func,
   renderTableGroupHeaderCell: PropTypes.func,
   renderTableRow: PropTypes.func,
-  renderTableCellColumnAccessibleLabel: PropTypes.func,
   renderTableCell: PropTypes.func,
   renderColumnValue: PropTypes.func,
 };

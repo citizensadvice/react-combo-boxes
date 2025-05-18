@@ -7,6 +7,7 @@ export function renderListBox(
   componentProps,
 ) {
   const {
+    id,
     classPrefix,
     columns,
     renderTableWrapper,
@@ -47,8 +48,8 @@ export function renderListBox(
                     {columns.map((column) =>
                       renderTableHeaderCell(
                         {
-                          'aria-hidden': 'true',
-                          key: column.name,
+                          key: column.key,
+                          id: `${id}_column_${column.key}`,
                           className: joinTokens(
                             makeBEMClass(classPrefix, 'table-header'),
                             column.cellClass,

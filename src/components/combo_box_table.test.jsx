@@ -2,7 +2,6 @@ import { useState, forwardRef } from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ComboBoxTable } from './combo_box_table';
-import { visuallyHiddenClassName } from '../constants/visually_hidden_class_name';
 
 const ComboBoxWrapper = forwardRef(({ value: initialValue, ...props }, ref) => {
   const [value, onValue] = useState(initialValue);
@@ -48,7 +47,7 @@ describe('columns as names only', () => {
       />,
     );
     await userEvent.tab();
-    await userEvent.click(screen.getByRole('option', { name: /Banana/ }));
+    await userEvent.click(screen.getByRole('option', { name: 'Banana Fruit' }));
     expect(spy).toHaveBeenCalledWith({
       label: 'Banana',
       type: 'Fruit',
@@ -108,7 +107,9 @@ describe('columns with headers', () => {
       />,
     );
     await userEvent.tab();
-    await userEvent.click(screen.getByRole('option', { name: /Banana/ }));
+    await userEvent.click(
+      screen.getByRole('option', { name: 'Name Banana Type Fruit' }),
+    );
     expect(spy).toHaveBeenCalledWith({
       label: 'Banana',
       type: 'Fruit',
@@ -243,7 +244,9 @@ describe('grouped', () => {
       />,
     );
     await userEvent.tab();
-    await userEvent.click(screen.getByRole('option', { name: /Banana/ }));
+    await userEvent.click(
+      screen.getByRole('option', { name: 'Fruit Banana Yellow' }),
+    );
     expect(spy).toHaveBeenCalledWith({
       name: 'Banana',
       type: 'Fruit',
@@ -266,6 +269,78 @@ describe('grouped', () => {
 
     expect(spy).toHaveBeenCalledWith({
       name: 'Banana',
+      type: 'Fruit',
+      colour: 'Yellow',
+    });
+  });
+});
+
+describe('grouped with columns with headers', () => {
+  const options = [
+    { label: 'Apple', type: 'Fruit', colour: 'Green' },
+    { label: 'Banana', type: 'Fruit', colour: 'Yellow' },
+    { label: 'Potato', type: 'Vegetable', colour: 'Brown' },
+  ];
+
+  const columns = [
+    { name: 'label', label: 'Name' },
+    { name: 'colour', label: 'Colour' },
+  ];
+
+  function map({ name, type }) {
+    return {
+      label: name,
+      group: type,
+    };
+  }
+
+  it('renders a table with headers', () => {
+    const { container } = render(
+      <ComboBoxWrapper
+        options={options}
+        columns={columns}
+        mapOption={map}
+      />,
+    );
+    expect(container).toMatchSnapshot();
+  });
+
+  it('allows selection by click', async () => {
+    const spy = jest.fn();
+    render(
+      <ComboBoxWrapper
+        options={options}
+        columns={columns}
+        onValue={spy}
+        mapOption={map}
+      />,
+    );
+    await userEvent.tab();
+    await userEvent.click(
+      screen.getByRole('option', { name: 'Fruit Name Banana Colour Yellow' }),
+    );
+    expect(spy).toHaveBeenCalledWith({
+      label: 'Banana',
+      type: 'Fruit',
+      colour: 'Yellow',
+    });
+  });
+
+  it('allows selection by keyboard', async () => {
+    const spy = jest.fn();
+    render(
+      <ComboBoxWrapper
+        options={options}
+        columns={columns}
+        onValue={spy}
+        mapOption={map}
+      />,
+    );
+    await userEvent.tab();
+    await userEvent.keyboard('{ArrowDown}{ArrowDown}{Enter}');
+
+    expect(spy).toHaveBeenCalledWith({
+      label: 'Banana',
       type: 'Fruit',
       colour: 'Yellow',
     });
@@ -439,7 +514,7 @@ describe('customisation', () => {
           currentOption: null,
           notFound: false,
           suggestedOption: null,
-          column: { label: 'Type', name: 'type' },
+          column: { label: 'Type', name: 'type', key: 'type' },
         },
         expect.objectContaining({
           options: expect.any(Array),
@@ -659,147 +734,13 @@ describe('customisation', () => {
           group: expect.objectContaining({ label: 'Vegetable' }),
           option: expect.objectContaining({ label: 'Potato' }),
           selected: false,
-          column: { label: 'Type', name: 'type' },
+          column: { label: 'Type', name: 'type', key: 'type' },
         },
         expect.objectContaining({
           options: expect.any(Array),
           test: 'foo',
           columns: expect.any(Array),
         }),
-      );
-    });
-  });
-
-  describe('renderGroupAccessibleLabel', () => {
-    it('allows a table cell accessible label to be replaced', async () => {
-      render(
-        <ComboBoxWrapper
-          options={options}
-          columns={columns}
-          mapOption={map}
-          renderGroupAccessibleLabel={(props) => (
-            <kbd
-              data-foo="bar"
-              {...props}
-            />
-          )}
-        />,
-      );
-      await userEvent.click(screen.getByRole('combobox'));
-      expect(
-        screen.getAllByRole('option')[0].querySelector('td > kbd'),
-      ).toHaveAttribute('data-foo', 'bar');
-    });
-
-    it('is called with context and props', () => {
-      const spy = jest.fn();
-      render(
-        <ComboBoxWrapper
-          options={options}
-          columns={columns}
-          mapOption={map}
-          renderGroupAccessibleLabel={spy}
-          test="foo"
-        />,
-      );
-      expect(spy).toHaveBeenLastCalledWith(
-        { children: 'Vegetable\u00A0', className: visuallyHiddenClassName },
-        {
-          'aria-autocomplete': 'none',
-          'aria-busy': false,
-          expanded: false,
-          search: null,
-          currentOption: null,
-          notFound: false,
-          suggestedOption: null,
-          group: expect.objectContaining({ label: 'Vegetable' }),
-          option: expect.objectContaining({ label: 'Potato' }),
-          selected: false,
-        },
-        expect.objectContaining({
-          options: expect.any(Array),
-          test: 'foo',
-          columns: expect.any(Array),
-        }),
-      );
-    });
-  });
-
-  describe('renderTableCellColumnAccessibleLabel', () => {
-    it('allows a table cell accessible label to be replaced', async () => {
-      render(
-        <ComboBoxWrapper
-          options={options}
-          columns={columns}
-          mapOption={map}
-          renderTableCellColumnAccessibleLabel={(props) => (
-            <kbd
-              data-foo="bar"
-              {...props}
-            />
-          )}
-        />,
-      );
-      await userEvent.click(screen.getByRole('combobox'));
-      expect(
-        screen.getAllByRole('option')[0].querySelector('td > kbd'),
-      ).toHaveAttribute('data-foo', 'bar');
-    });
-
-    it('is called with context and props', () => {
-      const spy = jest.fn();
-      render(
-        <ComboBoxWrapper
-          options={options}
-          columns={columns}
-          mapOption={map}
-          renderTableCellColumnAccessibleLabel={spy}
-          test="foo"
-        />,
-      );
-      expect(spy).toHaveBeenLastCalledWith(
-        { children: 'Type\u00A0', className: visuallyHiddenClassName },
-        {
-          'aria-autocomplete': 'none',
-          'aria-busy': false,
-          expanded: false,
-          search: null,
-          currentOption: null,
-          notFound: false,
-          suggestedOption: null,
-          group: expect.objectContaining({ label: 'Vegetable' }),
-          option: expect.objectContaining({ label: 'Potato' }),
-          selected: false,
-          column: { label: 'Type', name: 'type' },
-        },
-        expect.objectContaining({
-          options: expect.any(Array),
-          test: 'foo',
-          columns: expect.any(Array),
-        }),
-      );
-    });
-
-    it('is has empty children if the column is empty', () => {
-      const testOptions = [{ name: 'Apple', type: 'Fruit', colour: '' }];
-      const spy = jest.fn();
-      render(
-        <ComboBoxWrapper
-          options={testOptions}
-          columns={columns}
-          mapOption={map}
-          renderTableCellColumnAccessibleLabel={spy}
-          test="foo"
-        />,
-      );
-      expect(spy).toHaveBeenCalledWith(
-        { children: null, className: visuallyHiddenClassName },
-        expect.objectContaining({
-          group: expect.objectContaining({ label: 'Fruit' }),
-          option: expect.objectContaining({ label: 'Apple' }),
-          column: { label: 'Colour', name: 'colour' },
-        }),
-        expect.anything(),
       );
     });
   });
@@ -849,7 +790,7 @@ describe('customisation', () => {
           group: expect.objectContaining({ label: 'Vegetable' }),
           option: expect.objectContaining({ label: 'Potato' }),
           selected: false,
-          column: { label: 'Type', name: 'type' },
+          column: { label: 'Type', name: 'type', key: 'type' },
         },
         expect.objectContaining({
           options: expect.any(Array),
