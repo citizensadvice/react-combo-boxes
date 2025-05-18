@@ -105,6 +105,28 @@ it('generates a live found message for focused options', async () => {
   ]);
 });
 
+it('generates a live found message where found count if not returned', async () => {
+  jest.useFakeTimers();
+
+  const { getMessages } = liveMessages();
+  const { rerender } = render(<Test />);
+
+  rerender(
+    <Test
+      options={['Apple', 'Banana']}
+      showListBox
+      foundOptionsMessage={null}
+      focusedOption={{ index: 0, label: 'Apple' }}
+    />,
+  );
+
+  act(() => {
+    jest.advanceTimersByTime(1400);
+  });
+
+  expect(await getMessages()).toEqual(['Apple 1 of 2 is highlighted']);
+});
+
 it('debounces updating the message', async () => {
   jest.useFakeTimers();
 

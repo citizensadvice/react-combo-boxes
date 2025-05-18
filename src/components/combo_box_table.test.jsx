@@ -2,7 +2,6 @@ import { useState, forwardRef } from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ComboBoxTable } from './combo_box_table';
-import { visuallyHiddenClassName } from '../constants/visually_hidden_class_name';
 
 const ComboBoxWrapper = forwardRef(({ value: initialValue, ...props }, ref) => {
   const [value, onValue] = useState(initialValue);

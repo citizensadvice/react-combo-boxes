@@ -23,9 +23,12 @@ export function AriaLiveMessage({
     if (showNotFound) {
       newMessage = notFoundMessage?.();
     } else if (showListBox) {
-      newMessage = foundOptionsMessage?.(options);
+      newMessage = foundOptionsMessage?.(options) || '';
       if (focusedOption) {
-        newMessage += `, ${selectedOptionMessage?.(focusedOption, options)}`;
+        if (newMessage) {
+          newMessage += ', ';
+        }
+        newMessage += selectedOptionMessage?.(focusedOption, options);
       }
     }
 
