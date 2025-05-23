@@ -23,11 +23,12 @@ confusing keyboard shortcuts.
 
 ## Combo-box pattern
 
-There are three official combo-box patterns: [ARIA 1.0, ARIA 1.1](https://www.w3.org/TR/wai-aria-practices/#combobox)
-and [ARIA 1.2](https://w3c.github.io/aria-practices/#combobox). The ARIA GitHub wiki contains an
-[explainer](https://github.com/w3c/aria/wiki/Resolving-ARIA-1.1-Combobox-Issues) on why.
+Historically there were three official combo-box patterns: [ARIA 1.0, ARIA 1.1](https://www.w3.org/TR/2017/NOTE-wai-aria-practices-1.1-20171214/examples/combobox/aria1.1pattern/listbox-combo.html)
+and [ARIA 1.2](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/). The ARIA GitHub wiki contains an
+[explainer](https://github.com/w3c/aria/wiki/Resolving-ARIA-1.1-Combobox-Issues/cbb0814a100eef3378c9962c162eef1cd05a4ba1) on why.
 
-Ultimately it is best to stick to the ARIA 1.0 pattern. This has the greatest screen-reader compatibility.
+Version 4 of this library now uses the ARIA 1.2 pattern. This is now fully supported by the latest versions of all screen-readers and browsers.
+Previous versions used the ARIA 1.0 pattern due to historical issues with screen-reader support with the other patterns.
 
 It is essential the correct roles and attributes are used. Without the correct roles a screen-reader will hijack the arrow
 keys for moving the virtual cursor and the component will not work at all.

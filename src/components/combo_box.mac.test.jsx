@@ -28,7 +28,7 @@ function ComboBoxWrapper(props) {
 function expectToBeOpen() {
   const combobox = screen.getByRole('combobox');
   const listbox = screen.getByRole('listbox', { hidden: true });
-  expect(combobox).toHaveAttribute('aria-owns', listbox.id);
+  expect(combobox).toHaveAttribute('aria-controls', listbox.id);
   expect(combobox).toHaveFocus();
   expect(listbox).toBeVisible();
   expect(combobox).not.toHaveAttribute('aria-activedescendant');
@@ -38,7 +38,7 @@ function expectToBeOpen() {
 function expectToHaveFocusedOption(option) {
   const combobox = screen.getByRole('combobox');
   const listbox = screen.getByRole('listbox', { hidden: true });
-  expect(combobox).toHaveAttribute('aria-owns', listbox.id);
+  expect(combobox).toHaveAttribute('aria-controls', listbox.id);
   expect(listbox).toBeVisible();
   expect(combobox).toHaveAttribute('aria-activedescendant', option.id);
   expect(option).toHaveFocus();

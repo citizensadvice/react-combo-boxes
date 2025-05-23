@@ -6,10 +6,10 @@ exports[`cells with html renders a table with colgroups 1`] = `
     class="react-combo-boxes-dropdown"
   >
     <div
+      aria-controls="id_listbox"
       aria-describedby="id_aria_description"
       aria-expanded="false"
       aria-labelledby="id-label id"
-      aria-owns="id_listbox"
       class="react-combo-boxes-dropdown__combobox"
       id="id"
       role="combobox"
@@ -137,10 +137,10 @@ exports[`columns as names only renders a table as the list box 1`] = `
     class="react-combo-boxes-dropdown"
   >
     <div
+      aria-controls="id_listbox"
       aria-describedby="id_aria_description"
       aria-expanded="false"
       aria-labelledby="id-label id"
-      aria-owns="id_listbox"
       class="react-combo-boxes-dropdown__combobox"
       id="id"
       role="combobox"
@@ -291,10 +291,10 @@ exports[`columns with headers and grouped renders a table with headers 1`] = `
     class="react-combo-boxes-dropdown"
   >
     <div
+      aria-controls="id_listbox"
       aria-describedby="id_aria_description"
       aria-expanded="false"
       aria-labelledby="id-label id"
-      aria-owns="id_listbox"
       class="react-combo-boxes-dropdown__combobox"
       id="id"
       role="combobox"
@@ -466,10 +466,10 @@ exports[`columns with headers renders a table with headers 1`] = `
     class="react-combo-boxes-dropdown"
   >
     <div
+      aria-controls="id_listbox"
       aria-describedby="id_aria_description"
       aria-expanded="false"
       aria-labelledby="id-label id"
-      aria-owns="id_listbox"
       class="react-combo-boxes-dropdown__combobox"
       id="id"
       role="combobox"
@@ -617,10 +617,10 @@ exports[`columns with html renders a table with colgroups 1`] = `
     class="react-combo-boxes-dropdown"
   >
     <div
+      aria-controls="id_listbox"
       aria-describedby="id_aria_description"
       aria-expanded="false"
       aria-labelledby="id-label id"
-      aria-owns="id_listbox"
       class="react-combo-boxes-dropdown__combobox"
       id="id"
       role="combobox"
@@ -752,10 +752,10 @@ exports[`grouped renders a table with groups 1`] = `
     class="react-combo-boxes-dropdown"
   >
     <div
+      aria-controls="id_listbox"
       aria-describedby="id_aria_description"
       aria-expanded="false"
       aria-labelledby="id-label id"
-      aria-owns="id_listbox"
       class="react-combo-boxes-dropdown__combobox"
       id="id"
       role="combobox"
