@@ -453,7 +453,7 @@ export const ComboBox = memo(
                       type: 'text',
                       role: 'combobox',
                       'aria-autocomplete': ariaAutocomplete,
-                      'aria-owns': `${id}_listbox`,
+                      'aria-controls': `${id}_listbox`,
                       'aria-expanded': showListBox ? 'true' : 'false',
                       'aria-activedescendant':
                         (showListBox && focusListBox && focusedOption?.key) ||

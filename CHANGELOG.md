@@ -6,6 +6,7 @@
 - Removes the `renderGroupAccessibleLabel` and `renderTableCellColumnAccessibleLabel` from combo-boxes and drop downs as these are no longer required
 - Use aria-labelledby for all option labels instead of inserting visually hidden text
 - Fix an issue where drop down aria-live message was prefixed with "undefined"
+- Switch to the ARIA 1.2 pattern as this now works better than the ARIA 1.0 pattern in VoiceOver.
 
 ## 3.0.2
 

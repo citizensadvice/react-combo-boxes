@@ -3,11 +3,11 @@ import { ComboBox, useTokenSearch } from '../../../src';
 
 const options = ['Apple', 'Banana', 'Cherry', 'Mango', 'Ugli fruit'];
 
-function renderInput({ 'aria-owns': ariaControls, ...props }) {
+function renderInput({ 'aria-controls': ariaOwns, ...props }) {
   return (
     <input
       {...props}
-      aria-controls={ariaControls}
+      aria-owns={ariaOwns}
     />
   );
 }
