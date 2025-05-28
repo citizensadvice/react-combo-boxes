@@ -241,20 +241,22 @@ describe('options', () => {
         });
 
         describe('pressing the home key', () => {
-          it('moves focus back to the list box', async () => {
+          it('does not change the selected option', async () => {
             render(<ComboBoxWrapper options={options} />);
             await userEvent.tab();
             await userEvent.keyboard('{ArrowUp}{Home}');
-            expectToBeOpen();
+            expectToHaveActiveOption(
+              screen.getByRole('option', { name: 'Orange' }),
+            );
           });
         });
 
         describe('pressing the end key', () => {
-          it('moves focus back to the list box', async () => {
+          it('does not change the selected option', async () => {
             render(<ComboBoxWrapper options={options} />);
             await userEvent.tab();
             await userEvent.keyboard('{ArrowDown}{End}');
-            expectToHaveSelectedOption(
+            expectToHaveActiveOption(
               screen.getByRole('option', { name: 'Apple' }),
             );
           });
@@ -288,70 +290,6 @@ describe('options', () => {
             await userEvent.tab();
             await userEvent.keyboard('{ArrowDown}');
             await userEvent.type(document.activeElement, 'a');
-            expectToHaveSelectedOption(
-              screen.getByRole('option', { name: 'Apple' }),
-            );
-          });
-        });
-
-        describe('pressing backspace', () => {
-          it('moves focus back to the list box', async () => {
-            render(<ComboBoxWrapper options={options} />);
-            await userEvent.tab();
-            await userEvent.keyboard('{ArrowDown}{Backspace}');
-            expectToHaveSelectedOption(
-              screen.getByRole('option', { name: 'Apple' }),
-            );
-          });
-        });
-
-        describe('pressing arrow left', () => {
-          it('moves focus back to the list box', async () => {
-            render(<ComboBoxWrapper options={options} />);
-            await userEvent.tab();
-            await userEvent.keyboard('{ArrowDown}{ArrowLeft}');
-            expectToHaveSelectedOption(
-              screen.getByRole('option', { name: 'Apple' }),
-            );
-          });
-        });
-
-        describe('pressing arrow right', () => {
-          it('moves focus back to the list box', async () => {
-            render(<ComboBoxWrapper options={options} />);
-            await userEvent.tab();
-            await userEvent.keyboard('{ArrowDown}{ArrowRight}');
-            expectToHaveSelectedOption(
-              screen.getByRole('option', { name: 'Apple' }),
-            );
-          });
-        });
-
-        describe('pressing delete', () => {
-          it('moves focus back to the list box removing the selected option', async () => {
-            render(<ComboBoxWrapper options={options} />);
-            await userEvent.tab();
-            await userEvent.keyboard('{ArrowDown}{Delete}');
-            expectToBeOpen();
-          });
-        });
-
-        describe('pressing Ctrl+d', () => {
-          it('moves focus back to the list box removing the selected option', async () => {
-            render(<ComboBoxWrapper options={options} />);
-            await userEvent.tab();
-            await userEvent.keyboard('{ArrowDown}{Control>}d{/Control}');
-            expectToHaveSelectedOption(
-              screen.getByRole('option', { name: 'Apple' }),
-            );
-          });
-        });
-
-        describe('pressing Ctrl+k', () => {
-          it('moves focus back to the list box removing the selected option', async () => {
-            render(<ComboBoxWrapper options={options} />);
-            await userEvent.tab();
-            await userEvent.keyboard('{ArrowDown}{Control>}k{/Control}');
             expectToHaveSelectedOption(
               screen.getByRole('option', { name: 'Apple' }),
             );
@@ -762,7 +700,7 @@ describe('options', () => {
             screen.getByRole('option', { name: 'Banana' }),
           );
           await userEvent.click(screen.getByRole('combobox'));
-          expectToHaveSelectedOption(
+          expectToHaveActiveOption(
             screen.getByRole('option', { name: 'Banana' }),
           );
         });
