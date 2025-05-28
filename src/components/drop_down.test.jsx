@@ -30,9 +30,10 @@ function expectToBeClosed() {
   expect(listbox).not.toHaveAttribute('aria-activedescendant');
 }
 
-function expectToHaveFocusedOption(option) {
+function expectToHaveActiveOption(option) {
   const combobox = screen.getByRole('combobox');
   const listbox = screen.getByRole('listbox', { hidden: true });
+  expect(combobox).toHaveFocus();
   expect(combobox).toHaveAttribute('role', 'combobox');
   expect(listbox).toBeVisible();
   expect(combobox).toHaveAttribute('aria-expanded', 'true');
@@ -40,7 +41,6 @@ function expectToHaveFocusedOption(option) {
   expect(listbox).toHaveAttribute('aria-activedescendant', option.id);
   expect(option).toHaveAttribute('role', 'option');
   expect(option).toHaveAttribute('aria-selected', 'true');
-  expect(option).toHaveFocus();
 }
 
 describe('options', () => {
@@ -74,7 +74,7 @@ describe('options', () => {
             it('opens the drop down with the first option selected', async () => {
               render(<DropDownWrapper options={options} />);
               await userEvent.click(screen.getByRole('combobox'));
-              expectToHaveFocusedOption(
+              expectToHaveActiveOption(
                 screen.getByRole('option', { name: 'Apple' }),
               );
             });
@@ -92,7 +92,7 @@ describe('options', () => {
               render(<DropDownWrapper options={options} />);
               await userEvent.tab();
               await userEvent.keyboard('{Enter}');
-              expectToHaveFocusedOption(
+              expectToHaveActiveOption(
                 screen.getByRole('option', { name: 'Apple' }),
               );
             });
@@ -103,7 +103,7 @@ describe('options', () => {
               render(<DropDownWrapper options={options} />);
               await userEvent.tab();
               await userEvent.keyboard(' ');
-              expectToHaveFocusedOption(
+              expectToHaveActiveOption(
                 screen.getByRole('option', { name: 'Apple' }),
               );
             });
@@ -114,7 +114,7 @@ describe('options', () => {
               render(<DropDownWrapper options={options} />);
               await userEvent.tab();
               await userEvent.keyboard('{ArrowDown}');
-              expectToHaveFocusedOption(
+              expectToHaveActiveOption(
                 screen.getByRole('option', { name: 'Apple' }),
               );
             });
@@ -123,7 +123,7 @@ describe('options', () => {
               render(<DropDownWrapper options={options} />);
               await userEvent.tab();
               await userEvent.keyboard('{Alt>}{ArrowDown}{/Alt}');
-              expectToHaveFocusedOption(
+              expectToHaveActiveOption(
                 screen.getByRole('option', { name: 'Apple' }),
               );
             });
@@ -151,7 +151,7 @@ describe('options', () => {
               render(<DropDownWrapper options={options} />);
               await userEvent.tab();
               await userEvent.keyboard('{ArrowUp}');
-              expectToHaveFocusedOption(
+              expectToHaveActiveOption(
                 screen.getByRole('option', { name: 'Apple' }),
               );
             });
@@ -193,7 +193,7 @@ describe('options', () => {
               );
               await userEvent.tab();
               await userEvent.click(screen.getByRole('combobox'));
-              expectToHaveFocusedOption(
+              expectToHaveActiveOption(
                 screen.getByRole('option', { name: 'Orange' }),
               );
             });
@@ -209,7 +209,7 @@ describe('options', () => {
               );
               await userEvent.tab();
               await userEvent.keyboard('{Enter}');
-              expectToHaveFocusedOption(
+              expectToHaveActiveOption(
                 screen.getByRole('option', { name: 'Orange' }),
               );
             });
@@ -225,7 +225,7 @@ describe('options', () => {
               );
               await userEvent.tab();
               await userEvent.keyboard(' ');
-              expectToHaveFocusedOption(
+              expectToHaveActiveOption(
                 screen.getByRole('option', { name: 'Orange' }),
               );
             });
@@ -241,7 +241,7 @@ describe('options', () => {
               );
               await userEvent.tab();
               await userEvent.keyboard('{ArrowDown}');
-              expectToHaveFocusedOption(
+              expectToHaveActiveOption(
                 screen.getByRole('option', { name: 'Orange' }),
               );
             });
@@ -255,7 +255,7 @@ describe('options', () => {
               );
               await userEvent.tab();
               await userEvent.keyboard('{Alt>}{ArrowDown}{/Alt}');
-              expectToHaveFocusedOption(
+              expectToHaveActiveOption(
                 screen.getByRole('option', { name: 'Orange' }),
               );
             });
@@ -271,7 +271,7 @@ describe('options', () => {
               );
               await userEvent.tab();
               await userEvent.keyboard('{ArrowUp}');
-              expectToHaveFocusedOption(
+              expectToHaveActiveOption(
                 screen.getByRole('option', { name: 'Orange' }),
               );
             });
@@ -291,7 +291,7 @@ describe('options', () => {
             );
             await userEvent.click(screen.getByRole('combobox'));
             await userEvent.keyboard('{ArrowDown}');
-            expectToHaveFocusedOption(
+            expectToHaveActiveOption(
               screen.getByRole('option', { name: 'Banana' }),
             );
             expect(spy).not.toHaveBeenCalled();
@@ -307,7 +307,7 @@ describe('options', () => {
             );
             await userEvent.click(screen.getByRole('combobox'));
             await userEvent.keyboard('{ArrowDown}{ArrowDown}{ArrowDown}');
-            expectToHaveFocusedOption(
+            expectToHaveActiveOption(
               screen.getByRole('option', { name: 'Apple' }),
             );
             expect(spy).not.toHaveBeenCalled();
@@ -323,7 +323,7 @@ describe('options', () => {
             );
             await userEvent.click(screen.getByRole('combobox'));
             await userEvent.keyboard('{Alt>}{ArrowDown}{/Alt}');
-            expectToHaveFocusedOption(
+            expectToHaveActiveOption(
               screen.getByRole('option', { name: 'Apple' }),
             );
             expect(spy).not.toHaveBeenCalled();
@@ -359,7 +359,7 @@ describe('options', () => {
             );
             await userEvent.click(screen.getByRole('combobox'));
             await userEvent.keyboard('{ArrowUp}');
-            expectToHaveFocusedOption(
+            expectToHaveActiveOption(
               screen.getByRole('option', { name: 'Apple' }),
             );
             expect(spy).not.toHaveBeenCalled();
@@ -375,7 +375,7 @@ describe('options', () => {
             );
             await userEvent.click(screen.getByRole('combobox'));
             await userEvent.keyboard('{ArrowUp}');
-            expectToHaveFocusedOption(
+            expectToHaveActiveOption(
               screen.getByRole('option', { name: 'Orange' }),
             );
             expect(spy).not.toHaveBeenCalled();
@@ -411,7 +411,7 @@ describe('options', () => {
             );
             await userEvent.click(screen.getByRole('combobox'));
             await userEvent.keyboard('{Home}');
-            expectToHaveFocusedOption(
+            expectToHaveActiveOption(
               screen.getByRole('option', { name: 'Apple' }),
             );
             expect(spy).not.toHaveBeenCalled();
@@ -430,7 +430,7 @@ describe('options', () => {
             );
             await userEvent.click(screen.getByRole('combobox'));
             await userEvent.keyboard('{End}');
-            expectToHaveFocusedOption(
+            expectToHaveActiveOption(
               screen.getByRole('option', { name: 'Orange' }),
             );
             expect(spy).not.toHaveBeenCalled();
@@ -449,7 +449,7 @@ describe('options', () => {
             );
             await userEvent.click(screen.getByRole('combobox'));
             await userEvent.keyboard('{PageUp}');
-            expectToHaveFocusedOption(
+            expectToHaveActiveOption(
               screen.getByRole('option', { name: 'Apple' }),
             );
             expect(spy).not.toHaveBeenCalled();
@@ -468,7 +468,7 @@ describe('options', () => {
             );
             await userEvent.click(screen.getByRole('combobox'));
             await userEvent.keyboard('{PageDown}');
-            expectToHaveFocusedOption(
+            expectToHaveActiveOption(
               screen.getByRole('option', { name: 'Orange' }),
             );
             expect(spy).not.toHaveBeenCalled();
@@ -486,7 +486,7 @@ describe('options', () => {
             );
             await userEvent.click(screen.getByRole('combobox'));
             await userEvent.keyboard('b');
-            expectToHaveFocusedOption(
+            expectToHaveActiveOption(
               screen.getByRole('option', { name: 'Banana' }),
             );
             expect(spy).not.toHaveBeenCalled();
@@ -496,7 +496,7 @@ describe('options', () => {
             render(<DropDownWrapper options={options} />);
             await userEvent.click(screen.getByRole('combobox'));
             await userEvent.keyboard('B');
-            expectToHaveFocusedOption(
+            expectToHaveActiveOption(
               screen.getByRole('option', { name: 'Banana' }),
             );
           });
@@ -505,7 +505,7 @@ describe('options', () => {
             render(<DropDownWrapper options={options} />);
             await userEvent.click(screen.getByRole('combobox'));
             await userEvent.keyboard('bz');
-            expectToHaveFocusedOption(
+            expectToHaveActiveOption(
               screen.getByRole('option', { name: 'Banana' }),
             );
           });
@@ -520,7 +520,7 @@ describe('options', () => {
             );
             await userEvent.click(screen.getByRole('combobox'));
             await userEvent.keyboard(' ');
-            expectToHaveFocusedOption(
+            expectToHaveActiveOption(
               screen.getByRole('option', { name: 'Banana' }),
             );
           });
@@ -533,7 +533,7 @@ describe('options', () => {
             render(<DropDownWrapper options={similarOptions} />);
             await userEvent.click(screen.getByRole('combobox'));
             await userEvent.keyboard('bl');
-            expectToHaveFocusedOption(
+            expectToHaveActiveOption(
               screen.getByRole('option', { name: 'Blackberry' }),
             );
           });
@@ -543,7 +543,7 @@ describe('options', () => {
             render(<DropDownWrapper options={similarOptions} />);
             await userEvent.click(screen.getByRole('combobox'));
             await userEvent.keyboard('a c');
-            expectToHaveFocusedOption(
+            expectToHaveActiveOption(
               screen.getByRole('option', { name: 'a c' }),
             );
           });
@@ -558,7 +558,7 @@ describe('options', () => {
             await user.keyboard('b');
             act(() => jest.advanceTimersByTime(1000));
             await user.keyboard('o');
-            expectToHaveFocusedOption(
+            expectToHaveActiveOption(
               screen.getByRole('option', { name: 'Orange' }),
             );
           });
@@ -567,7 +567,7 @@ describe('options', () => {
             render(<DropDownWrapper options={options} />);
             await userEvent.click(screen.getByRole('combobox'));
             await userEvent.keyboard('{Meta>}b{/Meta}');
-            expectToHaveFocusedOption(
+            expectToHaveActiveOption(
               screen.getByRole('option', { name: 'Apple' }),
             );
           });
@@ -576,7 +576,7 @@ describe('options', () => {
             render(<DropDownWrapper options={options} />);
             await userEvent.click(screen.getByRole('combobox'));
             await userEvent.keyboard('{Control>}b{/Control}');
-            expectToHaveFocusedOption(
+            expectToHaveActiveOption(
               screen.getByRole('option', { name: 'Apple' }),
             );
           });
@@ -585,7 +585,7 @@ describe('options', () => {
             render(<DropDownWrapper options={options} />);
             await userEvent.click(screen.getByRole('combobox'));
             await userEvent.keyboard('{Alt>}b{/Alt}');
-            expectToHaveFocusedOption(
+            expectToHaveActiveOption(
               screen.getByRole('option', { name: 'Apple' }),
             );
           });
@@ -641,7 +641,7 @@ describe('options', () => {
               target: screen.getByRole('option', { name: 'Banana' }),
               keys: '[MouseRight]',
             });
-            expectToHaveFocusedOption(
+            expectToHaveActiveOption(
               screen.getByRole('option', { name: 'Apple' }),
             );
             expect(spy).not.toHaveBeenCalled();
@@ -1004,7 +1004,7 @@ describe('options', () => {
         });
 
         describe('pressing home', () => {
-          it('does not select an item', async () => {
+          it('selects the first item', async () => {
             const spy = jest.fn();
             render(
               <DropDownWrapper
@@ -1020,7 +1020,7 @@ describe('options', () => {
         });
 
         describe('pressing end', () => {
-          it('does not select an item', async () => {
+          it('selects the last item', async () => {
             const spy = jest.fn();
             render(
               <DropDownWrapper
@@ -1053,7 +1053,7 @@ describe('options', () => {
         render(<DropDownWrapper options={options} />);
         await userEvent.click(screen.getByRole('combobox'));
         await userEvent.keyboard('{ArrowDown}');
-        expectToHaveFocusedOption(
+        expectToHaveActiveOption(
           screen.getByRole('option', { name: 'Banana' }),
         );
       });
@@ -1062,9 +1062,7 @@ describe('options', () => {
         render(<DropDownWrapper options={options} />);
         await userEvent.click(screen.getByRole('combobox'));
         await userEvent.keyboard('b');
-        expectToHaveFocusedOption(
-          screen.getByRole('option', { name: 'Apple' }),
-        );
+        expectToHaveActiveOption(screen.getByRole('option', { name: 'Apple' }));
       });
 
       describe('first option is disabled', () => {
@@ -1076,7 +1074,7 @@ describe('options', () => {
         it('defaults selection to the first non-disabled option', async () => {
           render(<DropDownWrapper options={disabledFirstOptions} />);
           await userEvent.click(screen.getByRole('combobox'));
-          expectToHaveFocusedOption(
+          expectToHaveActiveOption(
             screen.getByRole('option', { name: 'Banana' }),
           );
         });
@@ -1101,7 +1099,7 @@ describe('options', () => {
           render(<DropDownWrapper options={onlyDisabledOptions} />);
           await userEvent.click(screen.getByRole('combobox'));
           await userEvent.keyboard('{ArrowDown}');
-          expectToHaveFocusedOption(
+          expectToHaveActiveOption(
             screen.getByRole('option', { name: 'Apple' }),
           );
         });
@@ -1122,7 +1120,7 @@ describe('options', () => {
               screen.getByRole('option', { name: 'Banana' }),
             );
             expect(spy).not.toHaveBeenCalled();
-            expectToHaveFocusedOption(
+            expectToHaveActiveOption(
               screen.getByRole('option', { name: 'Apple' }),
             );
           });
@@ -1140,7 +1138,7 @@ describe('options', () => {
             await userEvent.click(screen.getByRole('combobox'));
             await userEvent.keyboard('{ArrowDown}{Enter}');
             expect(spy).not.toHaveBeenCalled();
-            expectToHaveFocusedOption(
+            expectToHaveActiveOption(
               screen.getByRole('option', { name: 'Banana' }),
             );
           });
@@ -1253,7 +1251,7 @@ describe('options', () => {
           />,
         );
         await userEvent.click(screen.getByRole('combobox'));
-        expectToHaveFocusedOption(screen.getAllByRole('option')[1]);
+        expectToHaveActiveOption(screen.getAllByRole('option')[1]);
         await userEvent.keyboard('{ArrowDown}{Enter}');
         expect(spy).toHaveBeenCalledWith({ label: 'foo', value: 3 });
       });
@@ -1275,7 +1273,7 @@ describe('options', () => {
           />,
         );
         await userEvent.click(screen.getByRole('combobox'));
-        expectToHaveFocusedOption(screen.getAllByRole('option')[1]);
+        expectToHaveActiveOption(screen.getAllByRole('option')[1]);
         await userEvent.keyboard('{ArrowDown}{Enter}');
         expect(spy).toHaveBeenCalledWith({ label: 'foo', id: 3 });
       });
@@ -1298,7 +1296,7 @@ describe('options', () => {
           render(<DropDownWrapper options={options} />);
           await userEvent.click(screen.getByRole('combobox'));
           expect(screen.getByRole('option')).toHaveAttribute('id', 'xxx');
-          expectToHaveFocusedOption(screen.getByRole('option'));
+          expectToHaveActiveOption(screen.getByRole('option'));
         });
 
         it('will not use duplicate ids', async () => {
@@ -1317,9 +1315,7 @@ describe('options', () => {
             'id',
             'xxx_1',
           );
-          expectToHaveFocusedOption(
-            screen.getByRole('option', { name: 'bar' }),
-          );
+          expectToHaveActiveOption(screen.getByRole('option', { name: 'bar' }));
         });
       });
     });
@@ -1342,7 +1338,7 @@ describe('options', () => {
         render(<DropDownWrapper options={options} />);
         await userEvent.click(screen.getByRole('combobox'));
         await userEvent.keyboard('{ArrowDown}');
-        expectToHaveFocusedOption(
+        expectToHaveActiveOption(
           screen.getByRole('option', { name: 'Citrus Orange' }),
         );
       });
@@ -1351,7 +1347,7 @@ describe('options', () => {
         render(<DropDownWrapper options={options} />);
         await userEvent.click(screen.getByRole('combobox'));
         await userEvent.keyboard('c');
-        expect(document.activeElement).toHaveTextContent('Apple');
+        expectToHaveActiveOption(screen.getByRole('option', { name: 'Apple' }));
       });
 
       it('triggers onValue when an option is selected', async () => {
@@ -1401,7 +1397,7 @@ describe('options', () => {
           await userEvent.click(screen.getByRole('combobox'));
           await userEvent.click(screen.getAllByText('Citrus')[0]);
           expect(spy).not.toHaveBeenCalled();
-          expectToHaveFocusedOption(
+          expectToHaveActiveOption(
             screen.getByRole('option', { name: 'Apple' }),
           );
         });
@@ -1516,7 +1512,7 @@ describe('options', () => {
       expect(container).toMatchSnapshot();
       expectToBeClosed();
       await userEvent.click(screen.getByRole('combobox'));
-      expectToHaveFocusedOption(screen.getByRole('option'));
+      expectToHaveActiveOption(screen.getByRole('option'));
       expect(screen.getByRole('option')).toHaveTextContent('');
       expect(screen.getByRole('option')).not.toHaveTextContent('null');
     });
@@ -1543,7 +1539,7 @@ describe('options', () => {
       expect(container).toMatchSnapshot();
       expectToBeClosed();
       await userEvent.click(screen.getByRole('combobox'));
-      expectToHaveFocusedOption(screen.getByRole('option'));
+      expectToHaveActiveOption(screen.getByRole('option'));
       expect(screen.getByRole('option')).toHaveTextContent('');
       expect(screen.getByRole('option')).not.toHaveTextContent('undefined');
     });
@@ -1631,11 +1627,11 @@ describe('options', () => {
         const { rerender } = render(<DropDownWrapper options={options} />);
         await userEvent.click(screen.getByRole('combobox'));
         await userEvent.keyboard('{ArrowDown}');
-        expectToHaveFocusedOption(
+        expectToHaveActiveOption(
           screen.getByRole('option', { name: 'Banana' }),
         );
         rerender(<DropDownWrapper options={newOptions} />);
-        expectToHaveFocusedOption(
+        expectToHaveActiveOption(
           screen.getByRole('option', { name: 'Banana' }),
         );
       });
@@ -1652,7 +1648,7 @@ describe('options', () => {
         await userEvent.click(screen.getByRole('combobox'));
         await userEvent.keyboard('{ArrowDown}');
         rerender(<DropDownWrapper options={newOptions} />);
-        expectToHaveFocusedOption(
+        expectToHaveActiveOption(
           screen.getByRole('option', { name: 'Strawberry' }),
         );
       });
@@ -1671,7 +1667,7 @@ describe('value', () => {
       />,
     );
     await userEvent.click(screen.getByRole('combobox'));
-    expectToHaveFocusedOption(screen.getByRole('option', { name: 'Banana' }));
+    expectToHaveActiveOption(screen.getByRole('option', { name: 'Banana' }));
   });
 
   it('onLayoutFocusedOption', async () => {
@@ -1700,7 +1696,7 @@ describe('value', () => {
         />,
       );
       await userEvent.click(screen.getByRole('combobox'));
-      expectToHaveFocusedOption(screen.getByRole('option', { name: 'Apple' }));
+      expectToHaveActiveOption(screen.getByRole('option', { name: 'Apple' }));
     });
 
     it('displays value as the combo box label', () => {
@@ -1748,7 +1744,7 @@ describe('value', () => {
           value="Apple"
         />,
       );
-      expectToHaveFocusedOption(screen.getByRole('option', { name: 'Apple' }));
+      expectToHaveActiveOption(screen.getByRole('option', { name: 'Apple' }));
     });
 
     describe('value is not in options', () => {
@@ -1766,7 +1762,7 @@ describe('value', () => {
             value="Potato"
           />,
         );
-        expectToHaveFocusedOption(
+        expectToHaveActiveOption(
           screen.getByRole('option', { name: 'Orange' }),
         );
       });
@@ -1786,7 +1782,7 @@ describe('placeholderOption', () => {
     );
     expect(container).toMatchSnapshot();
     await userEvent.click(screen.getByRole('combobox'));
-    expectToHaveFocusedOption(screen.getAllByRole('option')[0]);
+    expectToHaveActiveOption(screen.getAllByRole('option')[0]);
     expect(screen.getAllByRole('option')[0]).toHaveTextContent(
       'Please select…',
     );
@@ -1801,7 +1797,7 @@ describe('placeholderOption', () => {
       />,
     );
     await userEvent.click(screen.getByRole('combobox'));
-    expectToHaveFocusedOption(screen.getByRole('option', { name: 'Orange' }));
+    expectToHaveActiveOption(screen.getByRole('option', { name: 'Orange' }));
   });
 
   it('renders with value as null', async () => {
@@ -1813,7 +1809,7 @@ describe('placeholderOption', () => {
       />,
     );
     await userEvent.click(screen.getByRole('combobox'));
-    expectToHaveFocusedOption(
+    expectToHaveActiveOption(
       screen.getByRole('option', { name: 'Please select…' }),
     );
   });
@@ -1849,63 +1845,6 @@ describe('children', () => {
       </DropDownWrapper>,
     );
     expect(screen.getByRole('combobox')).toHaveTextContent('Custom text');
-  });
-});
-
-describe('managedFocus', () => {
-  const options = ['Apple', 'Banana', 'Orange'];
-
-  describe('when false', () => {
-    it('does not set the focus to options', async () => {
-      render(
-        <DropDownWrapper
-          options={options}
-          managedFocus={false}
-        />,
-      );
-      const comboBox = screen.getByRole('combobox');
-      await userEvent.click(screen.getByRole('combobox'));
-      expect(comboBox).toHaveFocus();
-      await userEvent.keyboard('{ArrowDown}');
-      expect(comboBox).toHaveFocus();
-      expect(comboBox).toHaveAttribute(
-        'aria-activedescendant',
-        screen.getByRole('option', { name: 'Banana' }).id,
-      );
-    });
-
-    it('calls onLayoutFocusedOption', async () => {
-      const spy = jest.fn();
-      render(
-        <DropDownWrapper
-          options={options}
-          managedFocus={false}
-          onLayoutFocusedOption={spy}
-        />,
-      );
-      const comboBox = screen.getByRole('combobox');
-      await userEvent.click(screen.getByRole('combobox'));
-      expect(comboBox).toHaveFocus();
-      await userEvent.keyboard('{ArrowDown}');
-      expect(spy).toHaveBeenCalledWith({
-        option: screen.getByRole('option', { name: 'Banana' }),
-        listbox: screen.getByRole('listbox'),
-        input: screen.getByRole('combobox'),
-      });
-    });
-
-    it('allows an option to be selected', async () => {
-      render(
-        <DropDownWrapper
-          options={options}
-          managedFocus={false}
-        />,
-      );
-      const combobox = screen.getByRole('combobox');
-      await userEvent.click(screen.getByRole('combobox'));
-      await userEvent.keyboard('{ArrowDown}{Enter}');
-      expect(combobox).toHaveTextContent('Banana');
-    });
   });
 });
 
@@ -2090,7 +2029,7 @@ describe('skipOption', () => {
     );
     await userEvent.click(screen.getByRole('combobox'));
     await userEvent.keyboard('{ArrowDown}');
-    expect(document.activeElement).toHaveTextContent('Orange');
+    expectToHaveActiveOption(screen.getByRole('option', { name: 'Orange' }));
   });
 
   it('allows options to be skipped by moving backwards', async () => {
@@ -2105,7 +2044,7 @@ describe('skipOption', () => {
     );
     await userEvent.click(screen.getByRole('combobox'));
     await userEvent.keyboard('{ArrowUp}{ArrowUp}');
-    expect(document.activeElement).toHaveTextContent('Apple');
+    expectToHaveActiveOption(screen.getByRole('option', { name: 'Apple' }));
   });
 
   it('allows options to be skipped by pressing home', async () => {
@@ -2120,7 +2059,7 @@ describe('skipOption', () => {
     );
     await userEvent.click(screen.getByRole('combobox'));
     await userEvent.keyboard('{ArrowDown}{Home}');
-    expect(document.activeElement).toHaveTextContent('Pear');
+    expectToHaveActiveOption(screen.getByRole('option', { name: 'Pear' }));
   });
 
   it('allows options to be skipped by pressing end', async () => {
@@ -2135,7 +2074,7 @@ describe('skipOption', () => {
     );
     await userEvent.click(screen.getByRole('combobox'));
     await userEvent.keyboard('{End}');
-    expect(document.activeElement).toHaveTextContent('Pear');
+    expectToHaveActiveOption(screen.getByRole('option', { name: 'Pear' }));
   });
 
   describe('all options are skipped', () => {
@@ -2152,7 +2091,7 @@ describe('skipOption', () => {
       );
       await userEvent.click(screen.getByRole('combobox'));
       await userEvent.keyboard('{ArrowDown}');
-      expect(document.activeElement).toHaveTextContent('Apple');
+      expectToHaveActiveOption(screen.getByRole('option', { name: 'Apple' }));
     });
 
     it('returns the original option going backwards', async () => {
@@ -2167,7 +2106,7 @@ describe('skipOption', () => {
       );
       await userEvent.click(screen.getByRole('combobox'));
       await userEvent.keyboard('{ArrowUp}');
-      expect(document.activeElement).toHaveTextContent('Apple');
+      expectToHaveActiveOption(screen.getByRole('option', { name: 'Apple' }));
     });
   });
 });
@@ -2191,7 +2130,7 @@ describe('findOption', () => {
     );
     await userEvent.click(screen.getByRole('combobox'));
     await userEvent.keyboard('b');
-    expect(document.activeElement).toHaveTextContent('Orange');
+    expectToHaveActiveOption(screen.getByRole('option', { name: 'Orange' }));
     expect(findOption.mock.calls).toEqual([
       [expect.objectContaining({ value: 'Apple' }), 'b'],
       [expect.objectContaining({ value: 'Pear' }), 'b'],

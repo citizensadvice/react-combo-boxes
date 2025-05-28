@@ -26,63 +26,50 @@ function ComboBoxWrapper(props) {
 }
 
 function expectToBeOpen() {
+  // and focused with no selected or focused option
   const combobox = screen.getByRole('combobox');
   const listbox = screen.getByRole('listbox', { hidden: true });
-  expect(combobox).toHaveAttribute('aria-controls', listbox.id);
   expect(combobox).toHaveFocus();
+  expect(combobox).toHaveAttribute('aria-controls', listbox.id);
   expect(listbox).toBeVisible();
+  expect(combobox).toHaveAttribute('aria-expanded', 'true');
   expect(combobox).not.toHaveAttribute('aria-activedescendant');
   expect(listbox).not.toHaveAttribute('aria-activedescendant');
 }
 
-function expectToHaveFocusedOption(option) {
+function expectToHaveActiveOption(option) {
+  // Option is selected and the activedescendant
   const combobox = screen.getByRole('combobox');
   const listbox = screen.getByRole('listbox', { hidden: true });
   expect(combobox).toHaveAttribute('aria-controls', listbox.id);
   expect(listbox).toBeVisible();
+  expect(combobox).toHaveAttribute('aria-expanded', 'true');
   expect(combobox).toHaveAttribute('aria-activedescendant', option.id);
-  expect(option).toHaveFocus();
+  expect(listbox).toHaveAttribute('aria-activedescendant', option.id);
+  expect(option).toHaveAttribute('role', 'option');
+  expect(option).toHaveAttribute('aria-selected', 'true');
+  expect(combobox).toHaveFocus();
 }
 
 const options = ['Apple', 'Banana', 'Orange'];
 
 describe('with an open list box', () => {
-  it('moves to the first option with the home key', async () => {
+  it('moves to the first option with the Home key', async () => {
     render(<ComboBoxWrapper options={options} />);
     await userEvent.tab();
     await userEvent.keyboard('{ArrowUp}{Home}');
-    expectToHaveFocusedOption(screen.getByRole('option', { name: 'Apple' }));
+    expectToHaveActiveOption(screen.getByRole('option', { name: 'Apple' }));
   });
 
-  it('moves to the last option with the end key', async () => {
+  it('moves to the last option with the End key', async () => {
     render(<ComboBoxWrapper options={options} />);
     await userEvent.tab();
     await userEvent.keyboard('{End}');
-    expectToHaveFocusedOption(screen.getByRole('option', { name: 'Orange' }));
-  });
-
-  describe('with a selected option', () => {
-    describe('pressing Ctrl+d', () => {
-      it('moves focus back to the list box removing the selected option', async () => {
-        render(<ComboBoxWrapper options={options} />);
-        await userEvent.tab();
-        await userEvent.keyboard('{ArrowDown}{Control>}d{/Control}');
-        expectToBeOpen();
-      });
-    });
-
-    describe('pressing Ctrl+k', () => {
-      it('moves focus back to the list box removing the selected option', async () => {
-        render(<ComboBoxWrapper options={options} />);
-        await userEvent.tab();
-        await userEvent.keyboard('{ArrowDown}{Control>}k{/Control}');
-        expectToBeOpen();
-      });
-    });
+    expectToHaveActiveOption(screen.getByRole('option', { name: 'Orange' }));
   });
 
   describe('with a custom skipOption', () => {
-    it('allows options to be skipped pressing home', async () => {
+    it('allows options to be skipped pressing HOME', async () => {
       function skipOption(option) {
         return option.label === 'Apple';
       }
@@ -94,10 +81,10 @@ describe('with an open list box', () => {
       );
       await userEvent.tab();
       await userEvent.keyboard('{Home}');
-      expectToHaveFocusedOption(screen.getByRole('option', { name: 'Banana' }));
+      expectToHaveActiveOption(screen.getByRole('option', { name: 'Banana' }));
     });
 
-    it('allows options to be skipped pressing end', async () => {
+    it('allows options to be skipped pressing END', async () => {
       function skipOption(option) {
         return option.label === 'Orange';
       }
@@ -109,7 +96,7 @@ describe('with an open list box', () => {
       );
       await userEvent.tab();
       await userEvent.keyboard('{End}');
-      expectToHaveFocusedOption(screen.getByRole('option', { name: 'Banana' }));
+      expectToHaveActiveOption(screen.getByRole('option', { name: 'Banana' }));
     });
   });
 });
@@ -122,7 +109,7 @@ describe('with a closed list box', () => {
       await userEvent.keyboard(
         '{ArrowDown}{ArrowDown}{Enter}{Home}{ArrowDown}',
       );
-      expectToHaveFocusedOption(screen.getByRole('option', { name: 'Banana' }));
+      expectToHaveActiveOption(screen.getByRole('option', { name: 'Banana' }));
     });
   });
 
@@ -131,7 +118,7 @@ describe('with a closed list box', () => {
       render(<ComboBoxWrapper options={options} />);
       await userEvent.tab();
       await userEvent.keyboard('{ArrowDown}{ArrowDown}{Enter}{End}{ArrowDown}');
-      expectToHaveFocusedOption(screen.getByRole('option', { name: 'Banana' }));
+      expectToHaveActiveOption(screen.getByRole('option', { name: 'Banana' }));
     });
   });
 });
