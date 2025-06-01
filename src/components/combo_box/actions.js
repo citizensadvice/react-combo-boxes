@@ -1,6 +1,5 @@
 import { nextInList } from '../../helpers/next_in_list';
 import { previousInList } from '../../helpers/previous_in_list';
-import { rNonPrintableKey } from '../../constants/r_non_printable_key';
 import { isMac } from '../../sniffers/is_mac';
 import { getKey } from '../../helpers/get_key';
 import { movePage } from '../../helpers/move_page';
@@ -181,22 +180,6 @@ export function onKeyDown(event) {
       dispatch({ type: SET_FOCUSED_OPTION, focusedOption: null });
     }
 
-    if (
-      event.target !== inputRef.current &&
-      editable &&
-      focusListBox &&
-      (['Delete', 'Backspace', 'ArrowLeft', 'ArrowRight'].includes(key) ||
-        !rNonPrintableKey.test(key) ||
-        (!isMac() && ['Home', 'End'].includes(key)))
-    ) {
-      // If the user is manipulating text or moving the cursor
-      // return focus to the input
-      // Mostly this works, but sadly it doesn't work with composition events (Dead key)
-      dispatch({ type: SET_FOCUS_LIST_BOX, focusListBox: false });
-      inputRef.current.focus();
-      return;
-    }
-
     if (key === 'Escape') {
       event.preventDefault();
       dispatch(setClosed());
@@ -301,10 +284,6 @@ export function onKeyDown(event) {
         event.preventDefault();
         if (focusedOption && !focusedOption?.unselectable) {
           dispatch(onSelectValue(focusedOption));
-          if (document.activeElement !== inputRef.current) {
-            // Mac Firefox still needs the focus reset even without managedFocus
-            inputRef.current.focus();
-          }
         }
         break;
       case 'Tab': {
@@ -459,22 +438,6 @@ export function onFocusInput() {
     }
 
     dispatch({ type: SET_FOCUS_LIST_BOX, focusListBox: false });
-  };
-}
-
-export function onFocusOption(option) {
-  return (dispatch, getState) => {
-    const { focusedOption, expanded } = getState();
-
-    if (!expanded || focusedOption?.identity === option.identity) {
-      return;
-    }
-
-    dispatch({
-      type: SET_FOCUSED_OPTION,
-      focusedOption: option,
-      focusListBox: true,
-    });
   };
 }
 

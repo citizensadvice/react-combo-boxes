@@ -24,7 +24,6 @@ import {
   onOptionsChanged,
   onValueChanged,
   onFocusInput,
-  onFocusOption,
 } from './combo_box/actions';
 import { useEvent } from '../hooks/use_event';
 import { useModified } from '../hooks/use_modified';
@@ -359,9 +358,7 @@ export const ComboBox = memo(
           onLayoutFocusedOption();
         }
         if (focusedOption && focusListBox && showListBox) {
-          if (managedFocus) {
-            focusedRef.current?.focus();
-          }
+          // TODO: Refactor this
         } else if (expanded && document.activeElement !== inputRef.current) {
           inputRef.current.focus();
         }
@@ -422,10 +419,6 @@ export const ComboBox = memo(
         (e, option) => dispatch(onClickOption(e, option)),
         [],
       );
-      const focusOption = useCallback(
-        (e, option) => dispatch(onFocusOption(option)),
-        [],
-      );
 
       const context = useMemo(
         () => ({
@@ -469,13 +462,6 @@ export const ComboBox = memo(
                       onMouseUp: (e) => dispatch(onInputMouseUp(e)),
                       onFocus: (e) => dispatch(onFocusInput(e)),
                       ref: combinedRef,
-                      tabIndex:
-                        managedFocus &&
-                        showListBox &&
-                        focusListBox &&
-                        !tabBetweenOptions
-                          ? -1
-                          : null,
                       'aria-invalid': ariaInvalid,
                       autoCapitalize,
                       autoComplete,
@@ -535,9 +521,7 @@ export const ComboBox = memo(
                       null
                     }
                     aria-labelledby={joinTokens(ariaLabelledBy)}
-                    onKeyDown={(e) => dispatch(onKeyDown(e))}
                     onSelectOption={clickOption}
-                    onFocusOption={focusOption}
                     focusedRef={focusedRef}
                     componentProps={optionisedProps}
                     componentState={componentState}
