@@ -16,7 +16,6 @@ export function Example() {
   const [autoselect, setAutoselect] = useState('inline');
   const [tabAutocomplete, setTabAutocomplete] = useState(false);
   const [showSelectedLabel, setShowSelectedLabel] = useState(false);
-  const [managedFocus, setManagedFocus] = useState(true);
   const [expandOnFocus, setExpandOnFocus] = useState(true);
   const [selectOnBlur, setSelectOnBlur] = useState(true);
 
@@ -39,7 +38,6 @@ export function Example() {
         autoselect={autoselect}
         tabAutocomplete={tabAutocomplete}
         showSelectedLabel={showSelectedLabel}
-        managedFocus={managedFocus}
         expandOnFocus={expandOnFocus}
         selectOnBlur={selectOnBlur}
       />
@@ -86,15 +84,6 @@ export function Example() {
           <code>&quot;inline&quot;</code>
         </label>
       </fieldset>
-
-      <label>
-        <input
-          type="checkbox"
-          onChange={({ target: { checked } }) => setManagedFocus(checked)}
-          checked={managedFocus}
-        />{' '}
-        Toggle managed focus
-      </label>
 
       <label>
         <input
