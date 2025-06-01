@@ -102,7 +102,6 @@ ListBox.propTypes = {
   'aria-activedescendant': PropTypes.string,
   componentProps: PropTypes.shape({
     classPrefix: PropTypes.string,
-    managedFocus: PropTypes.bool,
     options: PropTypes.array.isRequired,
     renderListBox: PropTypes.func.isRequired,
     renderGroup: PropTypes.func.isRequired,

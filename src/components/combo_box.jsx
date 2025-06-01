@@ -184,7 +184,6 @@ export const ComboBox = memo(
         foundOptionsMessage,
         id,
         inputMode,
-        managedFocus: false,
         maxLength,
         minLength,
         mustHaveSelection,
@@ -224,7 +223,6 @@ export const ComboBox = memo(
         ...props,
         ...normalisedOptions,
       });
-      const managedFocus = false;
 
       const { nullOptions, options, selectedOption, value } = normalisedOptions;
 
@@ -364,7 +362,6 @@ export const ComboBox = memo(
         }
       }, [
         expanded,
-        managedFocus,
         focusedOption,
         focusListBox,
         showListBox,
@@ -620,7 +617,6 @@ ComboBox.propTypes = {
   closeOnSelect: PropTypes.bool,
   expandOnFocus: PropTypes.bool,
   findSuggestion: PropTypes.func,
-  managedFocus: PropTypes.bool,
   selectOnBlur: PropTypes.bool,
   mustHaveSelection: PropTypes.bool,
   showSelectedLabel: PropTypes.bool,
