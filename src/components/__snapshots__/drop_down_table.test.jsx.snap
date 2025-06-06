@@ -45,7 +45,6 @@ exports[`cells with html renders a table with colgroups 1`] = `
               class="react-combo-boxes-dropdown__table-row"
               id="id_option_apple"
               role="option"
-              tabindex="-1"
             >
               <td
                 class="foo"
@@ -67,7 +66,6 @@ exports[`cells with html renders a table with colgroups 1`] = `
               class="react-combo-boxes-dropdown__table-row"
               id="id_option_banana"
               role="option"
-              tabindex="-1"
             >
               <td
                 class="foo"
@@ -89,7 +87,6 @@ exports[`cells with html renders a table with colgroups 1`] = `
               class="react-combo-boxes-dropdown__table-row"
               id="id_option_potato"
               role="option"
-              tabindex="-1"
             >
               <td
                 class="foo"
@@ -176,7 +173,6 @@ exports[`columns as names only renders a table as the list box 1`] = `
               class="react-combo-boxes-dropdown__table-row"
               id="id_option_apple"
               role="option"
-              tabindex="-1"
             >
               <td
                 class="react-combo-boxes-dropdown__table-cell"
@@ -198,7 +194,6 @@ exports[`columns as names only renders a table as the list box 1`] = `
               class="react-combo-boxes-dropdown__table-row"
               id="id_option_banana"
               role="option"
-              tabindex="-1"
             >
               <td
                 class="react-combo-boxes-dropdown__table-cell"
@@ -220,7 +215,6 @@ exports[`columns as names only renders a table as the list box 1`] = `
               class="react-combo-boxes-dropdown__table-row"
               id="id_option_potato"
               role="option"
-              tabindex="-1"
             >
               <td
                 class="react-combo-boxes-dropdown__table-cell"
@@ -243,7 +237,6 @@ exports[`columns as names only renders a table as the list box 1`] = `
               class="react-combo-boxes-dropdown__table-row"
               id="id_option_tomato"
               role="option"
-              tabindex="-1"
             >
               <td
                 class="react-combo-boxes-dropdown__table-cell"
@@ -362,7 +355,6 @@ exports[`columns with headers and grouped renders a table with headers 1`] = `
               class="react-combo-boxes-dropdown__table-row"
               id="id_option_"
               role="option"
-              tabindex="-1"
             >
               <td
                 class="react-combo-boxes-dropdown__table-cell"
@@ -384,7 +376,6 @@ exports[`columns with headers and grouped renders a table with headers 1`] = `
               class="react-combo-boxes-dropdown__table-row"
               id="id_option_1"
               role="option"
-              tabindex="-1"
             >
               <td
                 class="react-combo-boxes-dropdown__table-cell"
@@ -418,7 +409,6 @@ exports[`columns with headers and grouped renders a table with headers 1`] = `
               class="react-combo-boxes-dropdown__table-row"
               id="id_option_2"
               role="option"
-              tabindex="-1"
             >
               <td
                 class="react-combo-boxes-dropdown__table-cell"
@@ -525,7 +515,6 @@ exports[`columns with headers renders a table with headers 1`] = `
               class="react-combo-boxes-dropdown__table-row"
               id="id_option_apple"
               role="option"
-              tabindex="-1"
             >
               <td
                 class="react-combo-boxes-dropdown__table-cell"
@@ -547,7 +536,6 @@ exports[`columns with headers renders a table with headers 1`] = `
               class="react-combo-boxes-dropdown__table-row"
               id="id_option_banana"
               role="option"
-              tabindex="-1"
             >
               <td
                 class="react-combo-boxes-dropdown__table-cell"
@@ -569,7 +557,6 @@ exports[`columns with headers renders a table with headers 1`] = `
               class="react-combo-boxes-dropdown__table-row"
               id="id_option_potato"
               role="option"
-              tabindex="-1"
             >
               <td
                 class="react-combo-boxes-dropdown__table-cell"
@@ -660,7 +647,6 @@ exports[`columns with html renders a table with colgroups 1`] = `
               class="react-combo-boxes-dropdown__table-row"
               id="id_option_apple"
               role="option"
-              tabindex="-1"
             >
               <td
                 class="react-combo-boxes-dropdown__table-cell"
@@ -682,7 +668,6 @@ exports[`columns with html renders a table with colgroups 1`] = `
               class="react-combo-boxes-dropdown__table-row"
               id="id_option_banana"
               role="option"
-              tabindex="-1"
             >
               <td
                 class="react-combo-boxes-dropdown__table-cell"
@@ -704,7 +689,6 @@ exports[`columns with html renders a table with colgroups 1`] = `
               class="react-combo-boxes-dropdown__table-row"
               id="id_option_potato"
               role="option"
-              tabindex="-1"
             >
               <td
                 class="react-combo-boxes-dropdown__table-cell"
@@ -803,7 +787,6 @@ exports[`grouped renders a table with groups 1`] = `
               class="react-combo-boxes-dropdown__table-row"
               id="id_option_apple"
               role="option"
-              tabindex="-1"
             >
               <td
                 class="react-combo-boxes-dropdown__table-cell"
@@ -825,7 +808,6 @@ exports[`grouped renders a table with groups 1`] = `
               class="react-combo-boxes-dropdown__table-row"
               id="id_option_banana"
               role="option"
-              tabindex="-1"
             >
               <td
                 class="react-combo-boxes-dropdown__table-cell"
@@ -859,7 +841,6 @@ exports[`grouped renders a table with groups 1`] = `
               class="react-combo-boxes-dropdown__table-row"
               id="id_option_potato"
               role="option"
-              tabindex="-1"
             >
               <td
                 class="react-combo-boxes-dropdown__table-cell"

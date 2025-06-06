@@ -21,10 +21,10 @@ import {
   onClearValue,
   onBlur,
   onClickOption,
+  onWrapperKeyDown,
   onOptionsChanged,
   onValueChanged,
   onFocusInput,
-  onFocusOption,
 } from './combo_box/actions';
 import { useEvent } from '../hooks/use_event';
 import { useModified } from '../hooks/use_modified';
@@ -123,7 +123,6 @@ export const ComboBox = memo(
         closeOnSelect = true,
         expandOnFocus = true,
         findSuggestion = findOption,
-        managedFocus = true,
         selectOnBlur = true,
         skipOption,
         showSelectedLabel,
@@ -186,7 +185,6 @@ export const ComboBox = memo(
         foundOptionsMessage,
         id,
         inputMode,
-        managedFocus,
         maxLength,
         minLength,
         mustHaveSelection,
@@ -358,22 +356,7 @@ export const ComboBox = memo(
         if (showListBox && onLayoutFocusedOption) {
           onLayoutFocusedOption();
         }
-        if (focusedOption && focusListBox && showListBox) {
-          if (managedFocus) {
-            focusedRef.current?.focus();
-          }
-        } else if (expanded && document.activeElement !== inputRef.current) {
-          inputRef.current.focus();
-        }
-      }, [
-        expanded,
-        managedFocus,
-        focusedOption,
-        focusListBox,
-        showListBox,
-        options,
-        onLayoutFocusedOption,
-      ]);
+      }, [focusedOption, showListBox, onLayoutFocusedOption]);
 
       useLayoutListBox({
         showListBox,
@@ -422,10 +405,6 @@ export const ComboBox = memo(
         (e, option) => dispatch(onClickOption(e, option)),
         [],
       );
-      const focusOption = useCallback(
-        (e, option) => dispatch(onFocusOption(option)),
-        [],
-      );
 
       const context = useMemo(
         () => ({
@@ -443,6 +422,7 @@ export const ComboBox = memo(
               className: className || makeBEMClass(classPrefix),
               onBlur: handleBlur,
               onFocus: handleFocus,
+              onKeyDown: (e) => dispatch(onWrapperKeyDown(e)),
               ref: comboRef,
               children: (
                 <>
@@ -469,13 +449,6 @@ export const ComboBox = memo(
                       onMouseUp: (e) => dispatch(onInputMouseUp(e)),
                       onFocus: (e) => dispatch(onFocusInput(e)),
                       ref: combinedRef,
-                      tabIndex:
-                        managedFocus &&
-                        showListBox &&
-                        focusListBox &&
-                        !tabBetweenOptions
-                          ? -1
-                          : null,
                       'aria-invalid': ariaInvalid,
                       autoCapitalize,
                       autoComplete,
@@ -535,9 +508,7 @@ export const ComboBox = memo(
                       null
                     }
                     aria-labelledby={joinTokens(ariaLabelledBy)}
-                    onKeyDown={(e) => dispatch(onKeyDown(e))}
                     onSelectOption={clickOption}
-                    onFocusOption={focusOption}
                     focusedRef={focusedRef}
                     componentProps={optionisedProps}
                     componentState={componentState}
@@ -636,7 +607,6 @@ ComboBox.propTypes = {
   closeOnSelect: PropTypes.bool,
   expandOnFocus: PropTypes.bool,
   findSuggestion: PropTypes.func,
-  managedFocus: PropTypes.bool,
   selectOnBlur: PropTypes.bool,
   mustHaveSelection: PropTypes.bool,
   showSelectedLabel: PropTypes.bool,

@@ -49,7 +49,6 @@ export function Example() {
         onChange={(e) => setValue(e.target.value)}
         options={filteredOptions}
         showSelectedLabel
-        managedFocus={false}
         expandOnFocus={false}
         renderDownArrow={() => null}
         renderClearButton={() => null}

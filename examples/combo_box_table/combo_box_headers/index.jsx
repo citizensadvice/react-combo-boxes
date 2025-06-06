@@ -47,7 +47,6 @@ export function Example() {
     options: cats,
     index: mapOption,
   });
-  const [managedFocus, setManagedFocus] = useState(true);
 
   return (
     <>
@@ -68,7 +67,6 @@ export function Example() {
         renderColumnValue={renderValue}
         mapOption={mapOption}
         onLayoutListBox={onLayoutListBox}
-        managedFocus={managedFocus}
       />
 
       <label htmlFor="output">Current value</label>
@@ -78,15 +76,6 @@ export function Example() {
       >
         {JSON.stringify(value, undefined, ' ')}
       </output>
-
-      <label>
-        <input
-          type="checkbox"
-          onChange={({ target: { checked } }) => setManagedFocus(checked)}
-          checked={managedFocus}
-        />{' '}
-        Toggle managed focus
-      </label>
     </>
   );
 }

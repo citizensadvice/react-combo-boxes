@@ -43,20 +43,6 @@ Overall, this is better for experience for users, but can [trip-up novice users]
 
 This library treats a combo-box as a single tab-stop. However there is an option to allow [tabbing between combo-box options](combo_box.md#tabbetweenoptions-boolean--false).
 
-## Managed focus vs `aria-activedescendant`
-
-ARIA 1.0 introduced the [`aria-activedescendant`](https://www.w3.org/TR/wai-aria-1.1/#aria-activedescendant) attribute.
-
-This is supposed to simplify managing focus inside a widget so it can remain a single tab-stop.
-
-While `aria-activedescendant` now works well in most screen-readers, unfortunately it doesn't work
-perfectly in all screen-readers. VoiceOver in particular has had some bugs in this area.
-
-This library uses managed-focus for maximum compatibility. That means focusing options using the keyboard
-moves browser focus.
-
-If is possible to opt out of this by setting the [`managedFocus`](combo_box.md#managedfocus-boolean--true) option to `false`.
-
 ## Status messages
 
 It is useful for a user to know if a combo-box has any options to select.

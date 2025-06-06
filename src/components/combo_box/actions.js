@@ -1,6 +1,5 @@
 import { nextInList } from '../../helpers/next_in_list';
 import { previousInList } from '../../helpers/previous_in_list';
-import { rNonPrintableKey } from '../../constants/r_non_printable_key';
 import { isMac } from '../../sniffers/is_mac';
 import { getKey } from '../../helpers/get_key';
 import { movePage } from '../../helpers/move_page';
@@ -12,11 +11,8 @@ export const SET_FOCUSED_OPTION = 'SET_FOCUSED_OPTION';
 export const SET_FOCUS_LIST_BOX = 'SET_FOCUS_LIST_BOX';
 
 function findSuggestedOption({ options, findSuggestion, search }) {
-  if (!options || !findSuggestion || !search) {
-    return null;
-  }
   for (const option of options) {
-    const result = findSuggestion(option, search);
+    const result = findSuggestion?.(option, search);
     if (result) {
       return option;
     }
@@ -181,22 +177,6 @@ export function onKeyDown(event) {
       dispatch({ type: SET_FOCUSED_OPTION, focusedOption: null });
     }
 
-    if (
-      event.target !== inputRef.current &&
-      editable &&
-      focusListBox &&
-      (['Delete', 'Backspace', 'ArrowLeft', 'ArrowRight'].includes(key) ||
-        !rNonPrintableKey.test(key) ||
-        (!isMac() && ['Home', 'End'].includes(key)))
-    ) {
-      // If the user is manipulating text or moving the cursor
-      // return focus to the input
-      // Mostly this works, but sadly it doesn't work with composition events (Dead key)
-      dispatch({ type: SET_FOCUS_LIST_BOX, focusListBox: false });
-      inputRef.current.focus();
-      return;
-    }
-
     if (key === 'Escape') {
       event.preventDefault();
       dispatch(setClosed());
@@ -301,10 +281,6 @@ export function onKeyDown(event) {
         event.preventDefault();
         if (focusedOption && !focusedOption?.unselectable) {
           dispatch(onSelectValue(focusedOption));
-          if (document.activeElement !== inputRef.current) {
-            // Mac Firefox still needs the focus reset even without managedFocus
-            inputRef.current.focus();
-          }
         }
         break;
       case 'Tab': {
@@ -462,22 +438,6 @@ export function onFocusInput() {
   };
 }
 
-export function onFocusOption(option) {
-  return (dispatch, getState) => {
-    const { focusedOption, expanded } = getState();
-
-    if (!expanded || focusedOption?.identity === option.identity) {
-      return;
-    }
-
-    dispatch({
-      type: SET_FOCUSED_OPTION,
-      focusedOption: option,
-      focusListBox: true,
-    });
-  };
-}
-
 export function onInputMouseUp(e) {
   return (dispatch, getState, getProps) => {
     const { expanded } = getState();
@@ -526,31 +486,40 @@ export function onBlur() {
 
 export function onClickOption(event, option) {
   return (dispatch, getState, getProps) => {
-    if (event.button > 0) {
-      return;
-    }
-
     const { inputRef } = getProps();
     dispatch(onSelectValue(option));
     inputRef.current?.focus();
   };
 }
 
+export function onWrapperKeyDown(event) {
+  return (dispatch, getState, getProps) => {
+    const { expanded } = getState();
+    const { inputRef } = getProps();
+    const { key } = event;
+
+    if (expanded && key === 'Escape') {
+      event.preventDefault();
+      dispatch(setClosed());
+      inputRef.current.focus();
+      event.preventDefault();
+    }
+  };
+}
+
 export function onClearValue(event) {
   return (dispatch, setState, getProps) => {
-    if (event.type === 'click' && event.button > 0) {
-      return;
-    }
     if (event.type === 'keydown' && event.key !== 'Enter') {
       return;
     }
     if (event.type === 'keyup' && event.key !== ' ') {
       return;
     }
-    const { expandOnFocus, disabled, readOnly } = getProps();
+    const { expandOnFocus, disabled, readOnly, inputRef } = getProps();
     if (disabled || readOnly) {
       return;
     }
+    inputRef.current.focus();
     dispatch(onSelectValue(null, expandOnFocus));
   };
 }

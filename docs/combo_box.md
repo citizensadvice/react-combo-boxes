@@ -119,12 +119,6 @@ The following attributes will be passed to the `<input>` element.
 
 ### Behaviour switches
 
-#### `managedFocus: boolean = true`
-
-When true, the document focus moves to the selected option. When false the selected option is exposed to a screen-reader by `aria-activedescendant`.
-
-This defaults to `true` for maximum compatibility with older screen-readers.
-
 #### `autoselect: boolean | "inline" = false`
 
 If `true` the first matching option is automatically selected.

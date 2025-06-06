@@ -85,7 +85,6 @@ export function Example() {
         tabAutocomplete
         showSelectedLabel
         expandOnFocus={false}
-        managedFocus={false}
         renderNotFound={() => null}
         renderClearButton={() => null}
         renderInput={renderInput}
