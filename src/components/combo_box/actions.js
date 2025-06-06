@@ -11,11 +11,8 @@ export const SET_FOCUSED_OPTION = 'SET_FOCUSED_OPTION';
 export const SET_FOCUS_LIST_BOX = 'SET_FOCUS_LIST_BOX';
 
 function findSuggestedOption({ options, findSuggestion, search }) {
-  if (!options || !findSuggestion || !search) {
-    return null;
-  }
   for (const option of options) {
-    const result = findSuggestion(option, search);
+    const result = findSuggestion?.(option, search);
     if (result) {
       return option;
     }
@@ -489,31 +486,40 @@ export function onBlur() {
 
 export function onClickOption(event, option) {
   return (dispatch, getState, getProps) => {
-    if (event.button > 0) {
-      return;
-    }
-
     const { inputRef } = getProps();
     dispatch(onSelectValue(option));
     inputRef.current?.focus();
   };
 }
 
+export function onWrapperKeyDown(event) {
+  return (dispatch, getState, getProps) => {
+    const { expanded } = getState();
+    const { inputRef } = getProps();
+    const { key } = event;
+
+    if (expanded && key === 'Escape') {
+      event.preventDefault();
+      dispatch(setClosed());
+      inputRef.current.focus();
+      event.preventDefault();
+    }
+  };
+}
+
 export function onClearValue(event) {
   return (dispatch, setState, getProps) => {
-    if (event.type === 'click' && event.button > 0) {
-      return;
-    }
     if (event.type === 'keydown' && event.key !== 'Enter') {
       return;
     }
     if (event.type === 'keyup' && event.key !== ' ') {
       return;
     }
-    const { expandOnFocus, disabled, readOnly } = getProps();
+    const { expandOnFocus, disabled, readOnly, inputRef } = getProps();
     if (disabled || readOnly) {
       return;
     }
+    inputRef.current.focus();
     dispatch(onSelectValue(null, expandOnFocus));
   };
 }

@@ -71,7 +71,7 @@ function expectToHaveSelectedOption(option) {
   expect(combobox).toHaveFocus();
 }
 
-function expectToHaveActiveOption(option) {
+function expectToHaveActiveOption(option, { focused = true } = {}) {
   // Option is selected and the activedescendant
   const combobox = screen.getByRole('combobox');
   const listbox = screen.getByRole('listbox', { hidden: true });
@@ -82,7 +82,9 @@ function expectToHaveActiveOption(option) {
   expect(listbox).toHaveAttribute('aria-activedescendant', option.id);
   expect(option).toHaveAttribute('role', 'option');
   expect(option).toHaveAttribute('aria-selected', 'true');
-  expect(combobox).toHaveFocus();
+  if (focused) {
+    expect(combobox).toHaveFocus();
+  }
 }
 
 describe('options', () => {
@@ -364,6 +366,22 @@ describe('options', () => {
             );
             expect(spy.mock.calls[0][0].defaultPrevented).toEqual(true);
             document.removeEventListener('mousedown', spy);
+          });
+
+          it('does not select with a right click', async () => {
+            const spy = jest.fn();
+            render(
+              <ComboBoxWrapper
+                options={options}
+                onValue={spy}
+              />,
+            );
+            await userEvent.tab();
+            await userEvent.pointer({
+              keys: '[MouseRight]',
+              target: screen.getByRole('option', { name: 'Banana' }),
+            });
+            expect(spy).not.toHaveBeenCalled();
           });
         });
 
@@ -2355,6 +2373,12 @@ describe('autoselect', () => {
         await userEvent.type(screen.getByRole('combobox'), 'b');
         expectToBeOpen();
       });
+
+      it('does not error with no options', async () => {
+        render(<ComboBoxWrapper autoselect />);
+        await userEvent.type(screen.getByRole('combobox'), 'b');
+        expectToBeClosed();
+      });
     });
 
     describe('backspace', () => {
@@ -2369,6 +2393,7 @@ describe('autoselect', () => {
         expectToBeOpen();
       });
 
+      // TODO: probably should not be the case - expore beforeinput
       describe('ctrl+d', () => {
         it('continues to auto-select an option', async () => {
           render(
@@ -2554,11 +2579,28 @@ describe('autoselect', () => {
         });
       });
     });
+
+    describe('when readOnly', () => {
+      it('does not select onblur', async () => {
+        const spy = jest.fn();
+        render(
+          <ComboBoxWrapper
+            options={['foo', 'bar']}
+            search="bar"
+            autoselect
+            readOnly
+            onValue={spy}
+          />,
+        );
+        await userEvent.click(screen.getByRole('combobox'));
+        expectToBeClosed();
+        await userEvent.tab();
+        expect(spy).not.toHaveBeenCalled();
+      });
+    });
   });
 
   describe('when inline', () => {
-    // NOTE: userEvent.type is doing something jazzy with setSelection so can't be used
-
     it('changes the value of aria-autocomplete for no onSearch', () => {
       render(
         <ComboBoxWrapper
@@ -3437,6 +3479,18 @@ describe('findSuggestion', () => {
     await userEvent.type(screen.getByRole('combobox'), 'o');
     expectToBeOpen();
   });
+
+  it('does not error is null', async () => {
+    render(
+      <ComboBoxWrapper
+        options={options}
+        autoselect
+        findSuggestion={null}
+      />,
+    );
+    await userEvent.type(screen.getByRole('combobox'), 'o');
+    expectToBeOpen();
+  });
 });
 
 describe('notFoundMessage', () => {
@@ -4105,6 +4159,74 @@ describe('renderListBox', () => {
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
   });
+
+  describe('with focusable childen', () => {
+    it('keeps the listbox open', async () => {
+      render(
+        <ComboBoxWrapper
+          options={['Apple', 'Orange']}
+          renderListBox={({ hidden, className, ...props }) => (
+            <div
+              className={className}
+              hidden={hidden}
+            >
+              <ul
+                className="reset-list"
+                {...props}
+              />
+              <div className="list-footer">
+                <a href="https://en.wikipedia.org/wiki/Fruit">
+                  More about fruit
+                </a>
+              </div>
+            </div>
+          )}
+        />,
+      );
+      await userEvent.tab();
+      await userEvent.keyboard('a{ArrowDown}');
+      expectToHaveActiveOption(screen.getByRole('option', { name: 'Apple' }));
+      await userEvent.tab();
+      expect(screen.getByRole('link')).toHaveFocus();
+      expectToHaveActiveOption(screen.getByRole('option', { name: 'Apple' }), {
+        focused: false,
+      });
+      await userEvent.tab({ shift: true });
+      expectToHaveSelectedOption(screen.getByRole('option', { name: 'Apple' }));
+      expect(screen.getByRole('combobox')).toHaveDisplayValue('a');
+    });
+
+    it('closes the list box on escape', async () => {
+      render(
+        <ComboBoxWrapper
+          options={['Apple', 'Orange']}
+          renderListBox={({ hidden, className, ...props }) => (
+            <div
+              className={className}
+              hidden={hidden}
+            >
+              <ul
+                className="reset-list"
+                {...props}
+              />
+              <div className="list-footer">
+                <a href="https://en.wikipedia.org/wiki/Fruit">
+                  More about fruit
+                </a>
+              </div>
+            </div>
+          )}
+        />,
+      );
+      await userEvent.tab();
+      await userEvent.keyboard('a{ArrowDown}');
+      expectToHaveActiveOption(screen.getByRole('option', { name: 'Apple' }));
+      await userEvent.tab();
+      expect(screen.getByRole('link')).toHaveFocus();
+      await userEvent.keyboard('{Escape}');
+      expectToBeClosed();
+    });
+  });
 });
 
 describe('renderGroup', () => {
@@ -4395,15 +4517,16 @@ describe('renderClearButton', () => {
         options={['foo']}
         value="foo"
         renderClearButton={(props) => (
-          <dl
+          <button
             data-foo="bar"
             {...props}
+            role={null}
           />
         )}
       />,
     );
     const button = screen.getByRole('button', { name: 'Clear foo' });
-    expect(button.tagName).toEqual('DL');
+    expect(button.tagName).toEqual('BUTTON');
     expect(button).toHaveAttribute('data-foo', 'bar');
   });
 
@@ -4430,6 +4553,28 @@ describe('renderClearButton', () => {
       },
       expect.objectContaining({ options: expect.any(Array), test: 'foo' }),
     );
+  });
+
+  it('closes the list box if focused and escape is pressed', async () => {
+    render(
+      <ComboBoxWrapper
+        options={['one', 'two']}
+        value="foo"
+        renderClearButton={(props) => (
+          <button
+            {...props}
+            role={null}
+            tabIndex={null}
+          />
+        )}
+      />,
+    );
+    await userEvent.tab();
+    expectToBeOpen();
+    await userEvent.tab();
+    expect(screen.getByRole('button', { name: 'Clear foo' })).toHaveFocus();
+    await userEvent.keyboard('{Escape}');
+    expectToBeClosed();
   });
 });
 

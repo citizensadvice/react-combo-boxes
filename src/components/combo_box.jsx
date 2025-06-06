@@ -21,6 +21,7 @@ import {
   onClearValue,
   onBlur,
   onClickOption,
+  onWrapperKeyDown,
   onOptionsChanged,
   onValueChanged,
   onFocusInput,
@@ -355,19 +356,7 @@ export const ComboBox = memo(
         if (showListBox && onLayoutFocusedOption) {
           onLayoutFocusedOption();
         }
-        if (focusedOption && focusListBox && showListBox) {
-          // TODO: Refactor this
-        } else if (expanded && document.activeElement !== inputRef.current) {
-          inputRef.current.focus();
-        }
-      }, [
-        expanded,
-        focusedOption,
-        focusListBox,
-        showListBox,
-        options,
-        onLayoutFocusedOption,
-      ]);
+      }, [focusedOption, showListBox, onLayoutFocusedOption]);
 
       useLayoutListBox({
         showListBox,
@@ -433,6 +422,7 @@ export const ComboBox = memo(
               className: className || makeBEMClass(classPrefix),
               onBlur: handleBlur,
               onFocus: handleFocus,
+              onKeyDown: (e) => dispatch(onWrapperKeyDown(e)),
               ref: comboRef,
               children: (
                 <>
