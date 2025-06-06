@@ -8,11 +8,9 @@ export const ListBox = forwardRef(
     {
       focusedRef,
       onSelectOption,
-      onFocusOption,
       componentProps,
       componentProps: {
         classPrefix,
-        managedFocus,
         options,
         renderListBox,
         renderGroup,
@@ -20,7 +18,6 @@ export const ListBox = forwardRef(
         renderGroupName,
         renderOption,
         renderValue,
-        tabBetweenOptions,
       },
       componentState,
       componentState: { currentOption },
@@ -78,14 +75,12 @@ export const ListBox = forwardRef(
                 key,
                 role: 'option',
                 className: makeBEMClass(classPrefix, 'option'),
-                tabIndex: tabBetweenOptions && managedFocus ? 0 : -1,
                 'aria-selected': selected ? 'true' : null,
                 'aria-disabled': disabled ? 'true' : null,
                 'aria-labelledby': group ? `${group.key} ${key}` : null,
                 ref: selected ? focusedRef : null,
                 ...html,
                 onClick: disabled ? null : (e) => onSelectOption(e, option),
-                onFocus: onFocusOption ? (e) => onFocusOption(e, option) : null,
                 children: renderValue(
                   { children: label },
                   { ...componentState, selected, option, group },
@@ -107,7 +102,6 @@ ListBox.propTypes = {
   'aria-activedescendant': PropTypes.string,
   componentProps: PropTypes.shape({
     classPrefix: PropTypes.string,
-    managedFocus: PropTypes.bool,
     options: PropTypes.array.isRequired,
     renderListBox: PropTypes.func.isRequired,
     renderGroup: PropTypes.func.isRequired,

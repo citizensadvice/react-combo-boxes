@@ -44,7 +44,6 @@ function renderOption({ key, 'aria-labelledby': _, ...props }) {
 export function Example() {
   const [value, setValue] = useState(null);
   const [search, setSearch] = useState(null);
-  const [managedFocus, setManagedFocus] = useState(true);
   const filteredOptions = useTokenSearch(search, { options });
 
   return (
@@ -62,19 +61,9 @@ export function Example() {
         onValue={setValue}
         onSearch={setSearch}
         options={filteredOptions}
-        managedFocus={managedFocus}
         renderGroup={renderGroup}
         renderOption={renderOption}
       />
-
-      <label>
-        <input
-          type="checkbox"
-          onChange={({ target: { checked } }) => setManagedFocus(checked)}
-          checked={managedFocus}
-        />{' '}
-        Toggle managed focus
-      </label>
 
       <label htmlFor="output">Current value</label>
       <output

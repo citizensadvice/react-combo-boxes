@@ -14,7 +14,6 @@ export function Example() {
   const [value, setValue] = useState(null);
   const [search, setSearch] = useState(null);
   const filteredOptions = useTokenSearch(search, { options });
-  const [managedFocus, setManagedFocus] = useState(false);
 
   return (
     <>
@@ -32,7 +31,6 @@ export function Example() {
         onSearch={setSearch}
         options={filteredOptions}
         tabBetweenOptions
-        managedFocus={managedFocus}
       />
 
       <label htmlFor="output">Current value</label>
@@ -42,15 +40,6 @@ export function Example() {
       >
         {JSON.stringify(value, undefined, ' ')}
       </output>
-
-      <label>
-        <input
-          type="checkbox"
-          onChange={({ target: { checked } }) => setManagedFocus(checked)}
-          checked={managedFocus}
-        />{' '}
-        Toggle managed focus
-      </label>
     </>
   );
 }

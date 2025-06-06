@@ -6,7 +6,8 @@
 - Removes the `renderGroupAccessibleLabel` and `renderTableCellColumnAccessibleLabel` from combo-boxes and drop downs as these are no longer required
 - Use aria-labelledby for all option labels instead of inserting visually hidden text
 - Fix an issue where drop down aria-live message was prefixed with "undefined"
-- Switch to the ARIA 1.2 pattern as this now works better than the ARIA 1.0 pattern in VoiceOver.
+- Switch to the ARIA 1.2 pattern as this now works better than the ARIA 1.0 pattern.
+- Removed `managedFocus` option. Focus for screen-readers now entirely uses `aria-activedescendant` which now works reliably over all screen-readers.
 
 ## 3.0.2
 

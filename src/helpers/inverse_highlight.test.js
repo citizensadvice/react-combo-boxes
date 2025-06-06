@@ -23,3 +23,7 @@ it('does not highlight leading and trailing spaces', () => {
     ' foo',
   ]);
 });
+
+it('does not highlight nothing', () => {
+  expect(inverseHighlight([''])).toEqual(['']);
+});
