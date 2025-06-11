@@ -1,10 +1,11 @@
 import { nextInList } from './next_in_list';
 import { previousInList } from './previous_in_list';
+import { nearestScrollable } from './nearest_scrollable';
 
 /**
  * Moves down a page of options, or up a page of options
  */
-export function movePage(direction, options, focusedOption, { skip }) {
+export function movePage(direction, options, focusedOption, listbox, { skip }) {
   let next;
   let previous;
   if (direction === 'down') {
@@ -22,10 +23,7 @@ export function movePage(direction, options, focusedOption, { skip }) {
   if (!referenceElement) {
     return lastOption;
   }
-  let parent = referenceElement.offsetParent;
-  if (parent && parent.matches('table')) {
-    parent = parent.offsetParent;
-  }
+  let parent = nearestScrollable(referenceElement, listbox);
   if (!parent) {
     return lastOption;
   }

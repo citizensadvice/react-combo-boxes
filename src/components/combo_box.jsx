@@ -236,7 +236,7 @@ export const ComboBox = memo(
 
       const [state, dispatch] = useReducer(
         reducer,
-        { ...optionisedProps, inputRef, lastKeyRef },
+        { ...optionisedProps, inputRef, listRef, lastKeyRef },
         initialState,
       );
       const [showBusy, setShowBusy] = useState(false);

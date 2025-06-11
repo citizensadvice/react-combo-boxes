@@ -130,6 +130,7 @@ export function onKeyDown(event) {
     const {
       options,
       inputRef,
+      listRef,
       lastKeyRef,
       skipOption: skip,
       mustHaveSelection,
@@ -254,7 +255,13 @@ export function onKeyDown(event) {
           event.preventDefault();
           dispatch({
             type: SET_FOCUSED_OPTION,
-            focusedOption: movePage('down', options, focusedOption, { skip }),
+            focusedOption: movePage(
+              'down',
+              options,
+              focusedOption,
+              listRef.current,
+              { skip },
+            ),
             focusListBox: true,
           });
         }
@@ -265,7 +272,13 @@ export function onKeyDown(event) {
           event.preventDefault();
           dispatch({
             type: SET_FOCUSED_OPTION,
-            focusedOption: movePage('up', options, focusedOption, { skip }),
+            focusedOption: movePage(
+              'up',
+              options,
+              focusedOption,
+              listRef.current,
+              { skip },
+            ),
             focusListBox: true,
           });
         }

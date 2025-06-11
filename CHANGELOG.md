@@ -8,6 +8,7 @@
 - Fix an issue where drop down aria-live message was prefixed with "undefined"
 - Switch to the ARIA 1.2 pattern as this now works better than the ARIA 1.0 pattern.
 - Removed `managedFocus` option. Focus for screen-readers now entirely uses `aria-activedescendant` which now works reliably over all screen-readers.
+- Fix the scrolling options not working in the drop down
 
 ## 3.0.2
 
