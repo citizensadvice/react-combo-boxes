@@ -1,3 +1,5 @@
+import { nearestScrollable } from '../helpers/nearest_scrollable';
+
 /**
  * Ensure the option is visible in the list box
  *
@@ -13,22 +15,13 @@ export function scrollIntoView({ option, listbox, input }) {
     return;
   }
 
-  let parent = option.offsetParent;
+  const parent = nearestScrollable(option, listbox);
 
   if (!parent) {
     return;
   }
 
-  if (parent.matches('table')) {
-    parent = parent.offsetParent;
-  }
-
-  if (!parent || parent.matches('body')) {
-    return;
-  }
-
   // Ensure the list box is correctly scrolled
-
   const elementTop = option.offsetTop;
   const elementBottom = elementTop + option.clientHeight;
 
