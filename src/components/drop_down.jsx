@@ -51,7 +51,7 @@ function renderInput(props, state, componentProps) {
       autoComplete: null,
       children: (children ?? value?.label ?? selectedOption?.label) || '\u00A0',
       className: makeBEMClass(classPrefix, 'combobox'),
-      tabIndex: disabled || !options?.length ? null : 0,
+      tabIndex: disabled ? null : 0,
       type: null,
       value: null,
     },

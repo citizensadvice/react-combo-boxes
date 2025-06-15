@@ -9,6 +9,10 @@
 - Switch to the ARIA 1.2 pattern as this now works better than the ARIA 1.0 pattern.
 - Removed `managedFocus` option. Focus for screen-readers now entirely uses `aria-activedescendant` which now works reliably over all screen-readers.
 - Fix the scrolling options not working in the drop down
+- Adjusted Escape to behave like the aria-practices recommendations. Press once to close and press a second time to clear the value.
+- Pressing Alt + ArrowUp no longer clears the search value
+- Fix pressing Alt + ArrowUp on a dropdown changes the selected option to the default option
+- A drop down with no options is now focusable
 
 ## 3.0.2
 

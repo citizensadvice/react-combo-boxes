@@ -24,6 +24,7 @@ function expectToBeClosed() {
   const combobox = screen.getByRole('combobox');
   const listbox = screen.getByRole('listbox', { hidden: true });
   expect(combobox).toHaveAttribute('role', 'combobox');
+  expect(combobox).toHaveFocus();
   expect(listbox).not.toBeVisible();
   expect(combobox).toHaveAttribute('aria-expanded', 'false');
   expect(combobox).not.toHaveAttribute('aria-activedescendant');
@@ -55,7 +56,7 @@ describe('options', () => {
       it('renders a closed drop down', () => {
         const { container } = render(<DropDownWrapper options={options} />);
         expect(container).toMatchSnapshot();
-        expectToBeClosed();
+        expect(screen.getByRole('listbox', { hidden: true })).not.toBeVisible();
       });
 
       it('renders a drop down with a selected value', () => {
@@ -616,7 +617,6 @@ describe('options', () => {
               screen.getByRole('option', { name: 'Banana' }),
             );
             expectToBeClosed();
-            expect(screen.getByRole('combobox')).toHaveFocus();
           });
 
           it('updates the displayed value', async () => {
@@ -667,7 +667,6 @@ describe('options', () => {
             await userEvent.click(screen.getByRole('combobox'));
             await userEvent.keyboard('{ArrowDown}{Enter}');
             expectToBeClosed();
-            expect(screen.getByRole('combobox')).toHaveFocus();
           });
 
           it('updates the displayed value', async () => {
@@ -698,7 +697,6 @@ describe('options', () => {
             await userEvent.click(screen.getByRole('combobox'));
             await userEvent.keyboard('{ArrowDown}{Escape}');
             expectToBeClosed();
-            expect(screen.getByRole('combobox')).toHaveFocus();
           });
         });
 
@@ -729,7 +727,6 @@ describe('options', () => {
             await waitFor(() => {
               expectToBeClosed();
             });
-            expect(screen.getByRole('combobox')).toHaveFocus();
           });
 
           it('updates the displayed value', async () => {
@@ -760,7 +757,6 @@ describe('options', () => {
             await userEvent.click(screen.getByRole('combobox'));
             await userEvent.keyboard('{ArrowDown}{Shift>}{Tab}</Shift}');
             expectToBeClosed();
-            expect(screen.getByRole('combobox')).toHaveFocus();
           });
 
           it('updates the displayed value', async () => {
@@ -772,32 +768,18 @@ describe('options', () => {
         });
 
         describe('when pressing ArrowUp + alt on an option', () => {
-          it('calls onValue', async () => {
-            const spy = jest.fn();
-            render(
-              <DropDownWrapper
-                options={options}
-                onValue={spy}
-              />,
-            );
-            await userEvent.click(screen.getByRole('combobox'));
-            await userEvent.keyboard('{ArrowDown}{Alt>}{ArrowUp}</Alt}');
-            expect(spy).toHaveBeenCalledWith({ label: 'Banana' });
-          });
-
-          it('closes the list box and selects the combobox', async () => {
+          it('closes the list box', async () => {
             render(<DropDownWrapper options={options} />);
             await userEvent.click(screen.getByRole('combobox'));
             await userEvent.keyboard('{ArrowDown}{Alt>}{ArrowUp}</Alt}');
             expectToBeClosed();
-            expect(screen.getByRole('combobox')).toHaveFocus();
           });
 
-          it('updates the displayed value', async () => {
+          it('does not update the displayed value', async () => {
             render(<DropDownWrapper options={options} />);
             await userEvent.click(screen.getByRole('combobox'));
             await userEvent.keyboard('{ArrowDown}{Alt>}{ArrowUp}</Alt}');
-            expect(screen.getByRole('combobox')).toHaveTextContent('Banana');
+            expect(screen.getByRole('combobox')).toHaveTextContent('Apple');
           });
         });
 
@@ -1207,7 +1189,6 @@ describe('options', () => {
             await userEvent.keyboard('{ArrowDown}{Alt>}{ArrowUp}{/Alt}');
             expect(spy).not.toHaveBeenCalled();
             expectToBeClosed();
-            expect(screen.getByRole('combobox')).toHaveFocus();
           });
         });
 
@@ -1417,9 +1398,10 @@ describe('options', () => {
     });
 
     describe('missing label', () => {
-      it('treats as a blank string', () => {
+      it('treats as a blank string', async () => {
         const options = [{}];
         const { container } = render(<DropDownWrapper options={options} />);
+        await userEvent.tab();
         expect(container).toMatchSnapshot();
         expectToBeClosed();
       });
@@ -1432,7 +1414,7 @@ describe('options', () => {
     it('renders a closed drop down', () => {
       const { container } = render(<DropDownWrapper options={options} />);
       expect(container).toMatchSnapshot();
-      expectToBeClosed();
+      expect(screen.getByRole('listbox', { hidden: true })).not.toBeVisible();
     });
 
     it('triggers the onValue callback with the selected value', async () => {
@@ -1447,7 +1429,6 @@ describe('options', () => {
       await userEvent.keyboard('{ArrowDown}{Enter}');
       expect(spy).toHaveBeenCalledWith('Banana');
       expectToBeClosed();
-      expect(screen.getByRole('combobox')).toHaveFocus();
     });
 
     it('triggers the onValue callback with an empty string', async () => {
@@ -1462,7 +1443,6 @@ describe('options', () => {
       await userEvent.keyboard('{Enter}');
       expect(spy).toHaveBeenCalledWith('');
       expectToBeClosed();
-      expect(screen.getByRole('combobox')).toHaveFocus();
     });
   });
 
@@ -1472,7 +1452,7 @@ describe('options', () => {
     it('renders a closed drop down', () => {
       const { container } = render(<DropDownWrapper options={options} />);
       expect(container).toMatchSnapshot();
-      expectToBeClosed();
+      expect(screen.getByRole('listbox', { hidden: true })).not.toBeVisible();
     });
 
     it('triggers the onValue callback with the selected value', async () => {
@@ -1487,7 +1467,6 @@ describe('options', () => {
       await userEvent.keyboard('{ArrowDown}{Enter}');
       expect(spy).toHaveBeenCalledWith(1);
       expectToBeClosed();
-      expect(screen.getByRole('combobox')).toHaveFocus();
     });
 
     it('triggers the onValue callback with 0', async () => {
@@ -1502,7 +1481,6 @@ describe('options', () => {
       await userEvent.keyboard('{ArrowDown}{Enter}');
       expect(spy).toHaveBeenCalledWith(0);
       expectToBeClosed();
-      expect(screen.getByRole('combobox')).toHaveFocus();
     });
   });
 
@@ -1510,7 +1488,6 @@ describe('options', () => {
     it('renders a closed drop down with the option as an empty string', async () => {
       const { container } = render(<DropDownWrapper options={[null]} />);
       expect(container).toMatchSnapshot();
-      expectToBeClosed();
       await userEvent.click(screen.getByRole('combobox'));
       expectToHaveActiveOption(screen.getByRole('option'));
       expect(screen.getByRole('option')).toHaveTextContent('');
@@ -1529,7 +1506,6 @@ describe('options', () => {
       await userEvent.keyboard('{Enter}');
       expect(spy).toHaveBeenCalledWith(null);
       expectToBeClosed();
-      expect(screen.getByRole('combobox')).toHaveFocus();
     });
   });
 
@@ -1537,7 +1513,6 @@ describe('options', () => {
     it('renders a closed drop down with the option as an empty string', async () => {
       const { container } = render(<DropDownWrapper options={[undefined]} />);
       expect(container).toMatchSnapshot();
-      expectToBeClosed();
       await userEvent.click(screen.getByRole('combobox'));
       expectToHaveActiveOption(screen.getByRole('option'));
       expect(screen.getByRole('option')).toHaveTextContent('');
@@ -1556,7 +1531,6 @@ describe('options', () => {
       await userEvent.keyboard('{Enter}');
       expect(spy).toHaveBeenCalledWith(undefined);
       expectToBeClosed();
-      expect(screen.getByRole('combobox')).toHaveFocus();
     });
   });
 
@@ -1569,6 +1543,7 @@ describe('options', () => {
 
     it('does not open the listbox on arrow down', async () => {
       render(<DropDownWrapper options={[]} />);
+      await userEvent.tab();
       await userEvent.keyboard('{ArrowDown}');
       expectToBeClosed();
     });
@@ -1929,7 +1904,8 @@ describe('disabled', () => {
         />,
       );
       await userEvent.click(screen.getByRole('combobox'));
-      expectToBeClosed();
+      expect(document.body).toHaveFocus();
+      expect(screen.getByRole('listbox', { hidden: true })).not.toBeVisible();
     });
 
     it('does not set tabIndex', () => {
