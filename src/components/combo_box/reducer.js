@@ -52,14 +52,14 @@ function reduce(state, { type, ...params }) {
       };
     }
     case SET_CLOSED: {
-      const { expanded } = params;
+      const { expanded, clear } = params;
 
       return {
         ...state,
         expanded: !!expanded,
         focusedOption: null,
         focusListBox: false,
-        search: null,
+        search: clear ? null : state.search,
       };
     }
     case SET_FOCUSED_OPTION: {

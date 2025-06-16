@@ -68,11 +68,13 @@ function applyAutoselect(action) {
   };
 }
 
-function setClosed() {
+function setClosed({ clear = true } = {}) {
   return (dispatch, _, getProps) => {
-    const { onSearch } = getProps();
-    onSearch?.('');
-    dispatch({ type: SET_CLOSED });
+    if (clear) {
+      const { onSearch } = getProps();
+      onSearch?.('');
+    }
+    dispatch({ type: SET_CLOSED, clear });
   };
 }
 
@@ -102,7 +104,7 @@ export function onSelectValue(newValue, expanded) {
       clearOnSelect,
     } = getProps();
     const expand = expanded === undefined ? !closeOnSelect : expanded;
-    dispatch({ type: SET_CLOSED, expanded: expand });
+    dispatch({ type: SET_CLOSED, expanded: expand, clear: true });
     if (newValue?.unselectable) {
       onSearch?.(value?.label || '');
       return;
@@ -123,6 +125,18 @@ export function onSelectValue(newValue, expanded) {
   };
 }
 
+function onEscape() {
+  return (dispatch, getState, getProps) => {
+    const { expanded } = getState();
+    const { editable } = getProps();
+    if (expanded) {
+      dispatch(setClosed({ clear: false }));
+    } else if (editable) {
+      dispatch(onSelectValue(null, false));
+    }
+  };
+}
+
 export function onKeyDown(event) {
   return (dispatch, getState, getProps) => {
     const { expanded, focusListBox, focusedOption, suggestedOption } =
@@ -133,7 +147,6 @@ export function onKeyDown(event) {
       listRef,
       lastKeyRef,
       skipOption: skip,
-      mustHaveSelection,
       editable,
       disabled,
       readOnly,
@@ -180,8 +193,7 @@ export function onKeyDown(event) {
 
     if (key === 'Escape') {
       event.preventDefault();
-      dispatch(setClosed());
-      inputRef.current.focus();
+      dispatch(onEscape());
       return;
     }
 
@@ -192,12 +204,7 @@ export function onKeyDown(event) {
         // Close if altKey, otherwise next item and show
         event.preventDefault();
         if (altKey) {
-          if (mustHaveSelection) {
-            dispatch(onSelectValue(focusedOption));
-          } else {
-            dispatch(setClosed());
-          }
-          inputRef.current.focus();
+          dispatch(setClosed({ clear: false }));
         } else if (expanded) {
           dispatch({
             type: SET_FOCUSED_OPTION,
@@ -350,7 +357,6 @@ export function onKeyDown(event) {
           } else {
             dispatch(setClosed());
           }
-          inputRef.current.focus();
         }
         break;
       }
@@ -507,15 +513,13 @@ export function onClickOption(event, option) {
 
 export function onWrapperKeyDown(event) {
   return (dispatch, getState, getProps) => {
-    const { expanded } = getState();
     const { inputRef } = getProps();
     const { key } = event;
 
-    if (expanded && key === 'Escape') {
+    if (!event.defaultPrevented && key === 'Escape') {
       event.preventDefault();
-      dispatch(setClosed());
+      dispatch(onEscape());
       inputRef.current.focus();
-      event.preventDefault();
     }
   };
 }

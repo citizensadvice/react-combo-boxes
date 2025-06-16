@@ -505,19 +505,11 @@ describe('options', () => {
           expect(screen.getByRole('combobox')).toHaveValue('Apple');
         });
 
-        it('clears the search value', async () => {
-          const onSearch = jest.fn();
-          render(
-            <ComboBoxWrapper
-              options={options}
-              onSearch={onSearch}
-            />,
-          );
-          await userEvent.tab();
-          await userEvent.keyboard(
-            '{ArrowDown}{Enter}{ArrowDown}{ArrowDown}{Escape}',
-          );
-          expect(onSearch).toHaveBeenLastCalledWith('');
+        it('keeps the search value', async () => {
+          render(<ComboBoxWrapper options={options} />);
+          await userEvent.type(screen.getByRole('combobox'), 'app');
+          await userEvent.keyboard('{ArrowDown}{Escape}');
+          expect(screen.getByRole('combobox')).toHaveValue('app');
         });
       });
 
@@ -529,7 +521,7 @@ describe('options', () => {
           expectToBeClosed();
         });
 
-        it('clears the search value', async () => {
+        it('keeps the search value', async () => {
           const onSearch = jest.fn();
           render(
             <ComboBoxWrapper
@@ -537,9 +529,9 @@ describe('options', () => {
               onSearch={onSearch}
             />,
           );
-          await userEvent.tab();
+          await userEvent.type(screen.getByRole('combobox'), 'foo');
           await userEvent.keyboard('{ArrowDown}{Alt>}{ArrowUp}{/Alt}');
-          expect(onSearch).toHaveBeenLastCalledWith('');
+          expect(screen.getByRole('combobox', 'foo')).toHaveValue('foo');
         });
 
         describe('with no value', () => {
@@ -697,6 +689,49 @@ describe('options', () => {
               keys: '[MouseRight]',
             });
             expectToBeClosed();
+          });
+        });
+
+        describe('pressing escape', () => {
+          it('clears the search value', async () => {
+            const onSearch = jest.fn();
+            render(
+              <ComboBoxWrapper
+                options={options}
+                onSearch={onSearch}
+              />,
+            );
+            await userEvent.type(screen.getByRole('combobox'), 'foo');
+            await userEvent.keyboard('{Escape}');
+            expectToBeClosed();
+            expect(screen.getByRole('combobox')).toHaveValue('foo');
+            onSearch.mockClear();
+            await userEvent.keyboard('{Escape}');
+            expect(screen.getByRole('combobox')).toHaveValue('');
+            expect(onSearch).toHaveBeenCalledWith('');
+          });
+
+          it('clears the current value', async () => {
+            const onSearch = jest.fn();
+            const onValue = jest.fn();
+            render(
+              <ComboBoxWrapper
+                options={options}
+                onSearch={onSearch}
+                onValue={onValue}
+                value="Apple"
+              />,
+            );
+            await userEvent.tab();
+            await userEvent.keyboard('{Alt>}{ArrowUp}{/Alt}');
+            expectToBeClosed();
+            expect(screen.getByRole('combobox')).toHaveValue('Apple');
+
+            onSearch.mockClear();
+            await userEvent.keyboard('{Escape}');
+            expect(screen.getByRole('combobox')).toHaveValue('');
+            expect(onValue).toHaveBeenCalledWith(null);
+            expect(onSearch).toHaveBeenCalledWith('');
           });
         });
       });
@@ -1859,24 +1894,6 @@ describe('busy', () => {
         });
       });
 
-      describe('with a search and closed', () => {
-        it('sets aria-busy=false on the wrapper', async () => {
-          const { container } = render(
-            <ComboBoxWrapper
-              options={['foo']}
-              busy
-              busyDebounce={null}
-            />,
-          );
-          await userEvent.type(screen.getByRole('combobox'), 'foo');
-          await userEvent.type(
-            screen.getByRole('combobox'),
-            '{Alt>}{ArrowUp}{/Alt}',
-          );
-          expect(container.firstChild).toHaveAttribute('aria-busy', 'false');
-        });
-      });
-
       describe('with a search matching the selected option and expanded', () => {
         it('sets aria-busy=true on the wrapper', async () => {
           const { container } = render(
@@ -2724,7 +2741,7 @@ describe('autoselect', () => {
         await userEvent.type(document.activeElement, 'fo');
         expect(document.activeElement).toHaveValue('foo');
         await userEvent.type(document.activeElement, '{Escape}');
-        expect(document.activeElement).toHaveValue('');
+        expect(document.activeElement).toHaveValue('fo');
       });
     });
 
