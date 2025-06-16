@@ -35,7 +35,6 @@ function renderInput(props, state, componentProps) {
     classPrefix,
     children,
     disabled,
-    options,
     required,
     value,
     selectedOption,

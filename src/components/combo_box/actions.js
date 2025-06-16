@@ -147,7 +147,6 @@ export function onKeyDown(event) {
       listRef,
       lastKeyRef,
       skipOption: skip,
-      mustHaveSelection,
       editable,
       disabled,
       readOnly,
