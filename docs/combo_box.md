@@ -190,6 +190,10 @@ Sets the message to be read to a screen-reader when an option is highlighted.
 
 Defaults to: "label x of y is highlighted"
 
+#### `visuallyHiddenClassName: string = 'visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only'`
+
+The class name to visually hide an element. This is used for aria-live messages and highlighting.
+
 #### render props
 
 A number of render methods are provided to customise the appearance of the component.

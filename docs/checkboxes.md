@@ -87,15 +87,14 @@ Each render method has the signature
 
 The render functions available are:
 
-| Name                         | Default value                                         | Description                                                                        |
-| ---------------------------- | ----------------------------------------------------- | ---------------------------------------------------------------------------------- |
-| `renderWrapper`              | `({ key, ...props }) => <div key={key} {...props} />` | Renders the wrapper for each checkbox                                              |
-| `renderInput`                | `(props) => <input {...props} />`                     | Renders the checkbox input                                                         |
-| `renderLabel`                | `(props) => <label {...props} />`                     | Renders label for a checkbox                                                       |
-| `renderLabelWrapper`         | `(props) => <Fragment {...props} />`                  | Allows an element to wraps the label and description                               |
-| `renderDescription`          | `(props) => <div {...props} />`                       | Renders the optional description for checkbox                                      |
-| `renderGroup`                | `({ key, ...props }) => <div key={key} {...props} />` | Wraps a group of options                                                           |
-| `renderGroupLabel`           | `(props) => <div {...props} />`                       | Renders the visible label for a group. This will be ignored by a screen-reader     |
-| `renderGroupAccessibleLabel` | `(props) => <span {...props} />`                      | Renders the accessible label for a group. This will be read out before each option |
+| Name                 | Default value                                         | Description                                                                    |
+| -------------------- | ----------------------------------------------------- | ------------------------------------------------------------------------------ |
+| `renderWrapper`      | `({ key, ...props }) => <div key={key} {...props} />` | Renders the wrapper for each checkbox                                          |
+| `renderInput`        | `(props) => <input {...props} />`                     | Renders the checkbox input                                                     |
+| `renderLabel`        | `(props) => <label {...props} />`                     | Renders label for a checkbox                                                   |
+| `renderLabelWrapper` | `(props) => <Fragment {...props} />`                  | Allows an element to wraps the label and description                           |
+| `renderDescription`  | `(props) => <div {...props} />`                       | Renders the optional description for checkbox                                  |
+| `renderGroup`        | `({ key, ...props }) => <div key={key} {...props} />` | Wraps a group of options                                                       |
+| `renderGroupLabel`   | `(props) => <div {...props} />`                       | Renders the visible label for a group. This will be ignored by a screen-reader |
 
 [options]: options.md

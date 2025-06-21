@@ -41,6 +41,10 @@ If you wish to submit the value add a `<input type="hidden" name="name" value="v
 
 This uses the same properties as [ComboBox][combo-box], with the following additions:
 
+#### `expandOnFocus: boolean = false`
+
+Expand the list box when then component is focused.
+
 ### `placeholderOption: string`
 
 Add a placeholder option as the first option in the list.
