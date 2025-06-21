@@ -636,36 +636,3 @@ describe('renderGroupLabel', () => {
     );
   });
 });
-
-describe('renderGroupAccessibleLabel', () => {
-  it('customises the group accessible label', () => {
-    const spy = jest.fn((props) => (
-      <div
-        data-foo="bar"
-        {...props}
-      />
-    ));
-    render(
-      <Test
-        options={[{ label: 'Apple', group: 'fizz' }]}
-        renderGroupAccessibleLabel={spy}
-        test="foo"
-      />,
-    );
-
-    expect(document.querySelector('label').firstElementChild).toHaveAttribute(
-      'data-foo',
-      'bar',
-    );
-    expect(spy).toHaveBeenCalledWith(
-      expect.any(Object),
-      {
-        group: expect.objectContaining({ label: 'fizz' }),
-      },
-      expect.objectContaining({
-        options: expect.any(Array),
-        test: 'foo',
-      }),
-    );
-  });
-});

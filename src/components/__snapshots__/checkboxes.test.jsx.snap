@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`options as array of strings renders checkbox group 1`] = `
 <div>
@@ -14,6 +14,7 @@ exports[`options as array of strings renders checkbox group 1`] = `
     <label
       class="react-combo-boxes-checkbox__label"
       for="id_option_apple"
+      id="id_option_apple_label"
     >
       Apple
     </label>
@@ -30,6 +31,7 @@ exports[`options as array of strings renders checkbox group 1`] = `
     <label
       class="react-combo-boxes-checkbox__label"
       for="id_option_banana"
+      id="id_option_banana_label"
     >
       Banana
     </label>
@@ -46,6 +48,7 @@ exports[`options as array of strings renders checkbox group 1`] = `
     <label
       class="react-combo-boxes-checkbox__label"
       for="id_option_orange"
+      id="id_option_orange_label"
     >
       Orange
     </label>
@@ -67,6 +70,7 @@ exports[`options options as array of objects group renders grouped options 1`] =
     <label
       class="react-combo-boxes-checkbox__label"
       for="id_option_apple"
+      id="id_option_apple_label"
     >
       Apple
     </label>
@@ -76,6 +80,7 @@ exports[`options options as array of objects group renders grouped options 1`] =
   >
     <div
       class="react-combo-boxes-checkbox-group__label"
+      id="id_group_citrus"
     >
       Citrus
     </div>
@@ -83,6 +88,7 @@ exports[`options options as array of objects group renders grouped options 1`] =
       class="react-combo-boxes-checkbox"
     >
       <input
+        aria-labelledby="id_group_citrus id_option_orange_label"
         class="react-combo-boxes-checkbox__input"
         id="id_option_orange"
         type="checkbox"
@@ -91,12 +97,8 @@ exports[`options options as array of objects group renders grouped options 1`] =
       <label
         class="react-combo-boxes-checkbox__label"
         for="id_option_orange"
+        id="id_option_orange_label"
       >
-        <span
-          class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-        >
-          Citrus 
-        </span>
         Orange
       </label>
     </div>
@@ -104,6 +106,7 @@ exports[`options options as array of objects group renders grouped options 1`] =
       class="react-combo-boxes-checkbox"
     >
       <input
+        aria-labelledby="id_group_citrus id_option_lemon_label"
         class="react-combo-boxes-checkbox__input"
         id="id_option_lemon"
         type="checkbox"
@@ -112,12 +115,8 @@ exports[`options options as array of objects group renders grouped options 1`] =
       <label
         class="react-combo-boxes-checkbox__label"
         for="id_option_lemon"
+        id="id_option_lemon_label"
       >
-        <span
-          class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-        >
-          Citrus 
-        </span>
         Lemon
       </label>
     </div>
@@ -127,6 +126,7 @@ exports[`options options as array of objects group renders grouped options 1`] =
   >
     <div
       class="react-combo-boxes-checkbox-group__label"
+      id="id_group_berry"
     >
       Berry
     </div>
@@ -134,6 +134,7 @@ exports[`options options as array of objects group renders grouped options 1`] =
       class="react-combo-boxes-checkbox"
     >
       <input
+        aria-labelledby="id_group_berry id_option_raspberry_label"
         class="react-combo-boxes-checkbox__input"
         id="id_option_raspberry"
         type="checkbox"
@@ -142,12 +143,8 @@ exports[`options options as array of objects group renders grouped options 1`] =
       <label
         class="react-combo-boxes-checkbox__label"
         for="id_option_raspberry"
+        id="id_option_raspberry_label"
       >
-        <span
-          class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-        >
-          Berry 
-        </span>
         Raspberry
       </label>
     </div>
@@ -155,6 +152,7 @@ exports[`options options as array of objects group renders grouped options 1`] =
       class="react-combo-boxes-checkbox"
     >
       <input
+        aria-labelledby="id_group_berry id_option_strawberry_label"
         class="react-combo-boxes-checkbox__input"
         id="id_option_strawberry"
         type="checkbox"
@@ -163,12 +161,8 @@ exports[`options options as array of objects group renders grouped options 1`] =
       <label
         class="react-combo-boxes-checkbox__label"
         for="id_option_strawberry"
+        id="id_option_strawberry_label"
       >
-        <span
-          class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-        >
-          Berry 
-        </span>
         Strawberry
       </label>
     </div>
