@@ -32,6 +32,15 @@ function renderGroup(props, { groupChildren, group: { key, label } }) {
   );
 }
 
+function renderOption({ key, 'aria-labelledby': _, ...props }) {
+  return (
+    <li
+      key={key}
+      {...props}
+    />
+  );
+}
+
 export function Example() {
   const [value, setValue] = useState(null);
   const ref = useRef();
@@ -52,7 +61,7 @@ export function Example() {
         onValue={setValue}
         options={options}
         renderGroup={renderGroup}
-        renderGroupAccessibleLabel={() => null}
+        renderOption={renderOption}
       />
 
       <label htmlFor="output">Current value</label>
