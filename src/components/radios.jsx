@@ -4,7 +4,6 @@ import { useNormalisedOptions } from '../hooks/use_normalised_options';
 import { renderGroupedOptions } from '../helpers/render_grouped_options';
 import { classPrefix as defaultClassPrefix } from '../constants/class_prefix';
 import { makeBEMClass } from '../helpers/make_bem_class';
-import { visuallyHiddenClassName } from '../constants/visually_hidden_class_name';
 
 const defaultRenderWrapper = ({ key, ...props }) => (
   <div
@@ -24,7 +23,6 @@ const defaultRenderGroup = ({ key, ...props }) => (
   />
 );
 const defaultRenderGroupLabel = (props) => <div {...props} />;
-const defaultRenderGroupAccessibleLabel = (props) => <span {...props} />;
 
 export const Radios = memo(
   ({
@@ -40,7 +38,6 @@ export const Radios = memo(
     renderDescription = defaultRenderDescription,
     renderGroup = defaultRenderGroup,
     renderGroupLabel = defaultRenderGroupLabel,
-    renderGroupAccessibleLabel = defaultRenderGroupAccessibleLabel,
     required = false,
     value: _value = null,
     ...rawProps
@@ -57,7 +54,6 @@ export const Radios = memo(
       renderDescription,
       renderGroup,
       renderGroupLabel,
-      renderGroupAccessibleLabel,
       required,
       ...rawProps,
       ...useNormalisedOptions({
@@ -91,6 +87,7 @@ export const Radios = memo(
                   {
                     children: label,
                     className: makeBEMClass(groupClassPrefix, 'label'),
+                    id: key,
                     ...html,
                   },
                   { group },
@@ -108,6 +105,7 @@ export const Radios = memo(
         const { identity, label, key, html, disabled, description, group } =
           option;
         const checked = selectedOption?.identity === identity;
+        const labelledBy = group ? `${group.key} ${key}_label` : null;
 
         return renderWrapper(
           {
@@ -119,6 +117,7 @@ export const Radios = memo(
                     'aria-describedby': description
                       ? `${key}_description`
                       : null,
+                    'aria-labelledby': labelledBy,
                     checked,
                     disabled,
                     id: key,
@@ -139,22 +138,9 @@ export const Radios = memo(
                       {renderLabel(
                         {
                           htmlFor: key,
-                          children: (
-                            <>
-                              {group
-                                ? renderGroupAccessibleLabel(
-                                    {
-                                      className: visuallyHiddenClassName,
-                                      children: `${group.label} `,
-                                    },
-                                    { group },
-                                    optionisedProps,
-                                  )
-                                : null}
-                              {label}
-                            </>
-                          ),
+                          children: label,
                           className: makeBEMClass(classPrefix, 'label'),
+                          id: `${key}_label`,
                         },
                         { option, checked },
                         optionisedProps,
@@ -202,7 +188,6 @@ Radios.propTypes = {
   renderDescription: PropTypes.func,
   renderGroup: PropTypes.func,
   renderGroupLabel: PropTypes.func,
-  renderGroupAccessibleLabel: PropTypes.func,
 };
 
 Radios.displayName = 'Radios';

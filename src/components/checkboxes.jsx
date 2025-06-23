@@ -4,7 +4,6 @@ import { useNormalisedOptions } from '../hooks/use_normalised_options';
 import { renderGroupedOptions } from '../helpers/render_grouped_options';
 import { classPrefix as defaultClassPrefix } from '../constants/class_prefix';
 import { makeBEMClass } from '../helpers/make_bem_class';
-import { visuallyHiddenClassName } from '../constants/visually_hidden_class_name';
 
 const defaultRenderWrapper = ({ key, ...props }) => (
   <div
@@ -24,7 +23,6 @@ const defaultRenderGroup = ({ key, ...props }) => (
   />
 );
 const defaultRenderGroupLabel = (props) => <div {...props} />;
-const defaultRenderGroupAccessibleLabel = (props) => <span {...props} />;
 
 export const Checkboxes = memo(
   ({
@@ -41,7 +39,6 @@ export const Checkboxes = memo(
     renderDescription = defaultRenderDescription,
     renderGroup = defaultRenderGroup,
     renderGroupLabel = defaultRenderGroupLabel,
-    renderGroupAccessibleLabel = defaultRenderGroupAccessibleLabel,
     ...props
   }) => {
     const normalisedOptions = useNormalisedOptions({
@@ -63,7 +60,6 @@ export const Checkboxes = memo(
       renderDescription,
       renderGroup,
       renderGroupLabel,
-      renderGroupAccessibleLabel,
       ...props,
       normalisedOptions,
     });
@@ -121,6 +117,7 @@ export const Checkboxes = memo(
                   {
                     children: label,
                     className: makeBEMClass(groupClassPrefix, 'label'),
+                    id: key,
                     ...html,
                   },
                   { group },
@@ -140,6 +137,7 @@ export const Checkboxes = memo(
         const checked = selectedOptions.some(
           (item) => item.identity === identity,
         );
+        const labelledBy = group ? `${group.key} ${key}_label` : null;
 
         return renderWrapper(
           {
@@ -151,6 +149,7 @@ export const Checkboxes = memo(
                     'aria-describedby': description
                       ? `${key}_description`
                       : null,
+                    'aria-labelledby': labelledBy,
                     checked,
                     disabled,
                     id: key,
@@ -171,22 +170,9 @@ export const Checkboxes = memo(
                       {renderLabel(
                         {
                           htmlFor: key,
-                          children: (
-                            <>
-                              {group
-                                ? renderGroupAccessibleLabel(
-                                    {
-                                      className: visuallyHiddenClassName,
-                                      children: `${group.label} `,
-                                    },
-                                    { group },
-                                    optionisedProps,
-                                  )
-                                : null}
-                              {label}
-                            </>
-                          ),
+                          children: label,
                           className: makeBEMClass(classPrefix, 'label'),
+                          id: `${key}_label`,
                         },
                         { option, checked },
                         optionisedProps,
@@ -233,7 +219,6 @@ Checkboxes.propTypes = {
   renderDescription: PropTypes.func,
   renderGroup: PropTypes.func,
   renderGroupLabel: PropTypes.func,
-  renderGroupAccessibleLabel: PropTypes.func,
 };
 
 Checkboxes.displayName = 'Checkboxes';
