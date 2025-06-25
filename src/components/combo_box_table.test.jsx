@@ -135,6 +135,29 @@ describe('columns with headers', () => {
       colour: 'Yellow',
     });
   });
+
+  it('omits headers for columns with no value', async () => {
+    const testOptions = [
+      { label: 'Apple', type: 'Fruit', colour: 'Green' },
+      { label: 'Banana', colour: 'Yellow' },
+      { label: 'Potato', type: 'Vegetable', colour: 'Brown' },
+    ];
+    const spy = jest.fn();
+
+    render(
+      <ComboBoxWrapper
+        options={testOptions}
+        columns={columns}
+        onValue={spy}
+      />,
+    );
+    await userEvent.tab();
+    await userEvent.click(screen.getByRole('option', { name: 'Name Banana' }));
+    expect(spy).toHaveBeenCalledWith({
+      label: 'Banana',
+      colour: 'Yellow',
+    });
+  });
 });
 
 describe('columns with html', () => {
