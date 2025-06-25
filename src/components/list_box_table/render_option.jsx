@@ -23,7 +23,9 @@ export function renderOption(
       'aria-labelledby': [
         group?.key,
         ...columns.flatMap((column) => [
-          column.label && `${componentProps.id}_column_${column.key}`,
+          column.label &&
+            option.value[column.name] &&
+            `${componentProps.id}_column_${column.key}`,
           `${option.key}_cell_${column.key}`,
         ]),
       ]
