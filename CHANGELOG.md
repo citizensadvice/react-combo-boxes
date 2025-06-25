@@ -1,18 +1,26 @@
 # Change log
 
-## Unreleased
+## 4.0.0-rc.1
+
+### Changed
+
+Thanks to recent improvements in browser and screen-reader support it has been possible to make a number of simplifications.
 
 - Remove non-breaking space separators between options as the Mac Chrome bug requiring this has been resolved
 - Use aria-labelledby for all option labels involving groups instead of inserting visually hidden text
-- Removes the `renderGroupAccessibleLabel` and `renderTableCellColumnAccessibleLabel` from all components as these are no longer required
-- Fix an issue where drop down aria-live message was prefixed with "undefined"
-- Switch to the ARIA 1.2 pattern as this now works better than the ARIA 1.0 pattern.
+- Removes the `renderGroupAccessibleLabel` and `renderTableCellColumnAccessibleLabel` from all components as these are no longer required distributed
+  to the aria-labelledby change
 - Removed `managedFocus` option. Focus for screen-readers now entirely uses `aria-activedescendant` which now works reliably over all screen-readers.
-- Fix the scrolling options not working in the drop down
+- Switch to the ARIA 1.2 pattern as this now works better than the ARIA 1.0 pattern.
 - Adjusted Escape to behave like the aria-practices recommendations. Press once to close and press a second time to clear the value.
 - Pressing Alt + ArrowUp no longer clears the search value
-- Fix pressing Alt + ArrowUp on a dropdown changes the selected option to the default option
 - A drop down with no options is now focusable
+
+### Fixes
+
+- Fix an issue where drop down aria-live message was prefixed with "undefined"
+- Fix the scrolling options not working in the drop down
+- Fix pressing Alt + ArrowUp on a dropdown changes the selected option to the default option
 
 ## 3.0.2
 
