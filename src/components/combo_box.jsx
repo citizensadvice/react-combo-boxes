@@ -503,10 +503,6 @@ export const ComboBox = memo(
                     id={`${id}_listbox`}
                     tabIndex={-1}
                     hidden={!showListBox}
-                    aria-activedescendant={
-                      (showListBox && focusListBox && focusedOption?.key) ||
-                      null
-                    }
                     aria-labelledby={joinTokens(ariaLabelledBy)}
                     onSelectOption={clickOption}
                     focusedRef={focusedRef}

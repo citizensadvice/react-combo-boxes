@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`options as array of objects disabled sets the aria-disabled attribute 1`] = `
 <div>
@@ -22,7 +22,6 @@ exports[`options as array of objects disabled sets the aria-disabled attribute 1
       class="react-combo-boxes-dropdown__listbox-wrapper"
     >
       <ul
-        aria-activedescendant="id_option_apple"
         aria-labelledby="id-label"
         class="react-combo-boxes-dropdown__listbox"
         id="id_listbox"
@@ -592,7 +591,6 @@ exports[`options updating options updates the options 1`] = `
       class="react-combo-boxes-dropdown__listbox-wrapper"
     >
       <ul
-        aria-activedescendant="id_option_strawberry"
         aria-labelledby="id-label"
         class="react-combo-boxes-dropdown__listbox"
         id="id_listbox"
