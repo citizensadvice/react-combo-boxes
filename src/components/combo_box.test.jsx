@@ -79,7 +79,7 @@ function expectToHaveActiveOption(option, { focused = true } = {}) {
   expect(listbox).toBeVisible();
   expect(combobox).toHaveAttribute('aria-expanded', 'true');
   expect(combobox).toHaveAttribute('aria-activedescendant', option.id);
-  expect(listbox).toHaveAttribute('aria-activedescendant', option.id);
+  expect(listbox).not.toHaveAttribute('aria-activedescendant');
   expect(option).toHaveAttribute('role', 'option');
   expect(option).toHaveAttribute('aria-selected', 'true');
   if (focused) {

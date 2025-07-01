@@ -23,6 +23,7 @@ const DropDownWrapper = forwardRef(({ value: _value, ...props }, ref) => {
 function expectToBeClosed() {
   const combobox = screen.getByRole('combobox');
   const listbox = screen.getByRole('listbox', { hidden: true });
+  expect(combobox).toHaveAttribute('aria-controls', listbox.id);
   expect(combobox).toHaveAttribute('role', 'combobox');
   expect(combobox).toHaveFocus();
   expect(listbox).not.toBeVisible();
@@ -34,12 +35,13 @@ function expectToBeClosed() {
 function expectToHaveActiveOption(option) {
   const combobox = screen.getByRole('combobox');
   const listbox = screen.getByRole('listbox', { hidden: true });
+  expect(combobox).toHaveAttribute('aria-controls', listbox.id);
   expect(combobox).toHaveFocus();
   expect(combobox).toHaveAttribute('role', 'combobox');
   expect(listbox).toBeVisible();
   expect(combobox).toHaveAttribute('aria-expanded', 'true');
   expect(combobox).toHaveAttribute('aria-activedescendant', option.id);
-  expect(listbox).toHaveAttribute('aria-activedescendant', option.id);
+  expect(listbox).not.toHaveAttribute('aria-activedescendant');
   expect(option).toHaveAttribute('role', 'option');
   expect(option).toHaveAttribute('aria-selected', 'true');
 }
