@@ -1,6 +1,6 @@
 # Change log
 
-## 4.0.0-rc.1
+## 4.0.0
 
 ### Changed
 
@@ -8,11 +8,13 @@ Thanks to recent improvements in browser and screen-reader support it has been p
 
 - Remove non-breaking space separators between options as the Mac Chrome bug requiring this has been resolved
 - Use aria-labelledby for all option labels involving groups instead of inserting visually hidden text
-- Removes the `renderGroupAccessibleLabel` and `renderTableCellColumnAccessibleLabel` from all components as these are no longer required distributed
-  to the aria-labelledby change
-- Removed `managedFocus` option. Focus for screen-readers now entirely uses `aria-activedescendant` which now works reliably over all screen-readers.
-- Switch to the ARIA 1.2 pattern as this now works better than the ARIA 1.0 pattern.
-- Adjusted Escape to behave like the aria-practices recommendations. Press once to close and press a second time to clear the value.
+- Removes the `renderGroupAccessibleLabel` and `renderTableCellColumnAccessibleLabel` from all components
+  as these are no longer required
+- Removed `managedFocus` option. Focus for screen-readers now entirely uses `aria-activedescendant` which now
+  works reliably over all screen-readers
+- Switch to the ARIA 1.2 pattern as this now works reliably over all screen-readers
+- Adjusted Escape to behave like the aria-practices recommendations. Press once to close and press a second time
+  to clear the value.
 - Pressing Alt + ArrowUp no longer clears the search value
 - A drop down with no options is now focusable
 
