@@ -1,7 +1,6 @@
-import React, { Fragment, useContext } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { inverseHighlight } from '../../helpers/inverse_highlight';
-import { Context } from '../combo_box/context';
 
 function emptyHighlight(highlight) {
   return (
@@ -11,32 +10,57 @@ function emptyHighlight(highlight) {
 }
 
 export function Highlight({ children, inverse = false }) {
-  const { visuallyHiddenClassName } = useContext(Context);
   let highlighted = children;
+
   if (inverse) {
     highlighted = inverseHighlight(highlighted);
   }
 
-  if (emptyHighlight(highlighted)) {
-    return highlighted.join('');
-  }
+  const ref = useRef();
 
-  const parts = highlighted.map(
-    (part) => (Array.isArray(part) ? <mark>{part}</mark> : part), //eslint-disable-line react/jsx-key
-  );
-  const highlight = React.createElement(Fragment, null, ...parts);
+  useLayoutEffect(() => {
+    const { current } = ref;
 
-  if (parts.length === 1) {
-    return highlight;
-  }
+    if (!current) {
+      return;
+    }
 
-  // Accessible naming treats inline elements as block and adds additional white space
-  return (
-    <>
-      <span className={visuallyHiddenClassName}>{highlighted.join('')}</span>
-      <span aria-hidden="true">{highlight}</span>
-    </>
-  );
+    if (emptyHighlight(highlighted)) {
+      return;
+    }
+
+    if (!CSS.highlights) {
+      return;
+    }
+
+    let highlight = CSS.highlights.get('react-combo-boxes');
+    if (!highlight) {
+      highlight = new window.Highlight();
+      CSS.highlights.set('react-combo-boxes', highlight);
+    }
+
+    let index = 0;
+    const added = highlighted
+      .map((part) => {
+        if (Array.isArray(part)) {
+          const range = new Range();
+          range.setStart(current.firstChild, index);
+          range.setEnd(current.firstChild, index + part[0].length);
+          highlight.add(range);
+          index += part[0].length;
+          return range;
+        } else {
+          index += part.length;
+        }
+      })
+      .filter(Boolean);
+
+    return () => {
+      added.forEach((range) => highlight.delete(range));
+    };
+  });
+
+  return <span ref={ref}>{highlighted.join('')}</span>;
 }
 
 Highlight.propTypes = {

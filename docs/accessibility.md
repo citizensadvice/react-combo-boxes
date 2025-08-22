@@ -111,11 +111,11 @@ Some shortcuts are ambiguous.
 
 This library supports [highlighting](highlighters.md) the parts of the found results that match the search term.
 
-Semantically this can be archived with `<mark>Hyp</mark>atia`.
+Semantically this can be achieved with `<mark>Hyp</mark>atia`.
 
 Unfortunately some screen-readers read this as "Hyp athia", which can turn search results into nonsense.
 
-This library hides the highlighted text from a screen-reader and uses a visually hidden element so it always reads the unhighlighted result.
+Instead this library uses the [CSS custom highlight api](https://developer.mozilla.org/en-US/docs/Web/API/CSS_Custom_Highlight_API) to draw the highlight.
 
 ## Autocomplete
 

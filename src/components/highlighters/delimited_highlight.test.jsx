@@ -1,5 +1,6 @@
 import { render } from '@testing-library/react';
 import { DelimitedHighlight } from './delimited_highlight';
+import '../../__mock_highlight__';
 
 it('highlights empty string', () => {
   const { container } = render(
@@ -9,7 +10,12 @@ it('highlights empty string', () => {
       end="</em>"
     />,
   );
-  expect(container).toMatchInlineSnapshot(`<div />`);
+  expect(container).toMatchInlineSnapshot(`
+   <div>
+     <span />
+   </div>
+  `);
+  expect(CSS.highlights.get('react-combo-boxes')).toHaveHighlights();
 });
 
 it('highlights with no match', () => {
@@ -21,10 +27,13 @@ it('highlights with no match', () => {
     />,
   );
   expect(container).toMatchInlineSnapshot(`
-<div>
-  foo
-</div>
-`);
+   <div>
+     <span>
+       foo
+     </span>
+   </div>
+  `);
+  expect(CSS.highlights.get('react-combo-boxes')).toHaveHighlights();
 });
 
 it('highlights with a match', () => {
@@ -36,22 +45,17 @@ it('highlights with a match', () => {
     />,
   );
   expect(container).toMatchInlineSnapshot(`
-<div>
-  <span
-    class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-  >
-    foo bar
-  </span>
-  <span
-    aria-hidden="true"
-  >
-    foo 
-    <mark>
-      bar
-    </mark>
-  </span>
-</div>
-`);
+   <div>
+     <span>
+       foo bar
+     </span>
+   </div>
+  `);
+  expect(CSS.highlights.get('react-combo-boxes')).toHaveHighlights([
+    'bar',
+    4,
+    7,
+  ]);
 });
 
 it('inverses a highlight', () => {
@@ -64,20 +68,15 @@ it('inverses a highlight', () => {
     />,
   );
   expect(container).toMatchInlineSnapshot(`
-<div>
-  <span
-    class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-  >
-    foo bar
-  </span>
-  <span
-    aria-hidden="true"
-  >
-    <mark>
-      foo
-    </mark>
-     bar
-  </span>
-</div>
-`);
+   <div>
+     <span>
+       foo bar
+     </span>
+   </div>
+  `);
+  expect(CSS.highlights.get('react-combo-boxes')).toHaveHighlights([
+    'foo',
+    0,
+    3,
+  ]);
 });

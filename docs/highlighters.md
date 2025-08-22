@@ -18,6 +18,16 @@ function renderValue(_, { option: { label }, search) {
 />
 ```
 
+The highlight is created using the [CSS custom highlight api](https://developer.mozilla.org/en-US/docs/Web/API/CSS_Custom_Highlight_API).
+
+They are styled using:
+
+```css
+::highlight(react-combo-boxes) {
+  background-color: peachpuff;
+}
+```
+
 Four highlight components are provided, or you could build your own.
 
 ## Available highlighters
@@ -37,7 +47,7 @@ For example elastic search will return highlighted strings that look like:
   start="<em>"
   end="</em>"
 />
-// <div>foo<mark>bar</mark></div>
+// foo*bar*
 ```
 
 ### `PrefixHighlight`
@@ -48,10 +58,10 @@ Left trims and matches case insensitively.
 
 ```js
 <PrefixHighlight
-  value="foo bar foo"
-  search="foo"
+  value="foo bar fo"
+  search="fo"
 />
-// <div><mark>foo</mark> bar foo</div>
+// *fo*o bar *fo*
 ```
 
 ### `SubstringHighlight`
@@ -67,7 +77,7 @@ Useful for highlighting a database ilike query.
   value="foo barfoo"
   search="foo"
 />
-// <div><mark>foo</mark> bar<mark>foo</mark></div>
+// *foo* bar*foo*
 ```
 
 ### `TokenHighlight`
@@ -79,7 +89,7 @@ Highlights matching tokens from a token search.
   value="foo foobar barfoo"
   search="foo"
 />
-// <div><mark>foo</mark> <mark>foo</mark>bar barfoo</div>
+// *foo* *foo*bar barfoo
 ```
 
 ### `Highlight`
@@ -91,5 +101,5 @@ The children should be an array whose members are strings or a single item array
 
 ```js
 <Highlight>{['foo', ['bar'], ' foe']}</Highlight>
-// <div>foo<mark>bar</mark> foe</div>
+// foo*bar* foe
 ```
