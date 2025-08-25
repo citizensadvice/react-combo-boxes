@@ -1,5 +1,9 @@
 # Change log
 
+## Unreleased
+
+- Fixed drop down with only one issue with that issue selected would not show as expanded
+
 ## 4.0.0
 
 ### Changed

@@ -332,11 +332,12 @@ export const ComboBox = memo(
           expanded &&
           !!options.length &&
           !(
+            !mustHaveSelection &&
             options.length === 1 &&
             options[0].identity === selectedOption?.identity &&
             options[0].label === (search ?? value?.label)
           ),
-        [expanded, options, selectedOption, search, value],
+        [expanded, options, selectedOption, search, value, mustHaveSelection],
       );
 
       const onLayoutFocusedOption = useEvent(() => {

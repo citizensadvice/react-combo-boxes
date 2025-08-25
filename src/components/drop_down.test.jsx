@@ -1687,6 +1687,22 @@ describe('value', () => {
     });
   });
 
+  describe('with a single option matching the value', () => {
+    it('does not open the combo box', async () => {
+      const options = ['foo'];
+      render(
+        <DropDownWrapper
+          options={options}
+          value="foo"
+        />,
+      );
+      await userEvent.click(screen.getByRole('combobox'));
+      expectToHaveActiveOption(
+        screen.getByRole('option', { name: 'foo' }),
+      );
+    });
+  });
+
   describe('updating the value', () => {
     it('updates the aria-selected value of an open listbox', async () => {
       const { rerender } = render(
