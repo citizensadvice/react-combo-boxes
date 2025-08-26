@@ -192,7 +192,7 @@ Defaults to: "label x of y is highlighted"
 
 #### `visuallyHiddenClassName: string = 'visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only'`
 
-The class name to visually hide an element. This is used for aria-live messages and highlighting.
+The class name to visually hide an element. This is used for aria-live messages.
 
 #### render props
 
