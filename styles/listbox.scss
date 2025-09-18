@@ -143,20 +143,18 @@
     border-top: 1px solid #ddd;
   }
 
-  & {
-    @supports (scroll-padding-top: 1px) and (position: sticky) {
-      &__listbox--header {
-        scroll-padding-top: var(--react-combo-boxes-table-header-offset);
-      }
+  @supports (scroll-padding-top: 1px) and (position: sticky) {
+    &__listbox--header {
+      scroll-padding-top: var(--react-combo-boxes-table-header-offset);
+    }
 
-      &__table-header {
-        position: sticky;
-        top: 0;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        background-color: var(--react-combo-boxes-background-color);
-      }
+    &__table-header {
+      position: sticky;
+      top: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      background-color: var(--react-combo-boxes-background-color);
     }
   }
 
