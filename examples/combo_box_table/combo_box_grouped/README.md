@@ -1,3 +1,3 @@
-# Combo box table with header row
+# Combo box table with groups
 
-A combo box table whose options are laid out in a table, and the table has a header row displaying the column names.
+A combo box table whose options are grouped, but without a header row
