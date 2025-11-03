@@ -137,27 +137,20 @@
 
   &__table-header {
     border-bottom: 1px solid #ddd;
+    position: sticky;
+    top: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    background-color: var(--react-combo-boxes-background-color);
   }
 
   &__table-group-header {
     border-top: 1px solid #ddd;
   }
 
-  & {
-    @supports (scroll-padding-top: 1px) and (position: sticky) {
-      &__listbox--header {
-        scroll-padding-top: var(--react-combo-boxes-table-header-offset);
-      }
-
-      &__table-header {
-        position: sticky;
-        top: 0;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        background-color: var(--react-combo-boxes-background-color);
-      }
-    }
+  &__listbox--header {
+    scroll-padding-top: var(--react-combo-boxes-table-header-offset);
   }
 
   &__table-cell {
