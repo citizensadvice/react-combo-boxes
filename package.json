@@ -76,7 +76,7 @@
     "react-dom": "^19.1.0",
     "stylelint": "^16.10.0",
     "stylelint-config-standard": "^39.0.0",
-    "stylelint-config-standard-scss": "^15.0.0",
+    "stylelint-config-standard-scss": "^16.0.0",
     "stylelint-scss": "^6.8.1"
   },
   "peerDependencies": {
