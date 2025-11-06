@@ -1,6 +1,8 @@
 # Change log
 
-## Unreleased
+## 5.0.0
+
+### Changed
 
 - Highlights are now generated using the [CSS custom highlight api](https://developer.mozilla.org/en-US/docs/Web/API/CSS_Custom_Highlight_API).
 
