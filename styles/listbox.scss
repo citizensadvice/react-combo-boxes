@@ -1,6 +1,10 @@
 @use 'variables';
 @use 'sr_only';
 
+::highlight(react-combo-boxes) {
+  background-color: var(--react-combo-boxes-mark-color);
+}
+
 @mixin react-combo-boxes-listbox-container {
   list-style: none;
   min-width: 100%;
@@ -55,10 +59,6 @@
     padding: var(--react-combo-boxes-padding-y)
       var(--react-combo-boxes-padding-x);
     cursor: pointer;
-
-    mark {
-      background-color: var(--react-combo-boxes-mark-color);
-    }
 
     &:hover,
     &:active {

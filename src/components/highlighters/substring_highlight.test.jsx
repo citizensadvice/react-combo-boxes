@@ -1,5 +1,6 @@
 import { render } from '@testing-library/react';
 import { SubstringHighlight } from './substring_highlight';
+import '../../__mock_highlight__';
 
 it('highlights empty string', () => {
   const { container } = render(
@@ -8,7 +9,12 @@ it('highlights empty string', () => {
       search=""
     />,
   );
-  expect(container).toMatchInlineSnapshot(`<div />`);
+  expect(container).toMatchInlineSnapshot(`
+   <div>
+     <span />
+   </div>
+  `);
+  expect(CSS.highlights.get('react-combo-boxes')).toHaveHighlights();
 });
 
 it('highlights with an empty search', () => {
@@ -19,10 +25,13 @@ it('highlights with an empty search', () => {
     />,
   );
   expect(container).toMatchInlineSnapshot(`
-<div>
-  foo
-</div>
-`);
+   <div>
+     <span>
+       foo
+     </span>
+   </div>
+  `);
+  expect(CSS.highlights.get('react-combo-boxes')).toHaveHighlights();
 });
 
 it('highlights with no match', () => {
@@ -33,10 +42,13 @@ it('highlights with no match', () => {
     />,
   );
   expect(container).toMatchInlineSnapshot(`
-<div>
-  foo barfoo
-</div>
-`);
+   <div>
+     <span>
+       foo barfoo
+     </span>
+   </div>
+  `);
+  expect(CSS.highlights.get('react-combo-boxes')).toHaveHighlights();
 });
 
 it('highlights with a match', () => {
@@ -47,25 +59,16 @@ it('highlights with a match', () => {
     />,
   );
   expect(container).toMatchInlineSnapshot(`
-<div>
-  <span
-    class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-  >
-    foo barfoo
-  </span>
-  <span
-    aria-hidden="true"
-  >
-    <mark>
-      foo
-    </mark>
-     bar
-    <mark>
-      foo
-    </mark>
-  </span>
-</div>
-`);
+   <div>
+     <span>
+       foo barfoo
+     </span>
+   </div>
+  `);
+  expect(CSS.highlights.get('react-combo-boxes')).toHaveHighlights(
+    ['foo', 0, 3],
+    ['foo', 7, 10],
+  );
 });
 
 it('inverses the a highlight', () => {
@@ -77,21 +80,15 @@ it('inverses the a highlight', () => {
     />,
   );
   expect(container).toMatchInlineSnapshot(`
-<div>
-  <span
-    class="visually-hidden visuallyhidden sr-only react-combo-boxes-sr-only"
-  >
-    foo barfoo
-  </span>
-  <span
-    aria-hidden="true"
-  >
-    foo 
-    <mark>
-      bar
-    </mark>
-    foo
-  </span>
-</div>
-`);
+   <div>
+     <span>
+       foo barfoo
+     </span>
+   </div>
+  `);
+  expect(CSS.highlights.get('react-combo-boxes')).toHaveHighlights([
+    'bar',
+    4,
+    7,
+  ]);
 });
