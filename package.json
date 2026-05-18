@@ -77,7 +77,7 @@
     "stylelint": "^16.10.0",
     "stylelint-config-standard": "^39.0.0",
     "stylelint-config-standard-scss": "^16.0.0",
-    "stylelint-scss": "^6.8.1"
+    "stylelint-scss": "^7.1.1"
   },
   "peerDependencies": {
     "@floating-ui/react": ">= 0.26.27",
