@@ -1,0 +1,8 @@
+export default {
+  extends: ['stylelint-config-standard-scss'],
+  rules: {
+    'selector-class-pattern': null,
+    'scss/operator-no-newline-after': null,
+    'scss/operator-no-newline-before': null,
+  },
+};
