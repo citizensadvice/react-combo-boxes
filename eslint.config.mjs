@@ -133,7 +133,7 @@ export default [
     },
   },
   {
-    files: ['eslint.config.mjs'],
+    files: ['eslint.config.mjs', 'stylelint.config.mjs'],
 
     rules: {
       'import/no-default-export': 'off',
