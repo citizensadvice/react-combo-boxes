@@ -1,3 +1,4 @@
+// oxlint-disable jest/no-conditional-expect, jest/expect-expect
 import { useEffect, useState, forwardRef } from 'react';
 import { render, waitFor, act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -3763,7 +3764,7 @@ describe('id', () => {
       />,
     );
     await userEvent.tab();
-    // eslint-disable-next-line testing-library/no-container
+    // oxlint-disable-next-line testing-library/no-container
     expect(container.querySelector('div')).not.toHaveAttribute('id');
     expect(screen.getByRole('combobox')).toHaveAttribute('id', 'foo');
     expect(screen.getByRole('listbox')).toHaveAttribute('id', 'foo_listbox');
@@ -3800,7 +3801,7 @@ describe('classPrefix', () => {
       />,
     );
     await userEvent.tab();
-    // eslint-disable-next-line testing-library/no-container
+    // oxlint-disable-next-line testing-library/no-container
     expect(container.querySelector('div')).not.toHaveClass();
     expect(screen.getByRole('combobox')).not.toHaveClass();
     expect(screen.getByRole('listbox')).not.toHaveClass();
@@ -3820,7 +3821,7 @@ describe('classPrefix', () => {
       />,
     );
     await userEvent.tab();
-    // eslint-disable-next-line testing-library/no-container
+    // oxlint-disable-next-line testing-library/no-container
     expect(container.querySelector('div')).toHaveClass('foo');
     expect(screen.getByRole('combobox')).toHaveClass('foo__input');
     expect(screen.getByRole('listbox')).toHaveClass('foo__listbox');

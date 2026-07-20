@@ -40,7 +40,7 @@ const defaultRenderTableCell = ({ key, ...props }) => (
     {...props}
   />
 );
-// eslint-disable-next-line react/jsx-no-useless-fragment
+// oxlint-disable-next-line react/jsx-no-useless-fragment
 const defaultRenderColumnValue = (props) => <Fragment {...props} />;
 
 export const DropDownTable = forwardRef(

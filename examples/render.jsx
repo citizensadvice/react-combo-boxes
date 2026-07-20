@@ -1,6 +1,6 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import * as components from './**/*.jsx'; // eslint-disable-line import/no-unresolved, import/extensions
+import * as components from './**/*.jsx'; // oxlint-disable-line import/no-unresolved, import/extensions
 
 document.querySelectorAll('[data-react-example]').forEach((node) => {
   const parts = node.dataset.reactExample.split('/');

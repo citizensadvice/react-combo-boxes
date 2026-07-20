@@ -1,3 +1,4 @@
+// oxlint-disable jest/no-standalone-expect
 import '@testing-library/jest-dom';
 
 // Fix broken jsdom has focus https://github.com/jsdom/jsdom/issues/3794

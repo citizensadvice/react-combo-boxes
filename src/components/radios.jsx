@@ -13,7 +13,7 @@ const defaultRenderWrapper = ({ key, ...props }) => (
 );
 const defaultRenderInput = (props) => <input {...props} />;
 const defaultRenderLabel = (props) => <label {...props} />;
-// eslint-disable-next-line react/jsx-no-useless-fragment
+// oxlint-disable-next-line react/jsx-no-useless-fragment
 const defaultRenderLabelWrapper = (props) => <Fragment {...props} />;
 const defaultRenderDescription = (props) => <div {...props} />;
 const defaultRenderGroup = ({ key, ...props }) => (
