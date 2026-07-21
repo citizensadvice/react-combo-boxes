@@ -12,6 +12,6 @@ export function useCombineRefs(...refs) {
         }
       });
     },
-    [...refs], // eslint-disable-line react-hooks/exhaustive-deps
+    [...refs], // oxlint-disable-line react-hooks/exhaustive-deps
   );
 }

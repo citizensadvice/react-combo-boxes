@@ -1,3 +1,4 @@
+// oxlint-disable jest/expect-expect
 import { useEffect, useState, forwardRef } from 'react';
 import { render, waitFor, act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -1552,7 +1553,7 @@ describe('options', () => {
 
     it('displays a none breaking space as the current selection', () => {
       render(<DropDownWrapper options={[]} />);
-      expect(screen.getByRole('combobox').textContent).toEqual('\u00A0'); // eslint-disable-line jest-dom/prefer-to-have-text-content
+      expect(screen.getByRole('combobox').textContent).toEqual('\u00A0'); // oxlint-disable-line jest-dom/prefer-to-have-text-content
     });
   });
 

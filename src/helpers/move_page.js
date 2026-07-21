@@ -55,5 +55,5 @@ export function movePage(direction, options, focusedOption, listbox, { skip }) {
       return prevOption === focusedOption ? nextOption : prevOption;
     }
     prevOption = nextOption;
-  } while (true); // eslint-disable-line no-constant-condition
+  } while (true); // oxlint-disable-line no-constant-condition
 }

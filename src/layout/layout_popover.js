@@ -20,7 +20,7 @@ export function layoutPopover({ listbox, input }) {
   // Needs to be position fixed
   listbox.style.setProperty('position', 'fixed');
 
-  // eslint-disable-next-line no-prototype-builtins
+  // oxlint-disable-next-line no-prototype-builtins
   if (HTMLElement.prototype.hasOwnProperty('popover')) {
     listbox.popover = 'manual';
     // This will ensure the listbox is always in the top layer

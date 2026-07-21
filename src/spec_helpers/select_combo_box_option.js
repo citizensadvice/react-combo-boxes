@@ -1,4 +1,4 @@
-/* eslint-disable testing-library/no-debugging-utils */
+/* oxlint-disable testing-library/no-debugging-utils */
 import {
   waitFor,
   screen,

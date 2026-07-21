@@ -53,7 +53,7 @@ const defaultRenderGroup = ({ key, ...props }) => (
   />
 );
 const defaultRenderGroupLabel = (props) => <li {...props} />;
-// eslint-disable-next-line react/jsx-no-useless-fragment
+// oxlint-disable-next-line react/jsx-no-useless-fragment
 const defaultRenderGroupName = (props) => <Fragment {...props} />;
 const defaultRenderOption = ({ key, ...props }) => (
   <li
@@ -61,7 +61,7 @@ const defaultRenderOption = ({ key, ...props }) => (
     {...props}
   />
 );
-// eslint-disable-next-line react/jsx-no-useless-fragment
+// oxlint-disable-next-line react/jsx-no-useless-fragment
 const defaultRenderValue = (props) => <Fragment {...props} />;
 const defaultRenderDownArrow = (props) => <span {...props} />;
 const defaultRenderClearButton = (props) => <span {...props} />;
@@ -324,7 +324,7 @@ export const ComboBox = memo(
         if (search === null && expanded) {
           onSearch?.(value?.label);
         }
-      }, [value?.identity]); // eslint-disable-line react-hooks/exhaustive-deps
+      }, [value?.identity]); // oxlint-disable-line react-hooks/exhaustive-deps
 
       // Do not show the list box is the only option is the currently selected option
       const showListBox = useMemo(

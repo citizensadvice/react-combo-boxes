@@ -9,5 +9,5 @@
       break;
     }
     cursor.open = true;
-  } while (true); // eslint-disable-line no-constant-condition
+  } while (true); // oxlint-disable-line no-constant-condition
 })();
