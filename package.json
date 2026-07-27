@@ -49,7 +49,7 @@
     "gh-pages": "^6.2.0",
     "jest": "^30.0.0",
     "jest-environment-jsdom": "^30.0.0",
-    "marked": "^16.0.0",
+    "marked": "^18.0.7",
     "marked-highlight": "^2.2.0",
     "node-emoji": "^2.1.3",
     "normalize.css": "^8.0.1",
